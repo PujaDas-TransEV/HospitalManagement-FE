@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { FaHome, FaInfoCircle, FaHospital, FaSignInAlt } from 'react-icons/fa';
+import { FaHome, FaInfoCircle, FaHospital, FaSignInAlt,FaEnvelope} from 'react-icons/fa';
 import './Navbar.css'; // Importing the CSS file for styles
 
 function HospitalNavbar() {
@@ -63,7 +63,7 @@ function HospitalNavbar() {
 
           <li>
             <Link to="/contact" className="nav-link">
-              Contact Us
+            <FaEnvelope className="icon" />Contact Us
             </Link>
           </li>
         </ul>

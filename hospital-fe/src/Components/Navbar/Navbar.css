@@ -1,8 +1,8 @@
-/* General styles for Navbar */
+
 .hospital-navbar {
-    background-color: #005f73; /* Navbar background color */
-    padding: 10px 0; /* Vertical padding */
-    height: 60px; /* Fixed height */
+    background-color: #005f73; 
+    padding: 10px 0; 
+    height: 60px; 
   }
   
   .navbar-container {
@@ -103,7 +103,7 @@
     background-color: #f1f1f1;
   }
   
-  /* Auth Section */
+
   .auth-section {
     display: flex;
     align-items: center;
@@ -131,4 +131,6 @@
   .login-btn .icon {
     margin-right: 8px;
   }
-  
+   
+
+   
