@@ -1,0 +1,498 @@
+
+ * {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Navigation Styles */
+nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 30px;
+  background-color: rgb(11, 78, 78);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  font-family: Arial, sans-serif;
+}
+
+nav .logo h1 {
+  color: #72c02c;
+  margin-left: 50px;
+}
+
+#bar {
+  display: none;
+  color: white;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+.logo {
+  font-size: 22px;
+}
+
+/* Main Section Styling */
+.main {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  background-color: rgb(16, 106, 106);
+  color: white;
+  height: 640px;
+  padding: 0 20px;
+}
+
+.mainText h1 {
+  font-size: 55px;
+}
+
+.mainText h3 {
+  font-size: 35px;
+  margin-top: 20px;
+}
+
+.mainText button {
+  width: 140px;
+  height: 40px;
+  background-color: black;
+  color: white;
+  font-size: 20px;
+  border: none;
+  margin-top: 22px;
+  transition: all 0.3s ease;
+}
+
+.mainText button:hover {
+  border: 2px solid black;
+  background-color: transparent;
+}
+
+/* Auth Buttons */
+.logout-btn,
+.login-btn {
+  background-color: #d4311b;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  border-radius: 5px;
+  margin-right: 60px;
+}
+
+.logout-btn:hover,
+.login-btn:hover {
+  background-color: #007319;
+}
+
+.logout-btn .icon,
+.login-btn .icon {
+  margin-right: 8px;
+}
+
+/* Mobile View for Navigation */
+@media (max-width: 768px) {
+  nav ul {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    background-color: #2a2a2a;
+    display: none;
+    flex-direction: column;
+    padding: 20px;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+  }
+
+  nav ul li {
+    margin: 10px 0;
+    text-align: center;
+  }
+
+  #bar {
+    display: block;
+  }
+
+  nav.active ul {
+    display: flex;
+  }
+
+  .login-btn {
+    width: 100%;
+    margin-top: 10px;
+  }
+}
+
+/* Full Screen Height Section */
+.min-h-screen {
+  height: 100vh;
+  background-size: cover;
+  background-position: center;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.min-h-screen h1 {
+  font-size: 3rem;
+  text-align: center;
+  font-weight: bold;
+}
+
+.min-h-screen p {
+  text-align: center;
+  font-size: 1.25rem;
+  margin-top: 20px;
+  max-width: 800px;
+}
+
+/* Content Section Styling */
+.container.content {
+  margin-top: -50px;
+}
+
+.container.content p {
+  font-size: 1.2rem;
+  color: #555;
+  line-height: 1.8;
+}
+
+ul.list-unstyled {
+  list-style-type: none;
+  padding-left: 0;
+}
+
+ul.list-unstyled li {
+  font-size: 1.1rem;
+  color: #555;
+  line-height: 1.8;
+  margin-bottom: 10px;
+}
+
+ul.list-unstyled li i {
+  color: #72c02c;
+  margin-right: 10px;
+}
+
+/* Blockquote Styling */
+blockquote {
+  font-style: italic;
+  color: #333;
+  background-color: #f9f9f9;
+  padding: 20px;
+  border-left: 5px solid #72c02c;
+  margin: 20px 0;
+  border-radius: 5px;
+}
+
+blockquote small {
+  font-weight: bold;
+  display: block;
+  margin-top: 10px;
+}
+
+/* Responsive Video */
+.responsive-video iframe {
+  width: 100%;
+  height: 300px;
+  border-radius: 8px;
+  border: none;
+}
+
+/* General Layout Styles */
+.service-block-v6 {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 50px;
+}
+
+/* Ensuring the text and image have some gap */
+.service-desc {
+  width: 50%;
+}
+
+/* General Layout Styles */
+.service-block-v6 {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 50px;
+}
+
+/* Ensuring the text and image have some gap */
+.service-desc {
+  width: 50%;
+}
+
+.service-block-v6 img {
+  width: 150%; /* Make the images smaller */
+  height: auto;
+  margin-bottom: 20px;
+  max-width: 800px;
+  padding: 70px; /* Optional: limit the maximum width */
+}
+
+/* Mission Section Background */
+.mission-container {
+  padding: 50px 0; /* Add padding to separate the content */
+}
+
+/* Vision Section Background */
+.vision-container {
+  padding: 50px 0; /* Add padding to separate the content */
+}
+
+/* Values Section Background */
+.values-container {
+  padding: 50px 0; /* Add padding to separate the content */
+}
+
+/* Mobile View */
+@media (max-width: 768px) {
+  .service-block-v6 {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .service-block-v6 img {
+    margin-bottom: 20px;
+    width: 80%; /* Make the image width 80% on mobile */
+    max-width: 200px; /* Limit maximum width for mobile view */
+  }
+
+  /* Make the text and image stack vertically on mobile */
+  .mission-container, .vision-container, .values-container {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .service-desc, .service-block-v6 img {
+    width: 100%;
+  }
+}
+/* About.css */
+.department-card {
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  text-align: center;
+}
+
+.department-img {
+  width: 100%;
+  height: auto;
+  max-height: 200px; /* Adjust to control image size */
+  object-fit: cover;
+}
+
+.department-info {
+  padding: 20px;
+}
+
+.department-info h3 {
+  font-size: 1.5rem;
+  color: #333;
+}
+
+.department-info p {
+  color: #666;
+  font-size: 1rem;
+  line-height: 1.6;
+}
+/* Latest Posts Section */
+.latest-posts-container {
+  background-color: #f4f4f4;
+  padding: 60px 0;
+}
+
+.latest-posts-container h2 {
+  font-size: 2.5rem;
+  text-align: center;
+  color: #333;
+  margin-bottom: 30px;
+}
+
+.post-card {
+  background-color: #fff;
+  padding: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin-bottom: 30px;
+  border-radius: 5px;
+}
+
+.post-card h3 {
+  font-size: 1.5rem;
+  color: #333;
+  margin-bottom: 15px;
+}
+
+.post-card p {
+  font-size: 1rem;
+  color: #666;
+}
+
+.read-more {
+  color: #72c02c;
+  font-weight: bold;
+  text-decoration: none;
+  margin-top: 15px;
+  display: inline-block;
+}
+
+.read-more:hover {
+  text-decoration: underline;
+}
+
+/* Contact Information Section */
+.contact-info-container {
+  background-color: #ffffff;
+  padding: 60px 0;
+}
+
+.contact-info-container h2 {
+  font-size: 2.5rem;
+  text-align: center;
+  color: #333;
+  margin-bottom: 30px;
+}
+
+.contact-info-container h3 {
+  font-size: 1.5rem;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.contact-info-container p {
+  font-size: 1.1rem;
+  color: #666;
+}
+
+/* Grid Layout for Latest Posts */
+.container .row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.container .col-md-4 {
+  flex: 1;
+  min-width: 30%;
+}
+
+.container .col-md-6 {
+  flex: 1;
+  min-width: 45%;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .service-block-v6 {
+    flex-direction: column;
+  }
+
+  .service-desc,
+  .col-md-6 {
+    max-width: 50%;
+    padding: 0;
+  }
+
+  .container .row {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .container .col-md-4 {
+    min-width: 50%;
+  }
+
+  .container .col-md-6 {
+    min-width: 100%;
+  }
+}
+/* Departments Section */
+.departments-section {
+  background-color: #fff;
+  padding: 60px 0;
+}
+
+.departments-section .section-heading {
+  font-size: 2.5rem;
+  margin-bottom: 30px;
+  text-align: center;
+  color: #333;
+  font-weight: bold;
+}
+
+.departments-container {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px; /* Reduced gap between departments */
+  flex-wrap: wrap;
+}
+
+.department-card {
+  background-color: white;
+  padding: 20px;
+  text-align: center;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  margin-bottom: 20px;
+}
+
+.department-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.department-card h3 {
+  font-size: 1.6rem;
+  color: #72c02c;
+  margin-bottom: 15px;
+  font-weight: 600;
+}
+
+.department-card p {
+  font-size: 1rem;
+  color: #333;
+  line-height: 1.6;
+  margin-bottom: 20px;
+}
+
+/* Latest Posts Section */
+.latest-posts-container {
+  background-color: #f4f4f4;
+  padding: 60px 0;
+}
+
+.latest-posts-container .headline-center {
+  margin-bottom: 60px;
+}
+
+.latest-posts-container h2 {
+  font-size: 2.5rem;
+  text-align: center;
+}
+
+.latest-posts-container h2 span {
+  color: #72c02c;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .department-card {
+    width: 100%;
+    margin-bottom: 20px;
+  }
+
+  .departments-container {
+    justify-content: center;
+  }
+}

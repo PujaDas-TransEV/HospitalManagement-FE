@@ -1,0 +1,388 @@
+/* Medical.css */
+
+/* General Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  
+  
+  section {
+    padding: 60px 0;
+  }
+  
+  /* Hero Section */
+  .hero-section {
+    background-image: url('../img/slider/3(1).jpg');
+    background-size: cover;
+    background-position: center;
+    color: white;
+    text-align: center;
+    padding: 100px 0;
+  }
+  
+  .hero-content h1 {
+    font-size: 3rem;
+    margin-bottom: 20px;
+  }
+  
+  .hero-content p {
+    font-size: 1.2rem;
+    margin-bottom: 30px;
+  }
+  
+  .cta-button {
+    background-color: #72c02c;
+    color: white;
+    padding: 10px 20px;
+    font-size: 1.1rem;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+  }
+  
+  .cta-button:hover {
+    background-color: #5a9c1a;
+  }
+  
+  /* About Us Section */
+  .about-section {
+    background-color: #fff;
+  }
+  
+  .about-section .section-heading {
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+  
+  .about-section p {
+    font-size: 1.1rem;
+    line-height: 1.6;
+    text-align: center;
+    margin-bottom: 30px;
+  }
+  
+  /* Our Services Section */
+  .services-section {
+    background-color: #f1f1f1;
+  }
+  
+  .services-section .section-heading {
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+  
+  .services-container {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+  
+  .service-card {
+    background-color: white;
+    padding: 20px;
+    width: 30%;
+    text-align: center;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .service-card img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 5px;
+    margin-bottom: 15px;
+  }
+  
+  .service-card h3 {
+    font-size: 1.5rem;
+    color: #72c02c;
+    margin-bottom: 10px;
+  }
+  
+  .service-card p {
+    font-size: 1rem;
+    color: #333;
+    line-height: 1.5;
+  }
+  
+ .departments-section {
+    background-color: #fff;
+  }
+  
+  .departments-section .section-heading {
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+  
+  .departments-container {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+  
+  .department-card {
+    background-color: white;
+    padding: 20px;
+    width: 30%;
+    text-align: center;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .department-card h3 {
+    font-size: 1.5rem;
+    color: #72c02c;
+    margin-bottom: 10px;
+  }
+  
+  .department-card p {
+    font-size: 1rem;
+    color: #333;
+    line-height: 1.5;
+  } 
+  
+  /* Meet Our Doctors Section */
+  .doctors-section {
+    background-color: #f9f9f9;
+  }
+  
+  .doctors-section .section-heading {
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+  
+  .doctor-card {
+    background-color: white;
+    padding: 20px;
+    width: 250px;
+    text-align: center;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin: 0 auto;
+  }
+  
+  .doctor-card img {
+    width: 100%;
+    height: auto;
+    border-radius: 50%;
+    margin-bottom: 15px;
+  }
+  
+  .doctor-card h3 {
+    font-size: 1.5rem;
+    color: #72c02c;
+    margin-bottom: 10px;
+  }
+  
+  .doctor-card p {
+    font-size: 1rem;
+    color: #333;
+  }
+  
+  /* Patient Testimonials Section */
+  .testimonials-section {
+    background-color: #f1f1f1;
+  }
+  
+  .testimonials-section .section-heading {
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+  
+  .testimonial-card {
+    background-color: white;
+    padding: 20px;
+    width: 80%;
+    text-align: center;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin: 0 auto 30px auto;
+  }
+  
+  .testimonial-card img {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    margin-bottom: 15px;
+  }
+  
+  .testimonial-card p {
+    font-size: 1rem;
+    color: #333;
+    line-height: 1.6;
+    margin-bottom: 10px;
+  }
+  
+  .testimonial-card small {
+    font-size: 0.9rem;
+    color: #72c02c;
+  }
+  
+  /* Appointment Section */
+  .appointment-section {
+    background-color: #fff;
+    text-align: center;
+  }
+  
+  .appointment-section .section-heading {
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+  }
+  
+  .appointment-section .cta-button {
+    background-color: #72c02c;
+    color: white;
+    padding: 10px 20px;
+    font-size: 1.2rem;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+  }
+  
+  .appointment-section .cta-button:hover {
+    background-color: #5a9c1a;
+  }
+  
+  /* Contact Section */
+  .contact-section {
+    background-image: url('../Assests/map.png');
+    background-size: cover;
+    background-position: center;
+    padding: 60px 0;
+    color: white;
+    text-align: center;
+  }
+  
+  .contact-section .content {
+    background-color: rgba(0, 0, 0, 0.6);
+    padding: 20px;
+    border-radius: 10px;
+  }
+  
+  .contact-section h2 {
+    font-size: 2.5rem;
+  }
+  
+  .contact-section p {
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+  }
+  
+  /* FAQ Section */
+  .faq-section {
+    background-color: #f9f9f9;
+  }
+  
+  .faq-section .section-heading {
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+  
+  .faq-item {
+    background-color: white;
+    padding: 20px;
+    width: 80%;
+    margin: 20px auto;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .faq-item h3 {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+  }
+  
+  .faq-item p {
+    font-size: 1rem;
+    color: #333;
+    line-height: 1.6;
+  }
+  
+  /* Responsive Styles */
+  @media (max-width: 768px) {
+    .services-container, .departments-container {
+      flex-direction: column;
+      align-items: center;
+    }
+  
+    .service-card, .department-card {
+      width: 80%;
+      margin: 10px 0;
+    }
+  
+    .doctor-card {
+      width: 80%;
+    }
+  
+    .testimonial-card {
+      width: 90%;
+    }
+  }
+
+  /* Modal Styles */
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .modal-content {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    width: 400px;
+    text-align: center;
+  }
+  
+  .modal input {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 4px;
+    border: 1px solid #ddd;
+  }
+  
+  .cta-button {
+    padding: 10px 20px;
+    background-color: #0056b3;
+    color: white;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .cta-button:hover {
+    background-color: #003f87;
+  }
+  
+  .close-modal {
+    background-color: #f44336;
+    color: white;
+    padding: 10px;
+    margin-top: 10px;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .close-modal:hover {
+    background-color: #d32f2f;
+  }
+  

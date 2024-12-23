@@ -1,136 +1,119 @@
 
-.hospital-navbar {
-    background-color: #005f73; 
-    padding: 10px 0; 
-    height: 60px; 
-  }
-  
-  .navbar-container {
+  /* Navbar Styling */
+  nav {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 20px;
-  }
-  
-  .navbar-brand {
-    display: flex;
-    align-items: center;
-  }
-  
-  .logo-img {
-    height: 40px;
-    margin-right: 10px;
-  }
-  
-  .brand-name {
-    font-size: 24px;
-    font-weight: bold;
-    color: #ffffff;
-  }
-  
-  .nav-links {
-    display: flex;
-    list-style: none;
-    margin: 0;
-    padding: 0;
-  }
-  
-  .nav-links li {
-    margin-right: 20px;
-  }
-  
-  .nav-link {
-    text-decoration: none;
-    color: #ffffff;
-    font-size: 18px;
-    font-weight: bold;
-    display: flex;
-    align-items: center;
-    transition: color 0.3s ease;
-  }
-  
-  .nav-link:hover {
-    color: #80ced7;
-  }
-  
-  .icon {
-    margin-right: 8px;
-  }
-  
-  .dropdown {
-    position: relative;
-  }
-  
-  .dropdown-toggle {
-    background: none;
-    border: none;
-    color: white;
-    font-size: 18px;
-    font-weight: bold;
-    display: flex;
-    align-items: center;
-  }
-  
-  .dropdown-popup {
-    position: absolute;
-    top: 30px;
-    left: 0;
-    background-color: #ffffff;
-    border-radius: 5px;
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    padding: 20px 30px;
+    background-color: rgb(11, 78, 78);
+    position: sticky;
+    top: 0;
     z-index: 1000;
-    min-width: 200px;
+    font-family: Arial, sans-serif;
   }
   
-  .dropdown-menu {
-    list-style: none;
-    padding: 10px;
-    margin: 0;
+  nav .logo h1 {
+    color: #72c02c;
+    margin-left: 50px;
+    /* font-size: 30px;
+    font-weight: bold; */
   }
   
-  .dropdown-item {
-    text-decoration: none;
-    color: #333;
-    display: block;
-    padding: 8px 16px;
-    font-weight: normal;
-    transition: background-color 0.2s ease;
+ 
+  #bar {
+    display: none;
+    color: white;
+    font-size: 24px;
+    cursor: pointer;
   }
   
-  .dropdown-item:hover {
-    background-color: #f1f1f1;
+  
+  .logo{
+    font-size: 22px;
   }
   
-
-  .auth-section {
+  .main{
     display: flex;
     align-items: center;
+    justify-content: space-around;
+     background-color: rgb(16, 106, 106);
+     color: white;
+     height: 640px;
+    
+  } 
+  .mainText h1{
+    font-size: 55px;
   }
-  
-  .logout-btn,
-  .login-btn {
-    background-color: #d4311b;
+  .mainText h3{
+    font-size: 35px;
+    margin-top: 20px;
+  }
+  .mainText button{
+    width: 140px;
+    height: 40px;
+    background-color: black;
     color: white;
+    font-size: 20px;
     border: none;
-    padding: 8px 16px;
-    font-size: 16px;
-    font-weight: bold;
-    cursor: pointer;
-    border-radius: 5px;
-   
+    margin-top: 22px;
   }
-  
-  .logout-btn:hover,
-  .login-btn:hover {
-    background-color: #007319;
+  .mainText button:hover{
+    border: 2px solid black;
+    background-color: transparent;
   }
-  
-  .logout-btn .icon,
-  .login-btn .icon {
-    margin-right: 8px;
-  }
-   
+  .logout-btn,
+.login-btn {
+  background-color: #d4311b;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  border-radius: 5px;
+  margin-right:60px;
+ 
+}
 
-   
+.logout-btn:hover,
+.login-btn:hover {
+  background-color: #007319;
+}
+
+.logout-btn .icon,
+.login-btn .icon {
+  margin-right: 8px;
+}
+  /* Responsive Navbar (Mobile View) */
+  @media (max-width: 768px) {
+    nav ul {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      width: 100%;
+      background-color: #2a2a2a;
+      display: none;
+      flex-direction: column;
+      padding: 20px;
+      box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+    }
+  
+    nav ul li {
+      margin: 10px 0;
+      text-align: center;
+    }
+  
+    #bar {
+      display: block;
+    }
+  
+    nav.active ul {
+      display: flex;
+    }
+  
+    .login-btn {
+      width: 100%;
+      margin-top: 10px;
+    }
+  }
+  

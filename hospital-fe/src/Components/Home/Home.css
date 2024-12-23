@@ -6,17 +6,7 @@ body{
   font-family: 'Roboto', sans-serif;
   background-color: #e6e6e6;
 } 
-nav{
-  display: flex;
-  align-items: center;
-  justify-content: space-around;
-  padding: 20px;
-  background-color: rgb(11, 78, 78);
-  color: white;
-  position: fixed;
-  top: 0%;
-  width: 100%;
-}
+ 
 ul{
   display: flex;
 }
@@ -27,11 +17,11 @@ ul li a{
   text-decoration: none;
   font-size: 20px;
   margin-inline: 20px;
-  color: white;
+  color: rgb(192, 194, 191);
 }
 ul li a:hover{
-  color: black;
-  border-bottom: 2px solid black;
+  color: white;
+  border-bottom: 2px solid black; 
 }
 .logo{
   font-size: 22px;
@@ -297,15 +287,13 @@ ul li a:hover{
   max-width: 100%;
   height: auto;
 }
-/* Inside your Home.css */
 
-/* About Us Section Styles */
 #about-us {
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 50px;
-  background-color: #f4f4f4; /* Background color for the section */
+  background-color: #f4f4f4; 
 }
 
 .about-us-content {
@@ -322,7 +310,7 @@ ul li a:hover{
 .about-us-left img {
   width: 100%;
   height: auto;
-  border-radius: 8px; /* Optional: adds rounded corners */
+  border-radius: 8px;
 }
 
 .about-us-right {
@@ -402,5 +390,347 @@ ul li a:hover{
   }
   .content img{
       width: 90%;
+  }
+}
+.why-choose-us {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 60px 20px;
+  gap: 10px; /* Reduced gap between containers */
+}
+
+.why-choose-us-left-container {
+  flex: 0.6; /* Make the left container take up 60% of the space */
+  background-color: #d5e8eb; /* Background color for the left container */
+  padding: 20px;
+  margin-left: 200px;
+}
+
+
+.why-choose-us-left h2 {
+  font-size: 2.5rem;
+  color: #7a3131;
+  margin-bottom: 20px;
+}
+
+.why-choose-us-left p {
+  font-size: 1.1rem;
+  line-height: 1.8;
+  color: #2c2626;
+  text-align: justify;
+}
+
+.why-choose-us-right-container {
+  flex: 1;
+  /* Background color for the right container */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+.why-choose-us-right img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 10px;
+}
+
+/* Responsive styling */
+@media (max-width: 768px) {
+  .why-choose-us {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .why-choose-us-left-container,
+  .why-choose-us-right-container {
+    flex: none;
+    width: 100%;
+  }
+
+  .why-choose-us-left h2 {
+    font-size: 2rem;
+  }
+
+  .why-choose-us-left p {
+    font-size: 1rem;
+  }
+}
+
+
+/* Specialties Section */
+.specialty-section {
+  padding: 40px 20px;
+  background-color: #f4f7fa;
+  text-align: center;
+}
+
+.specialty-section h2 {
+  font-size: 2.5rem;
+  color: #333;
+  margin-bottom: 30px;
+  text-transform: uppercase;
+}
+
+/* .specialty-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 20px;
+  justify-content: center;
+} */
+
+/* .specialty-card {
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  transition: transform 0.3s ease-in-out;
+
+} */
+
+.specialty-container {
+  display: flex;
+  flex-wrap: wrap; 
+  justify-content: center; 
+  gap: 20px; 
+}
+
+.specialty-card {
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  transition: transform 0.3s ease-in-out;
+  width: 250px; 
+}
+
+.specialty-card:hover {
+  transform: translateY(-10px);
+}
+
+.specialty-card img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  border-bottom: 2px solid #eee;
+}
+
+.specialty-card p {
+  padding: 15px;
+  font-size: 1rem;
+  color: #555;
+  line-height: 1.5;
+}
+
+.specialty-card .show-more-btn {
+  background-color: #0066cc;
+  color: #fff;
+  border: none;
+  padding: 8px 20px;
+  font-size: 1rem;
+  margin: 15px 0;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.specialty-card .show-more-btn:hover {
+  background-color: #004a99;
+} 
+ 
+
+
+@media (max-width: 768px) {
+  .specialty-section {
+    padding: 30px 15px;
+  }
+
+  .specialty-container {
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  }
+
+  .specialty-card p {
+    font-size: 0.9rem;
+  }
+
+  .specialty-card img {
+    height: 180px;
+  }
+}
+/* Gallery Section */
+.gallery-section {
+  padding: 50px 20px;
+  background-color: #f8f8f8;
+  text-align: center;
+}
+
+.gallery-section h2 {
+  font-size: 2rem;
+  color: #333;
+  margin-bottom: 30px;
+}
+
+.gallery-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+}
+
+.gallery-item {
+  background-color: #fff;
+  border-radius: 10px;
+  overflow: hidden;
+  width: 300px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+}
+
+.gallery-item:hover {
+  transform: scale(1.05);
+}
+
+.gallery-item img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.gallery-item p {
+  padding: 15px;
+  font-size: 1rem;
+  color: #555;
+  background-color: #fff;
+  margin: 0;
+}
+
+/* Optional: For mobile responsiveness */
+@media (max-width: 768px) {
+  .gallery-container {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .gallery-item {
+    width: 80%;
+    margin-bottom: 20px;
+  }
+}
+/* Reviews Section */
+.reviews-section {
+  margin-top: 50px;
+  padding: 50px 0;
+  background-color: #f4f4f4;
+}
+
+.reviews-section h2 {
+  text-align: center;
+  font-size: 32px;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+.reviews-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+}
+
+.review-card {
+  background-color: white;
+  width: 300px;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  transition: transform 0.3s ease;
+}
+
+.review-card img {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  margin-bottom: 15px;
+}
+
+.review-card p {
+  font-size: 16px;
+  color: #555;
+}
+
+.review-card .review-text p {
+  font-size: 18px;
+  color: #333;
+}
+
+.review-card:hover {
+  transform: translateY(-10px);
+}
+/* Specialties Section Styling */
+#speciality {
+  background-color: #6ab47b; /* Green background color for the container */
+  padding: 50px 0;
+  color: white;
+  margin-top: 10px; /* Text color to contrast with the green background */
+}
+
+#speciality .head {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+#speciality h1 {
+  font-size: 36px;
+  color: white; /* White color for the heading */
+  font-weight: bold;
+}
+
+
+
+/* Styling for Each Specialty Card */
+.spCard {
+  background-color: white; 
+  width: calc(33.33% - 20px); 
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.spCard img {
+  width: 100%;
+  height: auto;
+  border-radius: 10px;
+  margin-bottom: 15px;
+}
+
+.spCard p {
+  font-size: 16px;
+  color: #555;
+  margin: 5px 0;
+}
+
+/* Hover Effects for Cards */
+.spCard:hover {
+  transform: translateY(-10px); /* Lift effect */
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Increased shadow for hover */
+}
+
+/* Responsive Design for Small Screens */
+@media (max-width: 768px) {
+  .spCard {
+    width: calc(50% - 20px); /* 2 cards per row */
+  }
+}
+
+@media (max-width: 480px) {
+  .spCard {
+    width: 100%; /* 1 card per row */
   }
 }

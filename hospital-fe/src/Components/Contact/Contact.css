@@ -1,0 +1,174 @@
+/* Contact.css */
+
+/* Hero Section Styling */
+.hero-sections {
+    background: url('../img/galary/hospital(1).jpg') no-repeat center center/cover;
+    padding: 80px 0;
+    text-align: center;
+    color: white;
+  }
+  
+  .hero-contentt h1 {
+    font-size: 3rem;
+    margin-bottom: 10px;
+  }
+  
+  .hero-contentt p {
+    font-size: 1.2rem;
+    margin-bottom: 20px;
+  }
+  
+ /* Contact Information Section Styling */
+.contact-info {
+    background-color: #f9f9f9; /* Light background color */
+    padding: 50px 0;
+  }
+  
+  .contact-info .container {
+    display: flex;
+    justify-content: space-between;  /* Aligns contact details and map to the sides */
+    align-items: flex-start;         /* Aligns items to the top */
+    gap: 30px;                       /* Space between the two sections */
+  }
+  
+  .contact-details {
+    width: 50%;                      /* Half the width for contact details */
+  }
+  
+  .contact-info-box {
+    background-color: #fff;         /* White background for each box */
+    padding: 20px;
+    margin-bottom: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Add a subtle shadow */
+    transition: transform 0.3s, box-shadow 0.3s;
+    padding: 40px;
+  }
+  
+  .contact-info-box:hover {
+    transform: translateY(-5px);     /* Slight lift effect on hover */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15); /* Enhance shadow on hover */
+  }
+  
+  .contact-info-box h3 {
+    font-size: 1.5rem;
+    color: #333;
+    margin-bottom: 10px;
+    font-weight: 600;
+  }
+  
+  .contact-info-box p {
+    font-size: 1rem;
+    color: #555;
+    margin: 0;
+  }
+  
+  .map {
+    width: 45%;                       /* Adjusts width of the map section */
+    max-width: 600px;                 /* Max width for the map */
+  }
+  
+  .map img {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;              /* Rounded corners for the map */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 30px; /* Subtle shadow effect for the map */
+  }
+  
+ /* Contact Form Section */
+.contact-form {
+    background-color: #f4f4f4;  /* Light gray background for the section */
+    padding: 50px 0;             /* Padding around the section */
+  }
+  
+  .contact-form .container {
+    max-width: 800px;            /* Restrict width to prevent it from being too wide */
+    margin: 0 auto;              /* Center the form */
+    background-color: #5cb1b4;   /* White background for the form */
+    padding: 30px;               /* Padding inside the form */
+    border-radius: 8px;          /* Rounded corners for the form */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);  /* Subtle shadow around the form */
+  }
+  
+  .contact-form h2 {
+    font-size: 2rem;             /* Heading size */
+    color: #333;                 /* Dark text color */
+    margin-bottom: 30px;         /* Space below the heading */
+    text-align: center;          /* Center the heading */
+  }
+  
+  .contact-form .form-group {
+    margin-bottom: 20px;         /* Space between each form group */
+  }
+  
+  .contact-form label {
+    font-size: 1.1rem;           /* Larger font size for labels */
+    color: #555;                 /* Slightly lighter color for labels */
+    display: block;              /* Ensure labels are on top */
+    margin-bottom: 8px;          /* Space between label and input */
+  }
+  
+  .contact-form input,
+  .contact-form textarea {
+    width: 100%;                 /* Make inputs and textarea take full width */
+    padding: 12px;               /* Padding inside input fields */
+    font-size: 1rem;             /* Font size */
+    border-radius: 6px;          /* Rounded corners */
+    border: 1px solid #ccc;      /* Light gray border */
+    box-sizing: border-box;      /* Ensure padding does not affect width */
+    margin-bottom: 20px;         /* Space between inputs */
+    transition: all 0.3s ease;   /* Smooth transition effect for focus */
+  }
+  
+  .contact-form input:focus,
+  .contact-form textarea:focus {
+    border-color: #4CAF50;       /* Green border when focused */
+    outline: none;               /* Remove outline on focus */
+  }
+  
+  .contact-form textarea {
+    height: 150px;               /* Set height for textarea */
+    resize: vertical;            /* Allow vertical resize */
+  }
+  
+  .contact-form .cta-button {
+    background-color: #4CAF50;   /* Green background for the button */
+    color: white;                /* White text color */
+    font-size: 1.2rem;           /* Font size for the button */
+    padding: 15px 30px;          /* Padding around the button */
+    border: none;                /* Remove default border */
+    border-radius: 6px;          /* Rounded corners */
+    cursor: pointer;             /* Change cursor to pointer */
+    width: 30%;    
+    margin-left: 240px;              /* Make the button span the entire width */
+    transition: background-color 0.3s ease, transform 0.3s ease; /* Smooth transitions */
+  }
+  
+  .contact-form .cta-button:hover {
+    background-color: #45a049;   /* Darker green on hover */
+    transform: translateY(-2px);  /* Slight lift effect on hover */
+  }
+  
+  .contact-form .cta-button:active {
+    transform: translateY(0);    /* Reset the lift on click */
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .contact-form .container {
+      padding: 20px;            /* Adjust padding on smaller screens */
+    }
+  
+    .contact-form input,
+    .contact-form textarea {
+      padding: 10px;            /* Adjust padding for smaller inputs */
+    }
+  
+    .contact-form .cta-button {
+      padding: 12px 25px;       /* Slightly smaller button padding */
+    }
+  }
+  
+  
+  

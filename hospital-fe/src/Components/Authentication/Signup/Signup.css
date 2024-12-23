@@ -1,0 +1,139 @@
+
+
+#signUpBody {
+    height: 100vh;
+    width: 100%;
+    display: grid;
+    grid-template-columns: 45% 55%;
+    align-items: center;
+    justify-items: center; 
+}
+
+
+#signUpBG {
+    background-image: url('../../Assests/signup-background.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 100%;
+    width: 100%;
+    position: relative;
+}
+
+
+.greenLayer {
+    background-color: rgba(126, 211, 165, 0.44);
+    height: 100%;
+    width: 100%;
+    position: absolute;
+}
+
+
+.signup-form {
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    padding: 40px;
+    max-width: 450px;
+    width: 100%;
+    z-index: 1;
+}
+
+
+h2 {
+    color: #048C7F;
+    font-size: 28px;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+
+#signUpform {
+    width: 100%;
+    margin: auto;
+}
+
+
+input,
+select {
+    width: 100%;
+    padding: 12px;
+    margin: 10px 0;
+    border: none !important;
+    border-bottom: 2px solid #ccc !important;
+    border-radius: 0 !important;
+    outline: none;
+    font-size: 16px;
+}
+
+
+input:focus, select:focus {
+    border-color: #31b372;
+}
+
+
+input[type=checkbox] {
+    margin-right: 10px;
+}
+
+
+.text-danger {
+    font-size: 14px;
+    color: red;
+    margin-top: 5px;
+}
+
+
+#signUp {
+    padding: 15px 30px;
+    color: white;
+    background-color: #31b372;
+    border: none;
+    border-radius: 5px;
+    font-size: 18px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    width: 100%;
+    text-align: center;
+}
+
+#signUp:hover {
+    background-color: #28a55d;
+}
+
+
+.text-center a {
+    color: #048C7F;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.text-center a:hover {
+    text-decoration: underline;
+}
+
+
+@media (max-width: 768px) {
+    #signUpBody {
+        grid-template-columns: 1fr; 
+    }
+
+    .signup-form {
+        padding: 20px;
+        width: 80%;
+    }
+
+    h2 {
+        font-size: 24px;
+    }
+
+    #signUp {
+        padding: 12px 25px;
+        font-size: 16px;
+    }
+
+    input,
+    select {
+        font-size: 14px;
+    }
+}
+
