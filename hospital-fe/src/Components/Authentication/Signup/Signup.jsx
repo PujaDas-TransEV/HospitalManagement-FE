@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import './Signup.css';
 import { NavLink } from 'react-router-dom';
@@ -15,6 +14,7 @@ function SignupPage() {
   const [passwordMatchDisplay, setPasswordMatchDisplay] = useState('none');
   const [passwordValidationMessage, setPasswordValidationMessage] = useState('');
   const [isOtpSent, setIsOtpSent] = useState(false); // Flag to check if OTP is sent
+  const [isSignupComplete, setIsSignupComplete] = useState(false); // Flag to check if signup is complete
 
   // Handle form submission for signup (send OTP)
   const handleSubmit = (event) => {
@@ -27,7 +27,7 @@ function SignupPage() {
     }
 
     const formData = new FormData();
-    formData.append('fullName', fullName);
+    formData.append('name', fullName);
     formData.append('email', email);
     formData.append('password', password);
     formData.append('confirm_password', confirmPassword);
@@ -39,10 +39,11 @@ function SignupPage() {
     })
       .then(response => response.json())
       .then(data => {
-        if (data.message === 'OTP Sent') {
+        // Ensure backend responds with OTP sent confirmation
+        if (data.message === 'OTP sent to your email! Please verify.') {
           setIsOtpSent(true); // OTP sent successfully, show OTP field
         } else {
-          console.error(data.errors);
+          console.error(data.errors || data.error);
         }
       })
       .catch(error => {
@@ -54,20 +55,30 @@ function SignupPage() {
   const handleVerifyOtp = (event) => {
     event.preventDefault();
 
+    // Validate if password and confirm password match again before sending data
+    if (password !== confirmPassword) {
+      setPasswordMatchDisplay('block');
+      return;
+    }
+
     const formData = new FormData();
+    formData.append('name', fullName); // Add name to formData
     formData.append('email', email); // Reuse email from state
+    formData.append('password', password); // Reuse password from state
+    formData.append('confirm_password', confirmPassword); // Reuse confirm password from state
     formData.append('otp', otp); // OTP entered by the user
 
-    // Send the OTP for verification to the backend (same endpoint for both signup and OTP verification)
+    // Send the OTP for verification along with the other details (name, email, password, confirm_password) to the backend
     fetch('http://localhost:5000/patients/signup', {
       method: 'POST',
       body: formData,
     })
       .then(response => response.json())
       .then(data => {
-        if (data.message === 'Signup Successful') {
+        if (data.message === 'Signup successful!') {
           alert('Signup Successful!');
-          navigate('/'); // Navigate to homepage or login page after successful signup
+          setIsSignupComplete(true);
+          navigate('/login'); // Navigate to homepage or login page after successful signup
         } else {
           alert('OTP verification failed! Please try again.');
         }
@@ -100,7 +111,6 @@ function SignupPage() {
       <div className="signup-form">
         <h2>Create An Account</h2>
         <form id="signUpform" name="signUpform" onSubmit={isOtpSent ? handleVerifyOtp : handleSubmit}>
-          {/* Full Name, Email, Password, Confirm Password */}
           <div className="d-flex flex-row mt-5">
             <div className="col-6 form-floating mx-2">
               <label htmlFor="fullName">Full Name</label>
@@ -156,30 +166,24 @@ function SignupPage() {
               placeholder="confirm password"
             />
           </div>
-          <div
-            className="mx-2 text-danger"
-            style={{ display: `${passwordMatchDisplay}` }}
-          >
+          <div className="mx-2 text-danger" style={{ display: `${passwordMatchDisplay}` }}>
             Passwords do not match
           </div>
 
-          {/* OTP Field appears only after OTP is sent */}
-          {isOtpSent && (
-            <>
-              <div className="form-floating mt-3 col-12 mx-2">
-                <label htmlFor="otp">Enter OTP</label>
-                <input
-                  type="text"
-                  id="otp"
-                  name="otp"
-                  value={otp}
-                  onChange={(event) => setOtp(event.target.value)}
-                  className="form-control"
-                  required
-                  placeholder="Enter OTP"
-                />
-              </div>
-            </>
+          {isOtpSent && !isSignupComplete && (
+            <div className="form-floating mt-3 col-12 mx-2">
+              <label htmlFor="otp">Enter OTP</label>
+              <input
+                type="text"
+                id="otp"
+                name="otp"
+                value={otp}
+                onChange={(event) => setOtp(event.target.value)}
+                className="form-control"
+                required
+                placeholder="Enter OTP"
+              />
+            </div>
           )}
 
           <div className="text-center">
