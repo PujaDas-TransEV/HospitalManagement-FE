@@ -12,6 +12,9 @@ import ForgetPassword from './Components/Authentication/ForgetPassword/Password'
 import AdminSignup from './Components/Authentication/AdminSignup/AdminSignup';
 import AdminLogin from './Components/Authentication/AdminLogin/AdminLogin';
 import AdminPassword from './Components/Authentication/AdminForgetPassword/Password';
+import SuperAdminSignup from './Components/Authentication/SuperAdminSignup/SuperAdminSignup';
+import SuperAdminLogin from './Components/Authentication/SuperAdminLogin/SuperAdminLogin';
+import SuperAdminForgetPassword from './Components/Authentication/SuperAdminForgetPassword/SuperAdminPassword';
 // import Patientdashboard from './Components/Patients/Patientdashboard';
 
 // Navbar component to conditionally render Navbar based on the current path
@@ -19,7 +22,7 @@ const ConditionalNavbar = () => {
   const location = useLocation();  // Get current location to conditionally render Navbar
 
   // Render Navbar only if the path is not '/login' or '/signup'
-  return !['/login', '/signup','/password','/admin/signup','/admin/login','/admin/password'].includes(location.pathname) && <Navbar />;
+  return !['/login', '/signup','/password','/admin/signup','/admin/login','/admin/password','/super/admin/signup','/super/admin/login','/super/admin/password'].includes(location.pathname) && <Navbar />;
 };
 
 // Main App Component
@@ -42,6 +45,9 @@ function App() {
         <Route path="/admin/login" element={<AdminLogin />} />
         <Route path="/admin/password" element={<AdminPassword />} />
         <Route path="/admin/password" element={<AdminPassword />} />
+        <Route path="/super/admin/signup" element={<SuperAdminSignup />} />
+        <Route path="/super/admin/login" element={<SuperAdminLogin />} />
+        <Route path="/super/admin/password" element={<SuperAdminForgetPassword />} />
         {/* <Route path="patient-dashboard" element={<Patientdashboard />} />  */}
         {/* Add other routes as needed */}
       </Routes>
