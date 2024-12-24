@@ -1,22 +1,23 @@
-   /* Full page height and margin reset */
+/* Full page height and margin reset */
 body, html {
     height: 100%;
     margin: 0;
-  }
-  
-  /* Center the login page vertically and horizontally */
-  .login-page {
+}
+
+/* Center the admin login page vertically and horizontally */
+.admin-login-page {
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
-    background-image: url('../../Assests/login-background.png'); /* Replace with your background image URL */
+    background-image: url('../../Assests/adminloginback.jpg'); 
     background-size: cover;
     background-position: center;
-  }
-  
-  /* Login card styles */
-  .login-card {
+}
+
+
+/* Admin login card styles */
+.admin-login-card {
     background-color: rgba(255, 255, 255, 0.9); /* Semi-transparent white */
     padding: 40px;
     border-radius: 8px;
@@ -24,35 +25,40 @@ body, html {
     width: 100%;
     max-width: 450px;
     text-align: center;
-  }
-  
-  /* Input fields and labels styling */
-  .input-group {
+}
+
+/* Title styling */
+.admin-login-card h1 {
+    font-size: 24px;
+    color: #87CEEB;
+    margin-bottom: 30px;
+}
+
+/* Input fields and labels styling */
+.input-group {
     margin-bottom: 15px;
     text-align: left;
-  }
-  
-  .input-group label {
+}
+
+.input-group label {
     display: block;
     margin-bottom: 5px;
     font-size: 14px;
     font-weight: bold;
-  }
-  
-  .input-group input {
+}
+
+.input-group input {
     width: 100%;
     padding: 10px;
     margin: 5px 0;
     border: 1px solid #ccc;
     border-radius: 4px;
-    box-sizing: border-box;
     font-size: 16px;
-  }
-  
-  /* Styling for login and sign up buttons */
-  
-  
-  .login-button, .signup-button {
+    box-sizing: border-box;
+}
+
+/* Styling for login and sign up buttons */
+.login-button, .signup-button {
     width: 48%;
     padding: 12px;
     font-size: 16px;
@@ -60,40 +66,50 @@ body, html {
     border-radius: 4px;
     cursor: pointer;
     transition: background-color 0.3s ease;
-    
-  }
-  
-  .login-button {
+}
+
+.login-button {
     background-color: #007bff;
     color: white;
+}
 
-  }
-  
-  .login-button:hover {
+.login-button:hover {
     background-color: #0056b3;
-  }
-  
-  .signup-button {
+}
+
+.signup-button {
     background-color: #28a745;
     color: white;
-  }
-  
-  .signup-button:hover {
+}
+
+.signup-button:hover {
     background-color: #218838;
-  }
-  
-  /* Forgot password link */
-  .forgot-password {
+}
+
+/* Forgot password link */
+.forgot-password {
     margin-top: 15px;
     text-align: center;
-  }
-  
-  .forgot-password a {
+}
+
+.forgot-password a {
     color: #007bff;
     text-decoration: none;
-  }
-  
-  .forgot-password a:hover {
+}
+
+.forgot-password a:hover {
     text-decoration: underline;
-  }
-  
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
+    .login-card {
+        padding: 20px;
+        max-width: 100%;
+    }
+
+    .login-button, .signup-button {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+}
