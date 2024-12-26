@@ -1,0 +1,92 @@
+
+/* Navbar Container */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  background-color: #2d3e50;
+  color: white;
+  font-size: 18px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Brand Name Styling */
+.brand-name {
+  font-size: 24px;
+  font-weight: bold;
+  margin-left: 200px;
+}
+
+/* Profile Section */
+.profile-info {
+  display: flex;
+  align-items: center;
+  position: relative;
+  cursor: pointer;
+}
+
+/* Profile Image Styling */
+.profile-img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin-right: 10px;
+  transition: transform 0.3s ease;
+}
+
+/* Hover Effect on Profile Image */
+.profile-img:hover {
+  transform: scale(1.1);
+}
+
+/* Profile Name Styling */
+.patient-name {
+  margin-right: 15px;
+}
+
+/* Dropdown Menu Styling */
+.dropdown-menu {
+  position: absolute;
+  top: 50px; /* Position dropdown below the profile */
+  right: 0;
+  background-color: #fff;
+  color: #333;
+  border-radius: 5px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  padding: 10px;
+  width: 150px;
+  z-index: 100;
+}
+
+/* Dropdown Item Styling */
+.dropdown-item {
+  background: none;
+  border: none;
+  padding: 8px 10px;
+  width: 100%;
+  text-align: left;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+/* Hover Effect on Dropdown Items */
+.dropdown-item:hover {
+  background-color: #f0f0f0;
+}
+
+/* Media Query for Smaller Screens */
+@media (max-width: 768px) {
+  .navbar {
+    padding: 10px;
+  }
+
+  .profile-info {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .dropdown-menu {
+    top: 40px;
+  }
+}

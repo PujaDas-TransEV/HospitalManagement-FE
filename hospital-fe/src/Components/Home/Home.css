@@ -397,12 +397,12 @@ ul li a:hover{
   flex-direction: row;
   justify-content: space-between;
   padding: 60px 20px;
-  gap: 10px; /* Reduced gap between containers */
+  gap: 10px; 
 }
 
 .why-choose-us-left-container {
-  flex: 0.6; /* Make the left container take up 60% of the space */
-  background-color: #d5e8eb; /* Background color for the left container */
+  flex: 0.6; 
+  background-color: #d5e8eb;
   padding: 20px;
   margin-left: 200px;
 }
@@ -423,7 +423,7 @@ ul li a:hover{
 
 .why-choose-us-right-container {
   flex: 1;
-  /* Background color for the right container */
+ 
   display: flex;
   justify-content: center;
   align-items: center;
@@ -436,7 +436,7 @@ ul li a:hover{
   border-radius: 10px;
 }
 
-/* Responsive styling */
+
 @media (max-width: 768px) {
   .why-choose-us {
     flex-direction: column;
@@ -459,7 +459,7 @@ ul li a:hover{
 }
 
 
-/* Specialties Section */
+
 .specialty-section {
   padding: 40px 20px;
   background-color: #f4f7fa;
@@ -473,21 +473,7 @@ ul li a:hover{
   text-transform: uppercase;
 }
 
-/* .specialty-container {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-  gap: 20px;
-  justify-content: center;
-} */
 
-/* .specialty-card {
-  background-color: #ffffff;
-  border-radius: 8px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  overflow: hidden;
-  transition: transform 0.3s ease-in-out;
-
-} */
 
 .specialty-container {
   display: flex;
@@ -558,7 +544,6 @@ ul li a:hover{
     height: 180px;
   }
 }
-/* Gallery Section */
 .gallery-section {
   padding: 50px 20px;
   background-color: #f8f8f8;
@@ -605,7 +590,7 @@ ul li a:hover{
   margin: 0;
 }
 
-/* Optional: For mobile responsiveness */
+
 @media (max-width: 768px) {
   .gallery-container {
     flex-direction: column;
@@ -617,7 +602,7 @@ ul li a:hover{
     margin-bottom: 20px;
   }
 }
-/* Reviews Section */
+
 .reviews-section {
   margin-top: 50px;
   padding: 50px 0;
@@ -671,12 +656,12 @@ ul li a:hover{
 .review-card:hover {
   transform: translateY(-10px);
 }
-/* Specialties Section Styling */
+
 #speciality {
-  background-color: #6ab47b; /* Green background color for the container */
+  background-color: #6ab47b; 
   padding: 50px 0;
   color: white;
-  margin-top: 10px; /* Text color to contrast with the green background */
+  margin-top: 10px;
 }
 
 #speciality .head {
@@ -686,13 +671,13 @@ ul li a:hover{
 
 #speciality h1 {
   font-size: 36px;
-  color: white; /* White color for the heading */
+  color: white; 
   font-weight: bold;
 }
 
 
 
-/* Styling for Each Specialty Card */
+
 .spCard {
   background-color: white; 
   width: calc(33.33% - 20px); 
@@ -716,21 +701,21 @@ ul li a:hover{
   margin: 5px 0;
 }
 
-/* Hover Effects for Cards */
+
 .spCard:hover {
-  transform: translateY(-10px); /* Lift effect */
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Increased shadow for hover */
+  transform: translateY(-10px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); 
 }
 
-/* Responsive Design for Small Screens */
+
 @media (max-width: 768px) {
   .spCard {
-    width: calc(50% - 20px); /* 2 cards per row */
+    width: calc(50% - 20px); 
   }
 }
 
 @media (max-width: 480px) {
   .spCard {
-    width: 100%; /* 1 card per row */
+    width: 100%; 
   }
 }

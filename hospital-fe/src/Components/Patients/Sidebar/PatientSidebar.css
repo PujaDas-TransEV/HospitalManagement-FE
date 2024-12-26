@@ -1,0 +1,151 @@
+
+/* Sidebar container */
+.sidebar-container {
+  display: flex;
+  height: 100vh;
+  transition: margin-left 0.3s ease;
+}
+
+/* Sidebar Navigation */
+.sidebar-nav {
+  width: 250px;
+  background-color: #2d3e50;
+  color: white;
+  padding: 20px 10px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  z-index: 100;
+  transition: width 0.3s ease, padding 0.3s ease;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Sidebar collapsed styles */
+.sidebar-nav.sidebar-collapsed {
+  width: 70px;
+  padding: 10px 5px;
+  margin-right: 10px;
+
+}
+
+/* Sidebar Navigation list */
+.navigation-list {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Specific styling for home item */
+.nav-item.home-item {
+  margin-top: 50px;
+  margin-bottom: 35px;
+  display: flex;
+  align-items: center;
+}
+
+/* General nav item styles */
+.nav-item {
+  margin-bottom: 35px;
+  display: flex;
+  align-items: center;
+}
+
+/* Nav link styles */
+.nav-link {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  color: white;
+  text-decoration: none;
+  font-size: 16px;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Hover effect on nav links */
+.nav-link:hover {
+  background-color: #1c2a37;
+  color: #dcdcdc;
+}
+
+/* Active link style */
+.nav-link.active-link {
+  background-color: #497a8d;
+}
+
+/* Nav icon styles */
+.nav-icon {
+  font-size: 20px;
+  margin-right: 10px;
+  transition: transform 0.3s ease;
+}
+
+/* Smaller nav icon when sidebar is collapsed */
+.sidebar-nav.sidebar-collapsed .nav-icon {
+  font-size: 18px;
+  margin-right: 5px;
+}
+
+/* Toggle button styling */
+.expand-toggle-btn {
+  background-color: transparent;
+  border: none;
+  color: white;
+  font-size: 24px;
+  cursor: pointer;
+  position: absolute;
+  top: 20px;
+  right: 1px;
+  transition: transform 0.3s ease;
+}
+
+/* Hover effect for toggle button */
+.expand-toggle-btn:hover {
+  transform: scale(1.1);
+}
+
+/* Close button (using icon) styling */
+.close-btn {
+  background-color: transparent;
+  border: none;
+  color: white;
+  font-size: 30px;
+  cursor: pointer;
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  z-index: 101;
+}
+
+
+/* Media queries for mobile responsiveness */
+@media screen and (max-width: 768px) {
+  .sidebar-nav {
+    width: 60px;
+  }
+
+  .sidebar-nav.sidebar-collapsed {
+    width: 60px;
+  }
+
+  .nav-link {
+    font-size: 14px;
+  }
+
+  .nav-icon {
+    font-size: 18px;
+  }
+
+  .expand-toggle-btn {
+    font-size: 20px;
+    top: 15px;
+    right: -25px;
+  }
+
+  .close-btn {
+    font-size: 25px;
+  }
+}

@@ -1,5 +1,5 @@
 
-  /* Navbar Styling */
+
   nav {
     display: flex;
     justify-content: space-between;
@@ -15,8 +15,7 @@
   nav .logo h1 {
     color: #72c02c;
     margin-left: 50px;
-    /* font-size: 30px;
-    font-weight: bold; */
+  
   }
   
  
@@ -84,7 +83,7 @@
 .login-btn .icon {
   margin-right: 8px;
 }
-  /* Responsive Navbar (Mobile View) */
+  
   @media (max-width: 768px) {
     nav ul {
       position: absolute;

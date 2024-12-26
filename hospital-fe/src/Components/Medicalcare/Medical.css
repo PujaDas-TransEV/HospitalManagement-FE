@@ -1,6 +1,4 @@
-/* Medical.css */
 
-/* General Styles */
 * {
     margin: 0;
     padding: 0;
@@ -13,7 +11,7 @@
     padding: 60px 0;
   }
   
-  /* Hero Section */
+
   .hero-section {
     background-image: url('../img/slider/3(1).jpg');
     background-size: cover;
@@ -48,7 +46,7 @@
     background-color: #5a9c1a;
   }
   
-  /* About Us Section */
+ 
   .about-section {
     background-color: #fff;
   }
@@ -65,8 +63,7 @@
     text-align: center;
     margin-bottom: 30px;
   }
-  
-  /* Our Services Section */
+
   .services-section {
     background-color: #f1f1f1;
   }
@@ -150,7 +147,7 @@
     line-height: 1.5;
   } 
   
-  /* Meet Our Doctors Section */
+  
   .doctors-section {
     background-color: #f9f9f9;
   }
@@ -189,7 +186,7 @@
     color: #333;
   }
   
-  /* Patient Testimonials Section */
+ 
   .testimonials-section {
     background-color: #f1f1f1;
   }
@@ -229,7 +226,7 @@
     color: #72c02c;
   }
   
-  /* Appointment Section */
+ 
   .appointment-section {
     background-color: #fff;
     text-align: center;
@@ -255,7 +252,7 @@
     background-color: #5a9c1a;
   }
   
-  /* Contact Section */
+
   .contact-section {
     background-image: url('../Assests/map.png');
     background-size: cover;
@@ -280,7 +277,7 @@
     margin-bottom: 10px;
   }
   
-  /* FAQ Section */
+
   .faq-section {
     background-color: #f9f9f9;
   }
@@ -311,7 +308,7 @@
     line-height: 1.6;
   }
   
-  /* Responsive Styles */
+
   @media (max-width: 768px) {
     .services-container, .departments-container {
       flex-direction: column;
@@ -332,7 +329,7 @@
     }
   }
 
-  /* Modal Styles */
+
 .modal {
     position: fixed;
     top: 0;
