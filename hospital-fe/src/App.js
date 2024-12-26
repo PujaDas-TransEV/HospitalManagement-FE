@@ -18,6 +18,9 @@ import SuperAdminForgetPassword from './Components/Authentication/SuperAdminForg
 import PatientNavbar from './Components/Patients/Navbar/PatientNavbar';
 import PatientSidebar from './Components/Patients/Sidebar/PatientSidebar';
 import Patientdashboard from './Components/Patients/PatientDashboard/PatientDashboard';
+import HealthOverview from './Components/Patients/HealthOverview/Health';
+import Appointments from './Components/Patients/Appointments/Appointment'
+import PatientAccount from './Components/Patients/Account/Account';
 
 // Navbar component to conditionally render Navbar based on the current path
 const ConditionalNavbar = () => {
@@ -53,6 +56,9 @@ function App() {
         <Route path="/patient-navbar" element={<PatientNavbar />} />
         <Route path="/patient-sidebar" element={<PatientSidebar />} />
         <Route path="/patient-dashboard" element={<Patientdashboard />} /> 
+        <Route path="/patient-health" element={<HealthOverview/>} /> 
+        <Route path="/patient-Appointments" element={<Appointments/>} /> 
+        <Route path="/patient-account" element={<PatientAccount/>} /> 
         {/* Add other routes as needed */}
       </Routes>
 

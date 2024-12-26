@@ -29,7 +29,7 @@ const PatientSidebar = () => {
           </li>
 
           <li className="nav-item">
-            <Link to="/health-overview" className={`nav-link ${location.pathname === '/health-overview' ? 'active-link' : ''}`}>
+            <Link to="/patient-health" className={`nav-link ${location.pathname === '/patient-health' ? 'active-link' : ''}`}>
               <FaHeartbeat className="nav-icon" />
               {isExpanded && <span>Health Overview</span>}
             </Link>
@@ -59,7 +59,7 @@ const PatientSidebar = () => {
             </Link>
           </li>
           <li className="nav-item">
-            <Link to="/account" className={`nav-link ${location.pathname === '/account' ? 'active-link' : ''}`}>
+            <Link to="/patient-account" className={`nav-link ${location.pathname === '/patient-account' ? 'active-link' : ''}`}>
               <FaUser className="nav-icon" />
               {isExpanded && <span>My Account</span>}
             </Link>
