@@ -107,6 +107,7 @@
     border-radius: 8px;
     margin-bottom: 20px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    background-color: #ffeb3b;
   }
   
   .health-metrics {
@@ -133,6 +134,7 @@
     border-radius: 8px;
     margin-bottom: 20px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    background-color: aquamarine;
   }
   
   .appointments ul {
@@ -152,6 +154,7 @@
     border-radius: 8px;
     margin-bottom: 20px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    background-color: bisque;
   }
   
   .message {
@@ -174,6 +177,7 @@
     border-radius: 8px;
     margin-bottom: 20px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    background-color: aliceblue;
   }
   
   .bills ul {

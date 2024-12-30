@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { FaHome, FaHeartbeat, FaCalendarCheck, FaNotesMedical, FaEnvelope, FaFileAlt, FaUser, FaAngleDoubleLeft, FaAngleDoubleRight } from 'react-icons/fa';  // Import FaTimes for close button
+import { FaHome, FaHeartbeat, FaCalendarCheck, FaNotesMedical, FaEnvelope, FaFileAlt, FaUser, FaAngleDoubleLeft, FaAngleDoubleRight,FaCog   } from 'react-icons/fa';  // Import FaTimes for close button
 import './PatientSidebar.css'; // Import your CSS file for styling
 
 const PatientSidebar = () => {
@@ -35,7 +35,7 @@ const PatientSidebar = () => {
             </Link>
           </li>
           <li className="nav-item">
-            <Link to="/appointments" className={`nav-link ${location.pathname === '/appointments' ? 'active-link' : ''}`}>
+            <Link to="/patient-Appointments" className={`nav-link ${location.pathname === '/appointments' ? 'active-link' : ''}`}>
               <FaCalendarCheck className="nav-icon" />
               {isExpanded && <span>Appointments</span>}
             </Link>
@@ -59,9 +59,15 @@ const PatientSidebar = () => {
             </Link>
           </li>
           <li className="nav-item">
-            <Link to="/patient-account" className={`nav-link ${location.pathname === '/patient-account' ? 'active-link' : ''}`}>
+            <Link to="/profile" className={`nav-link ${location.pathname === '/profile' ? 'active-link' : ''}`}>
               <FaUser className="nav-icon" />
               {isExpanded && <span>My Account</span>}
+            </Link>
+          </li>
+          <li className="nav-item">
+            <Link to="/settings" className={`nav-link ${location.pathname === '/settings' ? 'active-link' : ''}`}>
+              <FaCog  className="nav-icon" />
+              {isExpanded && <span>Settings</span>}
             </Link>
           </li>
         </ul>

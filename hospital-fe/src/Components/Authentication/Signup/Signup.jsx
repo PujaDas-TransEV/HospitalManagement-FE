@@ -62,7 +62,7 @@ function SignupPage() {
     }
 
     const formData = new FormData();
-    formData.append('name', fullName); // Add name to formData
+    // formData.append('name', fullName); // Add name to formData
     formData.append('email', email); // Reuse email from state
     formData.append('password', password); // Reuse password from state
     formData.append('confirm_password', confirmPassword); // Reuse confirm password from state
@@ -111,7 +111,7 @@ function SignupPage() {
       <div className="signup-form">
         <h2>Create An Account</h2>
         <form id="signUpform" name="signUpform" onSubmit={isOtpSent ? handleVerifyOtp : handleSubmit}>
-          <div className="d-flex flex-row mt-5">
+          {/* <div className="d-flex flex-row mt-5">
             <div className="col-6 form-floating mx-2">
               <label htmlFor="fullName">Full Name</label>
               <input
@@ -125,7 +125,7 @@ function SignupPage() {
                 onChange={(event) => setFullName(event.target.value)}
               />
             </div>
-          </div>
+          </div> */}
           <div className="form-floating mt-3 col-12 mx-2">
             <label htmlFor="email">Email</label>
             <input

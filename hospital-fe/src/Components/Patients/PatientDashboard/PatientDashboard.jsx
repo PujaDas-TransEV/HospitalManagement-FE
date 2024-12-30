@@ -17,7 +17,7 @@ const PatientDashboard = () => {
         
         {/* Main content area */}
         <div className="main-content">
-          <h2>Welcome, John Doe</h2>
+        
 
           {/* Health Overview */}
           <section className="health-overview">
@@ -73,3 +73,4 @@ const PatientDashboard = () => {
 };
 
 export default PatientDashboard;
+

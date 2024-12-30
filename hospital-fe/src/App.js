@@ -14,20 +14,21 @@ import AdminLogin from './Components/Authentication/AdminLogin/AdminLogin';
 import AdminPassword from './Components/Authentication/AdminForgetPassword/Password';
 import SuperAdminSignup from './Components/Authentication/SuperAdminSignup/SuperAdminSignup';
 import SuperAdminLogin from './Components/Authentication/SuperAdminLogin/SuperAdminLogin';
-import SuperAdminForgetPassword from './Components/Authentication/SuperAdminForgetPassword/SuperAdminPassword';
+import SuperAdminForgotPassword from './Components/Authentication/SuperAdminForgetPassword/SuperAdminPassword';
 import PatientNavbar from './Components/Patients/Navbar/PatientNavbar';
 import PatientSidebar from './Components/Patients/Sidebar/PatientSidebar';
 import Patientdashboard from './Components/Patients/PatientDashboard/PatientDashboard';
 import HealthOverview from './Components/Patients/HealthOverview/Health';
 import Appointments from './Components/Patients/Appointments/Appointment'
-import PatientAccount from './Components/Patients/Account/Account';
+import PatientProfile from './Components/Patients/MyProfile/MyProfile';
+import PatientSettings from './Components/Patients/Settings/PatientSettings';
 
 // Navbar component to conditionally render Navbar based on the current path
 const ConditionalNavbar = () => {
   const location = useLocation();  // Get current location to conditionally render Navbar
 
   // Render Navbar only if the path is not '/login' or '/signup'
-  return !['/login', '/signup','/password','/admin/signup','/admin/login','/admin/password','/super/admin/signup','/super/admin/login','/super/admin/password','/patient-dashboard'].includes(location.pathname) && <Navbar />;
+  return !['/login', '/signup','/password','/admin/signup','/admin/login','/admin/password','/super/admin/signup','/super/admin/login','/super/admin/password','/patient-dashboard','/patient-Appointments','/profile','/settings'].includes(location.pathname) && <Navbar />;
 };
 
 // Main App Component
@@ -49,16 +50,16 @@ function App() {
         <Route path="/admin/signup" element={<AdminSignup />} />
         <Route path="/admin/login" element={<AdminLogin />} />
         <Route path="/admin/password" element={<AdminPassword />} />
-        <Route path="/admin/password" element={<AdminPassword />} />
         <Route path="/super/admin/signup" element={<SuperAdminSignup />} />
         <Route path="/super/admin/login" element={<SuperAdminLogin />} />
-        <Route path="/super/admin/password" element={<SuperAdminForgetPassword />} />
+        <Route path="/super/admin/password" element={<SuperAdminForgotPassword />} />
         <Route path="/patient-navbar" element={<PatientNavbar />} />
         <Route path="/patient-sidebar" element={<PatientSidebar />} />
         <Route path="/patient-dashboard" element={<Patientdashboard />} /> 
         <Route path="/patient-health" element={<HealthOverview/>} /> 
         <Route path="/patient-Appointments" element={<Appointments/>} /> 
-        <Route path="/patient-account" element={<PatientAccount/>} /> 
+        <Route path="/profile" element={<PatientProfile/>} /> 
+        <Route path="/settings" element={<PatientSettings/>} /> 
         {/* Add other routes as needed */}
       </Routes>
 
