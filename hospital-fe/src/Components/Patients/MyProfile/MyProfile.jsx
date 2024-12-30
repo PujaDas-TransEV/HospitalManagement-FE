@@ -156,7 +156,7 @@ const PatientProfile = () => {
   return (
     <div className="home-page">
       <PatientNavbar />
-      <div className="flex justify-center items-center min-h-screen bg-gray-100" style={{ backgroundImage: "url(/images/background.png)" }}>
+      <div className="flex justify-center items-center min-h-screen bg-gray-100" style={{ backgroundImage: 'url(/Assests/background.jpg)' }}>
         <div className="home-content flex flex-row">
           <PatientSidebar />
           <div className="profile-container">
