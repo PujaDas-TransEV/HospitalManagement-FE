@@ -26,7 +26,7 @@ function AdminLoginPage() {
         // Check if login is successful
         if (data.message === 'Login successful!') {
           alert('Login successful!');
-          navigate('/admin-dashboard');  // Redirect to admin dashboard after successful login
+          navigate('/ad-dashboard');  // Redirect to admin dashboard after successful login
         } else {
           alert('Login failed! Please check your credentials.');
         }

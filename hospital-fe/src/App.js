@@ -22,13 +22,20 @@ import HealthOverview from './Components/Patients/HealthOverview/Health';
 import Appointments from './Components/Patients/Appointments/Appointment'
 import PatientProfile from './Components/Patients/MyProfile/MyProfile';
 import PatientSettings from './Components/Patients/Settings/PatientSettings';
+import DoctorDashboard from './Components/Doctors/DoctorDashboard/Dashboard';
+import DoctorProfile from './Components/Doctors/Profile/Profile';
+import AdminNavbar from './Components/Admin/Adminnavbar/AdminNavbar';
+import AdminSidebar from './Components/Admin/Adminsidebar/AdminSidebar';
+import AdminDashboard from './Components/Admin/AdminDashboard/Dashboard';
+import ManageDoctors from './Components/Admin/ManageDoctor/ManageDoctor';
+import DoctorSignup from './Components/Authentication/DoctorSignup/DoctorSignup';
 
 // Navbar component to conditionally render Navbar based on the current path
 const ConditionalNavbar = () => {
   const location = useLocation();  // Get current location to conditionally render Navbar
 
   // Render Navbar only if the path is not '/login' or '/signup'
-  return !['/login', '/signup','/password','/admin/signup','/admin/login','/admin/password','/super/admin/signup','/super/admin/login','/super/admin/password','/patient-dashboard','/patient-Appointments','/profile','/settings'].includes(location.pathname) && <Navbar />;
+  return !['/login', '/signup','/password','/admin/signup','/admin/login','/admin/password','/super/admin/signup','/super/admin/login','/super/admin/password','/patient-dashboard','/patient-Appointments','/profile','/settings','/dprofile','/doctordashboard','/adnavbar','/adsidebar','/ad-dashboard','/manage-doctors','/doctor-signup'].includes(location.pathname) && <Navbar />;
 };
 
 // Main App Component
@@ -59,7 +66,14 @@ function App() {
         <Route path="/patient-health" element={<HealthOverview/>} /> 
         <Route path="/patient-Appointments" element={<Appointments/>} /> 
         <Route path="/profile" element={<PatientProfile/>} /> 
-        <Route path="/settings" element={<PatientSettings/>} /> 
+        <Route path="/settings" element={<PatientSettings/>} />
+        <Route path="/doctordashboard" element={<DoctorDashboard/>} /> 
+        <Route path="/dprofile" element={<DoctorProfile/>} />  
+        <Route path="/adnavbar" element={<AdminNavbar/>} />  
+        <Route path="/adsidebar" element={<AdminSidebar/>} />
+        <Route path="/ad-dashboard" element={<AdminDashboard/>} />  
+        <Route path="/manage-doctors" element={<ManageDoctors/>} />  
+        <Route path="/doctor-signup" element={<DoctorSignup/>} />  
         {/* Add other routes as needed */}
       </Routes>
 
