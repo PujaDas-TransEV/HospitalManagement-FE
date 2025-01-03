@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import './Password.css'; // Import your CSS file
+import './DoctorForgetPassword.css'; // Import your CSS file
 
-function AdminForgotPasswordPage() {
+function DoctorForgotPasswordPage() {
   const [email, setEmail] = useState('');
   const [otp, setOtp] = useState('');
   const [newPassword, setNewPassword] = useState('');
@@ -19,13 +19,14 @@ function AdminForgotPasswordPage() {
     formData.append('email', email);
 
     // Send email to backend to trigger OTP sending
-    fetch('http://localhost:5000/adminpasswordreset', {
+    fetch('http://localhost:5000/doctorpasswordreset', {
       method: 'POST',
       body: formData,
     })
       .then((response) => response.json())
       .then((data) => {
-        if (data.message === 'OTP sent to your email for password reset.') {
+        console.log(data)
+        if (data) {
           setMessage('OTP has been sent to your email. Please check your inbox.');
           setIsOtpSent(true); // OTP sent, so show OTP and new password input
         } else {
@@ -53,29 +54,29 @@ function AdminForgotPasswordPage() {
     formData.append('newpassword', newPassword);
 
     // Send new password, OTP, and email to backend for resetting
-    fetch('http://localhost:5000/adminpasswordreset', {
+    fetch('http://localhost:5000/doctorpasswordreset', {
       method: 'POST',
       body: formData,
     })
       .then((response) => response.json())
       .then((data) => {
-        if (data.message === 'Password reset successfully.') {
+        if (data) {
           alert('Password reset successful!');
-          navigate('/admin/login'); // Redirect to admin login page after successful reset
+          navigate('/doctor-login'); // Redirect to doctor login page after successful reset
         } else {
           alert('Error resetting password. Please try again.');
         }
       })
       .catch((error) => {
-        console.error('Error during password reset:', error);
+        console.error('Error during password reset:');
         alert('An error occurred during password reset. Please try again.');
       });
   };
 
   return (
-    <div className="admin-forgot-password-page">
-      <div className="admin-forgot-password-card">
-        <h1 style={{ fontSize: '24px', color: '#800000' }}>Admin Forgot Password</h1>
+    <div className="forgot-password-page">
+      <div className="forgot-password-card">
+        <h1 style={{ fontSize: '24px', color: '#800000' }}>Doctor Forgot Password</h1>
 
         {/* Step 1: Email submission form */}
         {!isOtpSent && (
@@ -145,4 +146,4 @@ function AdminForgotPasswordPage() {
   );
 }
 
-export default AdminForgotPasswordPage;
+export default DoctorForgotPasswordPage;

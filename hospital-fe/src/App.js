@@ -29,13 +29,16 @@ import AdminSidebar from './Components/Admin/Adminsidebar/AdminSidebar';
 import AdminDashboard from './Components/Admin/AdminDashboard/Dashboard';
 import ManageDoctors from './Components/Admin/ManageDoctor/ManageDoctor';
 import DoctorSignup from './Components/Authentication/DoctorSignup/DoctorSignup';
+import DoctorLogin from './Components/Authentication/DoctorLogin/DoctorLogin';
+import DoctorForgetPassword from './Components/Authentication/DoctorForgetPassword/DoctorForgetPassword';
+import DepartmentPage from './Components/Admin/ManageDoctor/DepartmentPage/Department';
 
 // Navbar component to conditionally render Navbar based on the current path
 const ConditionalNavbar = () => {
   const location = useLocation();  // Get current location to conditionally render Navbar
 
   // Render Navbar only if the path is not '/login' or '/signup'
-  return !['/login', '/signup','/password','/admin/signup','/admin/login','/admin/password','/super/admin/signup','/super/admin/login','/super/admin/password','/patient-dashboard','/patient-Appointments','/profile','/settings','/dprofile','/doctordashboard','/adnavbar','/adsidebar','/ad-dashboard','/manage-doctors','/doctor-signup'].includes(location.pathname) && <Navbar />;
+  return !['/login', '/signup','/password','/admin/signup','/admin/login','/admin/password','/super/admin/signup','/super/admin/login','/super/admin/password','/patient-dashboard','/patient-Appointments','/profile','/settings','/dprofile','/doctordashboard','/adnavbar','/adsidebar','/ad-dashboard','/manage-doctors','/doctor-signup','/doctor-login','/doctors/:specialization','/doctors/Cardiology','/doctors/Neurology','/doctors/Pediatrics','/doctors/Orthopedics','/doctors/Infectious%20Diseases','/doctor-password'].includes(location.pathname) && <Navbar />;
 };
 
 // Main App Component
@@ -74,6 +77,9 @@ function App() {
         <Route path="/ad-dashboard" element={<AdminDashboard/>} />  
         <Route path="/manage-doctors" element={<ManageDoctors/>} />  
         <Route path="/doctor-signup" element={<DoctorSignup/>} />  
+        <Route path="/doctor-login" element={<DoctorLogin/>} />  
+        <Route path="/doctors/:specialization" element={<DepartmentPage />} />
+        <Route path="/doctor-password" element={<DoctorForgetPassword/>} /> 
         {/* Add other routes as needed */}
       </Routes>
 
@@ -84,3 +90,5 @@ function App() {
 }
 
 export default App;
+
+

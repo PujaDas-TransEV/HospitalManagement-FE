@@ -4,6 +4,8 @@
     flex-direction: column;
     height: 100vh;
     background-color: #f4f7fa;
+    
+
 
   }
   
@@ -77,13 +79,13 @@
   }
   
 
-   .main-content { 
+   .main-content-patient { 
      flex: 1;
     padding: 20px;
     background-color: #fff;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     border-radius: 8px; 
-  margin-left: 100px;
+  margin-right: 500px;
     
   }
    

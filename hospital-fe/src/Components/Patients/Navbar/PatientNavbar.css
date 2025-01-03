@@ -1,5 +1,5 @@
 
-/* Navbar Container */
+
 .navbar {
   display: flex;
   justify-content: space-between;
@@ -11,14 +11,14 @@
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-/* Brand Name Styling */
+
 .brand-name {
   font-size: 24px;
   font-weight: bold;
   margin-left: 200px;
 }
 
-/* Profile Section */
+
 .profile-info {
   display: flex;
   align-items: center;
@@ -26,7 +26,7 @@
   cursor: pointer;
 }
 
-/* Profile Image Styling */
+
 .profile-img {
   width: 40px;
   height: 40px;
@@ -35,20 +35,19 @@
   transition: transform 0.3s ease;
 }
 
-/* Hover Effect on Profile Image */
+
 .profile-img:hover {
   transform: scale(1.1);
 }
 
-/* Profile Name Styling */
+
 .patient-name {
   margin-right: 15px;
 }
 
-/* Dropdown Menu Styling */
 .dropdown-menu {
   position: absolute;
-  top: 50px; /* Position dropdown below the profile */
+  top: 50px; 
   right: 0;
   background-color: #fff;
   color: #333;
@@ -59,7 +58,7 @@
   z-index: 100;
 }
 
-/* Dropdown Item Styling */
+
 .dropdown-item {
   background: none;
   border: none;
@@ -70,12 +69,12 @@
   transition: background-color 0.3s ease;
 }
 
-/* Hover Effect on Dropdown Items */
+
 .dropdown-item:hover {
   background-color: #f0f0f0;
 }
 
-/* Media Query for Smaller Screens */
+
 @media (max-width: 768px) {
   .navbar {
     padding: 10px;

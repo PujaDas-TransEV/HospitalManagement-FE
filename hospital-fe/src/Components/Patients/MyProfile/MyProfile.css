@@ -369,7 +369,7 @@ body {
   color: #333;
 }
 
-/* Home Page */
+
 .home-page {
   display: flex;
   flex-direction: column;
@@ -388,7 +388,7 @@ body {
   margin: auto;
 }
 
-/* Profile Header */
+
 .profile-header {
   display: flex;
   justify-content: center;
@@ -414,7 +414,6 @@ body {
   margin-bottom: 0; 
 }
 
-/* Profile Card */
 .profile-card {
   background: linear-gradient(135deg, #58d3d3, #86618a);
   border-radius: 8px;
@@ -426,11 +425,11 @@ body {
   margin-bottom: 50px;
   width: 700px;
   padding-top: 0;
-  max-height: 500px; /* Limiting height */
-  overflow-y: auto; /* Allow scrolling if content exceeds the height */
+  max-height: 500px;
+  overflow-y: auto; 
 }
 
-/* Profile Image */
+
 .profile-image-container {
   position: relative;
   display: flex;
@@ -467,7 +466,6 @@ body {
   font-size: 14px;
 }
 
-/* Profile Details */
 .profile-details {
   margin-top: 20px;
   width: 100%;
@@ -511,7 +509,7 @@ body {
   margin-right: 20px;
 }
 
-/* Buttons */
+
 .profile-details button {
   background-color: #007bff;
   color: white;
@@ -549,7 +547,7 @@ body {
   margin-left: 10px;
 }
 
-/* Messages */
+
 .error-message {
   color: #f44336;
   background-color: #ffebee;
@@ -569,7 +567,7 @@ body {
   font-size: 14px;
 }
 
-/* OTP Popup */
+
 .otp-popup {
   position: fixed;
   top: 0;

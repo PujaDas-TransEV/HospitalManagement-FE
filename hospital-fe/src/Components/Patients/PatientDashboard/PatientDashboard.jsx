@@ -16,7 +16,7 @@ const PatientDashboard = () => {
         <PatientSidebar />
         
         {/* Main content area */}
-        <div className="main-content">
+        <div className="main-content-patient">
         
 
           {/* Health Overview */}
