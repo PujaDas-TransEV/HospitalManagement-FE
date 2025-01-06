@@ -1,0 +1,89 @@
+/* Doctor Navbar */
+.doctor-navbar {
+    height: 120px; /* Adjust the height of the navbar */
+    padding: 0 20px; /* Add padding to the sides */
+  }
+  
+  .doctor-navbar .search-bar {
+    width: 250px;
+    margin-right: 10px;
+    border-radius: 20px;
+  }
+  
+  .doctor-navbar .navbar-brand {
+    font-size: 1.6rem;
+    font-weight: bold;
+  }
+  
+  .doctor-navbar .nav-link {
+    color: white !important;
+  }
+  
+  .doctor-navbar .nav-item {
+    padding: 0 10px;
+  }
+  
+  .doctor-navbar .nav-item:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+  }
+  
+  /* Notification & Profile Container */
+  .doctor-navbar .notification-profile-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+   
+  }
+  
+  .doctor-navbar .notification-dropdown,
+  .doctor-navbar .profile-dropdown {
+    margin-left: 15px;
+  }
+  
+  .doctor-navbar .notification-dropdown .dropdown-toggle,
+  .doctor-navbar .profile-dropdown .dropdown-toggle {
+    display: flex;
+    align-items: center;
+    padding: 5px 15px;
+  }
+  
+  .doctor-navbar .profile-dropdown .profile-image {
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    margin-right: 10px;
+  }
+  
+  .doctor-navbar .profile-dropdown .doctor-name {
+    color: white;
+    font-size: 16px;
+  }
+  
+  .doctor-navbar .notification-dropdown .dropdown-toggle {
+    display: flex;
+    align-items: center;
+    padding: 5px 15px;
+  }
+  
+  .doctor-navbar .notification-dropdown .dropdown-menu {
+    min-width: 200px;
+    padding: 10px;
+  }
+  
+  /* Profile and Notification Section - Side by Side */
+  .doctor-navbar .ml-auto {
+    display: flex;
+    align-items: center;
+  }
+  
+  .search-bar {
+    border-radius: 20px;
+  }
+  
+  /* Custom hover and active effects for profile and notification items */
+  .doctor-navbar .profile-dropdown .dropdown-toggle:hover,
+  .doctor-navbar .notification-dropdown .dropdown-toggle:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+    cursor: pointer;
+  }
+  

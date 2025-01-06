@@ -1,0 +1,133 @@
+/* Main Dashboard Container */
+.dashboard-container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  background-color: #f0f2f5; /* Light greyish background for better contrast */
+}
+
+/* Dashboard Content Area */
+.dashboard-content {
+  display: flex;
+  flex-grow: 1;
+  padding: 20px;
+  margin-left: 250px; /* Offset sidebar */
+  background-color: #ffffff; /* Clean white background for content */
+}
+
+/* Doctor Dashboard */
+.doctor-dashboard {
+  width: 100%;
+  padding: 30px;
+  background-color: #ffffff; /* White background */
+  border-radius: 10px;
+  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.12); /* Soft shadow for depth */
+}
+
+h2 {
+  font-size: 26px;
+  color: #333333; /* Dark grey color for headings */
+  margin-bottom: 20px;
+  font-weight: 600; /* Slightly bolder font for headings */
+}
+
+/* Section Spacing */
+.mb-4 {
+  margin-bottom: 25px;
+}
+
+/* Card Styles */
+.card {
+  border-radius: 12px;
+  box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.08); /* Soft shadows */
+  background-color: #f8f9fa; /* Subtle light background for cards */
+}
+
+.card-header {
+  background-color: #4e73df; /* A deep blue background for card headers */
+  color: white;
+  font-weight: 600;
+  font-size: 18px;
+  display: flex;
+  align-items: center;
+  padding: 10px 20px;
+}
+
+.card-header .fa {
+  margin-right: 15px;
+}
+
+.card-body {
+  padding: 15px;
+}
+
+.card-footer {
+  background-color: #f1f3f5; /* A light background for footer */
+  border-top: 1px solid #e1e1e1;
+}
+
+/* Appointment and Patient Overview Cards */
+.appointment-card,
+.patient-card {
+  margin-bottom: 20px;
+}
+
+.appointment-card .list-group-item,
+.patient-card .list-group-item {
+  background-color: #ffffff; /* White background for list items */
+  border: 1px solid #e5e5e5;
+  padding: 12px;
+  font-size: 16px;
+  color: #555555; /* Darker text for better readability */
+}
+
+.appointment-card .list-group-item:hover,
+.patient-card .list-group-item:hover {
+  background-color: #f1f1f1; /* Light grey on hover */
+}
+
+.appointment-card .float-right,
+.patient-card .float-right {
+  background-color: #28a745; /* Green button for actions */
+  color: white;
+  border: none;
+  padding: 6px 15px;
+  border-radius: 5px;
+}
+
+.appointment-card .float-right:hover,
+.patient-card .float-right:hover {
+  background-color: #218838; /* Darker green on hover */
+}
+
+/* Medical Records Section */
+.medical-record-card .list-group-item {
+  background-color: #ffffff; /* White background */
+  padding: 14px;
+  border: 1px solid #e5e5e5;
+  font-size: 16px;
+  color: #555555;
+}
+
+.medical-record-card .list-group-item:hover {
+  background-color: #f1f1f1; /* Light grey on hover */
+}
+
+/* Sidebar and Navbar Spacing */
+.container {
+  max-width: 100%;
+  margin-left: 30px;
+  margin-right: 30px;
+}
+
+@media (max-width: 767px) {
+  .dashboard-content {
+    margin-left: 0; /* Adjust for mobile view */
+  }
+  .dashboard-container {
+    display: block;
+  }
+  .doctor-dashboard {
+    padding: 15px;
+  }
+}

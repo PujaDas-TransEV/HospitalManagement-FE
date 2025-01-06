@@ -1,0 +1,125 @@
+/* Apply Leave Container */
+.apply-leave-container {
+    max-width: 1000px;
+    margin: 30px auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Heading Styles */
+  h2 {
+    text-align: center;
+    color: #343a40;
+    font-size: 2rem;
+    margin-bottom: 20px;
+  }
+  
+  h3 {
+    color: #343a40;
+    font-size: 1.5rem;
+    margin-bottom: 15px;
+    text-align: center;
+  }
+  
+  /* Form Styles */
+  form {
+    margin-bottom: 20px;
+  }
+  
+  /* Input fields and text areas */
+  .form-control {
+    margin-bottom: 15px;
+    font-size: 1rem;
+    padding: 10px;
+  }
+  
+  /* Button Styles */
+  button {
+    padding: 10px 20px;
+    font-size: 1rem;
+    border-radius: 5px;
+    margin-top: 10px;
+  }
+  
+  button:disabled {
+    background-color: #ccc;
+  }
+  
+  button + button {
+    margin-left: 10px;
+  }
+  
+  /* Table Styles */
+  .table {
+    width: 100%;
+    margin-top: 30px;
+    border-collapse: collapse;
+    border: 1px solid #ddd;
+  }
+  
+  .table th,
+  .table td {
+    padding: 12px;
+    text-align: center;
+    border: 1px solid #ddd;
+  }
+  
+  .table th {
+    background-color: #f1f1f1;
+    font-weight: bold;
+  }
+  
+  .table-striped tbody tr:nth-child(odd) {
+    background-color: #f9f9f9;
+  }
+  
+  .table-hover tbody tr:hover {
+    background-color: #f1f1f1;
+  }
+  
+  /* Alert Styles */
+  .alert {
+    margin-bottom: 20px;
+  }
+  
+  /* Success Message */
+  .alert-success {
+    background-color: #d4edda;
+    border-color: #c3e6cb;
+    color: #155724;
+  }
+  
+  /* Error Message */
+  .alert-danger {
+    background-color: #f8d7da;
+    border-color: #f5c6cb;
+    color: #721c24;
+  }
+  
+  /* Responsive Design for smaller screens */
+  @media (max-width: 768px) {
+    .apply-leave-container {
+      padding: 15px;
+    }
+  
+    .table th,
+    .table td {
+      font-size: 0.875rem;
+    }
+  
+    button {
+      font-size: 0.875rem;
+      padding: 8px 16px;
+    }
+  
+    h2 {
+      font-size: 1.5rem;
+    }
+  
+    h3 {
+      font-size: 1.25rem;
+    }
+  }
+  

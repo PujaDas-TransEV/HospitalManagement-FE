@@ -23,7 +23,7 @@ import Appointments from './Components/Patients/Appointments/Appointment'
 import PatientProfile from './Components/Patients/MyProfile/MyProfile';
 import PatientSettings from './Components/Patients/Settings/PatientSettings';
 import DoctorDashboard from './Components/Doctors/DoctorDashboard/Dashboard';
-import DoctorProfile from './Components/Doctors/Profile/Profile';
+
 import AdminNavbar from './Components/Admin/Adminnavbar/AdminNavbar';
 import AdminSidebar from './Components/Admin/Adminsidebar/AdminSidebar';
 import AdminDashboard from './Components/Admin/AdminDashboard/Dashboard';
@@ -35,6 +35,12 @@ import DepartmentPage from './Components/Admin/ManageDoctor/DepartmentPage/Depar
 import ManagePatient from './Components/Admin/ManagePatient/ManagePatient';
 import AdminProfile from './Components/Admin/AdminProfile/AdminProfile';
 import AdminSettings from './Components/Admin/Admin Settings/AdminSettings';
+import DoctorNavbar from './Components/Doctors/DoctorNavbar/DoctorNAvbar';
+import DoctorSidebar from './Components/Doctors/DoctorSidebar/Doctorsidebar';
+import DoctorLeave from './Components/Doctors/DoctorLeave/Leave';
+import DoctorProfile from './Components/Doctors/DoctorProfile/DoctorProfile';
+import DoctorSettings from './Components/Doctors/DoctorSettings/DoctorSettings';
+
 
 
 // Navbar component to conditionally render Navbar based on the current path
@@ -42,7 +48,7 @@ const ConditionalNavbar = () => {
   const location = useLocation();  // Get current location to conditionally render Navbar
 
   // Render Navbar only if the path is not '/login' or '/signup'
-  return !['/login', '/signup','/password','/admin/signup','/admin/login','/admin/password','/super/admin/signup','/super/admin/login','/super/admin/password','/patient-dashboard','/patient-Appointments','/profile','/settings','/dprofile','/doctordashboard','/adnavbar','/adsidebar','/ad-dashboard','/manage-doctors','/doctor-signup','/doctor-login','/doctors/:specialization','/doctors/Cardiology','/doctors/Neurology','/doctors/Pediatrics','/doctors/Orthopedics','/doctors/Infectious%20Diseases','/doctor-password','/manage-patients','/admin-settings'].includes(location.pathname) && <Navbar />;
+  return !['/login', '/signup','/password','/admin/signup','/admin/login','/admin/password','/super/admin/signup','/super/admin/login','/super/admin/password','/patient-dashboard','/patient-Appointments','/profile','/settings','/dprofile','/doctordashboard','/adnavbar','/adsidebar','/ad-dashboard','/manage-doctors','/doctor-signup','/doctor-login','/doctors/:specialization','/doctors/Cardiology','/doctors/Neurology','/doctors/Pediatrics','/doctors/Orthopedics','/doctors/Infectious%20Diseases','/doctor-password','/manage-patients','/admin-settings','/doctor-navbar','/doctor-sidebar','/leave','/doctor-profile','/doctor-settings'].includes(location.pathname) && <Navbar />;
 };
 
 // Main App Component
@@ -87,6 +93,11 @@ function App() {
         <Route path="/manage-patients" element={<ManagePatient/>} />
         <Route path="/admin-profile" element={<AdminProfile/>} />
         <Route path="/admin-settings" element={<AdminSettings/>} />
+        <Route path="/doctor-navbar" element={<DoctorNavbar/>} />
+        <Route path="/doctor-sidebar" element={<DoctorSidebar/>} />
+        <Route path="/leave" element={<DoctorLeave/>} />
+        <Route path="/doctor-profile" element={<DoctorProfile/>} />
+        <Route path="/doctor-settings" element={<DoctorSettings/>} />
      
         {/* Add other routes as needed */}
       </Routes>

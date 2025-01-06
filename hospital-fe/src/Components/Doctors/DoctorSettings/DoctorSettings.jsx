@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { jwtDecode } from "jwt-decode"; // Import jwt-decode to decode the token
-import "./PatientSettings.css";
-import PatientNavbar from "../Navbar/PatientNavbar";
-import PatientSidebar from "../Sidebar/PatientSidebar";
+import "./DoctorSettings.css";
+import DoctorNavbar from '../DoctorNavbar/DoctorNAvbar';
+import DoctorSidebar from '../DoctorSidebar/Doctorsidebar';
 
-const PatientSettings = () => {
+const DoctorSettings = () => {
   const navigate = useNavigate();
   const [isDeleteConfirmed, setIsDeleteConfirmed] = useState(false);
   const [isPasswordChanged, setIsPasswordChanged] = useState(false);
@@ -29,7 +29,7 @@ const PatientSettings = () => {
   // Function to confirm password change
   const confirmPasswordChange = () => {
     setIsPasswordModalOpen(false); // Close the modal
-    navigate("/password"); // Redirect to the password change page
+    navigate("/doctor-password"); // Redirect to the password change page
   };
 
   // Function to confirm account deletion
@@ -45,21 +45,21 @@ const PatientSettings = () => {
           return;
         }
 
-        // Decode the token to get the patientId (userid)
+        // Decode the token to get the doctorId
         const decodedToken = jwtDecode(accessToken);
-        const patientId = decodedToken.userid; // Assuming patientId is stored as 'userid'
+        const doctorId = decodedToken.doctorid; // Assuming doctorId is stored as 'doctorid'
 
-        // Create FormData to send the patientId in the request
+        // Create FormData to send the doctorId in the request
         const formData = new FormData();
-        formData.append("patientid", patientId);
+        formData.append("doctorid", doctorId);
 
         // Make the API call to delete the account
-        const response = await fetch("http://localhost:5000/patientops/deleteprofile", {
+        const response = await fetch("http://localhost:5000/doctorsops/deletedoctor", {
           method: "POST",
           headers: {
             "Authorization": `Bearer ${accessToken}`, // Include token in the headers
           },
-          body: formData, // Send the patientId as form data
+          body: formData, // Send the doctorId as form data
         });
 
         const data = await response.json();
@@ -90,13 +90,13 @@ const PatientSettings = () => {
   return (
     <div className="dashboard-container">
       {/* Navbar at the top */}
-      <PatientNavbar />
+      <DoctorNavbar />
 
       <div className="dashboard-content">
         {/* Sidebar for navigation */}
-        <PatientSidebar />
-        <div className="settings-container-patient">
-          <h1 className="settings-title">Patient Settings</h1>
+        <DoctorSidebar />
+        <div className="settings-container-doctor">
+          <h1 className="settings-title">Doctor Settings</h1>
 
           {/* Change Password Section */}
           <div className="settings-section">
@@ -168,4 +168,4 @@ const PatientSettings = () => {
   );
 };
 
-export default PatientSettings;
+export default DoctorSettings;
