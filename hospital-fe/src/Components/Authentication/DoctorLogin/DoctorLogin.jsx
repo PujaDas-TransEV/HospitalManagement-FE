@@ -99,7 +99,7 @@ const DoctorLoginPage = () => {
 
         {/* Forgot Password link */}
         <div className="forgot-password">
-          <Link to="/doctor/password">Forgot Password?</Link>
+          <Link to="/doctor-password">Forgot Password?</Link>
         </div>
 
         {/* Display error message */}

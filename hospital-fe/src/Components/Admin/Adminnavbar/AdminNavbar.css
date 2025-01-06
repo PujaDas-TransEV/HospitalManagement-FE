@@ -1,4 +1,4 @@
-
+/* 
 
 
 .navbar {
@@ -141,4 +141,162 @@
       margin: 5px 0;
     }
   }
-  
+   */
+   /* Styling for the Navbar */
+/* General Navbar Styles for Admin */
+.navbar.admin-navbar {
+  padding: 0.25rem 1.5rem; /* Reduced padding for a smaller height */
+  font-family: Arial, sans-serif;
+  background-color: #343a40; /* Dark background color */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Light shadow to lift navbar */
+  height: 110px; /* Reduced height of navbar */
+}
+
+/* Admin Brand Name */
+.navbar.admin-navbar .navbar-brand {
+  font-size: 1.5rem; /* Slightly smaller font size for a compact look */
+  font-weight: bold;
+  color: #fff;
+  text-transform: uppercase;
+}
+
+.navbar.admin-navbar .navbar-brand:hover {
+  color: #f8f9fa; /* Light color on hover */
+}
+
+/* Search Bar */
+.admin-navbar .search-bar {
+  width: 250px; /* Reduced width for a more compact search bar */
+  height: 30px;
+  border-radius: 20px;
+  padding-left: 15px;
+  border: none;
+  outline: none;
+}
+
+.admin-navbar .search-bar:focus {
+  border-color: #0056b3; /* Blue border on focus */
+}
+
+.admin-navbar .search-bar::placeholder {
+  font-size: 14px;
+  color: #ccc;
+}
+
+/* Button Style (Search Button) */
+.admin-navbar .btn-outline-light {
+  border-radius: 20px;
+  height: 30px;
+  padding: 0 15px;
+  margin-left: 5px;
+  color: #fff;
+}
+
+.admin-navbar .btn-outline-light:hover {
+  background-color: #0056b3; /* Blue background on hover */
+  border-color: #0056b3;
+}
+
+/* Notification Icon Styles */
+.admin-navbar #notifications-dropdown .dropdown-toggle {
+  background-color: transparent;
+  border: none;
+  padding: 0;
+  font-size: 1.5rem;
+  color: #fff;
+}
+
+.admin-navbar #notifications-dropdown .dropdown-toggle:hover {
+  color: #0056b3; /* Blue color on hover */
+}
+
+.admin-navbar .dropdown-menu {
+  min-width: 180px;
+}
+
+/* Profile Icon and Name */
+.admin-navbar .profile-image {
+  width: 30px; /* Smaller profile image */
+  height: 30px;
+  border-radius: 50%;
+  margin-right: 10px;
+  object-fit: cover; /* Ensures the image fits properly */
+}
+
+.admin-navbar .admin-name {
+  font-size: 14px; /* Slightly smaller font size */
+  font-weight: bold;
+  color: #fff;
+  margin-left: 5px;
+}
+
+.admin-navbar #profile-dropdown .dropdown-toggle {
+  background-color: transparent;
+  border: none;
+  padding: 0;
+  display: flex;
+  align-items: center;
+}
+
+.admin-navbar #profile-dropdown .dropdown-toggle:hover {
+  color: #0056b3; /* Blue color on hover */
+}
+
+/* Profile Dropdown Menu */
+.admin-navbar .dropdown-menu {
+  min-width: 150px;
+  padding: 10px;
+}
+
+/* Dropdown Item */
+.admin-navbar .dropdown-item {
+  font-size: 14px;
+  padding: 8px 16px;
+  color: #333;
+}
+
+.admin-navbar .dropdown-item:hover {
+  background-color: #0056b3;
+  color: white; /* White text on hover */
+}
+
+/* Logout Button Styling */
+.admin-navbar .logout-btn {
+  color: #dc3545; /* Red color for logout */
+}
+
+.admin-navbar .logout-btn:hover {
+  color: #fff;
+  background-color: #dc3545; /* Red background on hover */
+}
+
+/* Navbar Right Section (for profile and notifications) */
+.admin-navbar .navbar-right-section {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* Responsive Styles for Admin */
+@media (max-width: 768px) {
+  .admin-navbar {
+    padding: 0.25rem 1rem;
+  }
+
+  .admin-navbar .search-bar {
+    width: 200px; /* Smaller width for smaller screens */
+  }
+
+  .admin-navbar .navbar-brand {
+    font-size: 1.25rem; /* Adjust brand name size */
+  }
+
+  .admin-navbar .profile-image {
+    width: 25px; /* Smaller profile image for smaller screens */
+    height: 25px;
+  }
+
+  .admin-navbar .admin-name {
+    font-size: 12px; /* Adjust font size for admin name */
+  }
+}

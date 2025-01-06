@@ -33,6 +33,8 @@ import DoctorLogin from './Components/Authentication/DoctorLogin/DoctorLogin';
 import DoctorForgetPassword from './Components/Authentication/DoctorForgetPassword/DoctorForgetPassword';
 import DepartmentPage from './Components/Admin/ManageDoctor/DepartmentPage/Department';
 import ManagePatient from './Components/Admin/ManagePatient/ManagePatient';
+import AdminProfile from './Components/Admin/AdminProfile/AdminProfile';
+import AdminSettings from './Components/Admin/Admin Settings/AdminSettings';
 
 
 // Navbar component to conditionally render Navbar based on the current path
@@ -40,7 +42,7 @@ const ConditionalNavbar = () => {
   const location = useLocation();  // Get current location to conditionally render Navbar
 
   // Render Navbar only if the path is not '/login' or '/signup'
-  return !['/login', '/signup','/password','/admin/signup','/admin/login','/admin/password','/super/admin/signup','/super/admin/login','/super/admin/password','/patient-dashboard','/patient-Appointments','/profile','/settings','/dprofile','/doctordashboard','/adnavbar','/adsidebar','/ad-dashboard','/manage-doctors','/doctor-signup','/doctor-login','/doctors/:specialization','/doctors/Cardiology','/doctors/Neurology','/doctors/Pediatrics','/doctors/Orthopedics','/doctors/Infectious%20Diseases','/doctor-password','/manage-patients'].includes(location.pathname) && <Navbar />;
+  return !['/login', '/signup','/password','/admin/signup','/admin/login','/admin/password','/super/admin/signup','/super/admin/login','/super/admin/password','/patient-dashboard','/patient-Appointments','/profile','/settings','/dprofile','/doctordashboard','/adnavbar','/adsidebar','/ad-dashboard','/manage-doctors','/doctor-signup','/doctor-login','/doctors/:specialization','/doctors/Cardiology','/doctors/Neurology','/doctors/Pediatrics','/doctors/Orthopedics','/doctors/Infectious%20Diseases','/doctor-password','/manage-patients','/admin-settings'].includes(location.pathname) && <Navbar />;
 };
 
 // Main App Component
@@ -83,6 +85,8 @@ function App() {
         <Route path="/doctors/:specialization" element={<DepartmentPage />} />
         <Route path="/doctor-password" element={<DoctorForgetPassword/>} /> 
         <Route path="/manage-patients" element={<ManagePatient/>} />
+        <Route path="/admin-profile" element={<AdminProfile/>} />
+        <Route path="/admin-settings" element={<AdminSettings/>} />
      
         {/* Add other routes as needed */}
       </Routes>

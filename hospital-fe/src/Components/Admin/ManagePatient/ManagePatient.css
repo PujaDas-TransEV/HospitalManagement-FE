@@ -1,182 +1,261 @@
-/* General Layout */
+
+/* Container for the entire page */
 .manage-doctors-container {
-    display: flex;
-    flex-direction: column;
-    height: 100vh;
-  }
-  
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* Header and Sidebar */
+.manage-doctors-content {
+  display: flex;
+  flex: 1;
+}
+
+.patient-management {
+  flex: 1;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  margin-left: 20px;
+}
+
+.patient-management h2 {
+  font-size: 24px;
+  font-weight: bold;
+  color: #333;
+}
+
+.patient-management h3 {
+  font-size: 20px;
+  margin-top: 20px;
+  color: #333;
+}
+
+button {
+  padding: 8px 16px;
+  background-color: #007bff;
+  border: none;
+  color: #fff;
+  cursor: pointer;
+  border-radius: 4px;
+  margin-top: 10px;
+  font-size: 14px;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+/* Sidebar and Navbar Styling */
+.admin-navbar {
+  /* Add specific styles for your AdminNavbar */
+}
+
+.admin-sidebar {
+  width: 250px;
+  background-color: #343a40;
+  padding: 20px;
+  color: #fff;
+  border-radius: 8px;
+  min-height: 100vh;
+}
+
+.admin-sidebar .icon {
+  font-size: 2rem;
+  margin-right: 10px;
+}
+
+.admin-sidebar .name {
+  font-size: 1.2rem;
+}
+
+.admin-sidebar .department-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 15px;
+  cursor: pointer;
+  padding: 10px;
+  background-color: #495057;
+  border-radius: 8px;
+}
+
+.admin-sidebar .department-item:hover {
+  background-color: #007bff;
+}
+
+/* Patient list table */
+.patient-list table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.patient-list th,
+.patient-list td {
+  padding: 12px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+.patient-list th {
+  background-color: #007bff;
+  color: #fff;
+}
+
+.patient-list td button {
+  background-color: #28a745;
+  padding: 6px 12px;
+  border-radius: 4px;
+  margin-right: 5px;
+  font-size: 14px;
+}
+
+.patient-list td button:hover {
+  background-color: #218838;
+}
+
+.patient-list td button:active {
+  background-color: #1e7e34;
+}
+
+.patient-list td button:nth-child(2) {
+  background-color: #dc3545;
+}
+
+.patient-list td button:nth-child(2):hover {
+  background-color: #c82333;
+}
+
+.patient-list td button:nth-child(2):active {
+  background-color: #bd2130;
+}
+
+/* Form Styles */
+input {
+  padding: 10px;
+  margin: 8px 0;
+  width: 100%;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+}
+
+input[type="date"],
+input[type="number"] {
+  width: 100%;
+  max-width: 200px;
+}
+
+/* Department selection styles */
+.departments {
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 20px;
+}
+
+.department-item {
+  display: flex;
+  align-items: center;
+  margin-right: 20px;
+  margin-bottom: 20px;
+  cursor: pointer;
+  padding: 10px;
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.department-item:hover {
+  background-color: #007bff;
+  color: #fff;
+}
+
+.icon {
+  font-size: 2rem;
+  margin-right: 10px;
+}
+
+.name {
+  font-size: 1.2rem;
+  font-weight: 500;
+}
+
+/* Add new patient form styling */
+.add-patient-form {
+  display: flex;
+  flex-direction: column;
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  margin-top: 20px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.add-patient-form input {
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+.add-patient-form button {
+  background-color: #28a745;
+  padding: 10px;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.add-patient-form button:hover {
+  background-color: #218838;
+}
+
+.add-patient-form button:active {
+  background-color: #1e7e34;
+}
+
+.add-patient-form h3 {
+  font-size: 20px;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+/* Mobile responsiveness */
+@media screen and (max-width: 768px) {
   .manage-doctors-content {
-    display: flex;
-    flex: 1;
-    background-color: #f4f7fc;
+    flex-direction: column;
   }
-  
-  .patient-management {
-    padding: 20px;
-    flex: 1;
-  }
-  
-  h2, h3 {
-    color: #333;
-  }
-  
-  button {
-    background-color: #4CAF50;
-    color: white;
-    border: none;
-    padding: 10px 15px;
-    cursor: pointer;
-    border-radius: 5px;
-    margin: 10px 0;
-  }
-  
-  button:hover {
-    background-color: #45a049;
-  }
-  
-  /* Patient List Table */
-  .patient-list table {
+
+  .admin-sidebar {
     width: 100%;
-    border-collapse: collapse;
-    margin-top: 20px;
-  }
-  
-  .patient-list th,
-  .patient-list td {
-    padding: 12px;
-    text-align: left;
-    border-bottom: 1px solid #ddd;
-  }
-  
-  .patient-list th {
-    background-color: #f2f2f2;
-  }
-  
-  .patient-list tr:hover {
-    background-color: #f1f1f1;
-  }
-  
-  .patient-list td button {
-    margin-right: 10px;
-    background-color: #f44336;
-  }
-  
-  .patient-list td button:hover {
-    background-color: #e53935;
-  }
-  
-  /* Department Section */
-  .departments {
-    display: flex;
-    gap: 15px;
     margin-bottom: 20px;
   }
-  
+
+  .patient-management {
+    margin-left: 0;
+  }
+
   .department-item {
-    cursor: pointer;
-    text-align: center;
-    background-color: #fff;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    padding: 15px;
-    transition: background-color 0.3s ease;
-  }
-  
-  .department-item:hover {
-    background-color: #f1f1f1;
-  }
-  
-  .icon {
-    font-size: 30px;
-    margin-bottom: 10px;
-  }
-  
-  .name {
-    font-size: 16px;
-    font-weight: bold;
-    color: #555;
-  }
-  
-  /* Form Section */
-  input,
-  select {
-    width: 100%;
-    padding: 10px;
-    margin: 10px 0;
-    border-radius: 5px;
-    border: 1px solid #ddd;
-  }
-  
-  input:focus,
-  select:focus {
-    outline: none;
-    border-color: #4CAF50;
-  }
-  
-  input[type="date"] {
-    padding-left: 20px;
-  }
-  
-  input[type="email"] {
-    padding-left: 20px;
-  }
-  
-  input[type="text"] {
-    padding-left: 10px;
-  }
-  
-  input[type="phone"] {
-    padding-left: 10px;
-  }
-  
-  /* Add/Edit Patient Form */
-  .add-edit-form {
-    margin-top: 20px;
-    padding: 20px;
-    background-color: #ffffff;
-    border-radius: 8px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-  }
-  
-  .add-edit-form h3 {
-    font-size: 20px;
-    color: #333;
+    flex: 1 1 45%;
     margin-bottom: 15px;
   }
-  
-  .add-edit-form input,
-  .add-edit-form select {
-    margin: 10px 0;
-    width: 100%;
-    font-size: 16px;
+
+  .patient-list table {
+    font-size: 14px;
   }
-  
-  .add-edit-form button {
-    margin-top: 20px;
-    width: 100%;
+}
+
+@media screen and (max-width: 480px) {
+  .patient-list table {
+    font-size: 12px;
   }
-  
-  /* Button to toggle the add new patient form */
-  button.add-new-patient-btn {
-    display: block;
-    margin-top: 20px;
-    width: 100%;
+
+  .patient-management h2 {
+    font-size: 20px;
   }
-  
-  /* Edit Button for Patient */
-  button.edit-button {
-    background-color: #4CAF50;
-  }
-  
-  button.edit-button:hover {
-    background-color: #45a049;
-  }
-  
-  button.delete-button {
-    background-color: #f44336;
-  }
-  
-  button.delete-button:hover {
-    background-color: #e53935;
-  }
-  
+}
+

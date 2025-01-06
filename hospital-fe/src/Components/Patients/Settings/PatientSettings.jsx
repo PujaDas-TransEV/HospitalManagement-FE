@@ -222,7 +222,7 @@ const PatientSettings = () => {
       <div className="dashboard-content">
         {/* Sidebar for navigation */}
         <PatientSidebar />
-        <div className="settings-container">
+        <div className="settings-container-patient">
           <h1 className="settings-title">Patient Settings</h1>
 
           {/* Change Password Section */}
