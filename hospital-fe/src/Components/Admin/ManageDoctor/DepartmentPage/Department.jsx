@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { Table, Spinner, Alert, Row, Col, Button, Dropdown } from 'react-bootstrap';
-import { FaHeart, FaBrain, FaUserMd, FaSyringe, FaStethoscope } from 'react-icons/fa';  // Example icons
+import { FaHeart, FaBrain, FaUserMd, FaSyringe, FaStethoscope } from 'react-icons/fa'; // Example icons
 import './Department.css';
 import AdminNavbar from '../../Adminnavbar/AdminNavbar';
 import AdminSidebar from '../../Adminsidebar/AdminSidebar';
@@ -24,7 +24,7 @@ const DepartmentPage = () => {
   };
 
   // Fetch doctors based on the specialization
-  useEffect(() => {
+  const fetchDoctors = () => {
     setLoading(true); // Start loading when the component mounts or specialization changes
     setError(null); // Clear previous errors
 
@@ -45,8 +45,6 @@ const DepartmentPage = () => {
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log('Backend response:', data); // Check the data structure
-
         if (data.error) {
           setError(data.error); // Show API error if returned
         } else if (Array.isArray(data.data) && data.data.length === 0) {
@@ -57,50 +55,35 @@ const DepartmentPage = () => {
         setLoading(false);
       })
       .catch((error) => {
-        console.error('Error fetching doctors:', error);
         setError('An error occurred while fetching doctors. Please try again.');
         setLoading(false);
       });
+  };
+
+  useEffect(() => {
+    fetchDoctors(); // Fetch doctors when component mounts or specialization changes
   }, [specialization]);
 
-  // Function to handle updating leave status
-  const handleLeaveStatusChange = (doctorUid, leaveIndex, newStatus) => {
-    // Find the doctor with the given UID
-    const updatedDoctors = doctors.map((doctor) => {
-      if (doctor.uid === doctorUid) {
-        const updatedLeaves = [...doctor.leaves];
-        updatedLeaves[leaveIndex] = { ...updatedLeaves[leaveIndex], status: newStatus };
-        return { ...doctor, leaves: updatedLeaves };
-      }
-      return doctor;
-    });
-
-    setDoctors(updatedDoctors); // Update the state with modified doctor data
-
-    // Optionally, make an API call to update the status in the database
-    const doctor = updatedDoctors.find((doc) => doc.uid === doctorUid); // Find the updated doctor object
+  // Function to handle updating leave status (approved or rejected)
+  const handleLeaveStatusChange = (leaveId, newStatus) => {
     const formData = new FormData();
-    formData.append('doctorid', doctorUid);
-    formData.append('leavefrom', doctor.leaves[leaveIndex].leavefrom);
-    formData.append('leaveto', doctor.leaves[leaveIndex].leaveto);
-    formData.append('reason', doctor.leaves[leaveIndex].reason);
+    formData.append('leaveid', leaveId);
     formData.append('status', newStatus);
 
     fetch('http://localhost:5000/doctors/leaveupdate', {
       method: 'POST',
-      body: formData, // Send FormData as the request body
+      body: formData,
     })
       .then((response) => response.json())
       .then((data) => {
         if (data.error) {
           setError(data.error);
         } else {
-          // Show success message
           alert('Leave status updated successfully');
+          fetchDoctors(); // Refresh the data after status update
         }
       })
       .catch((error) => {
-        console.error('Error updating leave status:', error);
         setError('Failed to update leave status.');
       });
   };
@@ -120,7 +103,6 @@ const DepartmentPage = () => {
             {specialization ? specialization.charAt(0).toUpperCase() + specialization.slice(1) : 'Doctors'} Doctors
           </h2>
 
-          {/* Show error message if there's an error */}
           {error && <Alert variant="danger">{error}</Alert>}
 
           {loading ? (
@@ -129,7 +111,6 @@ const DepartmentPage = () => {
             <>
               <Row className="mb-3">
                 <Col>
-                  {/* Display department icon based on specialization */}
                   <h3>
                     {specializationIcons[specialization] || <FaStethoscope />} {specialization.charAt(0).toUpperCase() + specialization.slice(1)}
                   </h3>
@@ -176,16 +157,18 @@ const DepartmentPage = () => {
                         <td>{doctor.gender}</td>
                         <td>{doctor.license_number}</td>
 
-                        {/* Display leave status for doctor */}
+                        {/* Display leave status for each doctor */}
                         <td>
                           {doctor.leaves && doctor.leaves.length > 0 ? (
                             doctor.leaves.map((leave, index) => (
-                              <div key={index}>
+                              <div key={index} className="leave-details">
                                 <span>{`From: ${leave.leavefrom} To: ${leave.leaveto}`}</span>
                                 <br />
                                 <span>{`Reason: ${leave.reason}`}</span>
                                 <br />
-                                <span>{`Status: ${leave.status}`}</span>
+                                <span className={`leave-status ${leave.status}`}>
+                                  {`Status: ${leave.status}`}
+                                </span>
                                 <br />
                                 {/* Admin can change the leave status */}
                                 {leave.status === 'pending' && (
@@ -196,12 +179,12 @@ const DepartmentPage = () => {
 
                                     <Dropdown.Menu>
                                       <Dropdown.Item
-                                        onClick={() => handleLeaveStatusChange(doctor.uid, index, 'approved')}
+                                        onClick={() => handleLeaveStatusChange(leave.leaveid, 'approved')}
                                       >
                                         Approve
                                       </Dropdown.Item>
                                       <Dropdown.Item
-                                        onClick={() => handleLeaveStatusChange(doctor.uid, index, 'rejected')}
+                                        onClick={() => handleLeaveStatusChange(leave.leaveid, 'rejected')}
                                       >
                                         Reject
                                       </Dropdown.Item>
@@ -232,3 +215,4 @@ const DepartmentPage = () => {
 };
 
 export default DepartmentPage;
+

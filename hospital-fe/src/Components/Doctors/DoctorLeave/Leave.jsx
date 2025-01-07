@@ -1,181 +1,351 @@
-import React, { useState } from 'react';
-import { Form, Button, Alert, Table } from 'react-bootstrap';
-import axios from 'axios';
-import './Leave.css'; // Import the corresponding CSS
+import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { jwtDecode } from "jwt-decode";
+import "./Leave.css";
 import DoctorNavbar from '../DoctorNavbar/DoctorNAvbar';
-import Doctorsidebar from '../DoctorSidebar/Doctorsidebar';
+import DoctorSidebar from '../DoctorSidebar/Doctorsidebar';
 
-const ApplyLeave = ({ doctorId }) => {
-  const [leaveReason, setLeaveReason] = useState('');
-  const [leaveFrom, setLeaveFrom] = useState('');
-  const [leaveTo, setLeaveTo] = useState('');
-  const [errorMessage, setErrorMessage] = useState('');
-  const [successMessage, setSuccessMessage] = useState('');
-  const [loading, setLoading] = useState(false);
-  const [showForm, setShowForm] = useState(false); // To toggle the form visibility
-  const [leaveRequests, setLeaveRequests] = useState([ // Dummy data for leave requests
-    { id: 1, leaveFrom: '2025-01-10', leaveTo: '2025-01-12', reason: 'Vacation' },
-    { id: 2, leaveFrom: '2025-02-05', leaveTo: '2025-02-10', reason: 'Medical' },
-  ]);
+const DoctorLeave = () => {
+  const [leaveData, setLeaveData] = useState([]); // Store fetched leave data
+  const [error, setError] = useState(null); // Store error message
+  const [successMessage, setSuccessMessage] = useState(null); // Store success message
+  const [doctorId, setDoctorId] = useState(null); // Store doctor ID from token
+  const [isEditing, setIsEditing] = useState(false); // To toggle between editing and viewing
+  const [editingLeave, setEditingLeave] = useState({
+    leavefrom: "",
+    leaveto: "",
+    reason: "",
+  }); // Store leave being edited
+  const [isApplyingLeave, setIsApplyingLeave] = useState(false); // Toggle applying leave form
+  const [leaveFormData, setLeaveFormData] = useState({
+    leavefrom: "",
+    leaveto: "",
+    reason: "",
+  }); // Store leave data for creation form
+  const navigate = useNavigate();
 
-  // Toggle form visibility when clicking "Apply for Leave"
-  const handleToggleForm = () => {
-    setShowForm(!showForm);
+  // Define formatDate function
+  const formatDate = (dateString) => {
+    const options = { year: "numeric", month: "long", day: "numeric" };
+    const date = new Date(dateString);
+    return date.toLocaleDateString("en-US", options); // Adjust the locale to your preference
   };
 
-  // Handle form submission
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setErrorMessage('');
-    setSuccessMessage('');
-    setLoading(true);
+  // Fetch doctor leave data
+  useEffect(() => {
+    const fetchDoctorLeave = async () => {
+      const accessToken = localStorage.getItem("accessToken");
 
-    // Validate form fields
-    if (!leaveReason || !leaveFrom || !leaveTo) {
-      setErrorMessage('Please fill in all fields.');
-      setLoading(false);
-      return;
-    }
+      if (!accessToken) {
+        navigate("/doctor-login"); // Redirect if no access token
+        return;
+      }
+
+      try {
+        const decodedToken = jwtDecode(accessToken); // Decode the token
+        const doctorIdFromToken = decodedToken.doctorid;
+        setDoctorId(doctorIdFromToken); // Set doctor ID
+
+        const formData = new FormData();
+        formData.append("doctorid", doctorIdFromToken);
+
+        // Send doctor ID in the request
+        const response = await fetch("http://localhost:5000/doctors/getallleave", {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+          body: formData,
+        });
+
+        const data = await response.json();
+
+        if (response.ok) {
+          setLeaveData(data.data || []); // Set the fetched leave data
+        } else {
+          setError(data.message || "Failed to fetch leave data.");
+        }
+      } catch (error) {
+        console.error("Error fetching leave data:", error);
+        setError("An error occurred while fetching leave data.");
+      }
+    };
+
+    fetchDoctorLeave(); // Call function to fetch leave data
+  }, [navigate]);
+
+  // Handle editing a leave request
+  const handleEdit = (leave) => {
+    setIsEditing(true);
+    setEditingLeave(leave); // Set the leave data to be edited
+  };
+
+  // Handle updating leave details
+  const handleUpdateLeave = async (event) => {
+    event.preventDefault();
+    const accessToken = localStorage.getItem("accessToken");
 
     const formData = new FormData();
-    formData.append('doctorId', doctorId);
-    formData.append('leaveFrom', leaveFrom);
-    formData.append('leaveTo', leaveTo);
-    formData.append('reason', leaveReason);
+    formData.append("leaveid", editingLeave.leaveid);
+    formData.append("leavefrom", editingLeave.leavefrom);
+    formData.append("leaveto", editingLeave.leaveto);
+    formData.append("reason", editingLeave.reason);
+    formData.append("doctorid", doctorId);
 
     try {
-      const response = await axios.post('http://localhost:5000/doctors/leave', formData, {
+      const response = await fetch("http://localhost:5000/doctors/leaveupdate", {
+        method: "POST",
         headers: {
-          'Content-Type': 'multipart/form-data',
+          Authorization: `Bearer ${accessToken}`,
         },
+        body: formData,
       });
 
-      // Handle success response
-      if (response.status === 200) {
-        setSuccessMessage('Leave request submitted successfully.');
-        setLeaveRequests([
-          ...leaveRequests,
-          { id: leaveRequests.length + 1, leaveFrom, leaveTo, reason: leaveReason },
-        ]);
-        setShowForm(false); // Close the form after submitting
+      const data = await response.json();
+      if (response.ok) {
+        setSuccessMessage("Leave successfully updated.");
+        setIsEditing(false);
+        setLeaveData(
+          leaveData.map((leave) =>
+            leave.leaveid === editingLeave.leaveid ? editingLeave : leave
+          )
+        );
+      } else {
+        setError(data.message || "Failed to update leave.");
       }
     } catch (error) {
-      // Handle error response
-      setErrorMessage(error.response?.data?.message || 'Something went wrong.');
-    } finally {
-      setLoading(false);
+      setError("An error occurred while updating leave.");
     }
   };
 
-  // Handle delete leave request
-  const handleDelete = (id) => {
-    // API request to delete leave (you can modify this to make a backend call)
-    setLeaveRequests(leaveRequests.filter((leave) => leave.id !== id));
-    setSuccessMessage('Leave request deleted successfully.');
+  // Handle input change in the edit form
+  const handleInputChange = (event) => {
+    const { name, value } = event.target;
+    setEditingLeave({ ...editingLeave, [name]: value });
   };
 
-  // Handle edit leave request (for demonstration, you can modify this to make API calls)
-  const handleEdit = (id) => {
-    const leaveToEdit = leaveRequests.find((leave) => leave.id === id);
-    setLeaveReason(leaveToEdit.reason);
-    setLeaveFrom(leaveToEdit.leaveFrom);
-    setLeaveTo(leaveToEdit.leaveTo);
-    setShowForm(true);
+  // Handle applying leave
+  const handleApplyLeave = async (event) => {
+    event.preventDefault();
+    const accessToken = localStorage.getItem("accessToken");
+
+    const formData = new FormData();
+    formData.append("leavefrom", leaveFormData.leavefrom); // Already in YYYY-MM-DD format
+    formData.append("leaveto", leaveFormData.leaveto); // Already in YYYY-MM-DD format
+    formData.append("reason", leaveFormData.reason);
+    formData.append("doctorid", doctorId);
+
+    try {
+      const response = await fetch("http://localhost:5000/doctors/create/leave", {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+        body: formData,
+      });
+
+      const data = await response.json();
+      if (response.ok) {
+        setSuccessMessage("Leave successfully applied.");
+        setLeaveData([...leaveData, data.data]); // Add the new leave to the state
+        setIsApplyingLeave(false); // Close the apply leave form
+      } else {
+        setError(data.message || "Failed to apply leave.");
+      }
+    } catch (error) {
+      setError("An error occurred while applying leave.");
+    }
+  };
+
+  // Handle deleting a leave request
+  const handleDelete = async (leaveId) => {
+    try {
+      const accessToken = localStorage.getItem("accessToken");
+      const formData = new FormData();
+      formData.append("leaveid", leaveId);
+
+      const response = await fetch("http://localhost:5000/doctorsops/deleteleave", {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+        body: formData,
+      });
+
+      const data = await response.json();
+      if (response.ok) {
+        setSuccessMessage("Leave successfully deleted.");
+        // Remove the deleted leave from the state
+        setLeaveData(leaveData.filter((leave) => leave.leaveid !== leaveId));
+      } else {
+        setError(data.message || "Failed to delete leave.");
+      }
+    } catch (error) {
+      setError("An error occurred while deleting leave.");
+    }
   };
 
   return (
-    <div className="dashboard-container">
-    {/* Navbar at the top */}
-    <DoctorNavbar />
-    
-    <div className="dashboard-content">
-      {/* Sidebar for navigation */}
-      <Doctorsidebar />
-    <div className="apply-leave-container">
-      <h2>Leave Management</h2>
+    <div className="home-page">
+      <DoctorNavbar />
+      <div className="flex justify-center items-center min-h-screen bg-gray-100">
+        <div className="home-content flex flex-row">
+          <DoctorSidebar />
+          <div className="leave-container">
+            <div className="leave-header">
+              <h2>Doctor Leave</h2>
+              <button
+                onClick={() => setIsApplyingLeave(true)}
+                style={{
+                  backgroundColor: "#4CAF50",
+                  color: "white",
+                  padding: "10px 20px",
+                  border: "none",
+                  cursor: "pointer",
+                  borderRadius: "5px",
+                }}
+              >
+                Apply for Leave
+              </button>
+            </div>
+            {error && <div className="error-message">{error}</div>}
+            {successMessage && <div className="success-message">{successMessage}</div>}
 
-      {/* Button to open the "Apply for Leave" form */}
-      <Button variant="primary" onClick={handleToggleForm}>
-        {showForm ? 'Close Leave Form' : 'Apply for Leave'}
-      </Button>
+            {/* Apply Leave Form */}
+            {isApplyingLeave && (
+              <div className="leave-form">
+                <h3>Apply Leave</h3>
+                <form onSubmit={handleApplyLeave}>
+                  <div>
+                    <label>Leave From:</label>
+                    <input
+                      type="date"
+                      name="leavefrom"
+                      value={leaveFormData.leavefrom || ""}
+                      onChange={(e) =>
+                        setLeaveFormData({
+                          ...leaveFormData,
+                          leavefrom: e.target.value,
+                        })
+                      }
+                    />
+                  </div>
+                  <div>
+                    <label>Leave To:</label>
+                    <input
+                      type="date"
+                      name="leaveto"
+                      value={leaveFormData.leaveto || ""}
+                      onChange={(e) =>
+                        setLeaveFormData({
+                          ...leaveFormData,
+                          leaveto: e.target.value,
+                        })
+                      }
+                    />
+                  </div>
+                  <div>
+                    <label>Reason:</label>
+                    <textarea
+                      name="reason"
+                      value={leaveFormData.reason || ""}
+                      onChange={(e) =>
+                        setLeaveFormData({
+                          ...leaveFormData,
+                          reason: e.target.value,
+                        })
+                      }
+                    />
+                  </div>
+                  <button type="submit">Submit Leave</button>
+                </form>
+              </div>
+            )}
 
-      {/* Display the success or error message */}
-      {successMessage && <Alert variant="success">{successMessage}</Alert>}
-      {errorMessage && <Alert variant="danger">{errorMessage}</Alert>}
+            {/* Edit Leave Form */}
+            {isEditing && editingLeave && (
+              <div className="leave-form">
+                <h3>Edit Leave</h3>
+                <form onSubmit={handleUpdateLeave}>
+                  <div>
+                    <label>Leave From:</label>
+                    <input
+                      type="date"
+                      name="leavefrom"
+                      value={editingLeave.leavefrom || ""}
+                      onChange={handleInputChange}
+                    />
+                  </div>
+                  <div>
+                    <label>Leave To:</label>
+                    <input
+                      type="date"
+                      name="leaveto"
+                      value={editingLeave.leaveto || ""}
+                      onChange={handleInputChange}
+                    />
+                  </div>
+                  <div>
+                    <label>Reason:</label>
+                    <textarea
+                      name="reason"
+                      value={editingLeave.reason || ""}
+                      onChange={handleInputChange}
+                    />
+                  </div>
+                  <button type="submit">Update Leave</button>
+                  <button
+                    type="button"
+                    onClick={() => setIsEditing(false)} // Close the edit form without saving
+                  >
+                    Cancel
+                  </button>
+                </form>
+              </div>
+            )}
 
-      {/* Apply Leave Form */}
-      {showForm && (
-        <Form onSubmit={handleSubmit}>
-          <Form.Group controlId="leaveReason">
-            <Form.Label>Reason for Leave</Form.Label>
-            <Form.Control
-              as="textarea"
-              rows={3}
-              value={leaveReason}
-              onChange={(e) => setLeaveReason(e.target.value)}
-              required
-            />
-          </Form.Group>
+            {/* Leave Table */}
+            <div className="leave-card">
+              <table className="table">
+                <thead>
+                  <tr >
+                  <th style={{ backgroundColor: "green", color: "white" }}>Leave Date (From)</th>
 
-          <Form.Group controlId="leaveFrom">
-            <Form.Label>Leave From</Form.Label>
-            <Form.Control
-              type="date"
-              value={leaveFrom}
-              onChange={(e) => setLeaveFrom(e.target.value)}
-              required
-            />
-          </Form.Group>
-
-          <Form.Group controlId="leaveTo">
-            <Form.Label>Leave To</Form.Label>
-            <Form.Control
-              type="date"
-              value={leaveTo}
-              onChange={(e) => setLeaveTo(e.target.value)}
-              required
-            />
-          </Form.Group>
-
-          <Button variant="primary" type="submit" disabled={loading}>
-            {loading ? 'Submitting Leave...' : 'Submit Leave Request'}
-          </Button>
-        </Form>
-      )}
-
-      {/* Table displaying existing leave requests */}
-      <h3>All Leave Requests</h3>
-      <Table striped bordered hover>
-        <thead>
-          <tr>
-            <th>Leave From</th>
-            <th>Leave To</th>
-            <th>Reason</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {leaveRequests.map((leave) => (
-            <tr key={leave.id}>
-              <td>{leave.leaveFrom}</td>
-              <td>{leave.leaveTo}</td>
-              <td>{leave.reason}</td>
-              <td>
-                <Button variant="warning" onClick={() => handleEdit(leave.id)} className="mr-2">
-                  Edit
-                </Button>
-                <Button variant="danger" onClick={() => handleDelete(leave.id)}>
-                  Delete
-                </Button>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </Table>
-    </div>
-    </div>
+                    <th  style={{ backgroundColor: "green", color: "white" }}>Leave Date (To)</th>
+                    <th  style={{ backgroundColor: "green", color: "white" }} >Reason</th>
+                    <th  style={{ backgroundColor: "green", color: "white" }}>Status</th>
+                    <th  style={{ backgroundColor: "green", color: "white" }}>Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {leaveData.length > 0 ? (
+                    leaveData.map((leave) => (
+                      leave && leave.leavefrom && leave.leaveto && leave.reason ? (
+                        <tr key={leave.leaveid}>
+                          <td>{formatDate(leave.leavefrom)}</td>
+                          <td>{formatDate(leave.leaveto)}</td>
+                          <td>{leave.reason}</td>
+                          <td>{leave.status}</td>
+                          <td>
+                            <button onClick={() => handleEdit(leave)}>Edit</button>
+                            <button onClick={() => handleDelete(leave.leaveid)}>Delete</button>
+                          </td>
+                        </tr>
+                      ) : null // Only render the row if data exists
+                    ))
+                  ) : (
+                    <tr>
+                      <td colSpan="5">No leave records found.</td>
+                    </tr>
+                  )}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };
 
-export default ApplyLeave;
+export default DoctorLeave;

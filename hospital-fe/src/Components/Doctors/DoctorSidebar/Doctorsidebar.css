@@ -1,4 +1,4 @@
-/* Sidebar base styles */
+
 .sidebar {
     height: 100vh;
     width: 250px;
@@ -20,7 +20,7 @@
     padding-left: 20px;
   }
   
-  /* Sidebar header */
+ 
   .sidebar-header {
     display: flex;
     justify-content: space-between;
@@ -41,8 +41,7 @@
     background: transparent;
     border: none;
   }
-  
-  /* Navigation links */
+
   .nav-link {
     color: #ddd;
     font-size: 16px;
@@ -63,13 +62,12 @@
     cursor: pointer;
   }
   
-  /* Icons */
   .nav-link .sidebar-item svg {
     margin-right: 10px;
     font-size: 1.3rem;
   }
   
-  /* Adjust text visibility */
+
   .sidebar.collapsed .sidebar-item {
     padding-left: 0;
   }
@@ -78,13 +76,13 @@
     display: none;
   }
   
-  /* Display text when expanded */
+
   .sidebar.expanded .sidebar-item span {
     display: inline-block;
     margin-left: 10px;
   }
   
-  /* Optional: make links bold */
+ 
   .sidebar-item span {
     font-weight: bold;
   }

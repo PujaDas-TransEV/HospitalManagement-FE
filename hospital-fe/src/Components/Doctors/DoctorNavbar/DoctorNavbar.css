@@ -1,7 +1,7 @@
-/* Doctor Navbar */
+
 .doctor-navbar {
-    height: 120px; /* Adjust the height of the navbar */
-    padding: 0 20px; /* Add padding to the sides */
+    height: 120px;
+    padding: 0 20px; 
   }
   
   .doctor-navbar .search-bar {
@@ -27,7 +27,7 @@
     background-color: rgba(255, 255, 255, 0.1);
   }
   
-  /* Notification & Profile Container */
+
   .doctor-navbar .notification-profile-container {
     display: flex;
     align-items: center;
@@ -70,7 +70,7 @@
     padding: 10px;
   }
   
-  /* Profile and Notification Section - Side by Side */
+  
   .doctor-navbar .ml-auto {
     display: flex;
     align-items: center;
@@ -80,7 +80,7 @@
     border-radius: 20px;
   }
   
-  /* Custom hover and active effects for profile and notification items */
+
   .doctor-navbar .profile-dropdown .dropdown-toggle:hover,
   .doctor-navbar .notification-dropdown .dropdown-toggle:hover {
     background-color: rgba(255, 255, 255, 0.2);
