@@ -55,7 +55,7 @@ const DoctorNavbar = () => {
             </Dropdown.Toggle>
             {notificationOpen && (
               <Dropdown.Menu>
-                <Dropdown.Item href="#/action-1">New Appointment</Dropdown.Item>
+                <Dropdown.Item href="/appointments">New Appointment</Dropdown.Item>
                 <Dropdown.Item href="#/action-2">Patient Update</Dropdown.Item>
               </Dropdown.Menu>
             )}

@@ -40,6 +40,9 @@ import DoctorSidebar from './Components/Doctors/DoctorSidebar/Doctorsidebar';
 import DoctorLeave from './Components/Doctors/DoctorLeave/Leave';
 import DoctorProfile from './Components/Doctors/DoctorProfile/DoctorProfile';
 import DoctorSettings from './Components/Doctors/DoctorSettings/DoctorSettings';
+import AppointmentManagement from './Components/Admin/AppointmentManagement/AppointmentManagement';
+import DoctorAppointment from './Components/Doctors/DoctorAppointment/DoctorAppointment';
+import DepartmentwisebookAppointment from './Components/Patients/Departmentwisebookappointment/Departmentwisebook';
 
 
 
@@ -48,7 +51,7 @@ const ConditionalNavbar = () => {
   const location = useLocation();  // Get current location to conditionally render Navbar
 
   // Render Navbar only if the path is not '/login' or '/signup'
-  return !['/login', '/signup','/password','/admin/signup','/admin/login','/admin/password','/super/admin/signup','/super/admin/login','/super/admin/password','/patient-dashboard','/patient-Appointments','/profile','/settings','/dprofile','/doctordashboard','/adnavbar','/adsidebar','/ad-dashboard','/manage-doctors','/doctor-signup','/doctor-login','/doctors/:specialization','/doctors/Cardiology','/doctors/Neurology','/doctors/Pediatrics','/doctors/Orthopedics','/doctors/Infectious%20Diseases','/doctor-password','/manage-patients','/admin-settings','/doctor-navbar','/doctor-sidebar','/leave','/doctor-profile','/doctor-settings','/admin-profile'].includes(location.pathname) && <Navbar />;
+  return !['/login', '/signup','/password','/admin/signup','/admin/login','/admin/password','/super/admin/signup','/super/admin/login','/super/admin/password','/patient-dashboard','/patient-Appointments','/profile','/settings','/dprofile','/doctordashboard','/adnavbar','/adsidebar','/ad-dashboard','/manage-doctors','/doctor-signup','/doctor-login','/doctors/:specialization','/doctors/Cardiology','/doctors/Neurology','/doctors/Pediatrics','/doctors/Orthopedics','/doctors/Infectious%20Diseases','/doctor-password','/manage-patients','/admin-settings','/doctor-navbar','/doctor-sidebar','/leave','/doctor-profile','/doctor-settings','/admin-profile','/appointment-management','/appointments','/appointment/:departmentId','/appointment/cardiology','/appointment/pediatrics'].includes(location.pathname) && <Navbar />;
 };
 
 // Main App Component
@@ -98,6 +101,9 @@ function App() {
         <Route path="/leave" element={<DoctorLeave/>} />
         <Route path="/doctor-profile" element={<DoctorProfile/>} />
         <Route path="/doctor-settings" element={<DoctorSettings/>} />
+        <Route path="/appointment-management" element={<AppointmentManagement/>} />
+        <Route path="/appointments" element={<DoctorAppointment/>} />
+        <Route path="/appointment/:departmentId" element={<DepartmentwisebookAppointment />} />
      
         {/* Add other routes as needed */}
       </Routes>

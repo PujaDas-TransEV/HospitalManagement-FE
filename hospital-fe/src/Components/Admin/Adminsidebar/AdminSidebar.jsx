@@ -54,7 +54,7 @@ const Sidebar = () => {
           </Link>
         </NavItem>
         <NavItem>
-          <Link to="/appointments" className="nav-link">
+          <Link to="/appointment-management" className="nav-link">
             <FaCalendarAlt />
             {!collapsed && <span>Appointment Management</span>}
           </Link>

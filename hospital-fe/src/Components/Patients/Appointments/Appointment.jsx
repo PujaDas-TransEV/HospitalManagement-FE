@@ -1,125 +1,194 @@
-import React, { useState } from 'react';
+
+// import React from 'react';
+// import { useNavigate } from 'react-router-dom';
+// import './Appointment.css';
+// import PatientNavbar from '../Navbar/PatientNavbar';
+// import PatientSidebar from '../Sidebar/PatientSidebar';
+
+
+// const departments = [
+//   { id: 'cardiology', name: 'Cardiology', icon: '❤️' },
+//   { id: 'neurology', name: 'Neurology', icon: '🧠' },
+//   { id: 'orthopedics', name: 'Orthopedics', icon: '💪' },
+//   { id: 'dermatology', name: 'Dermatology', icon: '🧴' },
+//   { id: 'pediatrics', name: 'Pediatrics', icon: '👶' },
+//   { id: 'surgery', name: 'Surgery', icon: '🔪' },
+// ];
+
+// const Appointment = () => {
+//   const navigate = useNavigate(); // Use useNavigate from React Router v6
+
+//   const handleDepartmentClick = (departmentId) => {
+//     navigate(`/appointment/${departmentId}`); // Navigate to the department appointment page
+//   };
+
+//   return (
+//     <div className="dashboard-container">
+//     {/* Navbar at the top */}
+//     <PatientNavbar />
+    
+//     <div className="dashboard-content">
+//       {/* Sidebar for navigation */}
+//       <PatientSidebar />
+      
+//     <div className="home-container">
+//       <h2>Select Department</h2>
+//       <div className="departments">
+//         {departments.map((dept) => (
+//           <div key={dept.id} className="department-card" onClick={() => handleDepartmentClick(dept.id)}>
+//             <div className="department-icon">{dept.icon}</div>
+//             <div className="department-name">{dept.name}</div>
+//           </div>
+//         ))}
+//       </div>
+//     </div>
+//     </div>
+//     </div>
+//   );
+// };
+
+// export default Appointment;
+
+
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import {jwtDecode} from 'jwt-decode'; // Import jwtDecode for decoding JWT tokens
+import './Appointment.css';
 import PatientNavbar from '../Navbar/PatientNavbar';
 import PatientSidebar from '../Sidebar/PatientSidebar';
-import './Appointment.css';
 
+// Dummy data for departments
 const departments = [
-  { id: 'cardiology', name: 'Cardiology' },
-  { id: 'neurology', name: 'Neurology' },
-  { id: 'orthopedics', name: 'Orthopedics' },
-  { id: 'dermatology', name: 'Dermatology' },
-  { id: 'pediatrics', name: 'Pediatrics' },
-  {id: 'surgery', name:'surgery'}
+  { id: 'cardiology', name: 'Cardiology', icon: '❤️' },
+  { id: 'neurology', name: 'Neurology', icon: '🧠' },
+  { id: 'orthopedics', name: 'Orthopedics', icon: '💪' },
+  { id: 'dermatology', name: 'Dermatology', icon: '🧴' },
+  { id: 'pediatrics', name: 'Pediatrics', icon: '👶' },
+  { id: 'surgery', name: 'Surgery', icon: '🔪' },
 ];
 
-const doctors = {
-  cardiology: [
-    { id: 1, name: 'Dr. John Smith', slots: ['10:00 AM', '11:00 AM', '02:00 PM'] },
-    { id: 2, name: 'Dr. Sarah Lee', slots: ['09:00 AM', '12:00 PM', '03:00 PM'] },
-  ],
-  neurology: [
-    { id: 1, name: 'Dr. David Wong', slots: ['11:00 AM', '01:00 PM', '04:00 PM'] },
-    { id: 2, name: 'Dr. Emily Clark', slots: ['09:30 AM', '02:30 PM', '05:00 PM'] },
-  ],
-  // Add other departments and their doctors as needed
-  surgery:[
-    {id:1,name:'Dr.John De', slots: ['9:00 AM','4:00 PM']},
-    {id:2,name:'Dr.P B Sarkar', slots:['11 AM','3 PM','8 PM']},
-  
+const Appointment = () => {
+  const navigate = useNavigate();
+  const [appointments, setAppointments] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [patientId, setPatientId] = useState(null);
 
-  ]
-};
+  useEffect(() => {
+    const fetchPatientProfile = async () => {
+      const accessToken = localStorage.getItem("accessToken");
 
-const DoctorAppointment = () => {
-  const [selectedDepartment, setSelectedDepartment] = useState('');
-  const [selectedDoctor, setSelectedDoctor] = useState(null);
-  const [selectedSlot, setSelectedSlot] = useState('');
-  const [appointmentStatus, setAppointmentStatus] = useState('');
+      if (!accessToken) {
+        navigate("/login"); // Redirect if no token is found in localStorage
+        return;
+      }
 
-  const handleDepartmentChange = (event) => {
-    setSelectedDepartment(event.target.value);
-    setSelectedDoctor(null); // Reset doctor selection when department changes
-    setSelectedSlot(''); // Reset slot when department changes
-  };
+      try {
+        // Decode the access token to get patientId
+        const decodedToken = jwtDecode(accessToken);
+        const patientId = decodedToken.userid;  // Assuming 'userid' is the key in your token
 
-  const handleDoctorChange = (event) => {
-    setSelectedDoctor(event.target.value);
-    setSelectedSlot(''); // Reset slot when doctor changes
-  };
+        setPatientId(patientId); // Set patientId from the decoded token
+      } catch (error) {
+        console.error('Error decoding token:', error);
+        navigate("/login"); // Redirect to login if token decoding fails
+      }
+    };
 
-  const handleSlotChange = (event) => {
-    setSelectedSlot(event.target.value);
-  };
+    fetchPatientProfile();
+  }, [navigate]);
 
-  const handleBookAppointment = () => {
-    if (!selectedDepartment || !selectedDoctor || !selectedSlot) {
-      setAppointmentStatus('Please select department, doctor, and slot.');
-      return;
+  useEffect(() => {
+    if (patientId) {
+      const formData = new FormData();
+      formData.append('patientid', patientId); // Append patientId to form data
+
+      // Fetch appointment details from the server
+      fetch('http://localhost:5000/getappoinmentdetails', {
+        method: 'POST',
+        body: formData,
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          // Assuming the response data is nested inside the 'data' property
+          const appointmentData = [data.data]; // Wrap in an array to display in table
+          setAppointments(appointmentData);  // Set appointments state
+          setLoading(false);
+        })
+        .catch((error) => {
+          setError('Failed to fetch appointments');
+          setLoading(false);
+        });
     }
-    setAppointmentStatus(`Appointment booked with Dr. ${selectedDoctor} for ${selectedSlot}.`);
+  }, [patientId]); // Re-fetch appointments when patientId changes
+
+  const handleDepartmentClick = (departmentId) => {
+    navigate(`/appointment/${departmentId}`); // Navigate to the department appointment page
   };
 
   return (
-    <div className="appointment-container">
-      {/* Patient Navbar */}
+    <div className="dashboard-container">
+      {/* Navbar at the top */}
       <PatientNavbar />
 
-      <div className="appointment-content">
-        {/* Patient Sidebar */}
+      <div className="dashboard-content">
+        {/* Sidebar for navigation */}
         <PatientSidebar />
 
-        {/* Main Appointment Content */}
-        <div className="appointment-main">
-          <h2>Book an Appointment</h2>
-
-          {/* Department Selection */}
-          <div className="department-selection">
-            <label htmlFor="department">Select Department:</label>
-            <select id="department" value={selectedDepartment} onChange={handleDepartmentChange}>
-              <option value="">-- Select Department --</option>
-              {departments.map((dept) => (
-                <option key={dept.id} value={dept.id}>{dept.name}</option>
-              ))}
-            </select>
+        <div className="home-container">
+          <h2>Select Department</h2>
+          <div className="departments">
+            {departments.map((dept) => (
+              <div
+                key={dept.id}
+                className="department-card"
+                onClick={() => handleDepartmentClick(dept.id)}
+              >
+                <div className="department-icon">{dept.icon}</div>
+                <div className="department-name">{dept.name}</div>
+              </div>
+            ))}
           </div>
+        </div>
 
-          {/* Doctor Selection */}
-          {selectedDepartment && (
-            <div className="doctor-selection">
-              <label htmlFor="doctor">Select Doctor:</label>
-              <select id="doctor" value={selectedDoctor} onChange={handleDoctorChange}>
-                <option value="">-- Select Doctor --</option>
-                {doctors[selectedDepartment]?.map((doctor) => (
-                  <option key={doctor.id} value={doctor.name}>{doctor.name}</option>
+        {/* Appointment details section */}
+        <div className="appointment-details-container">
+          {loading ? (
+            <div>Loading appointments...</div>
+          ) : error ? (
+            <div>{error}</div>
+          ) : appointments.length > 0 ? (
+            <table className="appointments-table">
+              <thead>
+                <tr>
+                  <th>Patient Name</th>
+                  <th>Doctor Name</th>
+                  <th>Appointment Time</th>
+                  <th>Details</th>
+                
+                </tr>
+              </thead>
+              <tbody>
+                {appointments.map((appointment) => (
+                  <tr key={appointment.uid}>
+                    <td>
+                      {appointment.patient_firstname} {appointment.patient_lastname}
+                    </td>
+                    <td>{appointment.doctor_fullname}</td>
+                    <td>{appointment.appoinmenttime}</td>
+                    <td>{appointment.appoinmentdetails}</td>
+                   
+                  </tr>
                 ))}
-              </select>
-            </div>
+              </tbody>
+            </table>
+          ) : (
+            <div>No appointment details found.</div>
           )}
-
-          {/* Slot Selection */}
-          {selectedDoctor && (
-            <div className="slot-selection">
-              <label htmlFor="slot">Select Slot:</label>
-              <select id="slot" value={selectedSlot} onChange={handleSlotChange}>
-                <option value="">-- Select Slot --</option>
-                {doctors[selectedDepartment]?.find((doc) => doc.name === selectedDoctor)?.slots.map((slot, index) => (
-                  <option key={index} value={slot}>{slot}</option>
-                ))}
-              </select>
-            </div>
-          )}
-
-          {/* Book Appointment Button */}
-          <button onClick={handleBookAppointment} className="book-btn">
-            Book Appointment
-          </button>
-
-          {/* Appointment Status Message */}
-          {appointmentStatus && <div className="appointment-status">{appointmentStatus}</div>}
         </div>
       </div>
     </div>
   );
 };
 
-export default DoctorAppointment;
+export default Appointment;
