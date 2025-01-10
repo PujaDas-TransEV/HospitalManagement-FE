@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom'; // Import useNavigate for navigation
 import './ManagePatient.css';
 import AdminNavbar from '../Adminnavbar/AdminNavbar';
 import AdminSidebar from '../Adminsidebar/AdminSidebar';
+import { Table, Button } from 'react-bootstrap';
 
 // Sample Data (will be replaced with data from the API)
 const departments = [
@@ -9,6 +11,7 @@ const departments = [
   { name: 'Neurology', icon: '🧠' },
   { name: 'Orthopedics', icon: '🦴' },
   { name: 'Dermatology', icon: '🌟' },
+  { name: 'Pediatrics', icon: '🌟' },
 ];
 
 const doctors = {
@@ -40,6 +43,8 @@ function PatientManagement() {
   const [selectedDepartment, setSelectedDepartment] = useState(null);
   const [showAddPatientForm, setShowAddPatientForm] = useState(false);
 
+  const navigate = useNavigate(); // Set up the navigate hook
+
   useEffect(() => {
     // Fetch all patients on component mount
     fetch('http://localhost:5000/patientops/getallpatient')
@@ -50,7 +55,6 @@ function PatientManagement() {
       .catch((error) => console.error('Error fetching patients:', error));
   }, []);
 
-  // Handle input changes for new patient or edits
   const handleInputChange = (e, field) => {
     if (editPatient) {
       setEditPatient((prev) => ({
@@ -65,7 +69,6 @@ function PatientManagement() {
     }
   };
 
-  // Handle department change and update doctors
   const handleDepartmentChange = (e) => {
     const selectedDepartment = e.target.value;
     if (editPatient) {
@@ -83,7 +86,6 @@ function PatientManagement() {
     }
   };
 
-  // Add new patient
   const addPatient = () => {
     fetch('http://localhost:5000/patientops/addpatient', {
       method: 'POST',
@@ -116,12 +118,10 @@ function PatientManagement() {
       .catch((error) => console.error('Error adding patient:', error));
   };
 
-  // Edit an existing patient
   const editPatientDetails = (patient) => {
     setEditPatient(patient);
   };
 
-  // Save edited patient
   const savePatient = () => {
     if (!editPatient || !editPatient.uid) {
       console.error('Patient details or UID are missing!');
@@ -143,21 +143,19 @@ function PatientManagement() {
     formData.append('address', editPatient.address);
     formData.append('email', editPatient.email);
 
-    // Send the update request to the backend
     fetch('http://localhost:5000/patients/profile/update', {
       method: 'POST',
-      body: formData, // Send the form data as the request body
+      body: formData,
     })
       .then((response) => response.json())
       .then((data) => {
         if (data) {
-          // Successfully updated the patient, update the local state
           setPatients(
             patients.map((patient) =>
               patient.id === editPatient.id ? { ...patient, ...data } : patient
             )
           );
-          setEditPatient(null); // Close the edit form
+          setEditPatient(null);
           alert('Patient profile updated successfully');
         } else {
           alert('Error updating patient profile');
@@ -169,7 +167,6 @@ function PatientManagement() {
       });
   };
 
-  // Delete patient function
   const deletePatient = (uid) => {
     if (!uid) {
       console.error('Patient UID is missing!');
@@ -178,53 +175,52 @@ function PatientManagement() {
     }
 
     const formData = new FormData();
-    formData.append('patientid', uid); // Append the patient UID to the form data
+    formData.append('patientid', uid);
 
-    // Send the delete request to the backend
     fetch('http://localhost:5000/patientops/deleteprofile', {
       method: 'POST',
-      body: formData, // Send the form data as the request body
+      body: formData,
     })
-      .then((response) => response.json()) // Parse the JSON response from the backend
+      .then((response) => response.json())
       .then((data) => {
         if (data) {
-          // Successfully deleted patient, update the local state
           setPatients((prevPatients) =>
             prevPatients.filter((patient) => patient.uid !== uid)
           );
           alert('Patient profile deleted successfully');
         } else {
-          // If there was an issue with deletion on the backend, show an error message
           alert('Error deleting patient profile');
         }
       })
       .catch((error) => {
-        // Catch any other errors, including network issues
         console.error('Error deleting patient:', error);
         alert('An error occurred while deleting the patient');
       });
   };
 
-  // Filter patients based on the selected department
   const filteredPatients = selectedDepartment
     ? patients.filter((patient) => patient.department === selectedDepartment)
     : patients;
 
+  // Department click handler for navigation
+  const handleDepartmentClick = (department) => {
+    navigate(`/patients/${department}`); // Navigate to doctors page for the clicked department
+  };
+
   return (
-    <div className="manage-doctors-container">
+    <div className="manage-patients-container">
       <AdminNavbar />
-      <div className="manage-doctors-content">
+      <div className="manage-patients-content">
         <AdminSidebar />
         <div className="patient-management">
           <h2>Admin - Manage Patients</h2>
 
-          {/* Display Departments with Icons */}
           <div className="departments">
             {departments.map((dept) => (
               <div
                 key={dept.name}
                 className="department-item"
-                onClick={() => setSelectedDepartment(dept.name)}
+                onClick={() => handleDepartmentClick(dept.name)} // Handle department click
               >
                 <div className="icon">{dept.icon}</div>
                 <div className="name">{dept.name}</div>
@@ -232,10 +228,9 @@ function PatientManagement() {
             ))}
           </div>
 
-          {/* Manage Patients by Department */}
-          <h3>{selectedDepartment ? `${selectedDepartment} Patients` : 'Manage All Patients'}</h3>
+          <h3 style={{marginLeft:'150px'}}>{selectedDepartment ? `${selectedDepartment} Patients` : 'Manage All Patients'}</h3>
           <div className="patient-list">
-            <table>
+            <Table striped bordered hover>
               <thead>
                 <tr>
                   <th>First Name</th>
@@ -249,103 +244,38 @@ function PatientManagement() {
                 </tr>
               </thead>
               <tbody>
-                {filteredPatients.map((patient) => (
-                  <tr key={patient.id}>
-                    <td>{patient.firstname}</td>
-                    <td>{patient.lastname}</td>
-                    <td>{patient.age}</td>
-                    <td>{patient.bloodgroup}</td>
-                    <td>{patient.address}</td>
-                    <td>{patient.phonenumber}</td>
-                    <td>{patient.email}</td>
-                    <td>
-                      <button onClick={() => editPatientDetails(patient)}>Edit</button>
-                      <button onClick={() => deletePatient(patient.uid)}>Delete</button>
-                    </td>
+                {filteredPatients.length === 0 ? (
+                  <tr>
+                    <td colSpan="8">No patients found.</td>
                   </tr>
-                ))}
+                ) : (
+                  filteredPatients.map((patient) => (
+                    <tr key={patient.uid}>
+                      <td>{patient.firstname}</td>
+                      <td>{patient.lastname}</td>
+                      <td>{patient.age}</td>
+                      <td>{patient.bloodgroup}</td>
+                      <td>{patient.address}</td>
+                      <td>{patient.phonenumber}</td>
+                      <td>{patient.email}</td>
+                      <td>
+                        <Button variant="warning" onClick={() => editPatientDetails(patient)}>
+                          Edit
+                        </Button>
+                        <Button variant="danger" onClick={() => deletePatient(patient.uid)}>
+                          Delete
+                        </Button>
+                      </td>
+                    </tr>
+                  ))
+                )}
               </tbody>
-            </table>
+            </Table>
           </div>
 
-          {/* Add New Patient Button */}
-          <button onClick={() => setShowAddPatientForm(!showAddPatientForm)}>
-            {showAddPatientForm ? 'Cancel' : 'Add New Patient'}
-          </button>
+        
 
-          {/* Edit Patient Form (for existing patients) */}
-          {editPatient && (
-            <div>
-              <h3>Edit Patient</h3>
-              <input
-                type="text"
-                placeholder="First Name"
-                value={editPatient.firstname}
-                onChange={(e) => handleInputChange(e, 'firstname')}
-              />
-              <input
-                type="text"
-                placeholder="Last Name"
-                value={editPatient.lastname}
-                onChange={(e) => handleInputChange(e, 'lastname')}
-              />
-              <input
-                type="text"
-                placeholder="Gender"
-                value={editPatient.gender}
-                onChange={(e) => handleInputChange(e, 'gender')}
-              />
-              <input
-                type="date"
-                placeholder="Date of Birth"
-                value={editPatient.dob}
-                onChange={(e) => handleInputChange(e, 'dob')}
-              />
-              <input
-                type="text"
-                placeholder="Phone"
-                value={editPatient.phone}
-                onChange={(e) => handleInputChange(e, 'phone')}
-              />
-              <input
-                type="email"
-                placeholder="Email"
-                value={editPatient.email}
-                onChange={(e) => handleInputChange(e, 'email')}
-              />
-              <input
-                type="text"
-                placeholder="Address"
-                value={editPatient.address}
-                onChange={(e) => handleInputChange(e, 'address')}
-              />
-              <input
-                type="number"
-                placeholder="Age"
-                value={editPatient.age}
-                onChange={(e) => handleInputChange(e, 'age')}
-              />
-              <input
-                type="text"
-                placeholder="Blood Group"
-                value={editPatient.bloodgroup}
-                onChange={(e) => handleInputChange(e, 'bloodgroup')}
-              />
-              <input
-                type="text"
-                placeholder="Height"
-                value={editPatient.height}
-                onChange={(e) => handleInputChange(e, 'height')}
-              />
-              <input
-                type="text"
-                placeholder="Weight"
-                value={editPatient.weight}
-                onChange={(e) => handleInputChange(e, 'weight')}
-              />
-              <button onClick={savePatient}>Save Changes</button>
-            </div>
-          )}
+        
         </div>
       </div>
     </div>

@@ -1,0 +1,101 @@
+/* General layout and container styles */
+
+  
+  .doctor-patient-list-page-container {
+    flex-grow: 1;
+    padding: 20px;
+    background-color: #f9f9f9;
+    margin-left: 240px; /* Offset for sidebar */
+  }
+  
+  
+  h2 .fa-stethoscope {
+    margin-right: 10px;
+    color: #0a74da; /* Blue color for the stethoscope icon */
+  }
+  
+  
+  
+  .mb-3 {
+    margin-bottom: 20px;
+  }
+  
+  /* Table Styles */
+  .table {
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    margin-top: 20px;
+  }
+  
+ 
+  
+  .table td {
+    padding: 15px;
+    text-align: center;
+    vertical-align: middle;
+  }
+  
+  .table td:hover {
+    background-color: #f1f1f1;
+  }
+  
+  .table-striped tbody tr:nth-child(odd) {
+    background-color: #f9f9f9;
+  }
+  
+  /* Table Responsiveness */
+  @media (max-width: 768px) {
+    .table th, .table td {
+      padding: 8px;
+      font-size: 12px;
+    }
+    
+    h2 {
+      font-size: 1.5rem;
+    }
+  
+    .doctor-patient-list-page-container {
+      margin-left: 0; /* No margin for mobile view */
+      padding: 10px;
+    }
+  }
+  
+  /* Alert Styles */
+  .alert {
+    margin-top: 20px;
+  }
+  
+  /* Loading spinner */
+  .spinner-border {
+    display: block;
+    margin: 20px auto;
+  }
+  
+  /* Modal Styles (Optional for further customizations) */
+  .modal-content {
+    border-radius: 8px;
+  }
+  
+  .modal-header {
+    background-color: #0a74da;
+    color: white;
+  }
+  
+  .modal-body {
+    padding: 20px;
+  }
+  
+  .modal-footer {
+    padding: 10px;
+    display: flex;
+    justify-content: flex-end;
+  }
+  
+  .modal-footer .btn {
+    border-radius: 5px;
+  }
+  
+
+  

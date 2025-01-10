@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import {jwtDecode} from "jwt-decode"; // Ensure you are using the correct import for jwt-decode
+import { jwtDecode } from "jwt-decode"; // Correct import for jwt-decode
 import "./DoctorProfile.css";
 import DoctorNavbar from '../DoctorNavbar/DoctorNAvbar';
 import DoctorSidebar from '../DoctorSidebar/Doctorsidebar';
 
 const DoctorProfile = () => {
   const [profileData, setProfileData] = useState(null);
-  const [newImage, setNewImage] = useState(null);
+  const [newImage, setNewImage] = useState(null); // Store new image
   const [error, setError] = useState(null);
   const [successMessage, setSuccessMessage] = useState(null);
   const [formData, setFormData] = useState({
@@ -23,8 +23,8 @@ const DoctorProfile = () => {
     qualification: "",
   });
 
-  const [doctorId, setDoctorId] = useState(null); // Store doctor ID here
-  const [isUpdated, setIsUpdated] = useState(false);
+  const [doctorId, setDoctorId] = useState(null); // Store doctor ID
+  const [isUpdated, setIsUpdated] = useState(false); // Flag to track updates
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -56,8 +56,8 @@ const DoctorProfile = () => {
         const data = await response.json();
 
         if (response.ok) {
-          setProfileData(data.data);
-          setFormData(data.data);
+          setProfileData(data.data); // Set profile data
+          setFormData(data.data); // Set the form data with fetched data
         } else {
           setError(data.message || "Failed to fetch profile.");
         }
@@ -70,27 +70,30 @@ const DoctorProfile = () => {
     fetchDoctorProfile();
   }, [navigate]);
 
+  // Handle image change (new image upload)
   const handleImageChange = (e) => {
     const file = e.target.files[0];
     if (file) {
       const reader = new FileReader();
       reader.onloadend = () => {
-        setNewImage(reader.result);
+        setNewImage(reader.result); // Store the uploaded image
         setIsUpdated(true);
       };
-      reader.readAsDataURL(file);
+      reader.readAsDataURL(file); // Convert file to base64
     }
   };
 
+  // Handle form data change
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({
       ...prevData,
       [name]: value,
     }));
-    setIsUpdated(true);
+    setIsUpdated(true); // Mark as updated
   };
 
+  // Handle profile update (submit form)
   const handleUpdateProfile = async () => {
     const accessToken = localStorage.getItem("accessToken");
 
@@ -112,9 +115,10 @@ const DoctorProfile = () => {
     formDataObj.append("yoe", formData.yoe);
     formDataObj.append("qualification", formData.qualification);
 
+    // If a new image is uploaded, convert it to a Blob and append to formData
     if (newImage) {
       const imageBlob = dataURItoBlob(newImage);
-      formDataObj.append("profilepicture", imageBlob, "profilepicture.jpg");
+      formDataObj.append("profilepictures", imageBlob, "profilepictures.jpg");
     }
 
     try {
@@ -128,20 +132,21 @@ const DoctorProfile = () => {
 
       const data = await response.json();
       if (response.ok) {
-        setProfileData(data.data);
+        setProfileData(data.data); // Update profile data
         setSuccessMessage("Profile updated successfully!");
-        setError(null);
+        setError(null); // Clear any previous errors
       } else {
         setError(data.message || "Failed to update profile.");
-        setSuccessMessage(null);
+        setSuccessMessage(null); // Clear any success message
       }
     } catch (error) {
       console.error("Error updating profile:", error);
       setError("An error occurred while updating profile.");
-      setSuccessMessage(null);
+      setSuccessMessage(null); // Clear success message
     }
   };
 
+  // Convert base64 to Blob
   function dataURItoBlob(dataURI) {
     const byteString = atob(dataURI.split(",")[1]);
     const arrayBuffer = new ArrayBuffer(byteString.length);
@@ -169,12 +174,12 @@ const DoctorProfile = () => {
                 <div
                   className="profile-image"
                   style={{
-                    backgroundImage: `url(${newImage || (profileData?.profilepicture ? 'data:image/jpeg;base64,' + profileData.profilepicture : '/images/default-profile.jpg')})`,
+                    backgroundImage: `url(${newImage || (profileData?.profilepictures ? 'data:image/jpeg;base64,' + profileData.profilepictures : '/images/default-profile.jpg')})`,
                     backgroundSize: "cover",
                     backgroundPosition: "center",
                     cursor: "pointer",
                   }}
-                  onClick={() => document.getElementById("fileInput").click()}
+                  onClick={() => document.getElementById("fileInput").click()} // Trigger file input on click
                 >
                   <input
                     type="file"
@@ -186,7 +191,7 @@ const DoctorProfile = () => {
               </div>
 
               <div className="profile-details">
-                {/* Profile fields */}
+                {/* Full Name & Email */}
                 <div className="profile-detail-row">
                   <div className="input-group half-width">
                     <label>Full Name:</label>
@@ -197,7 +202,6 @@ const DoctorProfile = () => {
                       onChange={handleChange}
                     />
                   </div>
-
                   <div className="input-group half-width">
                     <label>Email:</label>
                     <input
@@ -209,6 +213,7 @@ const DoctorProfile = () => {
                   </div>
                 </div>
 
+                {/* Phone & DOB */}
                 <div className="profile-detail-row">
                   <div className="input-group half-width">
                     <label>Phone Number:</label>
@@ -219,7 +224,6 @@ const DoctorProfile = () => {
                       onChange={handleChange}
                     />
                   </div>
-
                   <div className="input-group half-width">
                     <label>Date of Birth:</label>
                     <input
@@ -231,6 +235,7 @@ const DoctorProfile = () => {
                   </div>
                 </div>
 
+                {/* Address & Specialization */}
                 <div className="profile-detail-row">
                   <div className="input-group half-width">
                     <label>Address:</label>
@@ -241,7 +246,6 @@ const DoctorProfile = () => {
                       onChange={handleChange}
                     />
                   </div>
-
                   <div className="input-group half-width">
                     <label>Specialization:</label>
                     <input
@@ -253,6 +257,7 @@ const DoctorProfile = () => {
                   </div>
                 </div>
 
+                {/* Gender, Qualification, Years of Experience */}
                 <div className="profile-detail-row">
                   <div className="input-group full-width">
                     <label>Gender:</label>
@@ -264,6 +269,7 @@ const DoctorProfile = () => {
                   </div>
                 </div>
 
+                {/* Qualification & Experience */}
                 <div className="profile-detail-row">
                   <div className="input-group half-width">
                     <label>Qualification:</label>
@@ -274,7 +280,6 @@ const DoctorProfile = () => {
                       onChange={handleChange}
                     />
                   </div>
-
                   <div className="input-group half-width">
                     <label>YOE:</label>
                     <input
@@ -286,6 +291,7 @@ const DoctorProfile = () => {
                   </div>
                 </div>
 
+                {/* License Number */}
                 <div className="profile-detail-row">
                   <div className="input-group half-width">
                     <label>License Number:</label>
@@ -314,3 +320,4 @@ const DoctorProfile = () => {
 };
 
 export default DoctorProfile;
+
