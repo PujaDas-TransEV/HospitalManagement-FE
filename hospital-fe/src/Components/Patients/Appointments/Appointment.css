@@ -1,38 +1,70 @@
-.appointment-container {
+
+.dashboard-container {
   display: flex;
   flex-direction: column;
-  padding: 20px;
+  min-height: 100vh;
 }
+
 
 .dashboard-content {
   display: flex;
-}
-
-.appointment-main-content {
   flex: 1;
   padding: 20px;
-  background-color: #f9f9f9;
+}
+
+.home-container {
+  flex: 1;
+  background-color: #fff;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  border-radius: 10px;
+}
+
+
+
+.departments {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
 }
 
 .department-card {
-  display: flex;
-  align-items: center;
-  background-color: #e9f7ef;
-  border-radius: 8px;
+  background-color: #e2e8f0;
   padding: 20px;
-  margin-bottom: 20px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  width: 150px;
+  text-align: center;
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.department-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
 }
 
 .department-icon {
   font-size: 40px;
-  margin-right: 15px;
+  margin-bottom: 10px;
 }
 
 .department-name {
-  font-size: 20px;
-  font-weight: bold;
+  font-size: 16px;
+  font-weight: 500;
+  color: #4a4a4a;
 }
+
+
+.appointment-details-container {
+  margin-top: 40px;
+  background-color: #fff;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  border-radius: 10px;
+}
+
+
 
 .appointments-table {
   width: 100%;
@@ -40,36 +72,130 @@
   margin-top: 20px;
 }
 
-.appointments-table th, .appointments-table td {
-  border: 1px solid #ddd;
+.appointments-table th,
+.appointments-table td {
   padding: 10px;
-  text-align: center;
+  text-align: left;
+  border-bottom: 1px solid #e2e8f0;
 }
 
 .appointments-table th {
-  background-color: #f4f4f4;
+  background-color: #f7fafc;
+  color: #333;
+  font-weight: 600;
 }
 
-button.edit-button {
-  background-color: #4caf50;
+.appointments-table td {
+  color: #4a4a4a;
+}
+
+.appointments-table button {
+  background-color: #ff5722;
   color: white;
-  padding: 5px 10px;
   border: none;
+  padding: 8px 12px;
+  border-radius: 5px;
   cursor: pointer;
+  transition: background-color 0.3s ease;
 }
 
-button.delete-button {
-  background-color: #f44336;
+.appointments-table button:hover {
+  background-color: #e64a19;
+}
+
+
+.edit-appointment-form {
+  background-color: #fff;
+  padding: 20px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  margin-top: 40px;
+}
+
+.edit-appointment-form h3 {
+  font-size: 20px;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+.edit-appointment-form form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.edit-appointment-form label {
+  font-size: 16px;
+  color: #333;
+  font-weight: 600;
+}
+
+.edit-appointment-form input,
+.edit-appointment-form textarea {
+  padding: 10px;
+  font-size: 16px;
+  border-radius: 5px;
+  border: 1px solid #e2e8f0;
+  outline: none;
+  transition: border-color 0.3s ease;
+}
+
+.edit-appointment-form input:focus,
+.edit-appointment-form textarea:focus {
+  border-color: #4a90e2;
+}
+
+.edit-appointment-form button {
+  background-color: #4a90e2;
   color: white;
-  padding: 5px 10px;
+  padding: 10px 20px;
   border: none;
+  border-radius: 5px;
   cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
 }
 
-button.edit-button:hover {
-  background-color: #45a049;
+.edit-appointment-form button:hover {
+  background-color: #357ab7;
 }
 
-button.delete-button:hover {
-  background-color: #e53935;
+.edit-appointment-form button[type='button'] {
+  background-color: #e2e8f0;
+  color: #333;
 }
+
+.edit-appointment-form button[type='button']:hover {
+  background-color: #d1dce4;
+}
+
+
+.appointment-details-container > div {
+  text-align: center;
+  font-size: 18px;
+  font-weight: 600;
+  color: #888;
+}
+
+
+@media (max-width: 768px) {
+  .departments {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .department-card {
+    width: 100%;
+    max-width: 200px;
+    margin-bottom: 20px;
+  }
+
+  .appointments-table th,
+  .appointments-table td {
+    padding: 8px;
+  }
+
+  .edit-appointment-form {
+    margin-top: 20px;
+  }
+} 

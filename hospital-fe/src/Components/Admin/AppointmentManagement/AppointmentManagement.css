@@ -94,4 +94,72 @@
   button:hover {
     opacity: 0.8;
   }
-  
+  * Edit Appointment Form */
+.edit-appointment-form {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+  margin-top: 20px;
+}
+
+.edit-appointment-form h3 {
+  font-size: 20px;
+  color: #333;
+}
+
+.edit-appointment-form form {
+  display: flex;
+  flex-direction: column;
+}
+
+.edit-appointment-form form div {
+  margin-bottom: 15px;
+}
+
+.edit-appointment-form form label {
+  font-weight: bold;
+  font-size: 14px;
+  color: #555;
+}
+
+.edit-appointment-form form input {
+  padding: 8px;
+  font-size: 14px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  width: 100%;
+}
+
+.edit-appointment-form form input:focus {
+  border-color: #007bff;
+  outline: none;
+}
+
+.edit-appointment-form button {
+  background-color: #28a745;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  font-size: 14px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.edit-appointment-form button:hover {
+  background-color: #218838;
+}
+
+.edit-appointment-form .close-button {
+  background-color: #dc3545;
+  color: white;
+  padding: 5px 10px;
+  font-size: 12px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.edit-appointment-form .close-button:hover {
+  background-color: #c82333;
+}

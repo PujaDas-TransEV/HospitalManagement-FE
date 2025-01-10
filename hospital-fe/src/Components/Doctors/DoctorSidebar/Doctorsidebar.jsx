@@ -77,7 +77,7 @@ const Sidebar = () => {
       </div>
 
       <Nav className="flex-column">
-        <Nav.Link href="/doctor-dashboard" className="sidebar-item">
+        <Nav.Link href="/doctordashboard" className="sidebar-item">
           <FaCalendar />
           {!collapsed && ' Dashboard'}
         </Nav.Link>

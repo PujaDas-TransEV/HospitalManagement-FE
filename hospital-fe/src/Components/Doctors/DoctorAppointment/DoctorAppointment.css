@@ -1,4 +1,4 @@
-/* DoctorAppointment.css - Modern Clean Style */
+ 
 .dashboard-container {
     display: flex;
     flex-direction: column;
@@ -75,3 +75,25 @@
     padding: 30px;
   }
   
+
+  button.btn-warning {
+    background-color: #ffc107;
+    color: white;
+    border: none;
+    
+  }
+  
+  button.btn-warning:hover {
+    background-color: #e0a800;
+  }
+  
+  button.btn-danger {
+    background-color: #dc3545;
+    color: white;
+    border: none;
+  }
+  
+  button.btn-danger:hover {
+    background-color: #c82333;
+  }
+

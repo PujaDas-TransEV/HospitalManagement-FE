@@ -25,6 +25,12 @@ function AdminLoginPage() {
       .then((data) => {
         // Check if login is successful
         if (data.message === 'Login successful!') {
+          // Store the access token in localStorage
+          localStorage.setItem('accessToken', data.token);  // Assuming 'data.token' contains the JWT token
+
+          // Optionally, you can store other info like user data in localStorage if needed
+          localStorage.setItem('adminEmail', email); // Store the admin email (if needed)
+
           alert('Login successful!');
           navigate('/ad-dashboard');  // Redirect to admin dashboard after successful login
         } else {
@@ -88,4 +94,3 @@ function AdminLoginPage() {
 }
 
 export default AdminLoginPage;
-
