@@ -116,62 +116,55 @@ const About = () => {
         </div>
       </div>
 
-      {/* Departments Section */}
-      <div className="departments-container" style={{ backgroundColor: '#f9f9f9', padding: '60px 0' }}>
-        <div className="headline-center" style={{ marginBottom: '60px' }}>
-          <h2 style={{ fontSize: '2.5rem', textAlign: 'center',marginLeft:'700px' }}>
-            Our <span style={{ color: '#72c02c' }}>Departments</span>
-          </h2>
+     
+<div className="departments-container" style={{ backgroundColor: '#f9f9f9', padding: '60px 0' }}>
+  <div className="headline-center" style={{ marginBottom: '60px' }}>
+    <h2 style={{ fontSize: '2.5rem', textAlign: 'center', marginLeft:'700px' }}>
+      Our <span style={{ color: '#72c02c' }}>Departments</span>
+    </h2>
+  </div>
+
+  <div className="container">
+    <div className="department-cards-container" style={{marginLeft:'200px'}}>
+      {/* Cardiology */}
+      <div className="department-card-about" >
+        <img src={CardiologyImage} alt="Cardiology" className="department-img" />
+        <div className="department-info">
+          <h3>Cardiology</h3>
+          <p>Our Cardiology Department provides comprehensive heart care, including diagnosis, treatment, and ongoing management for all heart-related conditions.</p>
         </div>
+      </div>
 
-        <div className="container">
-          <div className="row">
-            {/* Cardiology and Neurology in the Same Row */}
-           
-              <div className="department-card" style={{ marginLeft: '300px',gap:'10px'}} >
-                <img src={CardiologyImage} alt="Cardiology" className="department-img" />
-                <div className="department-info">
-                  <h3>Cardiology</h3>
-                  <p>Our Cardiology Department provides comprehensive heart care, including diagnosis, treatment, and ongoing management for all heart-related conditions.</p>
-                </div>
-              </div>
-           
-
-           
-              <div className="department-card">
-                <img src={NeurologyImage} alt="Neurology" className="department-img" />
-                <div className="department-info">
-                  <h3>Neurology</h3>
-                  <p>We offer advanced diagnostic and therapeutic services for neurological disorders such as stroke, epilepsy, and brain injuries.</p>
-                </div>
-              </div>
-            </div>
-         
-
-          <div className="row">
-            {/* Orthopedics and Pediatrics in the Same Row */}
-           
-            <div className="department-card" style={{ marginLeft: '300px',gap:'10px'}} >
-                <img src={OrthopedicsImage} alt="Orthopedics" className="department-img" />
-                <div className="department-info">
-                  <h3>Orthopedics</h3>
-                  <p>Our Orthopedics Department specializes in bone, joint, and musculoskeletal care, providing treatment for fractures, arthritis, and sports injuries.</p>
-                </div>
-              </div>
-       
-
-          
-              <div className="department-card">
-                <img src={PediatricsImage} alt="Pediatrics" className="department-img" />
-                <div className="department-info">
-                  <h3>Pediatrics</h3>
-                  <p>Our Pediatrics Department offers care for children from infancy through adolescence, ensuring their health and development are supported at every stage.</p>
-                </div>
-              </div>
-            </div>
-          </div>
+      {/* Neurology */}
+      <div className="department-card-about">
+        <img src={NeurologyImage} alt="Neurology" className="department-img" />
+        <div className="department-info">
+          <h3>Neurology</h3>
+          <p>We offer advanced diagnostic and therapeutic services for neurological disorders such as stroke, epilepsy, and brain injuries.</p>
         </div>
- 
+      </div>
+
+      {/* Orthopedics */}
+      <div className="department-card-about">
+        <img src={OrthopedicsImage} alt="Orthopedics" className="department-img" />
+        <div className="department-info">
+          <h3>Orthopedics</h3>
+          <p>Our Orthopedics Department specializes in bone, joint, and musculoskeletal care, providing treatment for fractures, arthritis, and sports injuries.</p>
+        </div>
+      </div>
+
+      {/* Pediatrics */}
+      <div className="department-card-about">
+        <img src={PediatricsImage} alt="Pediatrics" className="department-img" />
+        <div className="department-info">
+          <h3>Pediatrics</h3>
+          <p>Our Pediatrics Department offers care for children from infancy through adolescence, ensuring their health and development are supported at every stage.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
 
       {/* Latest Posts Section */}
       <div className="latest-posts-container" style={{ backgroundColor: '#f4f4f4', padding: '60px 0' }}>
@@ -237,32 +230,32 @@ const About = () => {
       {/* Footer Section */}
       <div className="footer">
         <div className="text">
-          <h3>About Us</h3>
-          <p>24 Hours</p>
-          <p>Top Doctor</p>
-          <p>Best Care</p>
-          <p>Patient</p>
+          <h3 style={{color:'white'}}>About Us</h3>
+          <p style={{color:'whitesmoke'}}>24 Hours</p>
+          <p style={{color:'whitesmoke'}}>Top Doctor</p>
+          <p style={{color:'whitesmoke'}}>Best Care</p>
+          <p style={{color:'whitesmoke'}}>Patient</p>
         </div>
         <div className="text">
-          <h3>Speciality</h3>
-          <p>Knee surgery</p>
-          <p>Spin surgery</p>
-          <p>Leg surgery</p>
-          <p>Tendon surgery</p>
+          <h3 style={{color:'white'}}>Speciality</h3>
+          <p style={{color:'whitesmoke'}}>Knee surgery</p>
+          <p style={{color:'whitesmoke'}}>Spin surgery</p>
+          <p style={{color:'whitesmoke'}}>Leg surgery</p>
+          <p style={{color:'whitesmoke'}}>Tendon surgery</p>
         </div>
         <div className="text">
           <h3>Best Teams</h3>
-          <p>Doctors</p>
-          <p>Nursing</p>
-          <p>Staff</p>
-          <p>Hospital</p>
+          <p style={{color:'whitesmoke'}}>Doctors</p>
+          <p style={{color:'whitesmoke'}}>Nursing</p>
+          <p style={{color:'whitesmoke'}}>Staff</p>
+          <p style={{color:'whitesmoke'}}>Hospital</p>
         </div>
         <div className="text">
-          <h3>Address</h3>
-          <p>Near MG Road</p>
-          <p>Galaxy Care</p>
-          <p>333-09093</p>
-          <p>09-883-090</p>
+          <h3 style={{color:'white'}}>Address</h3>
+          <p style={{color:'whitesmoke'}}>Near MG Road</p>
+          <p style={{color:'whitesmoke'}}>Galaxy Care</p>
+          <p style={{color:'whitesmoke'}}>333-09093</p>
+          <p style={{color:'whitesmoke'}}>09-883-090</p>
         </div>
       </div>
     </div>

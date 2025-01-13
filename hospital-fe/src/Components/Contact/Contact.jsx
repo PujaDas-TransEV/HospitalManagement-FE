@@ -109,32 +109,32 @@ const ContactPage = () => {
       {/* Footer */}
       <div className="footer">
         <div className="text">
-          <h3>About Us</h3>
-          <p>24 Hours</p>
-          <p>Top Doctor</p>
-          <p>Best Care</p>
-          <p>Patient</p>
+          <h3 style={{color:'white'}}>About Us</h3>
+          <p style={{color:'whitesmoke'}}>24 Hours</p>
+          <p style={{color:'whitesmoke'}}>Top Doctor</p>
+          <p style={{color:'whitesmoke'}}>Best Care</p>
+          <p style={{color:'whitesmoke'}}>Patient</p>
         </div>
         <div className="text">
-          <h3>Speciality</h3>
-          <p>Knee surgery</p>
-          <p>Spin surgery</p>
-          <p>Leg surgery</p>
-          <p>Tendon surgery</p>
+          <h3 style={{color:'white'}}>Speciality</h3>
+          <p style={{color:'whitesmoke'}}>Knee surgery</p>
+          <p style={{color:'whitesmoke'}}>Spin surgery</p>
+          <p style={{color:'whitesmoke'}}>Leg surgery</p>
+          <p style={{color:'whitesmoke'}}>Tendon surgery</p>
         </div>
         <div className="text">
-          <h3>Best Teams</h3>
-          <p>Doctors</p>
-          <p>Nursing</p>
-          <p>Staff</p>
-          <p>Hospital</p>
+          <h3 style={{color:'white'}}>Best Teams</h3>
+          <p style={{color:'whitesmoke'}}>Doctors</p>
+          <p style={{color:'whitesmoke'}}>Nursing</p>
+          <p style={{color:'whitesmoke'}}>Staff</p>
+          <p style={{color:'whitesmoke'}}>Hospital</p>
         </div>
         <div className="text">
-          <h3>Address</h3>
-          <p>Near MG Road</p>
-          <p>Galaxy Care</p>
-          <p>333-09093</p>
-          <p>09-883-090</p>
+          <h3 style={{color:'white'}}>Address</h3>
+          <p style={{color:'whitesmoke'}}>Near MG Road</p>
+          <p style={{color:'whitesmoke'}}>Galaxy Care</p>
+          <p style={{color:'whitesmoke'}}>333-09093</p>
+          <p style={{color:'whitesmoke'}}>09-883-090</p>
         </div>
       </div>
     </div>

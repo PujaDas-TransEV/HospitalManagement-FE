@@ -5,7 +5,7 @@
   box-sizing: border-box;
 }
 
-/* Navigation Styles */
+
 nav {
   display: flex;
   justify-content: space-between;
@@ -34,7 +34,7 @@ nav .logo h1 {
   font-size: 22px;
 }
 
-/* Main Section Styling */
+
 .main {
   display: flex;
   align-items: center;
@@ -70,7 +70,7 @@ nav .logo h1 {
   background-color: transparent;
 }
 
-/* Auth Buttons */
+
 .logout-btn,
 .login-btn {
   background-color: #d4311b;
@@ -94,7 +94,7 @@ nav .logo h1 {
   margin-right: 8px;
 }
 
-/* Mobile View for Navigation */
+
 @media (max-width: 768px) {
   nav ul {
     position: absolute;
@@ -127,7 +127,7 @@ nav .logo h1 {
   }
 }
 
-/* Full Screen Height Section */
+
 .min-h-screen {
   height: 100vh;
   background-size: cover;
@@ -151,7 +151,7 @@ nav .logo h1 {
   max-width: 800px;
 }
 
-/* Content Section Styling */
+
 .container.content {
   margin-top: -50px;
 }
@@ -179,7 +179,7 @@ ul.list-unstyled li i {
   margin-right: 10px;
 }
 
-/* Blockquote Styling */
+
 blockquote {
   font-style: italic;
   color: #333;
@@ -196,7 +196,7 @@ blockquote small {
   margin-top: 10px;
 }
 
-/* Responsive Video */
+
 .responsive-video iframe {
   width: 100%;
   height: 300px;
@@ -204,7 +204,7 @@ blockquote small {
   border: none;
 }
 
-/* General Layout Styles */
+
 .service-block-v6 {
   display: flex;
   align-items: center;
@@ -212,12 +212,12 @@ blockquote small {
   margin-bottom: 50px;
 }
 
-/* Ensuring the text and image have some gap */
+
 .service-desc {
   width: 50%;
 }
 
-/* General Layout Styles */
+
 .service-block-v6 {
   display: flex;
   align-items: center;
@@ -225,35 +225,35 @@ blockquote small {
   margin-bottom: 50px;
 }
 
-/* Ensuring the text and image have some gap */
+
 .service-desc {
   width: 50%;
 }
 
 .service-block-v6 img {
-  width: 150%; /* Make the images smaller */
+  width: 150%; 
   height: auto;
   margin-bottom: 20px;
   max-width: 800px;
-  padding: 70px; /* Optional: limit the maximum width */
+  padding: 70px; 
 }
 
-/* Mission Section Background */
+
 .mission-container {
-  padding: 50px 0; /* Add padding to separate the content */
+  padding: 50px 0; 
 }
 
-/* Vision Section Background */
+
 .vision-container {
-  padding: 50px 0; /* Add padding to separate the content */
+  padding: 50px 0;
 }
 
-/* Values Section Background */
+
 .values-container {
-  padding: 50px 0; /* Add padding to separate the content */
+  padding: 50px 0; 
 }
 
-/* Mobile View */
+
 @media (max-width: 768px) {
   .service-block-v6 {
     flex-direction: column;
@@ -262,11 +262,11 @@ blockquote small {
 
   .service-block-v6 img {
     margin-bottom: 20px;
-    width: 80%; /* Make the image width 80% on mobile */
-    max-width: 200px; /* Limit maximum width for mobile view */
+    width: 80%; 
+    max-width: 200px; 
   }
 
-  /* Make the text and image stack vertically on mobile */
+  
   .mission-container, .vision-container, .values-container {
     flex-direction: column;
     align-items: center;
@@ -276,8 +276,8 @@ blockquote small {
     width: 100%;
   }
 }
-/* About.css */
-.department-card {
+
+.department-card-about {
   background-color: #fff;
   border-radius: 8px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -288,7 +288,7 @@ blockquote small {
 .department-img {
   width: 100%;
   height: auto;
-  max-height: 200px; /* Adjust to control image size */
+  max-height: 200px; 
   object-fit: cover;
 }
 
@@ -306,7 +306,7 @@ blockquote small {
   font-size: 1rem;
   line-height: 1.6;
 }
-/* Latest Posts Section */
+
 .latest-posts-container {
   background-color: #f4f4f4;
   padding: 60px 0;
@@ -350,7 +350,7 @@ blockquote small {
   text-decoration: underline;
 }
 
-/* Contact Information Section */
+
 .contact-info-container {
   background-color: #ffffff;
   padding: 60px 0;
@@ -374,7 +374,6 @@ blockquote small {
   color: #666;
 }
 
-/* Grid Layout for Latest Posts */
 .container .row {
   display: flex;
   flex-wrap: wrap;
@@ -391,7 +390,7 @@ blockquote small {
   min-width: 45%;
 }
 
-/* Responsive Design */
+
 @media (max-width: 768px) {
   .service-block-v6 {
     flex-direction: column;
@@ -416,7 +415,7 @@ blockquote small {
     min-width: 100%;
   }
 }
-/* Departments Section */
+
 .departments-section {
   background-color: #fff;
   padding: 60px 0;
@@ -433,11 +432,11 @@ blockquote small {
 .departments-container {
   display: flex;
   justify-content: space-between;
-  gap: 10px; /* Reduced gap between departments */
+  gap: 10px; 
   flex-wrap: wrap;
 }
 
-.department-card {
+/* .department-card-about {
   background-color: white;
   padding: 20px;
   text-align: center;
@@ -445,28 +444,28 @@ blockquote small {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   margin-bottom: 20px;
-}
+} */
 
-.department-card:hover {
+.department-card-about:hover {
   transform: translateY(-5px);
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
 }
 
-.department-card h3 {
+.department-card-about h3 {
   font-size: 1.6rem;
   color: #72c02c;
   margin-bottom: 15px;
   font-weight: 600;
 }
 
-.department-card p {
+.department-card-about p {
   font-size: 1rem;
   color: #333;
   line-height: 1.6;
   margin-bottom: 20px;
 }
 
-/* Latest Posts Section */
+
 .latest-posts-container {
   background-color: #f4f4f4;
   padding: 60px 0;
@@ -485,7 +484,7 @@ blockquote small {
   color: #72c02c;
 }
 
-/* Responsive Design */
+
 @media (max-width: 768px) {
   .department-card {
     width: 100%;
@@ -494,5 +493,80 @@ blockquote small {
 
   .departments-container {
     justify-content: center;
+  }
+}
+/* Departments Section Container */
+.departments-container {
+  background-color: #f9f9f9;
+  padding: 60px 0;
+}
+
+/* Card Grid Layout */
+.department-cards-container {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr); /* 4 equal columns */
+  gap: 20px; /* Space between the cards */
+  padding: 0 20px; /* Optional padding */
+  max-width: 1200px;
+  margin: 0 auto; /* Center the grid */
+}
+
+/* Department Card Styling */
+.department-card-about {
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  padding: 20px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+}
+
+.department-card-about:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+/* Department Image */
+.department-img {
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+}
+
+/* Department Info */
+.department-info {
+  padding-top: 10px;
+}
+
+/* Department Title */
+.department-info h3 {
+  font-size: 1.25rem;
+  color: #333;
+}
+
+/* Department Description */
+.department-info p {
+  font-size: 1rem;
+  color: #555;
+  padding-top: 10px;
+}
+
+/* Responsive Design for Smaller Screens */
+@media (max-width: 1200px) {
+  .department-cards-container {
+    grid-template-columns: repeat(3, 1fr); /* 3 columns for medium screens */
+  }
+}
+
+@media (max-width: 768px) {
+  .department-cards-container {
+    grid-template-columns: repeat(2, 1fr); /* 2 columns for small screens */
+  }
+}
+
+@media (max-width: 480px) {
+  .department-cards-container {
+    grid-template-columns: 1fr; /* 1 column for very small screens */
   }
 }

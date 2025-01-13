@@ -96,15 +96,15 @@ const Medicalcare = () => {
         <div className="container">
           <h2 className="section-heading">Our Medical Departments</h2>
           <div className="departments-container">
-            <div className="department-card">
+            <div className="department-card-medical">
               <h3>Cardiology</h3>
               <p>Providing advanced treatment for heart diseases and conditions with state-of-the-art equipment.</p>
             </div>
-            <div className="department-card">
+            <div className="department-card-medical">
               <h3>Neurology</h3>
               <p>Expert treatment for neurological disorders, including strokes, epilepsy, and Parkinson's disease.</p>
             </div>
-            <div className="department-card">
+            <div className="department-card-medical">
               <h3>Pediatrics</h3>
               <p>Comprehensive healthcare services for children from infancy to adolescence.</p>
             </div>

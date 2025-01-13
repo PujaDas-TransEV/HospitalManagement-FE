@@ -118,11 +118,11 @@ const DoctorProfile = () => {
     // If a new image is uploaded, convert it to a Blob and append to formData
     if (newImage) {
       const imageBlob = dataURItoBlob(newImage);
-      formDataObj.append("profilepictures", imageBlob, "profilepictures.jpg");
+      formDataObj.append("profile_picture", imageBlob, "profile_picture.jpg");
     }
 
     try {
-      const response = await fetch("http://localhost:5000/doctors/profile/update", {
+      const response = await fetch("http://localhost:5000/doctors/updatedata", {
         method: "POST",
         headers: {
           Authorization: `Bearer ${accessToken}`,
