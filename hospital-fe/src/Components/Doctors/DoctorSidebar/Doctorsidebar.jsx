@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Nav, Button } from 'react-bootstrap';
-import { FaCalendar, FaList, FaEnvelope, FaCog, FaBars, FaCalendarCheck } from 'react-icons/fa'; // FaCalendarCheck added for leave icon
+import { FaCalendar, FaList, FaEnvelope, FaCog, FaBars, FaCalendarCheck,FaUser,FaCalendarAlt  } from 'react-icons/fa'; // FaCalendarCheck added for leave icon
 import './Doctorsidebar.css'; // Custom styling
 
 const Sidebar = () => {
@@ -23,11 +23,11 @@ const Sidebar = () => {
           {!collapsed && ' Dashboard'}
         </Nav.Link>
         <Nav.Link href="/appointments" className="sidebar-item">
-          <FaList />
+          <FaCalendarCheck />
           {!collapsed && ' Appointments'}
         </Nav.Link>
         <Nav.Link href="/patients" className="sidebar-item">
-          <FaList />
+          <FaUser />
           {!collapsed && ' Patient List'}
         </Nav.Link>
         <Nav.Link href="/messages" className="sidebar-item">
@@ -35,7 +35,7 @@ const Sidebar = () => {
           {!collapsed && ' Messages'}
         </Nav.Link>
         <Nav.Link href="/leave" className="sidebar-item">
-          <FaCalendarCheck />
+          <FaCalendarAlt  />
           {!collapsed && ' Leave Management'} {/* Display text only if not collapsed */}
         </Nav.Link>
         <Nav.Link href="/doctor-settings" className="sidebar-item">

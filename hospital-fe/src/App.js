@@ -46,6 +46,9 @@ import DepartmentwisebookAppointment from './Components/Patients/Departmentwiseb
 import AdminAppointBookDepartmentwise from './Components/Admin/AdminDepartmentwiseAppointmentBook/AdminAppointmentBook';
 import PatientDepartmnetwiseList from './Components/Admin/DepartmetwisePatientsList/DepartmentwisePatientsList';
 import PatientList from './Components/Doctors/PatientList/PatientList';
+import Prescription from './Components/Patients/Prescription/Prescription';
+import AdminPrescription from './Components/Admin/PrescriptionReports/PrescriptionAdmin';
+import AdminFacilityManagement from './Components/Admin/FacilityManagement/FacilityManagement';
 
 
 
@@ -54,7 +57,7 @@ const ConditionalNavbar = () => {
   const location = useLocation();  // Get current location to conditionally render Navbar
 
   // Render Navbar only if the path is not '/login' or '/signup'
-  return !['/login', '/signup','/password','/admin/signup','/admin/login','/admin/password','/super/admin/signup','/super/admin/login','/super/admin/password','/patient-dashboard','/patient-Appointments','/profile','/settings','/dprofile','/doctordashboard','/adnavbar','/adsidebar','/ad-dashboard','/manage-doctors','/doctor-signup','/doctor-login','/doctors/:specialization','/doctors/Cardiology','/doctors/Neurology','/doctors/Pediatrics','/doctors/Orthopedics','/doctors/Infectious%20Diseases','/doctor-password','/manage-patients','/admin-settings','/doctor-navbar','/doctor-sidebar','/leave','/doctor-profile','/doctor-settings','/admin-profile','/appointment-management','/appointments','/appointment/:departmentId','/appointment/cardiology','/appointment/pediatrics','/appointment/neurology','/appointment/orthopedics','/appointment/dermatology','/appointment/surgery','/admin/appointments/cardiology','/patients/Cardiology','/patients/Neurology','/patients/Orthopedics','/patients/Dermatology','/patients/Pediatrics','/patients'].includes(location.pathname) && <Navbar />;
+  return !['/login', '/signup','/password','/admin/signup','/admin/login','/admin/password','/super/admin/signup','/super/admin/login','/super/admin/password','/patient-dashboard','/patient-Appointments','/profile','/settings','/dprofile','/doctordashboard','/adnavbar','/adsidebar','/ad-dashboard','/manage-doctors','/doctor-signup','/doctor-login','/doctors/:specialization','/doctors/Cardiology','/doctors/Neurology','/doctors/Pediatrics','/doctors/Orthopedics','/doctors/Infectious%20Diseases','/doctor-password','/manage-patients','/admin-settings','/doctor-navbar','/doctor-sidebar','/leave','/doctor-profile','/doctor-settings','/admin-profile','/appointment-management','/appointments','/appointment/:departmentId','/appointment/cardiology','/appointment/pediatrics','/appointment/neurology','/appointment/orthopedics','/appointment/dermatology','/appointment/surgery','/admin/appointments/cardiology','/patients/Cardiology','/patients/Neurology','/patients/Orthopedics','/patients/Dermatology','/patients/Pediatrics','/patients','/prescription','/reportsprescription','/facility-management'].includes(location.pathname) && <Navbar />;
 };
 
 // Main App Component
@@ -110,6 +113,9 @@ function App() {
         <Route path="/admin/appointments/:departmentId" element={<AdminAppointBookDepartmentwise />} />
         <Route path="/patients/:specialization" element={<PatientDepartmnetwiseList/>} />
         <Route path="/patients" element={<PatientList/>} />
+        <Route path="/prescription" element={<Prescription/>} />
+        <Route path="/reportsprescription" element={<AdminPrescription/>} />
+        <Route path="/facility-management" element={<AdminFacilityManagement/>} />
 
         
      

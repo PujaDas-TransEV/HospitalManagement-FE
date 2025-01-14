@@ -1,0 +1,89 @@
+.patient-reports-page {
+    padding: 20px;
+    background-color: #f9f9f9;
+  }
+  
+  .patient-reports-page h2 {
+    font-size: 2rem;
+    margin-bottom: 20px;
+    color: #2c3e50;
+  }
+  
+  .spinner-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+  }
+  
+  .table {
+    background-color: #fff;
+    border-radius: 8px;
+  }
+  
+  .table th, .table td {
+    padding: 15px;
+    text-align: center;
+  }
+  
+  .table th {
+    background-color: #3498db;
+    color: white;
+  }
+  
+  .table td {
+    font-size: 1rem;
+  }
+  
+  .table td img {
+    border-radius: 50%;
+  }
+  
+  .prescription-item {
+    background-color: #fff;
+    padding: 15px;
+    margin: 10px 0;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  }
+  
+  .image-container {
+    margin-top: 20px;
+    text-align: center;
+  }
+  
+  .modal-content {
+    border-radius: 10px;
+  }
+  
+  .modal-header {
+    background-color: #3498db;
+    color: white;
+  }
+  
+  .modal-body {
+    padding: 20px;
+    background-color: #f0f0f0;
+  }
+  
+  .modal-footer {
+    padding: 10px;
+    text-align: right;
+  }
+  
+  button {
+    background-color: #3498db;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    font-size: 1rem;
+    cursor: pointer;
+  }
+  
+  button:hover {
+    background-color: #2980b9;
+  }
+  
+  button:focus {
+    outline: none;
+  }
+  

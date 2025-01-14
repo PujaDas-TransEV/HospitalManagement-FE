@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Nav, NavItem } from 'react-bootstrap';
-import { FaTachometerAlt, FaUserMd, FaUserInjured, FaCalendarAlt, FaMoneyBillWave, FaCogs, FaSignOutAlt, FaBars, FaArrowLeft } from 'react-icons/fa';
+import { FaTachometerAlt, FaUserMd, FaUserInjured, FaCalendarAlt, FaMoneyBillWave, FaCogs, FaSignOutAlt, FaBars, FaArrowLeft, FaPills } from 'react-icons/fa';
 import './AdminSidebar.css';
 
 const Sidebar = () => {
@@ -60,6 +60,12 @@ const Sidebar = () => {
           </Link>
         </NavItem>
         <NavItem>
+          <Link to="/facility-management" className="nav-link">
+            <FaCalendarAlt />
+            {!collapsed && <span>Facility Management</span>}
+          </Link>
+        </NavItem>
+        <NavItem>
           <Link to="/billing" className="nav-link">
             <FaMoneyBillWave />
             {!collapsed && <span>Billing & Payments</span>}
@@ -72,9 +78,9 @@ const Sidebar = () => {
           </Link>
         </NavItem>
         <NavItem>
-          <Link to="/reports" className="nav-link">
-            <FaCogs />
-            {!collapsed && <span>Reports</span>}
+          <Link to="/reportsprescription" className="nav-link">
+            < FaPills />
+            {!collapsed && <span> Prescription & Reports</span>}
           </Link>
         </NavItem>
         <NavItem>

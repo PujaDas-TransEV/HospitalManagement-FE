@@ -53,7 +53,7 @@ const PatientSidebar = () => {
             </Link>
           </li>
           <li className="nav-item">
-            <Link to="/reports" className={`nav-link ${location.pathname === '/reports' ? 'active-link' : ''}`}>
+            <Link to="/prescription" className={`nav-link ${location.pathname === '/reports' ? 'active-link' : ''}`}>
               <FaFileAlt className="nav-icon" />
               {isExpanded && <span>Reports/Documents</span>}
             </Link>
