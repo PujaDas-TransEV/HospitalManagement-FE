@@ -1,0 +1,87 @@
+/* General Styling */
+.container {
+    width: 80%;
+    margin: 0 auto;
+    padding: 20px;
+  }
+  
+  .page-title {
+    text-align: center;
+    color: #333;
+    margin-bottom: 40px;
+  }
+  
+  /* Card Styling */
+  .card {
+   
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 30px;
+  }
+  
+  .form-container, .search-container, .all-wards-container {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  
+  /* Error and Success Message Styling */
+  .error, .success {
+    text-align: center;
+    font-weight: bold;
+    margin-bottom: 20px;
+  }
+  
+  .error {
+    color: red;
+  }
+  
+  .success {
+    color: green;
+  }
+  
+  /* Form Group */
+  .form-group {
+    margin-bottom: 15px;
+  }
+  
+  input[type="text"],
+  input[type="email"],
+  input[type="number"] {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  
+  
+  
+  table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  table th, table td {
+    padding: 12px;
+    border: 1px solid #ddd;
+  }
+  
+  table th {
+    background-color: #f2f2f2;
+  }
+  
+  table tr:nth-child(even) {
+    background-color: #f9f9f9;
+  }
+  
+  .ward-details p {
+    margin: 10px 0;
+  }
+  
+  .ward-details {
+    background-color: #f2f2f2;
+    padding: 15px;
+    border-radius: 8px;
+  }
+  
