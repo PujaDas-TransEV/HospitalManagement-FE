@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { FaHome, FaHeartbeat, FaCalendarCheck, FaNotesMedical, FaEnvelope, FaFileAlt, FaUser, FaAngleDoubleLeft, FaAngleDoubleRight,FaCog   } from 'react-icons/fa';  // Import FaTimes for close button
+import { FaHome, FaHeartbeat, FaCalendarCheck, FaNotesMedical, FaEnvelope, FaFileAlt, FaUser, FaAngleDoubleLeft, FaAngleDoubleRight,FaCog ,FaQuestionCircle  } from 'react-icons/fa';  // Import FaTimes for close button
 import './PatientSidebar.css'; // Import your CSS file for styling
 
 const PatientSidebar = () => {
@@ -56,6 +56,12 @@ const PatientSidebar = () => {
             <Link to="/prescription" className={`nav-link ${location.pathname === '/reports' ? 'active-link' : ''}`}>
               <FaFileAlt className="nav-icon" />
               {isExpanded && <span>Reports/Documents</span>}
+            </Link>
+          </li>
+          <li className="nav-item">
+            <Link to="/patient-support" className={`nav-link ${location.pathname === '/patient-support' ? 'active-link' : ''}`}>
+              <FaQuestionCircle className="nav-icon" />
+              {isExpanded && <span>Support</span>}
             </Link>
           </li>
           <li className="nav-item">

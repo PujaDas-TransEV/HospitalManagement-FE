@@ -75,7 +75,7 @@ h2 {
 }
 
 /* Buttons for create, edit, delete actions */
-button {
+/* button {
   margin-bottom: 10px;
 }
 
@@ -87,7 +87,7 @@ button[type="submit"] {
 button.cancel-btn {
   margin-top: 10px;
   width: 100%;
-}
+} */
 
 
 
