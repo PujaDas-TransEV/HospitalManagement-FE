@@ -1,16 +1,18 @@
-
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { Table, Spinner, Alert, Row, Col } from 'react-bootstrap';
-import { FaHeart, FaBrain, FaUserMd, FaSyringe, FaStethoscope } from 'react-icons/fa'; // Example icons
+import { FaHeart, FaBrain, FaUserMd, FaSyringe, FaStethoscope } from 'react-icons/fa';
 import AdminNavbar from '../Adminnavbar/AdminNavbar';
 import AdminSidebar from '../Adminsidebar/AdminSidebar';
+import './DepartmentwisePatientList.css'
+
 
 const PatientListPage = () => {
   const { specialization } = useParams(); // Get the specialization from the URL
   const navigate = useNavigate(); // Hook for navigation
   const [patients, setPatients] = useState([]);
   const [doctorDetails, setDoctorDetails] = useState([]); // Holds doctor details (name and appointment time)
+  const [admissionDetails, setAdmissionDetails] = useState({}); // Holds admission details (admit status, room number, etc.)
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -76,7 +78,7 @@ const PatientListPage = () => {
           .then((response) => response.json())
           .then((data) => ({
             fullname: data.data?.fullname || 'Unknown', // Doctor's full name
-            appointment_time: data.data?.appointment_time || 'Not available', // Doctor's appointment time (assuming this key exists in the response)
+            appointment_time: data.data?.appointment_time || 'Not available', // Doctor's appointment time
           }));
       })
     )
@@ -84,9 +86,54 @@ const PatientListPage = () => {
       .catch((error) => console.error('Error fetching doctor details:', error));
   };
 
+  // Fetch admission details based on patient UID (used as patientid)
+  const fetchAdmissionDetails = (patientUids) => {
+    Promise.all(
+      patientUids.map((patientUid) => {
+        const formData = new FormData();
+        formData.append('patientid', patientUid); // Send the UID (which is used as patientid)
+
+        return fetch('http://localhost:5000/ops/patientadmitstatus', {
+          method: 'POST',
+          body: formData,
+        })
+          .then((response) => response.json())
+          .then((data) => ({
+            patientUid,
+            admitstatus: data.data?.admitstatus || 'Not admitted',
+            room_number: data.data?.room_number || 'Not available',
+            room_type: data.data?.room_type || 'Not available',
+            wardname: data.data?.wardname || 'Not available',
+            wardemail: data.data?.wardemail || 'Not available',
+          }))
+          .catch((error) => {
+            console.error('Error fetching admission details for patient UID:', patientUid);
+            return { patientUid, error: 'Error fetching admission details' };
+          });
+      })
+    )
+      .then((admissionData) => {
+        const admissionDetailsObj = admissionData.reduce((acc, detail) => {
+          acc[detail.patientUid] = detail;
+          return acc;
+        }, {});
+        setAdmissionDetails(admissionDetailsObj);
+      })
+      .catch((error) => {
+        console.error('Error fetching admission details:', error);
+      });
+  };
+
   useEffect(() => {
     fetchPatients(); // Fetch patients when component mounts or specialization changes
   }, [specialization]);
+
+  useEffect(() => {
+    if (patients.length > 0) {
+      const patientUids = patients.map((patient) => patient.uid); // Use 'uid' as the patient ID from patientview API
+      fetchAdmissionDetails(patientUids); // Fetch admission details for each patient using 'uid'
+    }
+  }, [patients]);
 
   useEffect(() => {
     if (patients.length > 0) {
@@ -122,7 +169,7 @@ const PatientListPage = () => {
               <Table striped bordered hover>
                 <thead>
                   <tr>
-                    <th> Patient Full Name</th>
+                    <th>Patient Full Name</th>
                     <th>Age</th>
                     <th>Gender</th>
                     <th>Blood Group</th>
@@ -130,27 +177,38 @@ const PatientListPage = () => {
                     <th>Email</th>
                     <th>Doctor Name</th>
                     <th>Appointment Time</th>
+                    <th>Admission Status</th>
+                    <th>Room Number</th>
+                    <th>Room Type</th>
+                    <th>Ward Name</th>
+                    <th>Ward Email</th>
                   </tr>
                 </thead>
                 <tbody>
                   {patients.length > 0 ? (
-                    patients.map((patient, index) => (
-                      <tr key={index}>
-                        <td>{patient.firstname} {patient.lastname}</td>
-                        <td>{patient.age}</td>
-                        <td>{patient.gender}</td>
-                        <td>{patient.bloodgroup}</td>
-                        <td>{patient.phonenumber}</td>
-                        <td>{patient.email}</td>
-                       
-                        <td>{doctorDetails[index]?.fullname || 'Unknown'}</td>
-                        <td>{patient.appointment_time}</td>
-                       
-                      </tr>
-                    ))
+                    patients.map((patient, index) => {
+                      const admissionData = admissionDetails[patient.uid] || {}; // Use 'uid' as the patient ID
+                      return (
+                        <tr key={index}>
+                          <td>{patient.firstname} {patient.lastname}</td>
+                          <td>{patient.age}</td>
+                          <td>{patient.gender}</td>
+                          <td>{patient.bloodgroup}</td>
+                          <td>{patient.phonenumber}</td>
+                          <td>{patient.email}</td>
+                          <td>{doctorDetails[index]?.fullname || 'Unknown'}</td>
+                          <td>{patient.appointment_time}</td>
+                          <td>{admissionData.admitstatus || 'Not available'}</td>
+                          <td>{admissionData.room_number || 'Not available'}</td>
+                          <td>{admissionData.room_type || 'Not available'}</td>
+                          <td>{admissionData.wardname || 'Not available'}</td>
+                          <td>{admissionData.wardemail || 'Not available'}</td>
+                        </tr>
+                      );
+                    })
                   ) : (
                     <tr>
-                      <td colSpan="8">No patients available for this specialization.</td>
+                      <td colSpan="13">No patients available for this specialization.</td>
                     </tr>
                   )}
                 </tbody>
@@ -164,5 +222,3 @@ const PatientListPage = () => {
 };
 
 export default PatientListPage;
-
-

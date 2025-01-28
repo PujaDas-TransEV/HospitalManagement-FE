@@ -124,6 +124,27 @@ const RoomManagementPage = () => {
     setRoomType(event.target.value);
   };
 
+  // Handle delete room
+  const handleDeleteRoom = async (roomId) => {
+    const formData = new FormData();
+    formData.append('roomid', roomId);
+
+    try {
+      const response = await axios.post('http://localhost:5000/ops/deleteroom', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      });
+
+      if (response.status === 200) {
+        setSuccessMessage('Room deleted successfully!');
+        fetchAllRooms();  // Refresh the room list after deletion
+      }
+    } catch (error) {
+      setErrorMessage('Failed to delete room. Please try again.');
+    }
+  };
+
   // Navigate to the Patient Admission Page when button is clicked
   const handlePatientAdmissionRedirect = () => {
     navigate('/patient-admission'); // Redirect to Patient Admission page
@@ -166,11 +187,11 @@ const RoomManagementPage = () => {
             {roomDetails && (
               <div className="room-details">
                 <h4>Room Details</h4>
-                <p><strong>Room ID:</strong> {roomDetails.uid}</p> {/* Display room ID */}
+                <p><strong>Room ID:</strong> {roomDetails.uid}</p>
                 <p><strong>Room Number:</strong> {roomDetails.room_number}</p>
                 <p><strong>Room Type:</strong> {roomDetails.room_type}</p>
                 <p><strong>Capacity:</strong> {roomDetails.capacity}</p>
-                <p><strong>Ward ID:</strong> {roomDetails.room_ward_id}</p> {/* Display Ward ID */}
+                <p><strong>Ward ID:</strong> {roomDetails.room_ward_id}</p>
               </div>
             )}
           </div>
@@ -244,19 +265,29 @@ const RoomManagementPage = () => {
             <table>
               <thead>
                 <tr>
-                  <th>Room ID</th> {/* Display Room ID */}
+                  <th>Room ID</th>
                   <th>Room Number</th>
                   <th>Room Type</th>
                   <th>Capacity</th>
+                  <th>Actions</th> {/* Add Actions column */}
                 </tr>
               </thead>
               <tbody>
                 {allRooms.map((room) => (
-                  <tr key={room.uid}> {/* Use uid as room_id */}
-                    <td>{room.uid}</td> {/* Display room ID */}
+                  <tr key={room.uid}>
+                    <td>{room.uid}</td>
                     <td>{room.room_number}</td>
                     <td>{room.room_type}</td>
                     <td>{room.capacity}</td>
+                    <td>
+                      {/* Delete button */}
+                      <button
+                        className="btn delete-btn"
+                        onClick={() => handleDeleteRoom(room.uid)} // Pass room id for deletion
+                      >
+                        Delete
+                      </button>
+                    </td>
                   </tr>
                 ))}
               </tbody>

@@ -1,0 +1,125 @@
+/* Container for the entire page */
+.manage-patients-container {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+  }
+  
+  /* Main content area (side navbar and patient list container) */
+  .manage-patients-content {
+    display: flex;
+    flex: 1;
+    background-color: #f4f4f9;
+  }
+  
+  /* Main patient list container */
+  .patient-list-page-container {
+    flex: 1;
+    padding: 30px;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+    margin-left: 250px; /* Adjust if sidebar has fixed width */
+    margin-right: 20px;
+    overflow-y: auto;
+  }
+  
+  /* Header section */
+  .patient-list-page-container h2 {
+    font-size: 28px;
+    font-weight: 600;
+    margin-bottom: 20px;
+    color: #333;
+    text-align: center;
+  }
+  
+  /* Specialization icon and title */
+  .patient-list-page-container h3 {
+    font-size: 22px;
+    color: #666;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+  }
+  
+  .patient-list-page-container h3 svg {
+    margin-right: 10px;
+    font-size: 26px;
+  }
+  
+  /* Table Styling */
+  .table-striped {
+    width: auto;
+    table-layout: fixed; /* Makes the table cells more compact */
+  }
+  
+  .table-striped th,
+  .table-striped td {
+    padding: 8px 10px; /* Reduce padding */
+    text-align: center;
+    font-size: 14px; /* Reduce font size */
+  }
+  
+  .table-striped th {
+    background-color: #007bff;
+    color: white;
+    font-weight: bold;
+    text-transform: uppercase;
+  }
+  
+  .table-striped tbody tr:nth-child(odd) {
+    background-color: #f9f9f9;
+  }
+  
+  .table-striped tbody tr:nth-child(even) {
+    background-color: #f1f1f1;
+  }
+  
+  .table-striped tbody tr:hover {
+    background-color: #e0f7ff;
+    cursor: pointer;
+  }
+  
+  /* Spinner for loading state */
+  .spinner-border {
+    margin-top: 50px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  
+  /* Alert message styling */
+  .alert {
+    margin-bottom: 20px;
+    text-align: center;
+  }
+  
+  /* Responsive design for mobile and smaller screens */
+  @media (max-width: 768px) {
+    .manage-patients-content {
+      flex-direction: column;
+    }
+  
+    .patient-list-page-container {
+      margin-left: 0;
+      margin-right: 0;
+      padding: 15px;
+    }
+  
+    /* Adjust table cell padding and font size for small screens */
+    .table-striped th,
+    .table-striped td {
+      font-size: 12px; /* Reduce font size for mobile */
+      padding: 6px 8px; /* Reduce padding */
+    }
+  
+    .patient-list-page-container h2 {
+      font-size: 24px;
+    }
+  
+    .patient-list-page-container h3 {
+      font-size: 20px;
+    }
+  }
+  

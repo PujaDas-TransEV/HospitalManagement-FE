@@ -1,0 +1,76 @@
+
+  .staff-table {
+    margin-top: 20px;
+    width: 80%;  /* Reduced width for the table */
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .staff-table th,
+  .staff-table td {
+    text-align: center;
+    vertical-align: middle;
+    padding: 12px 15px; /* Adding padding for a cleaner look */
+  }
+  
+  .staff-table th {
+    background-color: #343a40;
+    color: #fff;
+  }
+  
+  .staff-table td {
+    background-color: #fff;
+  }
+  
+  .staff-table tbody tr:hover {
+    background-color: #f1f1f1;
+  }
+  
+  .staff-management-container button {
+    margin-bottom: 20px;
+    margin-top: 10px;
+  }
+  
+  .form-group label {
+    font-size: 1.1rem;
+  }
+  
+  .form-group input {
+    font-size: 1rem;
+    padding: 10px;
+  }
+  
+  .form-group select {
+    font-size: 1rem;
+    padding: 10px;
+  }
+  
+  .staff-form-button {
+    width: 100%;
+    font-size: 1.1rem;
+    padding: 10px;
+  }
+  
+  .staff-management-container .alert {
+    margin-top: 20px;
+  }
+  
+  /* Media queries for smaller screens */
+  @media (max-width: 768px) {
+    .staff-management-container {
+      margin-left: 0;
+    }
+  
+    .search-section .form-control {
+      width: 100%;
+    }
+
+    /* Adjusting table width on smaller screens */
+    .staff-table {
+      width: 95%;  /* Further reducing the width on smaller screens */
+    }
+
+    .staff-management-container button {
+      width: 100%;
+    }
+  }

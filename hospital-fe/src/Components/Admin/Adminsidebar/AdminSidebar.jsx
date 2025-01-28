@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Nav, NavItem } from 'react-bootstrap';
-import { FaTachometerAlt, FaUserMd, FaUserInjured, FaCalendarAlt, FaMoneyBillWave, FaCogs, FaSignOutAlt, FaBars, FaArrowLeft, FaPills,FaPlusCircle,FaBed } from 'react-icons/fa';
+import { FaTachometerAlt, FaUserMd, FaUserInjured, FaCalendarAlt, FaMoneyBillWave, FaCogs, FaSignOutAlt, FaBars, FaArrowLeft, FaPills,FaPlusCircle,FaBed,FaTools,FaBuilding,FaUser } from 'react-icons/fa';
 import './AdminSidebar.css';
 
 const Sidebar = () => {
@@ -61,7 +61,7 @@ const Sidebar = () => {
         </NavItem>
         <NavItem>
           <Link to="/facility-management" className="nav-link">
-            <FaCalendarAlt />
+            <FaBuilding />
             {!collapsed && <span>Facility Management</span>}
           </Link>
         </NavItem>
@@ -78,15 +78,21 @@ const Sidebar = () => {
           </Link>
         </NavItem>
         <NavItem>
+          <Link to="/staff-management" className="nav-link">
+            <FaUser />
+            {!collapsed && <span>Staff Management</span>}
+          </Link>
+        </NavItem>
+        <NavItem>
           <Link to="/billing" className="nav-link">
             <FaMoneyBillWave />
             {!collapsed && <span>Billing & Payments</span>}
           </Link>
         </NavItem>
         <NavItem>
-          <Link to="/inventory" className="nav-link">
-            <FaCogs />
-            {!collapsed && <span>Inventory Management</span>}
+          <Link to="/equipment-management" className="nav-link">
+            <FaTools />
+            {!collapsed && <span>Equipment Management</span>}
           </Link>
         </NavItem>
         <NavItem>

@@ -52,8 +52,8 @@ const WardManagementPage = () => {
     try {
       const response = await axios.post('http://localhost:5000/ops/wardmanagement', formData, {
         headers: {
-          'Content-Type': 'multipart/form-data'
-        }
+          'Content-Type': 'multipart/form-data',
+        },
       });
 
       if (response.status === 201) {
@@ -64,7 +64,7 @@ const WardManagementPage = () => {
         setLocation('');
         setWardEmail('');
         setWardPhoneNo('');
-        fetchAllWards();  // Refresh the ward list after creation
+        fetchAllWards(); // Refresh the ward list after creation
       }
     } catch (error) {
       setErrorMessage('Failed to create ward. Please try again.');
@@ -94,6 +94,23 @@ const WardManagementPage = () => {
       }
     } catch (error) {
       setErrorMessage('Failed to fetch ward details. Please try again.');
+    }
+  };
+
+  // Handle Ward Deletion
+  const handleDelete = async (wardId) => {
+    const formData = new FormData();
+    formData.append('wardid', wardId);
+
+    try {
+      const response = await axios.post('http://localhost:5000/ops/deleteward', formData);
+
+      if (response.status === 200) {
+        setSuccessMessage('Ward deleted successfully!');
+        fetchAllWards(); // Refresh the ward list after deletion
+      }
+    } catch (error) {
+      setErrorMessage('Failed to delete ward. Please try again.');
     }
   };
 
@@ -220,6 +237,7 @@ const WardManagementPage = () => {
                   <th>Type</th>
                   <th>Location</th>
                   <th>Capacity</th>
+                  <th>Action</th>
                 </tr>
               </thead>
               <tbody>
@@ -230,6 +248,14 @@ const WardManagementPage = () => {
                     <td>{ward.wardtype}</td>
                     <td>{ward.wardlocation}</td>
                     <td>{ward.capacity}</td>
+                    <td>
+                      <button
+                        onClick={() => handleDelete(ward.uid)}
+                        className="btn btn-delete"
+                      >
+                        Delete
+                      </button>
+                    </td>
                   </tr>
                 ))}
               </tbody>
