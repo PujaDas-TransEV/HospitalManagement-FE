@@ -1,4 +1,4 @@
-.patient-reports-page {
+/* .patient-reports-page {
     padding: 20px;
     background-color: #f9f9f9;
   }
@@ -86,4 +86,141 @@
   button:focus {
     outline: none;
   }
-  
+   */
+   /* General page styling */
+.prescription-page {
+  padding: 20px;
+  background-color: #f9f9f9;
+  width: 100%;
+  overflow-x: auto;
+}
+
+.prescription-page h2 {
+  font-size: 2rem;
+  margin-bottom: 20px;
+  color: #2c3e50;
+  font-weight: 600;
+  text-align: center;
+}
+
+/* Spinner container */
+.spinner-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+}
+
+/* Table styling */
+.table {
+  background-color: #fff;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.table th,
+.table td {
+  padding: 12px;
+  text-align: center;
+  vertical-align: middle;
+}
+
+.table th {
+  background-color: #3498db;
+  color: #fff;
+  font-weight: 600;
+}
+
+.table td {
+  font-size: 0.95rem;
+}
+
+/* Responsive scroll for mobile */
+@media (max-width: 768px) {
+  .table {
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+
+  .prescription-page {
+    padding: 10px;
+  }
+
+  .table th, .table td {
+    padding: 8px;
+    font-size: 0.85rem;
+  }
+}
+
+/* Modal styling */
+.modal-content {
+  border-radius: 10px;
+}
+
+.modal-header {
+  background-color: #3498db;
+  color: white;
+  border-bottom: none;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+}
+
+.modal-body {
+  padding: 20px;
+  background-color: #f0f0f0;
+  color: #333;
+  font-size: 1rem;
+}
+
+.modal-body p {
+  margin-bottom: 10px;
+}
+
+.modal-footer {
+  border-top: none;
+  padding: 15px;
+}
+
+/* Buttons */
+button, .btn {
+  background-color: #3498db;
+  color: white;
+  border: none;
+  padding: 8px 14px;
+  font-size: 1rem;
+  border-radius: 4px;
+  transition: background-color 0.3s ease;
+}
+
+button:hover, .btn:hover {
+  background-color: #2980b9;
+}
+
+button:focus, .btn:focus {
+  outline: none;
+  box-shadow: none;
+}
+
+/* Embed styling for PDFs */
+embed {
+  border-radius: 5px;
+  margin-top: 10px;
+  border: 1px solid #ccc;
+}
+
+/* Alert customization */
+.alert-danger {
+  text-align: center;
+  font-size: 1rem;
+}
+
+/* Custom prescription card (if needed) */
+.prescription-item {
+  background-color: #fff;
+  padding: 15px;
+  margin: 15px 0;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}

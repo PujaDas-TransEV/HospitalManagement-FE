@@ -174,7 +174,7 @@ const PatientMedicalHistoryPage = () => {
             setPatientDetails(data.data);
             setSuccessMessage(data.message);
           } else {
-            setErrorMessage('No admission details found for this patient');
+            // setErrorMessage('No admission details found for this patient');
           }
           setIsFetching(false);
         })

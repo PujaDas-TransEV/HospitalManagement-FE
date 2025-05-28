@@ -1,112 +1,102 @@
-/* Patient Support Page Styles */
+.support-container {
+  max-width: 600px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
 
-/* Container for the entire dashboard */
-.dashboard-container {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: center;
-    padding: 20px;
-    min-height: 100vh;
-    background-color: #f5f5f5;
-  }
-  
-  /* Container for the main content */
-  .dashboard-content {
-    display: flex;
-    flex: 1;
-    width: 100%;
-    justify-content: center; /* Center content horizontally */
-    align-items: center; /* Center content vertically */
-    padding: 20px;
-    flex-wrap: wrap;
-  }
-  
-  /* Support form container */
+.support-container h2 {
+  text-align: center;
+  font-size: 2rem;
+  margin-bottom: 1.5rem;
+  color: #2c3e50;
+}
+
+.support-container form div {
+  margin-bottom: 1.2rem;
+}
+
+.support-container label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  color: #333;
+}
+
+.support-container input,
+.support-container textarea {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  transition: border-color 0.3s;
+}
+
+.support-container input:focus,
+.support-container textarea:focus {
+  border-color: #3498db;
+  outline: none;
+}
+
+.support-container textarea {
+  resize: vertical;
+  min-height: 100px;
+}
+
+.support-container button {
+  width: 100%;
+  padding: 0.75rem;
+  background-color: #3498db;
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 600;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.support-container button:hover {
+  background-color: #2980b9;
+}
+
+.status-message {
+  margin-top: 1rem;
+  text-align: center;
+  font-weight: 500;
+  color: #2c3e50;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
   .support-container {
-    background-color: #fff;
-    padding: 30px;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    width: 100%;
-    max-width: 600px; /* Max width for form */
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-right: 800px;
+    padding: 1.5rem;
+    margin: 1rem;
   }
-  
- 
-  
-  /* Form styling */
-  form {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-    width: 100%;
-    margin-right: 100px;
+
+  .support-container h2 {
+    font-size: 1.5rem;
   }
-  
-  /* Form element (input, textarea) styling */
-  form div {
-    display: flex;
-    flex-direction: column;
+
+  .support-container input,
+  .support-container textarea {
+    font-size: 0.95rem;
   }
-  
-  label {
-    font-size: 14px;
-    font-weight: 600;
-    color: #555;
-    margin-bottom: 5px;
+
+  .support-container button {
+    font-size: 0.95rem;
   }
-  
-  input,
-  textarea {
-    padding: 10px;
-    font-size: 16px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    width: 100%;
-    box-sizing: border-box;
+}
+
+@media (max-width: 480px) {
+  .support-container {
+    padding: 1rem;
   }
-  
-  textarea {
-    resize: vertical;
-    min-height: 150px;
+
+  .support-container h2 {
+    font-size: 1.3rem;
   }
-  
-  /* Focus effect for input and textarea */
-  input:focus,
-  textarea:focus {
-    outline: none;
-    border-color: #4CAF50;
-  }
-  
-  
-  /* Status message styles */
-  .status-message {
-    margin-top: 20px;
-    padding: 10px;
-    border-radius: 4px;
-    font-size: 16px;
-    text-align: center;
-  }
-  
-  .status-message.success {
-    background-color: #d4edda;
-    color: #155724;
-  }
-  
-  .status-message.error {
-    background-color: #f8d7da;
-    color: #721c24;
-  }
-  
-  /* Media queries for responsiveness */
-  @media (max-width: 768px) {
-    .support-container {
-      width: 90%;
-      padding: 20px;
-    }
-  }
-  
+}

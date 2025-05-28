@@ -52,7 +52,7 @@ const PrescriptionPage = () => {
           fetchDoctorDetails(prescription.doctorid, prescription); // Fetch doctor details for each prescription
         });
       } else {
-        setError('No prescriptions found for this patient.');
+        // setError('No prescriptions found for this patient.');
       }
     } catch (err) {
       setError('Error fetching prescriptions.');

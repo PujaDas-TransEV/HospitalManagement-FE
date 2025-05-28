@@ -4,11 +4,13 @@ import { Link, useLocation } from 'react-router-dom';
 import {
   FaHome, FaHeartbeat, FaCalendarCheck, FaNotesMedical,
   FaEnvelope, FaFileAlt, FaUser, FaBars, FaQuestionCircle, FaCog,
-  FaAngleDoubleLeft, FaAngleDoubleRight
+  FaAngleDoubleLeft, FaAngleDoubleRight,FaRegClipboard
 } from 'react-icons/fa';
 
 import './PatientSidebar.css';
 import { MdDashboard } from 'react-icons/md';
+import { MdSupportAgent } from 'react-icons/md';
+
 const PatientSidebar = () => {
   const [isExpanded, setIsExpanded] = useState(false); // desktop expand/collapse
   const [isMobileOpen, setIsMobileOpen] = useState(false); // mobile sidebar open/close
@@ -95,7 +97,7 @@ const PatientSidebar = () => {
           </li>
           <li className="nav-item">
             <Link to="/patient-support" className={`nav-link ${location.pathname === '/patient-support' ? 'active-link' : ''}`} onClick={handleLinkClick}>
-              <FaQuestionCircle className="nav-icon" />
+              <MdSupportAgent className="nav-icon" />
               {(isExpanded || isMobileOpen)&& <span>Support</span>}
             </Link>
           </li>

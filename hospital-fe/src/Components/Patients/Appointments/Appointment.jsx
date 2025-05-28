@@ -1,11 +1,11 @@
+
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { jwtDecode } from 'jwt-decode'; // Import jwtDecode for decoding JWT tokens
-import './Appointment.css'; // Ensure you have your CSS styles here
+import {jwtDecode} from 'jwt-decode'; // Fixed import to default import
+import './Appointment.css';
 import PatientNavbar from '../Navbar/PatientNavbar';
 import PatientSidebar from '../Sidebar/PatientSidebar';
 
-// Dummy data for departments
 const departments = [
   { id: 'cardiology', name: 'Cardiology', icon: '❤️' },
   { id: 'neurology', name: 'Neurology', icon: '🧠' },
@@ -18,189 +18,150 @@ const departments = [
 const Appointment = () => {
   const navigate = useNavigate();
   const [appointments, setAppointments] = useState([]);
-  const [upcomingAppointments, setUpcomingAppointments] = useState([]); // To store upcoming appointments
+  const [upcomingAppointments, setUpcomingAppointments] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [patientId, setPatientId] = useState(null);
-  const [isEditing, setIsEditing] = useState(false); // For toggling the edit form
-  const [currentAppointment, setCurrentAppointment] = useState(null); // For holding current appointment data
+  const [isEditing, setIsEditing] = useState(false);
+  const [currentAppointment, setCurrentAppointment] = useState(null);
 
-  // Fetch patient profile from localStorage and decode the token
   useEffect(() => {
-    const fetchPatientProfile = async () => {
+    const fetchPatientProfile = () => {
       const accessToken = localStorage.getItem('accessToken');
-
       if (!accessToken) {
-        navigate('/login'); // Redirect if no token is found in localStorage
+        navigate('/login');
         return;
       }
-
       try {
-        // Decode the access token to get patientId
         const decodedToken = jwtDecode(accessToken);
-        const patientId = decodedToken.userid;  // Assuming 'userid' is the key in your token
-
-        setPatientId(patientId); // Set patientId from the decoded token
-      } catch (error) {
-        console.error('Error decoding token:', error);
-        navigate('/login'); // Redirect to login if token decoding fails
+        setPatientId(decodedToken.userid);
+      } catch {
+        navigate('/login');
       }
     };
 
     fetchPatientProfile();
   }, [navigate]);
 
-  // Fetch appointments when patientId is available
   useEffect(() => {
-    if (patientId) {
-      // Fetch all appointments
-      const formData = new FormData();
-      formData.append('patientid', patientId); // Append patientId to form data
+    if (!patientId) return;
 
-      // Fetch all appointments from the server (this was previously handled)
-      fetch('http://localhost:5000/getappoinmenthistory', {
-        method: 'POST',
-        body: formData,
+    setLoading(true);
+    setError(null);
+
+    const formData = new FormData();
+    formData.append('patientid', patientId);
+
+    // Fetch all appointments
+    fetch('http://localhost:5000/getappoinmenthistory', {
+      method: 'POST',
+      body: formData,
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        const appointmentData = Array.isArray(data.data) ? data.data : [data.data];
+        setAppointments(appointmentData.filter(Boolean)); // Filter null/undefined
+        setLoading(false);
       })
-        .then((response) => response.json())
-        .then((data) => {
-          const appointmentData = Array.isArray(data.data) ? data.data : [data.data]; // Handle both array and object response structures
-          setAppointments(appointmentData); // Set all appointments
-          setLoading(false);
-        })
-        .catch((error) => {
-          setError('Failed to fetch appointments');
-          setLoading(false);
-        });
+      .catch(() => {
+        setError('Failed to fetch appointments');
+        setLoading(false);
+      });
 
-      // Fetch upcoming appointments
-      fetch('http://localhost:5000/getappoinmentdetails', {
-        method: 'POST',
-        body: formData,
+    // Fetch upcoming appointments
+    fetch('http://localhost:5000/getappoinmentdetails', {
+      method: 'POST',
+      body: formData,
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        const upcomingData = Array.isArray(data.data) ? data.data : [data.data];
+        setUpcomingAppointments(upcomingData.filter(Boolean));
       })
-        .then((response) => response.json())
-        .then((data) => {
-          const upcomingAppointmentData = Array.isArray(data.data) ? data.data : [data.data];
-          setUpcomingAppointments(upcomingAppointmentData); // Set upcoming appointments
-        })
-        .catch((error) => {
-          setError('Failed to fetch upcoming appointments');
-          setLoading(false);
-        });
-    }
-  }, [patientId]); // Re-fetch appointments when patientId changes
+      .catch(() => {
+        setError('Failed to fetch upcoming appointments');
+      });
+  }, [patientId]);
 
-  // Navigate to the department appointment page
   const handleDepartmentClick = (departmentId) => {
     navigate(`/appointment/${departmentId}`);
   };
 
-  // Handle appointment deletion
   const handleDeleteAppointment = (appointmentId) => {
-    if (window.confirm('Are you sure you want to delete this appointment?')) {
-      const formData = new FormData();
-      formData.append('appoinid', appointmentId); // Pass appointmentId as 'appoinid'
-
-      // Delete appointment from the server
-      fetch('http://localhost:5000/ops/appoinmentdelete', {
-        method: 'POST',
-        body: formData,
-      })
-        .then((response) => response.json())
-        .then((data) => {
-          console.log('Delete response:', data); // Debugging line
-
-          if (data.success) {
-            // Ensure we're deleting the correct appointment
-            console.log('Deleting appointment with ID:', appointmentId);
-
-            // Remove the deleted appointment from the state
-            setAppointments((prevAppointments) =>
-              prevAppointments.filter((appointment) => appointment.uid !== appointmentId)
-            );
-            setUpcomingAppointments((prevUpcomingAppointments) =>
-              prevUpcomingAppointments.filter((appointment) => appointment.uid !== appointmentId)
-            );
-          } else {
-            alert('Appointment Delete Successfully');
-          }
-        })
-        .catch((error) => {
-          console.error('Error deleting appointment:', error);
-          alert('Failed to delete the appointment');
-        });
-    }
-  };
-
-  // Start editing the appointment (populate the form with current details)
-  const handleEditAppointment = (appointment) => {
-    setIsEditing(true);
-    setCurrentAppointment(appointment); // Set current appointment data for editing
-  };
-
-  // Submit the edited appointment details
-  const handleSubmitEdit = (event) => {
-    event.preventDefault();
+    if (!window.confirm('Are you sure you want to delete this appointment?')) return;
 
     const formData = new FormData();
-    formData.append('appoinid', currentAppointment.uid); // Add the appointment ID
-    formData.append('appoinmenttime', currentAppointment.appoinmenttime);
-    formData.append('appointmentdetails', currentAppointment.appointmentdetails);
+    formData.append('appoinid', appointmentId);
 
-    // Send the updated data to the server
+    fetch('http://localhost:5000/ops/appoinmentdelete', {
+      method: 'POST',
+      body: formData,
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.message) {
+          setAppointments((prev) => prev.filter((a) => a.uid !== appointmentId));
+          setUpcomingAppointments((prev) => prev.filter((a) => a.uid !== appointmentId));
+        } else {
+          alert('Failed to delete appointment');
+        }
+      })
+      .catch(() => {
+        alert('Failed to delete appointment');
+      });
+  };
+
+  const handleEditAppointment = (appointment) => {
+    setIsEditing(true);
+    setCurrentAppointment({ ...appointment });
+  };
+
+  const handleSubmitEdit = (e) => {
+    e.preventDefault();
+
+    const formData = new FormData();
+    formData.append('appoinid', currentAppointment.uid);
+    formData.append('appoinmenttime', currentAppointment.appoinmenttime);
+    formData.append('appointmentdetails', currentAppointment.appoinmentdetails);
+
     fetch('http://localhost:5000/update/appoinment', {
       method: 'POST',
       body: formData,
     })
-      .then((response) => response.json())
+      .then((res) => res.json())
       .then((data) => {
-        if (data.success) {
+        if (data.message) {
           alert('Appointment updated successfully');
-          
-          // Update the state with the updated appointment
-          setAppointments((prevAppointments) =>
-            prevAppointments.map((appointment) =>
-              appointment.uid === currentAppointment.uid ? { ...appointment, ...currentAppointment } : appointment
-            )
+          setAppointments((prev) =>
+            prev.map((a) => (a.uid === currentAppointment.uid ? currentAppointment : a))
           );
-
-          setUpcomingAppointments((prevUpcomingAppointments) =>
-            prevUpcomingAppointments.map((appointment) =>
-              appointment.uid === currentAppointment.uid ? { ...appointment, ...currentAppointment } : appointment
-            )
+          setUpcomingAppointments((prev) =>
+            prev.map((a) => (a.uid === currentAppointment.uid ? currentAppointment : a))
           );
         } else {
-          alert('Appointment updated successfully');
+          alert('Failed to update appointment');
         }
-        setIsEditing(false); // Hide the edit form
+        setIsEditing(false);
         setCurrentAppointment(null);
       })
-      .catch((error) => {
-        console.error('Error updating appointment:', error);
-        alert('Failed to update the appointment');
-      });
+      .catch(() => alert('Failed to update appointment'));
   };
 
-  // Handle form input changes
-  const handleInputChange = (event) => {
-    const { name, value } = event.target;
-    setCurrentAppointment((prevAppointment) => ({
-      ...prevAppointment,
-      [name]: value,
-    }));
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setCurrentAppointment((prev) => ({ ...prev, [name]: value }));
   };
 
-  // Render the appointments table
-  const renderAppointmentTable = (appointments) => {
-    if (!appointments || appointments.length === 0) {
-      return <div>No appointments found.</div>; // This message will be shown if no appointments exist
+  const renderAppointmentTable = (appointmentsList) => {
+    if (!appointmentsList || appointmentsList.length === 0) {
+      return <div>No appointments found.</div>;
     }
 
     return (
       <table className="appointments-table">
         <thead>
           <tr>
-            <th>Appointment ID</th> {/* Added column for Appointment ID */}
+            <th>Appointment ID</th>
             <th>Patient Name</th>
             <th>Doctor Name</th>
             <th>Appointment Time</th>
@@ -209,24 +170,24 @@ const Appointment = () => {
           </tr>
         </thead>
         <tbody>
-          {appointments.map((appointment) => (
-            // Make sure the appointment data is valid before accessing its properties
-            appointment && appointment.patient_firstname && appointment.patient_lastname && (
-              <tr key={appointment.uid}>
-                <td>{appointment.uid}</td> {/* Display Appointment ID (uid) */}
-                <td>
-                  {appointment.patient_firstname} {appointment.patient_lastname}
-                </td>
-                <td>{appointment.doctor_fullname}</td>
-                <td>{appointment.appoinmenttime}</td>
-                <td>{appointment.appoinmentdetails}</td>
-                <td>
-                  <button onClick={() => handleEditAppointment(appointment)}>Edit</button>
-                  <button onClick={() => handleDeleteAppointment(appointment.uid)}>Delete</button>
-                </td>
-              </tr>
-            )
-          ))}
+          {appointmentsList.map(
+            (appointment) =>
+              appointment && (
+                <tr key={appointment.uid}>
+                  <td>{appointment.uid}</td>
+                  <td>
+                    {appointment.patient_firstname} {appointment.patient_lastname}
+                  </td>
+                  <td>{appointment.doctor_fullname}</td>
+                  <td>{appointment.appoinmenttime}</td>
+                  <td>{appointment.appoinmentdetails}</td>
+                  <td>
+                    <button onClick={() => handleEditAppointment(appointment)}>Edit</button>
+                    <button onClick={() => handleDeleteAppointment(appointment.uid)}>Delete</button>
+                  </td>
+                </tr>
+              )
+          )}
         </tbody>
       </table>
     );
@@ -235,10 +196,8 @@ const Appointment = () => {
   return (
     <div className="dashboard-container">
       <PatientNavbar />
-
       <div className="dashboard-content">
         <PatientSidebar />
-
         <div className="home-container">
           <h2>Select Department</h2>
           <div className="departments">
@@ -253,64 +212,60 @@ const Appointment = () => {
               </div>
             ))}
           </div>
-        </div>
 
-        {/* Edit Appointment Form */}
-        {isEditing && currentAppointment && (
-          <div className="edit-appointment-form">
-            <h3>Edit Appointment</h3>
-            <form onSubmit={handleSubmitEdit}>
-              <div>
-                <label>Appointment Time:</label>
-                <input
-                  type="datetime-local"
-                  name="appoinmenttime"
-                  value={currentAppointment.appoinmenttime}
-                  onChange={handleInputChange}
-                />
-              </div>
-              <div>
-                <label>Details:</label>
-                <textarea
-                  name="appointmentdetails"
-                  value={currentAppointment.appointmentdetails}
-                  onChange={handleInputChange}
-                />
-              </div>
-              <button type="submit">Update Appointment</button>
-              <button type="button" onClick={() => setIsEditing(false)}>
-                Cancel
-              </button>
-            </form>
+          {isEditing && currentAppointment && (
+            <div className="edit-appointment-form">
+              <h3>Edit Appointment</h3>
+              <form onSubmit={handleSubmitEdit}>
+                <div>
+                  <label>Appointment Time:</label>
+                  <input
+                    type="datetime-local"
+                    name="appoinmenttime"
+                    value={currentAppointment.appoinmenttime}
+                    onChange={handleInputChange}
+                    required
+                  />
+                </div>
+                <div>
+                  <label>Details:</label>
+                  <textarea
+                    name="appoinmentdetails"
+                    value={currentAppointment.appoinmentdetails}
+                    onChange={handleInputChange}
+                    rows={4}
+                    required
+                  />
+                </div>
+                <button type="submit">Update Appointment</button>
+                <button type="button" onClick={() => setIsEditing(false)}>
+                  Cancel
+                </button>
+              </form>
+            </div>
+          )}
+
+          <div className="appointment-details-container">
+            <h3>Upcoming Appointments</h3>
+            {loading ? (
+              <div>Loading appointments...</div>
+            ) : error ? (
+              <div>{error}</div>
+            ) : (
+              renderAppointmentTable(upcomingAppointments)
+            )}
           </div>
-        )}
 
-        {/* Upcoming Appointments Section */}
-        <div className="appointment-details-container">
-          <h3>Upcoming Appointments</h3>
-          {loading ? (
-            <div>Loading appointments...</div>
-          ) : error ? (
-            <div>{error}</div>
-          ) : upcomingAppointments.length === 0 ? (
-            <div>No upcoming appointments found.</div> // Message for no upcoming appointments
-          ) : (
-            renderAppointmentTable(upcomingAppointments)
-          )}
-        </div>
-
-        {/* All Appointments Section */}
-        <div className="appointment-details-container">
-          <h3>All Appointments</h3>
-          {loading ? (
-            <div>Loading appointments...</div>
-          ) : error ? (
-            <div>{error}</div>
-          ) : appointments.length === 0 ? (
-            <div>No appointments found.</div> // Message for no appointments
-          ) : (
-            renderAppointmentTable(appointments)
-          )}
+          <div className="appointment-details-container">
+            <h3>All Appointments</h3>
+            {loading ? (
+              <div>Loading appointments...</div>
+            ) : error ? (
+              <div>{error}</div>
+            ) : (
+              renderAppointmentTable(appointments)
+            )}
+          </div>
         </div>
       </div>
     </div>

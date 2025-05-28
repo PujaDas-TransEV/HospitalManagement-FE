@@ -1,6 +1,6 @@
 
 
-/* General reset and body styles */
+
 * {
   box-sizing: border-box;
   margin: 0;
@@ -275,7 +275,6 @@ body {
   background-color: #999;
 }
 
-/* Media Queries */
 @media (max-width: 768px) {
   .profile-card {
     padding: 15px;
@@ -333,4 +332,6 @@ body {
   padding: 10px 20px; 
   border: none; 
   border-radius: 5
-}
+} 
+
+
