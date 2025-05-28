@@ -57,7 +57,8 @@ import AdminEquipmentManagement from './Components/Admin/EquipmentManagement/Equ
 import AdminStaffManagement from './Components/Admin/StaffManagement/StaffManagement'; 
 import PatientSupport from './Components/Patients/Support/Support';
 import AdminSupport from './Components/Admin/AdminSupport/AdminSupport';
-
+import PatientHomecareService from './Components/Patients/HomecareService/HomeService';
+import HomeCareRequest from './Components/Patients/HomecareService/HomecareService';
 
 
 // Navbar component to conditionally render Navbar based on the current path
@@ -65,7 +66,7 @@ const ConditionalNavbar = () => {
   const location = useLocation();  // Get current location to conditionally render Navbar
 
   // Render Navbar only if the path is not '/login' or '/signup'
-  return !['/login', '/signup','/password','/admin/signup','/admin/login','/admin/password','/super/admin/signup','/super/admin/login','/super/admin/password','/patient-dashboard','/patient-Appointments','/profile','/settings','/dprofile','/doctordashboard','/adnavbar','/adsidebar','/ad-dashboard','/manage-doctors','/doctor-signup','/doctor-login','/doctors/:specialization','/doctors/Cardiology','/doctors/Neurology','/doctors/Pediatrics','/doctors/Orthopedics','/doctors/Infectious%20Diseases','/doctor-password','/manage-patients','/admin-settings','/doctor-navbar','/doctor-sidebar','/leave','/doctor-profile','/doctor-settings','/admin-profile','/appointment-management','/appointments','/appointment/:departmentId','/appointment/cardiology','/appointment/pediatrics','/appointment/neurology','/appointment/orthopedics','/appointment/dermatology','/appointment/surgery','/admin/appointments/cardiology','/patients/Cardiology','/patients/Neurology','/patients/Orthopedics','/patients/Dermatology','/patients/Pediatrics','/patients','/prescription','/reportsprescription','/facility-management','/ward-management','/room-management','/patient-admission','/medical-history','/equipment-management','/staff-management','/admin-support','/patient-support'].includes(location.pathname) && <Navbar />;
+  return !['/login', '/signup','/password','/admin/signup','/admin/login','/admin/password','/super/admin/signup','/super/admin/login','/super/admin/password','/patient-dashboard','/patient-Appointments','/profile','/settings','/dprofile','/doctordashboard','/adnavbar','/adsidebar','/ad-dashboard','/manage-doctors','/doctor-signup','/doctor-login','/doctors/:specialization','/doctors/Cardiology','/doctors/Neurology','/doctors/Pediatrics','/doctors/Orthopedics','/doctors/Infectious%20Diseases','/doctor-password','/manage-patients','/admin-settings','/doctor-navbar','/doctor-sidebar','/leave','/doctor-profile','/doctor-settings','/admin-profile','/appointment-management','/appointments','/appointment/:departmentId','/appointment/cardiology','/appointment/pediatrics','/appointment/neurology','/appointment/orthopedics','/appointment/dermatology','/appointment/surgery','/admin/appointments/cardiology','/patients/Cardiology','/patients/Neurology','/patients/Orthopedics','/patients/Dermatology','/patients/Pediatrics','/patients','/prescription','/reportsprescription','/facility-management','/ward-management','/room-management','/patient-admission','/medical-history','/equipment-management','/staff-management','/admin-support','/patient-support','/home-care-service'].includes(location.pathname) && <Navbar />;
 };
 
 // Main App Component
@@ -131,6 +132,8 @@ function App() {
         <Route path="/equipment-management" element={<AdminEquipmentManagement/>} />
         <Route path="/staff-management" element={<AdminStaffManagement/>} />
         <Route path="/admin-support" element={<AdminSupport/>} />
+        <Route path="/home-care-service" element={<PatientHomecareService/>} />
+           <Route path="/home-care-request" element={<HomeCareRequest/>} />
 
         
      

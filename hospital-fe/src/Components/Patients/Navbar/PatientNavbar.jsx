@@ -3,50 +3,47 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { jwtDecode } from "jwt-decode";
 import "./PatientNavbar.css";
+import { MdDashboard } from 'react-icons/md';
 
 const PatientNavbar = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [profileData, setProfileData] = useState({
     firstname: "",
     lastname: "",
-    profilePicture: "/images/default-profile.jpg", // Default image path
+    profilePicture: "/images/default-profile.jpg", // Default image
   });
-  const navigate = useNavigate(); // Initialize useNavigate
+  const navigate = useNavigate();
 
-  // Fetch patient data on component mount
   useEffect(() => {
     const fetchPatientData = async () => {
       const accessToken = localStorage.getItem("accessToken");
       if (!accessToken) {
-        navigate("/login"); // Redirect to login if no access token is available
+        navigate("/login");
         return;
       }
 
       try {
-        const decodedToken = jwtDecode(accessToken); // Decode the token to get the patientId
+        const decodedToken = jwtDecode(accessToken);
         const patientId = decodedToken.userid;
 
-        // Create FormData and append patientId (no need to append firstname and lastname)
         const formData = new FormData();
         formData.append("patientid", patientId);
 
-        // Fetch patient profile data from the backend API
         const response = await fetch("http://localhost:5000/patients/profile/getbyid", {
           method: "POST",
           headers: {
             "Authorization": `Bearer ${accessToken}`,
           },
-          body: formData, // Send the formData in the body of the request
+          body: formData,
         });
 
         const data = await response.json();
 
         if (response.ok) {
-          // Update the profile data state with fetched data
           setProfileData({
-            firstname: data.data.firstname, // Extract firstname
-            lastname: data.data.lastname, // Extract lastname
-            profilePicture: `data:image/jpeg;base64,${data.data.profilepicture}`, // Extract base64 profile picture
+            firstname: data.data.firstname,
+            lastname: data.data.lastname,
+            profilePicture: `data:image/jpeg;base64,${data.data.profilepicture}`,
           });
         } else {
           console.error("Failed to fetch profile data");
@@ -59,38 +56,31 @@ const PatientNavbar = () => {
     fetchPatientData();
   }, [navigate]);
 
-  // Toggle dropdown visibility
   const toggleDropdown = () => {
     setIsDropdownOpen(!isDropdownOpen);
   };
 
-  // Navigate to the profile page
   const handleMyProfile = () => {
+    setIsDropdownOpen(false);
     navigate("/profile");
   };
 
-  // Logout functionality
   const handleLogout = () => {
-    // Clear user session data (e.g., remove token)
-    localStorage.removeItem("accessToken"); // Adjust according to your authentication logic
-
-    // Navigate to the login page after logging out
-    navigate("/login");
+    localStorage.removeItem("accessToken");
+    navigate("/"); // Redirect to home page after logout
   };
 
   return (
     <div className="navbar">
-      <div className="brand-name">Dashboard</div>
-      <div className="profile-info">
+      <div className="brand-name">LifeCare</div>
+      <div className="profile-info" onClick={toggleDropdown}>
         <img
-          src={profileData.profilePicture} // Use the dynamic profile picture
+          src={profileData.profilePicture}
           alt="Profile"
           className="profile-img"
-          onClick={toggleDropdown}
         />
-        <span className="patient-name">{profileData.firstname} {profileData.lastname}</span> {/* Display first and last name */}
+        <span className="patient-name">{profileData.firstname} {profileData.lastname}</span>
 
-        {/* Dropdown Menu */}
         {isDropdownOpen && (
           <div className="dropdown-menu">
             <button className="dropdown-item" onClick={handleMyProfile}>

@@ -1,13 +1,63 @@
 
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import {jwtDecode} from 'jwt-decode'; // fix import - no curly braces
 import './Navbar.css';
 
 const Navbar = () => {
   const [isActive, setIsActive] = useState(false);
+  const [profilePic, setProfilePic] = useState('/images/default-profile.jpg'); // default profile image initially
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const navigate = useNavigate();
 
   const handleToggle = () => {
     setIsActive(!isActive);
+  };
+
+  useEffect(() => {
+    const token = localStorage.getItem('accessToken');
+
+    if (token) {
+      setIsLoggedIn(true);
+      try {
+        const decoded = jwtDecode(token);
+        const userId = decoded.userid;
+
+        const fetchProfile = async () => {
+          const formData = new FormData();
+          formData.append('patientid', userId);
+
+          const response = await fetch('http://localhost:5000/patients/profile/getbyid', {
+            method: 'POST',
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+            body: formData,
+          });
+
+          const data = await response.json();
+
+          if (response.ok && data.data?.profilepicture) {
+            setProfilePic(`data:image/jpeg;base64,${data.data.profilepicture}`);
+          } else {
+            setProfilePic('/images/default-profile.jpg'); // fallback default
+          }
+        };
+
+        fetchProfile();
+      } catch (error) {
+        console.error('Token decode error:', error);
+        setIsLoggedIn(false);
+        setProfilePic('/images/default-profile.jpg'); // still show default on error
+      }
+    } else {
+      setIsLoggedIn(false);
+      setProfilePic(null); // no profile pic since not logged in
+    }
+  }, []);
+
+  const goToProfile = () => {
+    navigate('/profile');
   };
 
   return (
@@ -22,9 +72,20 @@ const Navbar = () => {
         <li><Link to="/medical">Medical Care</Link></li>
         <li><Link to="/contact">Contact Us</Link></li>
       </ul>
-      <Link to="/login">
-        <button className="login-btn">Login</button>
-      </Link>
+
+      {isLoggedIn ? (
+        <img
+          src={profilePic || '/images/default-profile.jpg'}
+          alt="Profile"
+          className="profile-pic"
+          onClick={goToProfile}
+          title="Go to Profile"
+        />
+      ) : (
+        <Link to="/login">
+          <button className="login-btn">Login</button>
+        </Link>
+      )}
     </nav>
   );
 };

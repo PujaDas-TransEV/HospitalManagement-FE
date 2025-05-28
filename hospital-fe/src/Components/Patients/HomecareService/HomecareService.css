@@ -1,0 +1,82 @@
+.homecare-container {
+  padding: 30px;
+  background-color: #f0f4f8;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.homecare-box {
+  background: white;
+  padding: 25px 30px;
+  border-radius: 10px;
+  width: 100%;
+  max-width: 700px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+.homecare-box h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #007bff;
+}
+
+.success-message {
+  background-color: #d4edda;
+  color: #155724;
+  padding: 10px;
+  margin-bottom: 15px;
+  border-radius: 5px;
+  text-align: center;
+}
+
+.homecare-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.homecare-form label {
+  margin-bottom: 15px;
+  font-weight: 500;
+  color: #333;
+}
+
+.homecare-form input,
+.homecare-form select,
+.homecare-form textarea {
+  padding: 10px;
+  margin-top: 5px;
+  font-size: 15px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.homecare-form textarea {
+  resize: vertical;
+  min-height: 80px;
+}
+
+.homecare-form button {
+  margin-top: 15px;
+  background-color: #007bff;
+  color: white;
+  padding: 12px;
+  font-size: 16px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+.homecare-form button:hover {
+  background-color: #0056b3;
+}
+
+@media (max-width: 600px) {
+  .homecare-box {
+    padding: 20px;
+  }
+}
