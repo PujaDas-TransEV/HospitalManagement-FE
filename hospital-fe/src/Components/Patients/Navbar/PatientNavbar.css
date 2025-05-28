@@ -4,7 +4,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: #2d3e50;
+  background-color: rgb(16, 106, 106);
   padding: 10px 20px;
   color: white;
   position: relative;
@@ -15,7 +15,7 @@
 .brand-name {
   font-size: 20px;
   font-weight: bold;
-  color: white;
+  color: greenyellow;
   margin-left: 50px; /* Pushes it to the right */
  /* Optional: spacing from the edge */
 }

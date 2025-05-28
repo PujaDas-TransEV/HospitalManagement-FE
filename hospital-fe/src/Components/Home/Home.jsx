@@ -123,9 +123,9 @@ const HospitalDashboard = () => {
   // Handle Show More Button
   const navigate = useNavigate();
   const handleShowMore = () => {
-    navigate("/specialities"); // Redirect to medical care page
+    navigate("/about"); // Redirect to medical care page
   };
-
+ 
   return (
     <div className="container-home">
       
@@ -136,7 +136,7 @@ const HospitalDashboard = () => {
           <h1>The Hospital that <br /> Care for you</h1>
           <h3 style={{color:'white'}}>Best Team's</h3>
           {/* <button>Show more</button> */}
-          <button style={{ color: 'white', backgroundColor: 'black', border: 'none', padding: '10px 20px', borderRadius: '5px', cursor: 'pointer',height:'50px',width:'150px' }}>
+          <button style={{ color: 'white', backgroundColor: 'black', border: 'none', padding: '10px 20px', borderRadius: '5px', cursor: 'pointer',height:'50px',width:'150px' }} onClick={handleShowMore}>
   Show more
 </button>
 

@@ -3,6 +3,9 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Select from 'react-select';
 import './HomecareService.css';
+import PatientNavbar  from '../Navbar/PatientNavbar';
+import PatientSidebar from '../Sidebar/PatientSidebar';
+import { useNavigate } from 'react-router-dom';
 
 const HomeCareService = () => {
   const [formData, setFormData] = useState({
@@ -22,6 +25,7 @@ const HomeCareService = () => {
     caretype: '',
     assignedstaffid: ''
   });
+const navigate = useNavigate();
 
   const [submitted, setSubmitted] = useState(false);
   const [doctors, setDoctors] = useState([]);
@@ -138,6 +142,7 @@ const HomeCareService = () => {
         caretype: '',
         assignedstaffid: ''
       });
+       navigate('/home-care-service');
     } catch (error) {
       console.error('Error submitting form:', error);
       alert('❌ Failed to submit the request.');
@@ -145,6 +150,13 @@ const HomeCareService = () => {
   };
 
   return (
+     <div className="dashboard-container">
+      {/* Navbar at the top */}
+      <PatientNavbar />
+      
+      <div className="dashboard-contenter">
+        {/* Sidebar for navigation */}
+        <PatientSidebar />
     <div className="homecare-container">
       <div className="homecare-box">
         <h2>🏠 Request Home Care Service</h2>
@@ -216,6 +228,8 @@ const HomeCareService = () => {
 
           <button type="submit">Submit Request</button>
         </form>
+      </div>
+    </div>
       </div>
     </div>
   );

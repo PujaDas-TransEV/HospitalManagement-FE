@@ -1,4 +1,4 @@
-.homecare-container {
+ .homecare-container {
   padding: 30px;
   background-color: #f0f4f8;
   min-height: 100vh;
@@ -59,24 +59,26 @@
   min-height: 80px;
 }
 
-.homecare-form button {
-  margin-top: 15px;
-  background-color: #007bff;
-  color: white;
-  padding: 12px;
-  font-size: 16px;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-  transition: 0.3s ease;
-}
 
-.homecare-form button:hover {
-  background-color: #0056b3;
-}
 
 @media (max-width: 600px) {
   .homecare-box {
     padding: 20px;
   }
+}
+.homecare-form button[type="submit"] {
+  background-color: #3498db;
+  color: white;
+  padding: 12px 20px;
+  font-size: 1.1rem;
+  font-weight: 700;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background-color 0.25s ease;
+  margin-top: 1rem;
+}
+
+.homecare-form button[type="submit"]:hover {
+  background-color: #2980b9;
 }

@@ -1,4 +1,4 @@
-/* Homecare Page Container */
+
 .homecare-page {
   max-width: 960px;
   margin: 2rem auto;
@@ -9,6 +9,15 @@
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
+}
+
+.homecare-page h1{
+
+  text-align: center;
+  margin-bottom: 1.5rem; /* spacing below the heading */
+  font-weight: 700;
+  font-size: 2.5rem;
+  color: #3a8994;
 }
 
 
@@ -24,9 +33,35 @@
   cursor: pointer;
   font-weight: bold;
 }
+.primary-btn {
+  padding: 6px 12px;
+  font-size: 14px;
+  max-width: 180px;
+  border-radius: 4px;
+  transition: all 0.3s ease;
+}
+
+/* Smaller buttons on very small screens */
+@media (max-width: 480px) {
+  .primary-btn {
+    padding: 4px 10px;
+    font-size: 12px;
+    max-width: 140px;
+  }
+}
+
+/* Medium devices */
+@media (max-width: 768px) and (min-width: 481px) {
+  .primary-btn {
+    padding: 5px 11px;
+    font-size: 13px;
+    max-width: 160px;
+  }
+}
+
 
 .primary-btn {
-  background-color: #007bff;
+  background-color: #28c5ab;
   color: white;
 }
 
@@ -62,8 +97,8 @@
   padding: 2rem;
   border-radius: 10px;
   max-width: 600px;
-  max-height: 80vh; /* Limit height */
-  overflow-y: auto;  /* Enable vertical scroll */
+  max-height: 80vh; 
+  overflow-y: auto;  
   margin: auto;
   position: relative;
 }
