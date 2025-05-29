@@ -141,14 +141,14 @@ const PrescriptionPage = () => {
       <div className="home-content flex flex-row">
         <PatientSidebar />
     <div className="prescription-page">
-      <h2>Your Prescriptions</h2>
-
+      {/* <h2>Your Prescriptions</h2> */}
+ <h2 style={{ marginBottom: '10px' }}>Your Prescriptions</h2> 
       {error && <Alert variant="danger">{error}</Alert>}
 
       {loading ? (
         <Spinner animation="border" variant="primary" />
       ) : (
-        <div>
+        <div className="prescription-table-wrapper">
           {prescriptions.length > 0 ? (
             <Table striped bordered hover responsive>
               <thead>

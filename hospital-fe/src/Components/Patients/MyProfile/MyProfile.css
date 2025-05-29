@@ -1,6 +1,4 @@
 
-
-
 * {
   box-sizing: border-box;
   margin: 0;
@@ -12,7 +10,6 @@ body {
   background-color: #f4f7fc;
   color: #333;
 }
-
 
 .home-page {
   display: flex;
@@ -27,58 +24,53 @@ body {
 
 .profile-container {
   flex: 1;
-  padding: 30px;
+  padding: 20px;
+  width: 100%;
   max-width: 1200px;
   margin: auto;
 }
-
 
 .profile-header {
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-bottom: 20px;
-  width: 700px;
+  margin-bottom: 0px;
 }
 
 .profile-header h2 {
-  font-size: 32px;
+  font-size: 2rem;
   color: #fff;
   font-weight: 500;
   text-transform: uppercase;
   letter-spacing: 1px;
   background: linear-gradient(135deg, #3576c0, #86618a);
-  padding: 10px;
+  padding: 12px 20px;
   border-radius: 8px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-  width: 100%; 
-  max-width: 700px; 
   text-align: center;
-  margin: 0; 
-  margin-bottom: 0; 
+  width: 100%;
+  max-width: 700px;
 }
 
 .profile-card {
   background: linear-gradient(135deg, #58d3d3, #86618a);
   border-radius: 8px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  padding: 20px;
+  padding: 25px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-bottom: 50px;
-  width: 700px;
-  padding-top: 0;
-  max-height: 500px;
-  overflow-y: auto; 
+  margin: auto;
+  width: 100%;
+  max-width: 700px;
+  overflow-y: auto;
+  max-height: 600px;
 }
 
-
 .profile-image-container {
-  position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
+  position: relative;
 }
 
 .profile-image {
@@ -88,26 +80,14 @@ body {
   background-color: #f0f0f0;
   background-size: cover;
   background-position: center;
-  cursor: pointer;
   border: 4px solid #ccc;
+  cursor: pointer;
   transition: transform 0.3s ease, border-color 0.3s ease;
 }
 
 .profile-image:hover {
   transform: scale(1.1);
   border-color: #007bff;
-}
-
-.profile-image-overlay {
-  position: absolute;
-  bottom: 10px;
-  left: 50%;
-  transform: translateX(-50%);
-  background-color: rgba(0, 0, 0, 0.5);
-  color: white;
-  padding: 5px 10px;
-  border-radius: 5px;
-  font-size: 14px;
 }
 
 .profile-details {
@@ -118,97 +98,71 @@ body {
 .profile-detail-row {
   display: flex;
   flex-wrap: wrap;
-  align-items: center;
+  gap: 16px;
   margin-bottom: 15px;
 }
 
-.profile-detail-row label {
-  color: black;
-  font-weight: 600;
-  width: 120px;
-  text-align: left;
-  margin-bottom: 8px;
+.input-group {
+  flex: 1;
+  min-width: 45%;
 }
 
-.profile-detail-row input,
-.profile-detail-row select {
-  padding: 8px 14px;
+.input-group.full-width {
+  min-width: 100%;
+}
+
+.input-group label {
+  font-weight: 600;
+  margin-bottom: 6px;
+  display: block;
+  color: #000;
+}
+
+.input-group input,
+.input-group select {
   width: 100%;
-  max-width: 300px;
+  padding: 10px 12px;
+  font-size: 16px;
   border: 1px solid #ccc;
   border-radius: 5px;
-  font-size: 16px;
 }
 
-.profile-detail-row input:disabled {
-  background-color: #f9f9f9;
-}
-
-.profile-detail-row .input-group {
-  flex: 1;
-  margin-right: 10px;
-}
-
-.profile-detail-row .input-group:nth-child(odd) {
-  margin-right: 20px;
-}
-
-
-.profile-details button {
+.update-button {
   background-color: #007bff;
   color: white;
-  padding: 8px 16px;
+  padding: 12px 20px;
   border: none;
   border-radius: 5px;
-  font-size: 14px;
+  font-size: 16px;
   cursor: pointer;
-  margin-top: 15px;
   width: 100%;
+  margin-top: 20px;
+  transition: background-color 0.3s ease;
 }
 
-.profile-details button:hover {
+.update-button:hover {
   background-color: #0056b3;
 }
 
-.verify-email-button {
-  background-color: #fbc02d;
-  padding: 6px 12px;
+.error-message,
+.success-message {
+  padding: 12px;
   border-radius: 5px;
-  font-weight: bold;
-  margin-top: 10px;
-  width: 130px;
   font-size: 14px;
-  margin-left: 10px;
+  margin-top: 10px;
+  width: 100%;
+  text-align: center;
 }
-
-.verify-email-button:hover {
-  background-color: #f57c00;
-}
-
-.verified {
-  color: #4caf50;
-  font-weight: bold;
-  margin-left: 10px;
-}
-
 
 .error-message {
   color: #f44336;
   background-color: #ffebee;
   border: 1px solid #f44336;
-  padding: 10px;
-  margin-top: 15px;
-  border-radius: 5px;
-  font-size: 14px;
 }
 
 .success-message {
   color: #4caf50;
   background-color: #e8f5e9;
-  padding: 10px;
-  margin-top: 15px;
-  border-radius: 5px;
-  font-size: 14px;
 }
 
 
@@ -229,109 +183,56 @@ body {
   background-color: white;
   padding: 30px;
   border-radius: 8px;
-  width: 400px;
-  text-align: center;
+  width: 90%;
+  max-width: 400px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  text-align: center;
 }
 
-.otp-popup h3 {
-  margin-bottom: 15px;
-  font-size: 20px;
-  color: #333;
-}
-
-.otp-popup input {
-  padding: 10px;
-  width: 80%;
-  max-width: 300px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  margin-bottom: 15px;
-  font-size: 16px;
-}
-
-.otp-popup button {
-  background-color: #007bff;
-  color: white;
-  border: none;
-  padding: 10px 20px;
-  border-radius: 5px;
-  cursor: pointer;
-  width: 100%;
-  font-weight: bold;
-  margin-top: 10px;
-}
-
-.otp-popup button:hover {
-  background-color: #0056b3;
-}
-
-.otp-popup button + button {
-  background-color: #ccc;
-  margin-top: 10px;
-}
-
-.otp-popup button + button:hover {
-  background-color: #999;
-}
 
 @media (max-width: 768px) {
   .profile-card {
-    padding: 15px;
+    padding: 20px;
+    max-height: 90vh;
   }
 
-  .profile-image {
-    width: 100px;
-    height: 100px;
+  .input-group {
+    min-width: 100%;
   }
 
   .profile-header h2 {
-    font-size: 28px;
+    font-size: 1.5rem;
   }
 
-  .profile-details input {
-    font-size: 14px;
-  }
-
-  .profile-details button {
-    font-size: 14px;
-  }
-
-  .profile-detail-row {
-    width: 100%;
+  .update-button {
+    font-size: 15px;
   }
 }
 
 @media (max-width: 480px) {
   .profile-header h2 {
-    font-size: 24px;
+    font-size: 1.25rem;
+    padding: 10px;
   }
 
   .profile-image {
-    width: 80px;
-    height: 80px;
+    width: 90px;
+    height: 90px;
   }
 
-  .profile-details p {
-    font-size: 12px;
+  .input-group input,
+  .input-group select {
+    font-size: 14px;
+    padding: 8px;
   }
 
-  .otp-popup-content {
-    width: 90%;
-    padding: 15px;
+  .update-button {
+    font-size: 14px;
+    padding: 10px;
   }
 
-  .profile-details input {
-    font-size: 12px;
+  .error-message,
+  .success-message {
+    font-size: 13px;
   }
 }
-
-.update-button {
-  background-color: #007bff; 
-  color: white; 
-  padding: 10px 20px; 
-  border: none; 
-  border-radius: 5
-} 
-
-
