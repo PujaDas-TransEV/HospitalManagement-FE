@@ -26,7 +26,7 @@
 }
 
 /* Expand/collapse toggle button */
-.expand-toggle-btn {
+.expand-toggle-btnn {
   position: fixed;
   top: 10px;
   left: 20px;
@@ -44,8 +44,8 @@
   z-index: 1100;
 }
 
-.sidebar-expanded + .expand-toggle-btn,
-.sidebar-expanded ~ .expand-toggle-btn {
+.sidebar-expanded + .expand-toggle-btnn,
+.sidebar-expanded ~ .expand-toggle-btnn {
   left: 220px;
 }
 
@@ -157,7 +157,7 @@
   }
 
   /* Hide desktop expand toggle on mobile */
-  .expand-toggle-btn {
+  .expand-toggle-btnn {
     display: none;
   }
 

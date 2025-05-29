@@ -54,7 +54,7 @@ const PatientSidebar = () => {
         `}
       >
         {/* Desktop expand/collapse toggle */}
-        <button className="expand-toggle-btn" onClick={toggleSidebar} aria-label="Expand sidebar">
+        <button className="expand-toggle-btnn" onClick={toggleSidebar} aria-label="Expand sidebar">
           {isExpanded ? <FaAngleDoubleLeft /> : <FaAngleDoubleRight />}
         </button>
 
