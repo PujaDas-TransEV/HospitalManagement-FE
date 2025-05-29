@@ -1,99 +1,214 @@
- 
+
 .dashboard-container {
-    display: flex;
-    flex-direction: column;
-    height: 100vh;
-  }
-  
-  .dashboard-content {
-    display: flex;
-    flex-grow: 1;
-  }
-  
-  .doctor-appointment-container {
-    padding: 30px;
-    background-color: #f9f9f9;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  }
-  
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+.dashboard-content {
+  display: flex;
+  flex-grow: 1;
+}
+
+.doctor-appointment-container {
+  padding: 30px;
+  background-color: #f9f9f9;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.doctor-appointment-container h2 {
+  font-size: 32px;
+  font-weight: bold;
+  color: #2c3e50;
+  margin-top: 40px;
+}
+
+.appointment-list {
+  margin-top: 20px;
+  overflow-x: auto; /* allow horizontal scroll on small screens */
+}
+
+.appointment-list table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 15px;
+  min-width: 600px; /* allow horizontal scroll for smaller screens */
+}
+
+.appointment-list th,
+.appointment-list td {
+  padding: 16px;
+  text-align: center;
+  border: 1px solid #ecf0f1;
+  white-space: nowrap; /* prevent text wrap in cells */
+}
+
+.appointment-list th {
+  background-color: #34495e;
+  color: white;
+  font-weight: bold;
+}
+
+.appointment-list td button {
+  padding: 8px 12px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+
+/* Button styles */
+button.primary {
+  background-color: #1abc9c;
+  color: white;
+}
+
+button.primary:hover {
+  background-color: #16a085;
+}
+
+button.danger {
+  background-color: #e74c3c;
+  color: white;
+}
+
+button.danger:hover {
+  background-color: #c0392b;
+}
+
+.modal-body {
+  background-color: #fff;
+  border-radius: 8px;
+  padding: 30px;
+}
+
+button.btn-warning {
+  background-color: #ffc107;
+  color: white;
+  border: none;
+}
+
+button.btn-warning:hover {
+  background-color: #e0a800;
+}
+
+button.btn-danger {
+  background-color: #dc3545;
+  color: white;
+  border: none;
+}
+
+button.btn-danger:hover {
+  background-color: #c82333;
+}
+
+/* Responsive Adjustments */
+
+/* Medium devices (tablets, 768px and up) */
+@media (max-width: 991.98px) {
   h2 {
-    font-size: 32px;
-    font-weight: bold;
-    color: #2c3e50;
+    font-size: 28px;
   }
-  
-  .appointment-list {
-    margin-top: 20px;
-  }
-  
+
   .appointment-list table {
-    width: 100%;
-    border-collapse: collapse;
+    min-width: 500px;
+  }
+
+  .appointment-list th,
+  .appointment-list td {
+    padding: 12px;
+    font-size: 14px;
+  }
+
+  .appointment-list td button {
+    padding: 6px 10px;
+    font-size: 13px;
+  }
+}
+
+/* Small devices (phones, less than 768px) */
+@media (max-width: 767.98px) {
+  .dashboard-content {
+    flex-direction: column;
+  }
+
+  .doctor-appointment-container {
+    padding: 15px;
+    box-shadow: none;
+  }
+
+  h2 {
+    font-size: 24px;
+    text-align: center;
+  }
+
+  .appointment-list {
     margin-top: 15px;
   }
-  
-  .appointment-list th, .appointment-list td {
-    padding: 16px;
-    text-align: center;
+
+  .appointment-list table {
+    min-width: 100%; /* remove min-width */
+  }
+
+  .appointment-list thead {
+    display: none; /* hide table header */
+  }
+
+  .appointment-list tbody tr {
+    display: block;
+    margin-bottom: 20px;
     border: 1px solid #ecf0f1;
-  }
-  
-  .appointment-list th {
-    background-color: #34495e;
-    color: white;
-    font-weight: bold;
-  }
-  
-  .appointment-list td button {
-    padding: 8px 12px;
-    border-radius: 5px;
-    cursor: pointer;
-  }
-  
-  button.primary {
-    background-color: #1abc9c;
-    color: white;
-  }
-  
-  button.primary:hover {
-    background-color: #16a085;
-  }
-  
-  button.danger {
-    background-color: #e74c3c;
-    color: white;
-  }
-  
-  button.danger:hover {
-    background-color: #c0392b;
-  }
-  
-  .modal-body {
-    background-color: #fff;
     border-radius: 8px;
-    padding: 30px;
-  }
-  
-
-  button.btn-warning {
-    background-color: #ffc107;
-    color: white;
-    border: none;
-    
-  }
-  
-  button.btn-warning:hover {
-    background-color: #e0a800;
-  }
-  
-  button.btn-danger {
-    background-color: #dc3545;
-    color: white;
-    border: none;
-  }
-  
-  button.btn-danger:hover {
-    background-color: #c82333;
+    padding: 10px;
+    background-color: #fff;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
   }
 
+  .appointment-list tbody td {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 10px;
+    text-align: left;
+    border: none;
+    white-space: normal;
+    font-size: 14px;
+  }
+
+  .appointment-list tbody td::before {
+    content: attr(data-label);
+    font-weight: 600;
+    color: #34495e;
+    flex-basis: 40%;
+  }
+
+  .appointment-list tbody td:last-child {
+    justify-content: flex-start;
+    gap: 10px;
+  }
+
+  .appointment-list td button {
+    padding: 6px 8px;
+    font-size: 12px;
+  }
+}
+
+/* Extra small devices (phones less than 480px) */
+@media (max-width: 479.98px) {
+  .doctor-appointment-container h2 {
+    font-size: 20px;
+  }
+
+  .appointment-list tbody td {
+    font-size: 13px;
+  }
+
+  .appointment-list td button {
+    padding: 5px 6px;
+    font-size: 11px;
+  }
+}

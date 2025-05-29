@@ -3,7 +3,7 @@
   display: flex;
   flex-direction: column;
   height: 100vh;
-  background-color: #f0f2f5; /* Light greyish background for better contrast */
+  background-color: #f0f2f5;
 }
 
 /* Dashboard Content Area */
@@ -11,24 +11,25 @@
   display: flex;
   flex-grow: 1;
   padding: 20px;
-  margin-left: 250px; /* Offset sidebar */
-  background-color: #ffffff; /* Clean white background for content */
+  margin-left: 250px; /* Sidebar width */
+  background-color: #ffffff;
+  transition: margin-left 0.3s ease;
 }
 
 /* Doctor Dashboard */
 .doctor-dashboard {
   width: 100%;
   padding: 30px;
-  background-color: #ffffff; /* White background */
+  background-color: #ffffff;
   border-radius: 10px;
-  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.12); /* Soft shadow for depth */
+  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.12);
 }
 
 h2 {
   font-size: 26px;
-  color: #333333; /* Dark grey color for headings */
+  color: #333333;
   margin-bottom: 20px;
-  font-weight: 600; /* Slightly bolder font for headings */
+  font-weight: 600;
 }
 
 /* Section Spacing */
@@ -39,12 +40,12 @@ h2 {
 /* Card Styles */
 .card {
   border-radius: 12px;
-  box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.08); /* Soft shadows */
-  background-color: #f8f9fa; /* Subtle light background for cards */
+  box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.08);
+  background-color: #f8f9fa;
 }
 
 .card-header {
-  background-color: #4e73df; /* A deep blue background for card headers */
+  background-color: #4e73df;
   color: white;
   font-weight: 600;
   font-size: 18px;
@@ -53,7 +54,7 @@ h2 {
   padding: 10px 20px;
 }
 
-.card-header .fa {
+.card-header svg {
   margin-right: 15px;
 }
 
@@ -61,34 +62,28 @@ h2 {
   padding: 15px;
 }
 
-.card-footer {
-  background-color: #f1f3f5; /* A light background for footer */
-  border-top: 1px solid #e1e1e1;
-}
-
-/* Appointment and Patient Overview Cards */
-.appointment-card,
-.patient-card {
-  margin-bottom: 20px;
-}
-
 .appointment-card .list-group-item,
-.patient-card .list-group-item {
-  background-color: #ffffff; /* White background for list items */
+.patient-card .list-group-item,
+.medical-record-card .list-group-item {
+  background-color: #ffffff;
   border: 1px solid #e5e5e5;
   padding: 12px;
   font-size: 16px;
-  color: #555555; /* Darker text for better readability */
+  color: #555555;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .appointment-card .list-group-item:hover,
-.patient-card .list-group-item:hover {
-  background-color: #f1f1f1; /* Light grey on hover */
+.patient-card .list-group-item:hover,
+.medical-record-card .list-group-item:hover {
+  background-color: #f1f1f1;
 }
 
 .appointment-card .float-right,
 .patient-card .float-right {
-  background-color: #28a745; /* Green button for actions */
+  background-color: #28a745;
   color: white;
   border: none;
   padding: 6px 15px;
@@ -97,37 +92,61 @@ h2 {
 
 .appointment-card .float-right:hover,
 .patient-card .float-right:hover {
-  background-color: #218838; /* Darker green on hover */
+  background-color: #218838;
 }
 
-/* Medical Records Section */
-.medical-record-card .list-group-item {
-  background-color: #ffffff; /* White background */
-  padding: 14px;
-  border: 1px solid #e5e5e5;
-  font-size: 16px;
-  color: #555555;
-}
-
-.medical-record-card .list-group-item:hover {
-  background-color: #f1f1f1; /* Light grey on hover */
-}
-
-/* Sidebar and Navbar Spacing */
+/* Container */
 .container {
   max-width: 100%;
   margin-left: 30px;
   margin-right: 30px;
 }
 
+/* Responsive adjustments */
+@media (max-width: 991px) {
+  .dashboard-content {
+    margin-left: 200px; /* Adjust if sidebar width changes */
+  }
+}
+
 @media (max-width: 767px) {
   .dashboard-content {
-    margin-left: 0; /* Adjust for mobile view */
+    margin-left: 0;
+    padding: 10px;
   }
-  .dashboard-container {
-    display: block;
-  }
+
   .doctor-dashboard {
     padding: 15px;
+  }
+
+  .appointment-card .list-group-item,
+  .patient-card .list-group-item,
+  .medical-record-card .list-group-item {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .appointment-card .float-right,
+  .patient-card .float-right {
+    margin-top: 10px;
+    width: 100%;
+    text-align: center;
+  }
+}
+
+@media (max-width: 480px) {
+  h2 {
+    font-size: 22px;
+  }
+
+  .card-header {
+    font-size: 16px;
+    padding: 8px 15px;
+  }
+
+  .appointment-card .list-group-item,
+  .patient-card .list-group-item,
+  .medical-record-card .list-group-item {
+    font-size: 14px;
   }
 }

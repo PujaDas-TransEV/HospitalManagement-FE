@@ -1,44 +1,35 @@
 
+
 import React, { useState, useEffect } from "react";
-import { Navbar, Nav, FormControl, Button, Dropdown } from "react-bootstrap";
-import { FaBell, FaSearch } from "react-icons/fa";
-import { jwtDecode } from "jwt-decode"; // Ensure jwt-decode is installed
-import './DoctorNavbar.css'; // Your custom styling
+import { Navbar, Nav, Dropdown } from "react-bootstrap";
+import { jwtDecode } from "jwt-decode";
+import { useNavigate } from "react-router-dom";
+import './DoctorNavbar.css';
 
 const DoctorNavbar = () => {
   const [profileOpen, setProfileOpen] = useState(false);
-  const [notificationOpen, setNotificationOpen] = useState(false);
   const [doctorData, setDoctorData] = useState({
     fullname: "",
-    profilepictures: "/images/default-profile.jpg", // Default image
+    profilepictures: "/images/default-profile.jpg",
   });
 
-  // Toggle Profile dropdown
+  const navigate = useNavigate();
+
   const toggleProfileDropdown = () => setProfileOpen(!profileOpen);
 
-  // Toggle Notifications dropdown
-  const toggleNotificationDropdown = () => setNotificationOpen(!notificationOpen);
-
-  // Fetch doctor info using the decoded doctorId
   useEffect(() => {
     const fetchDoctorInfo = async () => {
-      const accessToken = localStorage.getItem("accessToken"); // Get the token from localStorage
-
+      const accessToken = localStorage.getItem("accessToken");
       if (!accessToken) {
-        console.error("No access token found. Please log in.");
         return;
       }
-
       try {
-        // Decode the access token to get doctorId
         const decodedToken = jwtDecode(accessToken);
-        const doctorId = decodedToken.doctorid; // Extract doctorid from decoded token
+        const doctorId = decodedToken.doctorid;
 
-        // Prepare the form data to send doctorId
         const formData = new FormData();
-        formData.append("doctorid", doctorId); // Append doctorId to the form data
+        formData.append("doctorid", doctorId);
 
-        // Fetch doctor information from API
         const response = await fetch("http://localhost:5000/doctors/getbyid", {
           method: "POST",
           body: formData,
@@ -47,68 +38,35 @@ const DoctorNavbar = () => {
         const data = await response.json();
 
         if (data.message === "Doctor data hasbeen fetched successfully") {
-          // Set the doctor information from the API response
           setDoctorData({
-            fullname: data.data.fullname, // Set the full name
-            profilepictures: data.data.profilepictures 
-              ? `data:image/jpeg;base64,${data.data.profilepictures}` 
-              : "/images/default-profile.jpg", // Handle base64 encoding for profile image
+            fullname: data.data.fullname,
+            profilepictures: data.data.profilepictures
+              ? `data:image/jpeg;base64,${data.data.profilepictures}`
+              : "/images/default-profile.jpg",
           });
-        } else {
-          console.error("Error fetching doctor information:", data.message);
         }
       } catch (error) {
-        console.error("Error decoding token or fetching doctor info:", error);
+        console.error(error);
       }
     };
 
-    fetchDoctorInfo(); // Fetch doctor information when the component mounts
-  }, []); // Empty dependency array means it runs once when the component mounts
+    fetchDoctorInfo();
+  }, []);
+
+  const handleLogout = () => {
+    localStorage.removeItem("accessToken");
+    navigate("/");
+  };
 
   return (
-    <Navbar bg="dark" variant="dark" expand="lg" className="doctor-navbar">
-      <Navbar.Brand>Doctor Dashboard</Navbar.Brand>
+    <Navbar bg="dark" variant="dark" expand="lg" className="doctor-navbar" fixed="top">
+      <Navbar.Brand href="/">LifeCare</Navbar.Brand>
+      {/* <Navbar.Toggle aria-controls="basic-navbar-nav" /> */}
 
-      <Navbar.Collapse id="navbar-nav" className="justify-content-between">
-        {/* Search Bar */}
-        <Nav className="mx-auto">
-          <FormControl
-            type="text"
-            placeholder="Search for Patients or Appointments"
-            className="search-bar"
-          />
-          <Button variant="outline-light">
-            <FaSearch />
-          </Button>
-        </Nav>
-
-        {/* Notification & Profile Section */}
-        <Nav className="ml-auto notification-profile-container">
-          {/* Notifications */}
+      <Navbar.Collapse id="basic-navbar-nav" className="justify-content-end">
+        <Nav>
           <Dropdown
-            alignRight
-            show={notificationOpen}
-            onToggle={toggleNotificationDropdown}
-            className="notification-dropdown"
-          >
-            <Dropdown.Toggle
-              variant="outline-light"
-              id="notifications-dropdown"
-              onClick={toggleNotificationDropdown}
-            >
-              <FaBell />
-            </Dropdown.Toggle>
-            {notificationOpen && (
-              <Dropdown.Menu>
-                <Dropdown.Item href="/appointments">New Appointment</Dropdown.Item>
-                <Dropdown.Item href="#/action-2">Patient Update</Dropdown.Item>
-              </Dropdown.Menu>
-            )}
-          </Dropdown>
-
-          {/* Profile Dropdown */}
-          <Dropdown
-            alignRight
+            align="end"
             show={profileOpen}
             onToggle={toggleProfileDropdown}
             className="profile-dropdown"
@@ -117,20 +75,20 @@ const DoctorNavbar = () => {
               variant="outline-light"
               id="profile-dropdown"
               onClick={toggleProfileDropdown}
+              className="d-flex align-items-center"
             >
               <img
-                src={doctorData.profilepictures} // Use the fetched base64 encoded profile picture
+                src={doctorData.profilepictures}
                 alt="profile"
                 className="profile-image"
               />
-              <span className="doctor-name">
-                {doctorData.fullname} 
-              </span>
+              <span className="doctor-name">{doctorData.fullname}</span>
             </Dropdown.Toggle>
+
             {profileOpen && (
               <Dropdown.Menu>
                 <Dropdown.Item href="/doctor-profile">Profile</Dropdown.Item>
-                <Dropdown.Item href="/login">Log Out</Dropdown.Item>
+                <Dropdown.Item onClick={handleLogout}>Log Out</Dropdown.Item>
               </Dropdown.Menu>
             )}
           </Dropdown>
