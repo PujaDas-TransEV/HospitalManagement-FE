@@ -3,14 +3,16 @@ import React, { useState, useEffect } from 'react';
 import { Nav, Button } from 'react-bootstrap';
 import {
   FaCalendar, FaCalendarCheck, FaEnvelope, FaCog,
-  FaBars, FaUser, FaCalendarAlt
+  FaBars, FaUser, FaCalendarAlt,FaHome 
 } from 'react-icons/fa';
 import './Doctorsidebar.css';
 import { MdDashboard } from 'react-icons/md';
 import { FaUserMd } from 'react-icons/fa';
+import { Link, useLocation } from 'react-router-dom';
 const DoctorSidebar = () => {
   const [isExpanded, setIsExpanded] = useState(false); // desktop expand/collapse
   const [isMobileOpen, setIsMobileOpen] = useState(false); // mobile sidebar open/close
+const location = useLocation();
 
   const toggleSidebar = () => {
     setIsExpanded(!isExpanded);
@@ -87,6 +89,12 @@ const DoctorSidebar = () => {
   <FaUserMd />
   {(isExpanded || isMobileOpen) && ' Profile'}
 </Nav.Link>
+<li className="nav-item">
+            <Link to="/" className={`nav-link ${location.pathname === '/' ? 'active-link' : ''}`} onClick={handleLinkClick}>
+              <FaHome className="nav-icon" />
+              {(isExpanded || isMobileOpen) && <span>Return To Home</span>}
+            </Link>
+          </li>
       </div>
 
       {/* Mobile overlay */}
