@@ -102,7 +102,7 @@ const DoctorAppointmentManagement = () => {
       });
 
       const data = await response.json();
-      if (data.success) {
+      if (data.message) {
         setAppointments((prevAppointments) =>
           prevAppointments.map((appointment) =>
             appointment.uid === editingAppointment.uid ? { ...appointment, appoinmentstatus: newAppointment.status } : appointment
@@ -116,6 +116,8 @@ const DoctorAppointmentManagement = () => {
       console.error('Error updating appointment status:', error);
     }
   };
+
+
 
   // Cancel an appointment (using `uid` as `appoinid`)
   const handleCancelAppointment = async (appoinid) => {
@@ -189,7 +191,7 @@ const DoctorAppointmentManagement = () => {
 
           {/* Modal for editing appointment */}
           <Modal show={showModal} onHide={handleClose}>
-            <Modal.Header closeButton>
+            <Modal.Header  >
               <Modal.Title>Edit Appointment</Modal.Title>
             </Modal.Header>
             <Modal.Body>
@@ -251,7 +253,7 @@ const DoctorAppointmentManagement = () => {
               </Form>
             </Modal.Body>
             <Modal.Footer>
-              <Button variant="secondary" onClick={handleClose}>
+              <Button variant="secondary" onClick={handleClose}   style={{ marginRight: '10px' }} >
                 Close
               </Button>
               <Button

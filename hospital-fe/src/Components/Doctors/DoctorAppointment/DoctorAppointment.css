@@ -212,3 +212,95 @@ button.btn-danger:hover {
     font-size: 11px;
   }
 }
+/* ===== Modal Layout Styling ===== */
+.modal-content {
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+  max-height: 90vh; /* Prevent overflow */
+  overflow-y: auto; /* Scroll if needed */
+}
+
+/* Modal header & title */
+.modal-header {
+  background-color: #f1f1f1;
+  border-bottom: none;
+  padding: 15px 20px;
+}
+
+.modal-title {
+  font-size: 22px;
+  font-weight: 600;
+  color: #2c3e50;
+}
+
+/* Modal body & form fields */
+.modal-body {
+  background-color: #fff;
+  padding: 20px;
+}
+
+.modal-body .form-group {
+  margin-bottom: 15px;
+}
+
+.modal-body label {
+  font-weight: 600;
+  color: #34495e;
+  margin-bottom: 5px;
+  display: block;
+}
+
+.modal-body input,
+.modal-body select {
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  padding: 10px;
+  width: 100%;
+  font-size: 14px;
+}
+
+/* Modal footer */
+.modal-footer {
+  border-top: none;
+  padding: 15px 20px;
+  display: flex;
+  justify-content: space-between;
+}
+
+/* ===== Mobile Adjustments ===== */
+@media (max-width: 767.98px) {
+  .modal-dialog {
+    margin: 60px 10px 10px 10px !important; /* Push modal lower */
+    max-width: 100%;
+  }
+
+  .modal-content {
+    max-height: 85vh;
+    overflow-y: auto;
+  }
+
+  .modal-title {
+    font-size: 18px;
+  }
+
+  .modal-body {
+    padding: 15px;
+  }
+
+  .modal-body input,
+  .modal-body select {
+    padding: 8px;
+    font-size: 13px;
+  }
+
+  .modal-footer {
+    flex-direction: column;
+    gap: 10px;
+    align-items: stretch;
+  }
+
+  .modal-footer .btn {
+    width: 100%;
+  }
+}

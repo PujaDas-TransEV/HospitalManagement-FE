@@ -70,10 +70,10 @@ const DoctorSidebar = () => {
             <FaUser />
             {(isExpanded || isMobileOpen) && ' Patient List'}
           </Nav.Link>
-          <Nav.Link href="/messages" className="sidebar-item" onClick={handleLinkClick}>
+          {/* <Nav.Link href="/messages" className="sidebar-item" onClick={handleLinkClick}>
             <FaEnvelope />
             {(isExpanded || isMobileOpen) && ' Messages'}
-          </Nav.Link>
+          </Nav.Link> */}
           <Nav.Link href="/leave" className="sidebar-item" onClick={handleLinkClick}>
             <FaCalendarAlt />
             {(isExpanded || isMobileOpen) && ' Leave Management'}

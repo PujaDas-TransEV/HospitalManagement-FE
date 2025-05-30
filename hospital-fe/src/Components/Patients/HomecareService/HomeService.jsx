@@ -78,7 +78,7 @@ const HomeCareServicePage = () => {
 
   const handleUpdate = async () => {
     const formData = new FormData();
-    formData.append('uid', selectedRequest.homecare.uid);
+    formData.append('homeuid', selectedRequest.homecare.uid);
     editableFields.forEach((key) => {
       formData.append(key, selectedRequest.homecare[key]);
     });

@@ -1,11 +1,11 @@
-/* General styles for the page container */
+
 .dashboard-container {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
 }
 
-/* Layout styles for content */
+
 .dashboard-content {
   display: flex;
   flex: 1;
@@ -14,17 +14,17 @@
   padding: 20px;
 }
 
-/* Style for the patient list page container */
+
 .doctor-patient-list-page-container {
   flex: 1;
-  background-color: #fff;
+  background-color: #f4f6f9;
   padding: 20px;
   border-radius: 8px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  margin-left: 20px;
+  margin-left: 5px;
 }
 
-/* Header styling */
+
 h2 {
   font-size: 24px;
   font-weight: 600;
@@ -32,7 +32,7 @@ h2 {
   color: #333;
 }
 
-/* Table styling */
+
 table {
   width: 100%;
   border-collapse: collapse;
@@ -59,10 +59,7 @@ tr:hover {
   background-color: #f1f1f1;
 }
 
-/* Button styling */
 
-
-/* Modal styling */
 .modal-content {
   border-radius: 8px;
   padding: 20px;
@@ -94,7 +91,7 @@ button:focus {
   outline: none;
 }
 
-/* Adjustments for responsiveness */
+
 @media (max-width: 768px) {
   .dashboard-content {
     flex-direction: column;
@@ -115,7 +112,7 @@ button:focus {
   }
 }
 
-/* Style for Alert */
+
 .alert {
   margin-bottom: 20px;
 }
