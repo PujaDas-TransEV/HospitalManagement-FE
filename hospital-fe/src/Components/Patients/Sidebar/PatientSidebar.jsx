@@ -4,7 +4,7 @@ import { Link, useLocation } from 'react-router-dom';
 import {
   FaHome, FaHeartbeat, FaCalendarCheck, FaNotesMedical,
   FaEnvelope, FaFileAlt, FaUser, FaBars, FaQuestionCircle, FaCog,
-  FaAngleDoubleLeft, FaAngleDoubleRight,FaRegClipboard
+  FaAngleDoubleLeft, FaAngleDoubleRight,FaRegClipboard,FaClinicMedical
 } from 'react-icons/fa';
 
 import './PatientSidebar.css';
@@ -67,7 +67,7 @@ const PatientSidebar = () => {
           </li>
           <li className="nav-item">
             <Link to="/home-care-service" className={`nav-link ${location.pathname === '/home-care-service' ? 'active-link' : ''}`} onClick={handleLinkClick}>
-              <FaHeartbeat className="nav-icon" />
+              <FaClinicMedical className="nav-icon" />
               {(isExpanded || isMobileOpen)&& <span>Home Care Service</span>}
             </Link>
           </li>
