@@ -1,109 +1,47 @@
 
- .dashboard-container {
-    display: flex;
-    flex-direction: column;
-    height: 100vh;
-    background-color: #f4f6f9;
-  }
-  
- 
-  .dashboard-content {
-    display: flex;
-    flex-grow: 1;
-    padding-top: 20px;
-  }
-  
-  .dashboard-content > div {
-    flex: 1;
-  }
-  
+.dashboard-card,
+.stats-card {
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  text-align: center;
+  background-color: #ffffff;
+  transition: all 0.3s ease;
+  margin-left: 280px;
+}
 
-  .dashboard-card {
-    border-radius: 10px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    padding: 20px;
-    text-align: center;
-  }
-  
+/* Card backgrounds */
+.card-doctors {
+  background-color: #d1e7dd;
+}
+.card-patients {
+  background-color: #f8d7da;
+}
+.card-appointments {
+  background-color: #fff3cd;
+}
+.card-billing {
+  background-color: #dbe9ff;
+}
 
-  .card-doctors {
-    background-color: #d1e7dd;
-  }
-  
-  .card-patients {
-    background-color: #f8d7da;
-  }
-  
-  .card-appointments {
-    background-color: #fff3cd;
-  }
-  
-  .card-billing {
-    background-color: #dbe9ff;
-  }
-  
-
-  .icon {
-    color: #007bff;
-    margin-bottom: 10px;
-  }
-  
-
-  .dashboard-card h5 {
-    font-size: 1.2rem;
-    font-weight: bold;
-    margin-bottom: 10px;
-  }
-  
- 
-  .dashboard-card .btn {
-    margin-top: 10px;
-    border-radius: 25px;
-  }
-  
-
+/* Responsive behavior */
+@media (max-width: 768px) {
+  .dashboard-card,
   .stats-card {
-    background-color: #ffffff;
-    border-radius: 10px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    padding: 20px;
+    width: 100% !important;
+    max-width: 100% !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
   }
-  
-  .stats-card h5 {
-    font-size: 1.2rem;
-    font-weight: bold;
-    margin-bottom: 10px;
+
+  .container,
+  .row,
+  .col {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
   }
-  
-  .stats-card ul {
-    list-style: none;
-    padding: 0;
-  }
-  
-  .stats-card ul li {
-    margin-bottom: 8px;
-    color: #6c757d;
-  }
-  
- 
-  @media (max-width: 768px) {
-  
-    .dashboard-content {
-      flex-direction: column;
-    }
-  
-  
-    .dashboard-card {
-      margin-bottom: 20px;
-    }
-  }
-  
-  
-  .mb-4 {
-    margin-bottom: 1.5rem;
-  }
-  
-  .mt-4 {
-    margin-top: 1.5rem;
-  }
-  
+}
+.icon {
+  color: #007bff;
+  margin-bottom: 10px;
+}

@@ -37,7 +37,7 @@ const AdminSupport = () => {
         });
         const data = await response.json();
 
-        if (data.success) {
+        if (data.message) {
           setSupportTickets((prevTickets) =>
             prevTickets.filter((ticket) => ticket.uid !== supportId)
           );

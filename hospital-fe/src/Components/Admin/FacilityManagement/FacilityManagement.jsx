@@ -22,7 +22,8 @@ const FacilityManagementPage = () => {
     department_closetime: '',
   });
   const [currentFacilityId, setCurrentFacilityId] = useState(null);
-
+ const [showDetailsModal, setShowDetailsModal] = useState(false);
+  const [facilityDetails, setFacilityDetails] = useState(null);
   // Fetch all facilities
   const fetchFacilities = () => {
     setLoading(true);
@@ -139,33 +140,42 @@ const FacilityManagementPage = () => {
       });
   };
 
-  // Handle View Details
-  const handleViewDetails = (facilityId) => {
-    setLoading(true);
-    setError(null);
 
-    const formDataObj = new FormData();
-    formDataObj.append('facilityid', facilityId);
 
-    fetch('http://localhost:5000/facilityops/getfacilitydetailsbyid', {
-      method: 'POST',
-      body: formDataObj,
+const handleViewDetails = (facilityId) => {
+  setLoading(true);
+  setError(null);
+
+  const formDataObj = new FormData();
+  formDataObj.append('facilityid', facilityId);
+
+  fetch('http://localhost:5000/facilityops/getfacilitydetailsbyid', {
+    method: 'POST',
+    body: formDataObj,
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      if (data.error) {
+        setError(data.error);
+        setFacilityDetails(null);
+        setShowDetailsModal(false);
+      } else if (data.payload && data.payload.length > 0) {
+        setFacilityDetails(data.payload[0]); // show first object in payload
+        setShowDetailsModal(true);          // open modal to display details
+      } else {
+        setFacilityDetails(null);
+        setError('No details found.');
+        setShowDetailsModal(false);
+      }
+      setLoading(false);
     })
-      .then((response) => response.json())
-      .then((data) => {
-        if (data.error) {
-          setError(data.error);
-        } else {
-          // Show details in an alert (or update a modal or state to display the details)
-          alert('Facility Details: ' + JSON.stringify(data));
-        }
-        setLoading(false);
-      })
-      .catch((error) => {
-        setError('Error fetching facility details.');
-        setLoading(false);
-      });
-  };
+    .catch((error) => {
+      setError('Error fetching facility details.');
+      setLoading(false);
+      setShowDetailsModal(false);
+    });
+};
+
 
   // Handle Add Facility (New facility creation)
   const handleAddFacility = (e) => {
@@ -251,13 +261,43 @@ const FacilityManagementPage = () => {
                         <Button variant="info" onClick={() => openEditModal(facility)}>
                           Edit
                         </Button>
-                        <Button
-                          variant="info"
-                          style={{ backgroundColor: 'orange' }}
-                          onClick={() => handleViewDetails(facility.uid)}
-                        >
-                          View Details
-                        </Button>
+                       <Button
+  variant="info"
+  style={{ backgroundColor: 'orange' }}
+  onClick={() => handleViewDetails(facility.uid)}
+>
+  View Details
+</Button>
+
+                    <Modal show={showDetailsModal} onHide={() => setShowDetailsModal(false)}>
+  <Modal.Header closeButton>
+    <Modal.Title>Facility Details</Modal.Title>
+  </Modal.Header>
+  <Modal.Body>
+    {facilityDetails ? (
+      <div>
+        <p><strong>Department Name:</strong> {facilityDetails["Department_Name"] || 'N/A'}</p>
+        <p><strong>Details:</strong> {facilityDetails["Department_details"] || 'N/A'}</p>
+        <p><strong>Hospital ID:</strong> {facilityDetails["hospital_assignedid"] || 'N/A'}</p>
+        <p><strong>Department Head:</strong> {facilityDetails["Department_head_name"] || 'N/A'}</p>
+        <p><strong>Official Email:</strong> {facilityDetails["Department_email"] || 'N/A'}</p>
+        <p><strong>Official Phone No:</strong> {facilityDetails["Department_phoneno"] || 'N/A'}</p>
+        <p><strong>Status:</strong> {facilityDetails["Department status"] || 'N/A'}</p>
+        <p><strong>Open Time:</strong> {facilityDetails["Department Opentime"] || 'N/A'}</p>
+        <p><strong>Close Time:</strong> {facilityDetails["Department Closetime"] || 'N/A'}</p>
+        <p><strong>Created At:</strong> {new Date(facilityDetails["Created At"]).toLocaleString() || 'N/A'}</p>
+      </div>
+    ) : (
+      <p>No details available.</p>
+    )}
+  </Modal.Body>
+  <Modal.Footer>
+    <Button variant="secondary" onClick={() => setShowDetailsModal(false)}>
+      Close
+    </Button>
+  </Modal.Footer>
+</Modal>
+
                         <Button variant="danger" onClick={() => handleDeleteFacility(facility.uid)}>
                           Delete
                         </Button>
@@ -275,7 +315,7 @@ const FacilityManagementPage = () => {
         </div>
       </div>
 
-      Facility Modal for Add
+    
       <Modal show={showModal} onHide={() => setShowModal(false)}>
         <Modal.Header closeButton>
           <Modal.Title > Add Facility</Modal.Title>

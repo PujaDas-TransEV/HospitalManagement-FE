@@ -144,6 +144,7 @@ const ManageDoctors = () => {
           {loading ? (
             <Spinner animation="border" variant="primary" />
           ) : (
+            <div className="table-responsive-wrapper">
             <Table striped bordered hover className="doctors-table">
               <thead>
                 <tr>
@@ -184,10 +185,14 @@ const ManageDoctors = () => {
                   </tr>
                 )}
               </tbody>
+            
+
             </Table>
+            </div>
           )}
         </div>
       </div>
+      
 
       {/* Edit Doctor Modal */}
       <Modal show={showEditModal} onHide={() => setShowEditModal(false)}>
@@ -271,6 +276,7 @@ const ManageDoctors = () => {
         </Modal.Body>
       </Modal>
     </div>
+    
   );
 };
 

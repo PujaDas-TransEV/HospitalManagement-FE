@@ -139,7 +139,7 @@ const StaffManagement = () => {
     })
       .then((response) => response.json())
       .then((data) => {
-        if (data.success) {
+        if (data.message) {
           setSuccess('Staff updated successfully!');
           fetchStaffList();
           setEditingStaff(null);
@@ -163,7 +163,7 @@ const StaffManagement = () => {
     })
       .then((response) => response.json())
       .then((data) => {
-        if (data.success) {
+        if (data.message) {
           setSuccess('Staff deleted successfully!');
           fetchStaffList();
         } else {
@@ -191,9 +191,9 @@ const StaffManagement = () => {
                 placeholder="Search by Staff ID"
                 value={searchID}
                 onChange={(e) => setSearchID(e.target.value)}
-                style={{ width: '250px', marginRight: '10px' }}
+                style={{ width: '250px', marginRight: '-380px' }}
               />
-              <Button type="submit" variant="primary" style={{width:'100px',marginBottom:'10px',marginLeft:'200px'}}>
+              <Button type="submit" variant="primary" style={{width:'100px',marginBottom:'30px',marginLeft:'300px'}}>
                 Search
               </Button>
             </Form>
@@ -236,7 +236,8 @@ const StaffManagement = () => {
           <Button
             variant="primary"
             onClick={() => setShowForm(!showForm)}
-            style={{ marginBottom: '20px',marginLeft:'150px' }}
+              className="toggle-form-btn"
+           
           >
             {showForm ? 'Cancel' : 'Create Staff'}
           </Button>

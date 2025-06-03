@@ -1,18 +1,19 @@
 
 import React, { useState, useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import { jwtDecode } from 'jwt-decode'; // Import jwt-decode to decode the token
+import {jwtDecode} from 'jwt-decode';
 
 import AdminNavbar from '../Adminnavbar/AdminNavbar';
 import Adminsidebar from '../Adminsidebar/AdminSidebar';
 
 const AppointmentBookingPage = () => {
-  const { departmentId } = useParams(); // Get departmentId from URL
+  const [departments, setDepartments] = useState([]);
+  const [selectedDepartment, setSelectedDepartment] = useState('');
   const [doctors, setDoctors] = useState([]);
-  const [patients, setPatients] = useState([]); // New state to store patients
   const [selectedDoctor, setSelectedDoctor] = useState('');
-  const [selectedPatient, setSelectedPatient] = useState(''); // New state to store selected patient
+  const [patients, setPatients] = useState([]);
+  const [selectedPatient, setSelectedPatient] = useState('');
   const [selectedDate, setSelectedDate] = useState('');
   const [selectedTime, setSelectedTime] = useState('');
   const [appointmentDetails, setAppointmentDetails] = useState('');
@@ -20,47 +21,70 @@ const AppointmentBookingPage = () => {
   const [patientId, setPatientId] = useState(null);
   const navigate = useNavigate();
 
-  // Fetch patient profile on page load
+  // Decode token and get patientId
   useEffect(() => {
-    const fetchPatientProfile = async () => {
-      const accessToken = localStorage.getItem('accessToken');
+    const accessToken = localStorage.getItem('accessToken');
+    if (!accessToken) {
+      navigate('/login');
+      return;
+    }
 
-      if (!accessToken) {
-        navigate('/login'); // Redirect if no token is found
+    try {
+      const decodedToken = jwtDecode(accessToken);
+      setPatientId(decodedToken.userid);
+    } catch (error) {
+      console.error('Error decoding token:', error);
+      navigate('/login');
+    }
+  }, [navigate]);
+
+  // Fetch departments on component mount
+  useEffect(() => {
+    const fetchDepartments = async () => {
+      try {
+        const response = await axios.get('http://localhost:5000/facilityops/getallfacility');
+        console.log('Departments API response:', response.data);
+
+        // Assuming response.data is an array of departments
+        if (Array.isArray(response.data)) {
+          setDepartments(response.data);
+        } else if (Array.isArray(response.data.data)) {
+          setDepartments(response.data.data);
+        } else {
+          setDepartments([]);
+          setAppointmentStatus('Unexpected department data format.');
+        }
+      } catch (error) {
+        console.error('Error fetching departments:', error);
+        setDepartments([]);
+        setAppointmentStatus('Error fetching department data.');
+      }
+    };
+
+    fetchDepartments();
+  }, []);
+
+  // Fetch doctors whenever department changes
+  useEffect(() => {
+    const fetchDoctors = async () => {
+      if (!selectedDepartment) {
+        setDoctors([]);
         return;
       }
 
       try {
-        const decodedToken = jwtDecode(accessToken);
-        const patientId = decodedToken.userid; // Extracting patient ID from token
-        setPatientId(patientId);
-      } catch (error) {
-        console.error('Error decoding token:', error);
-        navigate('/login');
-      }
-    };
-
-    fetchPatientProfile();
-  }, [navigate]);
-
-  // Fetch doctors based on departmentId
-  useEffect(() => {
-    const fetchDoctors = async () => {
-      try {
         const formData = new FormData();
-        formData.append('doctorspecialization', departmentId);
+        formData.append('doctorspecialization', selectedDepartment);
 
-        const response = await axios.post('http://localhost:5000/selectivedoctordata', formData, {
-          headers: { 'Content-Type': 'multipart/form-data' },
-        });
-
-        if (response.data.data) {
+        const response = await axios.post('http://localhost:5000/selectivedoctordata', formData);
+        if (response.data.data && Array.isArray(response.data.data)) {
           const doctorList = response.data.data.map((doctor) => ({
             id: doctor.uid,
             name: doctor.fullname,
-            specialization: doctor.specialization,
+            specialization: selectedDepartment,
           }));
           setDoctors(doctorList);
+          setAppointmentStatus('');
         } else {
           setDoctors([]);
           setAppointmentStatus('No doctors available for this specialization.');
@@ -72,25 +96,21 @@ const AppointmentBookingPage = () => {
       }
     };
 
-    if (departmentId) {
-      fetchDoctors();
-    } else {
-      setAppointmentStatus('Invalid department ID.');
-    }
-  }, [departmentId]);
+    fetchDoctors();
+  }, [selectedDepartment]);
 
-  // Fetch patients for the dropdown
+  // Fetch all patients on mount
   useEffect(() => {
     const fetchPatients = async () => {
       try {
         const response = await axios.get('http://localhost:5000/patientops/getallpatient');
-        console.log(response.data);
-        if (response.data) {
+        if (Array.isArray(response.data)) {
           const patientList = response.data.map((patient) => ({
             id: patient.uid,
             name: patient.firstname,
           }));
           setPatients(patientList);
+          setAppointmentStatus('');
         } else {
           setPatients([]);
           setAppointmentStatus('No patients available.');
@@ -105,77 +125,40 @@ const AppointmentBookingPage = () => {
     fetchPatients();
   }, []);
 
-  // Handle changes in doctor selection
-  const handleDoctorChange = (event) => {
-    setSelectedDoctor(event.target.value);
-    setSelectedDate('');
-    setSelectedTime('');
-  };
-
-  // Handle changes in patient selection
-  const handlePatientChange = (event) => {
-    setSelectedPatient(event.target.value);
-  };
-
-  // Handle changes in date selection
-  const handleDateChange = (event) => {
-    setSelectedDate(event.target.value);
-    setSelectedTime('');
-  };
-
-  // Handle changes in time selection
-  const handleTimeChange = (event) => {
-    setSelectedTime(event.target.value);
-  };
-
-  // Handle changes in appointment details
-  const handleDetailsChange = (event) => {
-    setAppointmentDetails(event.target.value);
-  };
-
-  // Handle appointment booking
   const handleBookAppointment = async () => {
-    if (!selectedDoctor || !selectedPatient || !selectedDate || !selectedTime || !appointmentDetails || !patientId) {
+    if (
+      !selectedDoctor ||
+      !selectedPatient ||
+      !selectedDate ||
+      !selectedTime ||
+      !appointmentDetails ||
+      !patientId
+    ) {
       setAppointmentStatus('Please fill all the required fields.');
       return;
     }
 
-    // Log selected doctor and patient for debugging
-    console.log('Selected Doctor:', selectedDoctor);
-    console.log('Selected Patient:', selectedPatient);
-
     const doctor = doctors.find((doc) => doc.id === selectedDoctor);
     if (!doctor) {
       setAppointmentStatus('Invalid doctor selection.');
-      console.log('Doctor not found:', selectedDoctor);
       return;
     }
 
-    // Log doctor and patient ID and selected time for debugging
-    console.log('Doctor ID:', doctor.id);
-    console.log('Patient ID:', selectedPatient);
-    console.log('Selected Time:', selectedTime);
-
-    const appointmentDateTime = `${selectedDate} ${selectedTime}`; // Combine date and time
+    const appointmentDateTime = `${selectedDate} ${selectedTime}`;
 
     try {
       const formData = new FormData();
-      formData.append('doctorid', doctor.id); // Ensure doctor.id is correct
-      formData.append('patinetid', selectedPatient); // Ensure selectedPatient is correct
+      formData.append('doctorid', doctor.id);
+      formData.append('patinetid', selectedPatient);
       formData.append('appoinmenttime', appointmentDateTime);
       formData.append('appointmentdetails', appointmentDetails);
-
-      console.log('Form Data:', formData); // Log the formData to see its content before sending
 
       const response = await axios.post('http://localhost:5000/createappoinment', formData, {
         headers: { 'Content-Type': 'multipart/form-data' },
       });
 
-      // Log the response to check the returned data
-      console.log('Response:', response.data);
-
       if (response.data && response.data.message) {
-        setAppointmentStatus(`Appointment successfully booked with Dr. ${doctor.name} for ${appointmentDateTime}.`);
+        setAppointmentStatus(`Appointment booked with Dr. ${doctor.name} for ${appointmentDateTime}.`);
       } else {
         setAppointmentStatus('Error booking the appointment.');
       }
@@ -188,32 +171,74 @@ const AppointmentBookingPage = () => {
   return (
     <div className="dashboard-container">
       <AdminNavbar />
-      <div className="dashboard-content">
+      <div className="dashboard-content" style={{ display: 'flex' }}>
         <Adminsidebar />
-        <div className="appointment-booking-container">
-          <h2>Book Appointment - {departmentId}</h2>
+        <div className="appointment-booking-container" style={{ flex: 1, padding: '20px' }}>
+          <h2>Book Appointment</h2>
 
-          {/* Doctor Selection */}
-          <div className="doctor-selection">
-            <label>Select Doctor:</label>
-            <select value={selectedDoctor} onChange={handleDoctorChange}>
-              <option value="">-- Select Doctor --</option>
-              {doctors.length > 0 ? (
-                doctors.map((doctor) => (
-                  <option key={doctor.id} value={doctor.id}>
-                    {doctor.name} (UID: {doctor.id})
+          {/* Department Selection */}
+          <div className="form-group">
+            <label>Select Department:</label>
+            <select
+              value={selectedDepartment}
+              onChange={(e) => {
+                setSelectedDepartment(e.target.value);
+                setSelectedDoctor('');
+                setSelectedDate('');
+                setSelectedTime('');
+                setAppointmentStatus('');
+              }}
+            >
+              <option value="">-- Select Department --</option>
+              {departments.length > 0 ? (
+                departments.map((dept) => (
+                  <option key={dept.uid} value={dept.department_name}>
+                    {dept.department_name}
                   </option>
                 ))
               ) : (
-                <option value="">No doctors available</option>
+                <option disabled>No departments found</option>
               )}
             </select>
           </div>
 
+          {/* Doctor Selection */}
+          {selectedDepartment && (
+            <div className="form-group">
+              <label>Select Doctor:</label>
+              <select
+                value={selectedDoctor}
+                onChange={(e) => {
+                  setSelectedDoctor(e.target.value);
+                  setSelectedDate('');
+                  setSelectedTime('');
+                  setAppointmentStatus('');
+                }}
+              >
+                <option value="">-- Select Doctor --</option>
+                {doctors.length > 0 ? (
+                  doctors.map((doctor) => (
+                    <option key={doctor.id} value={doctor.id}>
+                      {doctor.name} (UID: {doctor.id})
+                    </option>
+                  ))
+                ) : (
+                  <option disabled>No doctors available</option>
+                )}
+              </select>
+            </div>
+          )}
+
           {/* Patient Selection */}
-          <div className="patient-selection">
+          <div className="form-group">
             <label>Select Patient:</label>
-            <select value={selectedPatient} onChange={handlePatientChange}>
+            <select
+              value={selectedPatient}
+              onChange={(e) => {
+                setSelectedPatient(e.target.value);
+                setAppointmentStatus('');
+              }}
+            >
               <option value="">-- Select Patient --</option>
               {patients.length > 0 ? (
                 patients.map((patient) => (
@@ -222,24 +247,38 @@ const AppointmentBookingPage = () => {
                   </option>
                 ))
               ) : (
-                <option value="">No patients available</option>
+                <option disabled>No patients available</option>
               )}
             </select>
           </div>
 
           {/* Date Selection */}
           {selectedDoctor && (
-            <div className="date-selection">
+            <div className="form-group">
               <label>Select Date:</label>
-              <input type="date" value={selectedDate} onChange={handleDateChange} />
+              <input
+                type="date"
+                value={selectedDate}
+                onChange={(e) => {
+                  setSelectedDate(e.target.value);
+                  setSelectedTime('');
+                  setAppointmentStatus('');
+                }}
+              />
             </div>
           )}
 
           {/* Time Selection */}
           {selectedDate && (
-            <div className="time-selection">
+            <div className="form-group">
               <label>Select Time:</label>
-              <select value={selectedTime} onChange={handleTimeChange}>
+              <select
+                value={selectedTime}
+                onChange={(e) => {
+                  setSelectedTime(e.target.value);
+                  setAppointmentStatus('');
+                }}
+              >
                 <option value="">-- Select Time --</option>
                 <option value="10:00:00">10:00 AM</option>
                 <option value="11:00:00">11:00 AM</option>
@@ -253,17 +292,30 @@ const AppointmentBookingPage = () => {
 
           {/* Appointment Details */}
           {selectedTime && (
-            <div className="appointment-details">
+            <div className="form-group">
               <label>Appointment Details:</label>
-              <textarea value={appointmentDetails} onChange={handleDetailsChange} placeholder="Enter appointment details"></textarea>
+              <textarea
+                value={appointmentDetails}
+                onChange={(e) => {
+                  setAppointmentDetails(e.target.value);
+                  setAppointmentStatus('');
+                }}
+                placeholder="Enter appointment details"
+              ></textarea>
             </div>
           )}
 
           {/* Book Appointment Button */}
-          <button onClick={handleBookAppointment}>Book Appointment</button>
+          <button onClick={handleBookAppointment} style={{ marginTop: '10px' }}>
+            Book Appointment
+          </button>
 
           {/* Appointment Status */}
-          {appointmentStatus && <div className="appointment-status">{appointmentStatus}</div>}
+          {appointmentStatus && (
+            <div className="appointment-status" style={{ marginTop: '15px', color: 'green' }}>
+              {appointmentStatus}
+            </div>
+          )}
         </div>
       </div>
     </div>

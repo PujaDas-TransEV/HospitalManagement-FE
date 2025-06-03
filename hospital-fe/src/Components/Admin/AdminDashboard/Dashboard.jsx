@@ -60,6 +60,8 @@ const AdminDashboard = () => {
           <Row className="mt-4">
             {/* 1st Row: Dashboard Cards for different sections (2 cards per row side by side) */}
             <Col md={6} className="mb-4">
+            {/* <Col xs={12} md={6} className="mb-4"> */}
+
               <Card className="dashboard-card card-doctors">
                 <Card.Body>
                   <FaUserMd size={40} className="icon" />

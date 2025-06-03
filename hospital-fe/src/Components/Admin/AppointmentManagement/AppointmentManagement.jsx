@@ -210,7 +210,7 @@ const AdminAppointments = () => {
     })
       .then((response) => response.json())
       .then((data) => {
-        if (data.success) {
+        if (data.message) {
           setAppointments((prevAppointments) =>
             prevAppointments.map((app) =>
               app.uid === selectedAppointment.uid ? selectedAppointment : app
@@ -226,12 +226,47 @@ const AdminAppointments = () => {
         alert('Failed to update appointment');
       });
   };
+  const [departments, setDepartments] = useState([]);
+
+
+useEffect(() => {
+  fetch('http://localhost:5000/facilityops/getallfacility')
+    .then((res) => res.json())
+    .then((data) => {
+      if (data && data.data) {
+        const departmentsWithIcons = data.data.map((dept, index) => ({
+          ...dept,
+          id: dept.department_name.toLowerCase(),     // 👈 custom lowercase id
+          name: dept.department_name,                 // 👈 display name
+          icon: assignDepartmentIcon(dept.department_name, index), // 👈 emoji icon
+        }));
+        setDepartments(departmentsWithIcons);
+      }
+    })
+    .catch((err) => {
+      console.error('Error fetching departments:', err);
+    });
+}, []);
+const assignDepartmentIcon = (name, index) => {
+  const iconMap = {
+    Cardiology: '❤️',
+    Neurology: '🧠',
+    Orthopedics: '💪',
+    Dermatology: '🧴',
+    Pediatrics: '👶',
+    Surgery: '🔪',
+  };
+
+  return iconMap[name] || ['🏥', '🩺', '🔬', '💊', '📋', '🧬'][index % 6];
+};
+
 
   // Render appointments table
   const renderAppointmentsTable = (appointments) => {
     if (!appointments || appointments.length === 0) {
       return <div>No appointments found.</div>;
     }
+
 
     return (
       <table className="appointments-table">
@@ -279,7 +314,7 @@ const AdminAppointments = () => {
           <h2>All Appointments</h2>
 
           {/* Department Filter */}
-          <h3>Select Department</h3>
+          {/* <h3>Select Department</h3>
           <div className="departments">
             {departments.map((dept) => (
               <div
@@ -291,10 +326,26 @@ const AdminAppointments = () => {
                 <div className="department-name">{dept.name}</div>
               </div>
             ))}
-          </div>
+          </div> */}
+<h3>Select Department</h3>
+<div className="departments">
+  {departments.map((dept) => (
+    <div
+      key={dept.uid}
+      className="department-card"
+      onClick={() => handleDepartmentClick(dept.uid)}
+    >
+      <div className="department-icon">{dept.icon}</div>
+      <div className="department-name">{dept.department_name}</div>
+    </div>
+  ))}
+</div>
 
           {/* Button to Add New Appointment */}
-          <button onClick={handleAddAppointment}>Add New Appointment</button>
+          {/* <button onClick={handleAddAppointment}>Add New Appointment</button> */}
+<button onClick={handleAddAppointment} className="responsive-button">
+  Add New Appointment
+</button>
 
           {/* Appointment Table */}
           {loading ? (

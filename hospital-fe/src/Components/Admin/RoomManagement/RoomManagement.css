@@ -1,235 +1,404 @@
-RoomManagement.css
+/* RoomManagement.css */
+
+/* Reset some default styling */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f9fafd;
+  margin: 0;
+  padding: 0;
+  color: #333;
+}
+
 .room-management-page {
-    font-family: Arial, sans-serif;
-    display: flex;
-    flex-direction: column;
-    height: 100vh;
-    background-color: #f4f6f9;
-  }
-  
-  .room-management-content {
-    display: flex;
-    flex: 1;
-  }
-  
-  .container {
-    flex: 1;
-    padding: 20px;
-    background-color: white;
-  
-  }
-  
-  .page-title {
-    font-size: 24px;
-    font-weight: bold;
-    margin-bottom: 20px;
-    color: #333;
-  }
-  
-  .error,
-  .success {
-    padding: 15px;
-    margin-bottom: 20px;
-    font-weight: bold;
-    border-radius: 4px;
-  }
-  
-  .error {
-    background-color: #f8d7da;
-    color: #721c24;
-  }
-  
-  .success {
-    background-color: #d4edda;
-    color: #155724;
-  }
-  
-  .search-section {
-    margin-bottom: 30px;
-  }
-  
-  .search-section h3 {
-    font-size: 20px;
-    margin-bottom: 10px;
-    margin-left: 100px;
-  }
-  
-  .search-section input {
-    padding: 10px;
-    font-size: 16px;
-    width: 300px;
-    margin-right: 10px;
-    border-radius: 4px;
-    border: 1px solid #ccc;
-    margin-left: 120px;
-  }
-  
-  .search-section button {
-    padding: 10px 20px;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-  }
-  
-  .search-section button:hover {
-    background-color: #0056b3;
-  }
-  
-  .room-details {
-    padding: 20px;
-    background-color: #f1f1f1;
-    border-radius: 4px;
-    margin-top: 20px;
-  }
-  
-  .room-details p {
-    margin: 5px 0;
-  }
-  
-  .card {
-    padding: 20px;
-    margin-top: 30px;
-    border-radius: 8px;
-   
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-  }
-  
-  .form-container {
-    margin-top: 30px;
-  }
-  
-  .form-container h3 {
-    font-size: 20px;
-    margin-bottom: 20px;
-  }
-  
-  .form-group {
-    margin-bottom: 15px;
-  }
-  
-  label {
-    display: block;
-    font-size: 16px;
-    margin-bottom: 5px;
-    color: #333;
-  }
-  
-  input,
-  select {
-    
-    padding: 12px;
-    font-size: 16px;
-    border-radius: 4px;
-    border: 1px solid #ccc;
-    margin-top: 5px;
-  }
-  
-  input:focus,
-  select:focus {
-    outline: none;
-    border-color: #007bff;
-  }
-  
-  
-  .all-rooms-container {
-    margin-top: 30px;
-    width: 1100px;
-    margin-left: 500px;
-  }
-  
-  .all-rooms-container h3 {
-    font-size: 20px;
-    margin-bottom: 15px;
-  }
-  
-  table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 20px;
-    border-radius: 4px;
-    overflow: hidden;
-  }
-  
-  table th,
-  table td {
-    padding: 15px;
-    text-align: left;
-    border-bottom: 1px solid #ddd;
-  }
-  
-  table th {
-    background-color: #f4f6f9;
-  }
-  
-  table tr:hover {
-    background-color: #f1f1f1;
-  }
-  
-  table td {
-    color: #333;
-  }
-  
-  table td:first-child {
-    color: #007bff;
-    font-weight: bold;
-  }
-  
-  @media (max-width: 768px) {
-    .search-section input {
-      width: 200px;
-    }
-  
-    .search-section button {
-      width: 100%;
-      margin-top: 10px;
-    }
-  
-    .form-group {
-      margin-bottom: 20px;
-    }
-  
-    .form-container {
-      padding: 10px;
-    }
-  
-    table td {
-      font-size: 14px;
-      padding: 10px;
-    }
-  
-    table th,
-    table td {
-      padding: 12px;
-    }
-  }
-  /* Styles for the Patient Admission Button container */
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* Layout for Navbar + Content */
+.room-management-content {
+  display: flex;
+  flex: 1;
+  background-color: #fff;
+  padding: 1rem;
+  gap: 1rem;
+  margin-left: 400px;
+}
+
+/* Sidebar */
+.room-management-content > .admin-sidebar {
+  width: 240px; /* Adjust as per AdminSidebar */
+}
+
+/* Container for main content */
+.container {
+  flex: 1;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 1rem;
+  background: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 3px 8px rgb(0 0 0 / 0.1);
+}
+
+/* Page Title */
+.page-title {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  color: #2c3e50;
+  text-align: center;
+}
+
+/* Messages */
+.error {
+  background-color: #ffe6e6;
+  color: #cc0000;
+  padding: 10px 15px;
+  margin-bottom: 1rem;
+  border-radius: 5px;
+  font-weight: 600;
+}
+
+.success {
+  background-color: #e6ffea;
+  color: #2d662d;
+  padding: 10px 15px;
+  margin-bottom: 1rem;
+  border-radius: 5px;
+  font-weight: 600;
+}
+
+/* Patient Admission Button */
 .patient-admission-btn {
-    margin-top: 20px; /* Adds space above the button */
-    text-align: center; /* Centers the button */
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.patient-admission-btn .btn {
+  background-color: #2980b9;
+  color: #fff;
+  border: none;
+  padding: 12px 25px;
+  font-size: 1.1rem;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.patient-admission-btn .btn:hover {
+  background-color: #1c5980;
+}
+
+/* Search Section */
+.search-section {
+  margin-bottom: 2rem;
+}
+
+.search-section h3 {
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  color: #34495e;
+}
+
+.search-section input[type="text"] {
+  padding: 10px 12px;
+  width: calc(100% - 120px);
+  max-width: 300px;
+  font-size: 1rem;
+  margin-right: 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  outline: none;
+  transition: border-color 0.3s ease;
+}
+
+.search-section input[type="text"]:focus {
+  border-color: #2980b9;
+}
+
+.search-section .btn {
+  padding: 10px 20px;
+  background-color: #2980b9;
+  color: #fff;
+  border: none;
+  font-weight: 600;
+  cursor: pointer;
+  border-radius: 6px;
+  transition: background-color 0.3s ease;
+}
+
+.search-section .btn:hover {
+  background-color: #1c5980;
+}
+
+/* Room Details */
+.room-details {
+  background-color: #f4f9ff;
+  border-left: 5px solid #2980b9;
+  padding: 15px 20px;
+  margin-top: 15px;
+  border-radius: 6px;
+}
+
+.room-details h4 {
+  margin-top: 0;
+  color: #2c3e50;
+}
+
+.room-details p {
+  margin: 6px 0;
+  font-size: 1rem;
+  color: #34495e;
+}
+
+/* Form Container */
+.card.form-container {
+  background: #ffffff;
+  padding: 20px 25px;
+  border-radius: 10px;
+  box-shadow: 0 6px 12px rgb(0 0 0 / 0.1);
+  margin-bottom: 2rem;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.card.form-container h3 {
+  margin-bottom: 20px;
+  font-weight: 700;
+  color: #2c3e50;
+  text-align: center;
+}
+
+/* Form groups */
+.form-group {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 15px;
+}
+
+.form-group label {
+  margin-bottom: 6px;
+  font-weight: 600;
+  color: #34495e;
+}
+
+.form-group input[type="text"],
+.form-group input[type="number"],
+.form-group select {
+  padding: 10px 12px;
+  font-size: 1rem;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  outline: none;
+  transition: border-color 0.3s ease;
+}
+
+.form-group input[type="text"]:focus,
+.form-group input[type="number"]:focus,
+.form-group select:focus {
+  border-color: #2980b9;
+}
+
+/* Submit button */
+.form-container button[type="submit"] {
+  background-color: #27ae60;
+  color: #fff;
+  border: none;
+  padding: 12px 25px;
+  font-size: 1.1rem;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 700;
+  transition: background-color 0.3s ease;
+  width: 100%;
+}
+
+.form-container button[type="submit"]:hover {
+  background-color: #1e8449;
+}
+
+/* All Rooms Table Container */
+.card.all-rooms-container {
+  background: #ffffff;
+  padding: 20px 25px;
+  border-radius: 10px;
+  box-shadow: 0 6px 12px rgb(0 0 0 / 0.1);
+  max-width: 100%;
+  overflow-x: auto;
+}
+
+/* Table styles */
+.all-rooms-container h3 {
+  margin-bottom: 20px;
+  font-weight: 700;
+  color: #2c3e50;
+  text-align: center;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 1rem;
+}
+
+thead {
+  background-color: #2980b9;
+  color: #fff;
+}
+
+thead th {
+  padding: 12px 15px;
+  text-align: left;
+  font-weight: 700;
+}
+
+tbody tr {
+  border-bottom: 1px solid #ddd;
+  transition: background-color 0.3s ease;
+}
+
+tbody tr:hover {
+  background-color: #f4f9ff;
+}
+
+tbody td {
+  padding: 12px 15px;
+  color: #34495e;
+}
+
+/* Delete button */
+.delete-btn {
+  background-color: #c0392b;
+  color: #fff;
+  border: none;
+  padding: 8px 14px;
+  font-weight: 600;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.delete-btn:hover {
+  background-color: #922b21;
+}
+
+/* Responsive styles */
+@media screen and (max-width: 1024px) {
+  .room-management-content {
+    margin-left: 250px; /* Adjust sidebar width or reduce margin */
   }
-  
-  .patient-admission-btn .btn {
-    background-color: #007bff; /* Blue background color */
-    color: white; /* White text color */
-    font-size: 16px; /* Font size */
-    padding: 12px 25px; /* Padding for better spacing */
-    border-radius: 5px; /* Rounded corners */
-    border: none; /* Remove default border */
-    cursor: pointer; /* Cursor change on hover */
-    transition: background-color 0.3s ease, transform 0.2s ease; /* Smooth transitions */
+}
+
+/* Small screens (mobiles) */
+@media screen and (max-width: 768px) {
+  .room-management-content {
+    flex-direction: column;
+    margin-left: 0; /* Remove margin so content uses full width */
+    padding: 1rem 0.5rem;
   }
-  
-  /* Button hover effect */
-  .patient-admission-btn .btn:hover {
-    background-color: #0056b3; /* Darker blue on hover */
-    transform: translateY(-2px); /* Slight upward movement on hover */
+}
+  .container {
+    max-width: 100%;
+    padding: 1rem 0.5rem;
   }
-  
-  /* Optional: Button focus state for better accessibility */
-  .patient-admission-btn .btn:focus {
-    outline: none; /* Removes the default focus outline */
-    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); /* Blue glow when focused */
+
+  .card.form-container,
+  .card.all-rooms-container {
+    padding: 15px 15px;
   }
-  
+
+
+@media screen and (max-width: 768px) {
+  .patient-admission-btn .btn,
+  .search-section .btn,
+  .form-container button[type="submit"],
+  .delete-btn {
+    width: 100%;
+    padding: 12px 0;
+  }
+
+  .search-section input[type="text"] {
+    width: 100%;
+    margin-bottom: 10px;
+  }
+
+  .search-section {
+    text-align: center;
+  }
+
+  .form-group {
+    margin-bottom: 20px;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .page-title {
+    font-size: 1.5rem;
+  }
+
+  table,
+  thead,
+  tbody,
+  th,
+  td,
+  tr {
+    display: block;
+  }
+
+  thead tr {
+    position: absolute;
+    top: -9999px;
+    left: -9999px;
+  }
+
+  tbody tr {
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    padding: 10px;
+    background: #fff;
+  }
+
+  tbody td {
+    padding-left: 50%;
+    position: relative;
+    text-align: left;
+  }
+
+  tbody td::before {
+    position: absolute;
+    top: 12px;
+    left: 15px;
+    width: 45%;
+    padding-right: 10px;
+    white-space: nowrap;
+    font-weight: 700;
+    color: #2980b9;
+  }
+
+  tbody td:nth-of-type(1)::before {
+    content: "Room ID";
+  }
+
+  tbody td:nth-of-type(2)::before {
+    content: "Room Number";
+  }
+
+  tbody td:nth-of-type(3)::before {
+    content: "Room Type";
+  }
+
+  tbody td:nth-of-type(4)::before {
+    content: "Capacity";
+  }
+
+  tbody td:nth-of-type(5)::before {
+    content: "Actions";
+  }
+}

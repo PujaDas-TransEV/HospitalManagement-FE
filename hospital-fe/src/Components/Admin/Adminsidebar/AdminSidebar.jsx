@@ -1,133 +1,145 @@
 
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
-import { Nav, NavItem } from 'react-bootstrap';
-import { FaTachometerAlt, FaUserMd, FaUserInjured, FaCalendarAlt, FaMoneyBillWave, FaCogs, FaSignOutAlt, FaBars, FaArrowLeft, FaPills,FaPlusCircle,FaBed,FaTools,FaBuilding,FaUser,FaQuestionCircle,FaClinicMedical } from 'react-icons/fa';
+import React, { useState, useEffect } from 'react';
+import { Link, useLocation } from 'react-router-dom';
+import {
+  FaTachometerAlt, FaUserMd, FaUserInjured, FaCalendarAlt, FaMoneyBillWave,
+  FaCogs, FaSignOutAlt, FaBars, FaPills, FaPlusCircle, FaBed, FaTools,
+  FaBuilding, FaUser, FaQuestionCircle, FaClinicMedical, FaAngleDoubleLeft, FaAngleDoubleRight
+} from 'react-icons/fa';
 import './AdminSidebar.css';
+import { useNavigate } from "react-router-dom";
+const AdminSidebar = () => {
+  const [isExpanded, setIsExpanded] = useState(false);
+  const [isMobileOpen, setIsMobileOpen] = useState(false);
+  const location = useLocation();
 
-const Sidebar = () => {
-  const [collapsed, setCollapsed] = useState(true);  // Initially collapsed state
+  const toggleSidebar = () => setIsExpanded(!isExpanded);
+  const toggleMobileSidebar = () => setIsMobileOpen(!isMobileOpen);
 
-  const toggleSidebar = () => {
-    setCollapsed(!collapsed);  // Toggle sidebar collapse/expand
+  useEffect(() => {
+    document.body.style.overflow = isMobileOpen ? 'hidden' : '';
+  }, [isMobileOpen]);
+
+  const handleLinkClick = () => {
+    if (isMobileOpen) setIsMobileOpen(false);
   };
+  const navigate = useNavigate();
+  const showText = isExpanded || isMobileOpen;
+const handleLogout = () => {
+  localStorage.removeItem("accessToken");
+  navigate("/admin/login");
+};
 
   return (
-    <div className={`sidebar ${collapsed ? 'collapsed' : ''}`}>
-      {/* Sidebar Toggle Button for Sidebar */}
-      <div className="toggle-btn" onClick={toggleSidebar}>
-        {collapsed ? (
-          <FaBars style={{ fontSize: '1.5rem', cursor: 'pointer' }} />
-        ) : (
-          <FaArrowLeft
-            style={{
-             
-              cursor: 'pointer',
-              marginRight:'80px'
+    <>
+      <button className="hamburger-btn" onClick={toggleMobileSidebar}>
+        <FaBars />
+      </button>
 
-            }}
-          />
-        )}
-      </div>
+      <div className={`sidebar-nav ${isExpanded ? 'sidebar-expanded' : 'sidebar-collapsed'} ${isMobileOpen ? 'mobile-open' : 'mobile-closed'}`}>
+        <button className="expand-toggle-btnn" onClick={toggleSidebar}>
+          {isExpanded ? <FaAngleDoubleLeft /> : <FaAngleDoubleRight />}
+        </button>
+ <div className="sidebar-content">
+        <ul className="navigation-list">
+          <li className="nav-item">
+            <Link to="/ad-dashboard" className={`nav-link ${location.pathname === '/ad-dashboard' ? 'active-link' : ''}`} onClick={handleLinkClick}>
+              <FaTachometerAlt className="nav-icon" />
+              {showText && <span>Dashboard</span>}
+            </Link>
+          </li>
+          <li className="nav-item">
+            <Link to="/manage-doctors" className="nav-link" onClick={handleLinkClick}>
+              <FaUserMd className="nav-icon" />
+              {showText && <span>Manage Doctors</span>}
+            </Link>
+          </li>
+          <li className="nav-item">
+            <Link to="/manage-patients" className="nav-link" onClick={handleLinkClick}>
+              <FaUserInjured className="nav-icon" />
+              {showText && <span>Manage Patients</span>}
+            </Link>
+          </li>
+          <li className="nav-item">
+            <Link to="/appointment-management" className="nav-link" onClick={handleLinkClick}>
+              <FaCalendarAlt className="nav-icon" />
+              {showText && <span>Appointments</span>}
+            </Link>
+          </li>
+          <li className="nav-item">
+            <Link to="/homecare" className="nav-link" onClick={handleLinkClick}>
+              <FaClinicMedical className="nav-icon" />
+              {showText && <span>Homecare</span>}
+            </Link>
+          </li>
+          <li className="nav-item">
+            <Link to="/facility-management" className="nav-link" onClick={handleLinkClick}>
+              <FaBuilding className="nav-icon" />
+              {showText && <span>Facility Management</span>}
+            </Link>
+          </li>
+          <li className="nav-item">
+            <Link to="/ward-management" className="nav-link" onClick={handleLinkClick}>
+              <FaPlusCircle className="nav-icon" />
+              {showText && <span>Ward Management</span>}
+            </Link>
+          </li>
+          <li className="nav-item">
+            <Link to="/room-management" className="nav-link" onClick={handleLinkClick}>
+              <FaBed className="nav-icon" />
+              {showText && <span>Room Management</span>}
+            </Link>
+          </li>
+          <li className="nav-item">
+            <Link to="/staff-management" className="nav-link" onClick={handleLinkClick}>
+              <FaUser className="nav-icon" />
+              {showText && <span>Staff Management</span>}
+            </Link>
+          </li>
+          <li className="nav-item">
+            <Link to="/billing" className="nav-link" onClick={handleLinkClick}>
+              <FaMoneyBillWave className="nav-icon" />
+              {showText && <span>Billing</span>}
+            </Link>
+          </li>
+          <li className="nav-item">
+            <Link to="/equipment-management" className="nav-link" onClick={handleLinkClick}>
+              <FaTools className="nav-icon" />
+              {showText && <span>Equipment</span>}
+            </Link>
+          </li>
+          <li className="nav-item">
+            <Link to="/reportsprescription" className="nav-link" onClick={handleLinkClick}>
+              <FaPills className="nav-icon" />
+              {showText && <span>Prescriptions</span>}
+            </Link>
+          </li>
+          <li className="nav-item">
+            <Link to="/admin-support" className="nav-link" onClick={handleLinkClick}>
+              <FaQuestionCircle className="nav-icon" />
+              {showText && <span>Support</span>}
+            </Link>
+          </li>
+          <li className="nav-item">
+            <Link to="/admin-settings" className="nav-link" onClick={handleLinkClick}>
+              <FaCogs className="nav-icon" />
+              {showText && <span>Settings</span>}
+            </Link>
+          </li>
+        
+          <li className="nav-item">
+  <button className="nav-link logout-button" onClick={handleLogout}>
+    <FaSignOutAlt className="nav-icon" />
+    {showText && <span>Logout</span>}
+  </button>
+</li>
 
-      {/* Sidebar Content */}
-      <div className="sidebar-header">
-        {/* You can add any header content here */}
+        </ul>
       </div>
-      <Nav className="flex-column">
-        <NavItem>
-          <Link to="/ad-dashboard" className="nav-link">
-            <FaTachometerAlt />
-            {!collapsed && <span>Dashboard</span>} {/* Show text when not collapsed */}
-          </Link>
-        </NavItem>
-        <NavItem>
-          <Link to="/manage-doctors" className="nav-link">
-            <FaUserMd />
-            {!collapsed && <span>Manage Doctors</span>}
-          </Link>
-        </NavItem>
-        <NavItem>
-          <Link to="/manage-patients" className="nav-link">
-            <FaUserInjured />
-            {!collapsed && <span>Manage Patients</span>}
-          </Link>
-        </NavItem>
-        <NavItem>
-          <Link to="/appointment-management" className="nav-link">
-            <FaCalendarAlt />
-            {!collapsed && <span>Appointment Management</span>}
-          </Link>
-        </NavItem>
-          <NavItem>
-          <Link to="/homecare" className="nav-link">
-            <FaClinicMedical />
-            {!collapsed && <span>Homecare</span>}
-          </Link>
-        </NavItem>
-        <NavItem>
-          <Link to="/facility-management" className="nav-link">
-            <FaBuilding />
-            {!collapsed && <span>Facility Management</span>}
-          </Link>
-        </NavItem>
-        <NavItem>
-          <Link to="/ward-management" className="nav-link">
-            <FaPlusCircle />
-            {!collapsed && <span>Ward Management</span>}
-          </Link>
-        </NavItem>
-        <NavItem>
-          <Link to="/room-management" className="nav-link">
-            <FaBed />
-            {!collapsed && <span>Room Management</span>}
-          </Link>
-        </NavItem>
-        <NavItem>
-          <Link to="/staff-management" className="nav-link">
-            <FaUser />
-            {!collapsed && <span>Staff Management</span>}
-          </Link>
-        </NavItem>
-        <NavItem>
-          <Link to="/billing" className="nav-link">
-            <FaMoneyBillWave />
-            {!collapsed && <span>Billing & Payments</span>}
-          </Link>
-        </NavItem>
-        <NavItem>
-          <Link to="/equipment-management" className="nav-link">
-            <FaTools />
-            {!collapsed && <span>Equipment Management</span>}
-          </Link>
-        </NavItem>
-        <NavItem>
-          <Link to="/reportsprescription" className="nav-link">
-            < FaPills />
-            {!collapsed && <span> Prescription & Reports</span>}
-          </Link>
-        </NavItem>
-        <NavItem>
-          <Link to="/admin-support" className="nav-link">
-            < FaQuestionCircle />
-            {!collapsed && <span>Support</span>}
-          </Link>
-        </NavItem>
-        <NavItem>
-          <Link to="/admin-settings" className="nav-link">
-            <FaCogs />
-            {!collapsed && <span>Settings</span>}
-          </Link>
-        </NavItem>
-        <NavItem>
-          <Link to="/admin/login" className="nav-link">
-            <FaSignOutAlt />
-            {!collapsed && <span>Logout</span>}
-          </Link>
-        </NavItem>
-      </Nav>
-    </div>
+</div>
+      {isMobileOpen && <div className="sidebar-overlay" onClick={toggleMobileSidebar} />}
+    </>
   );
 };
 
-export default Sidebar;
+export default AdminSidebar;

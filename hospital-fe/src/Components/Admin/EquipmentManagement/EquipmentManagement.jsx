@@ -94,7 +94,7 @@ const EquipmentManagementPage = () => {
     })
       .then((response) => response.json())
       .then((data) => {
-        if (data.success) {
+        if (data.message) {
           setSuccess('Equipment created successfully!');
           setEquipmentDetails({
             equipmentname: '',
@@ -140,7 +140,7 @@ const EquipmentManagementPage = () => {
     })
       .then((response) => response.json())
       .then((data) => {
-        if (data.success) {
+        if (data.message) {
           setSuccess('Equipment updated successfully!');
           fetchEquipments(); // Refresh the equipment list
           setEditingEquipment(null); // Clear editing state
@@ -164,7 +164,7 @@ const EquipmentManagementPage = () => {
     })
       .then((response) => response.json())
       .then((data) => {
-        if (data.success) {
+        if (data.message) {
           setSuccess('Equipment deleted successfully!');
           fetchEquipments(); // Refresh the equipment list
         } else {

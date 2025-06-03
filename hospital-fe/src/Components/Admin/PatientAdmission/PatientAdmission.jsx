@@ -6,6 +6,7 @@ import axios from 'axios';
 import './PatientAdmission.css';
 import AdminNavbar from '../Adminnavbar/AdminNavbar';
 import AdminSidebar from '../Adminsidebar/AdminSidebar';
+import { FiSearch } from 'react-icons/fi';
 
 const PatientAdmissionPage = () => {
   const [wardId, setWardId] = useState(''); // Store selected ward ID
@@ -217,9 +218,9 @@ const PatientAdmissionPage = () => {
               onChange={(e) => setAdmissionIdSearch(e.target.value)}
               placeholder="Enter Admission ID"
             />
-            <button onClick={handleSearchByAdmissionId} className="btn">
-      <i className="fas fa-search"></i> {/* FontAwesome search icon */}
-    </button>
+          <button onClick={handleSearchByAdmissionId} className="btn">
+  <FiSearch style={{ marginRight: '1px' }} />
+</button>
           </div>
 
           {/* Display Search Results */}

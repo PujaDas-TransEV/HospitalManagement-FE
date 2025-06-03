@@ -1,154 +1,118 @@
-/* Admin Support Page Styles */
 
-/* General Layout for the Page */
-.facility-management-page {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 20px;
-  }
-  
-  .facility-management-content {
-    display: flex;
-    width: 100%;
-    justify-content: space-between;
-  }
-  
-  /* Sidebar and Navbar Styling */
-  .admin-sidebar {
-    width: 250px;
-    background-color: #f4f4f4;
-    padding: 20px;
-  }
-  
-  .admin-navbar {
-    width: 100%;
-    background-color: #343a40;
-    color: #fff;
-    padding: 10px 0;
-    text-align: center;
-  }
-  
-  /* Main Content Styling */
+
+   .admin-support-container {
+  flex: 1;
+  padding: 20px;
+  max-width: 100%;
+  overflow-x: auto;
+  background-color: #f9f9f9;
+  margin-right: 500px;
+}
+
+.admin-support-container h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  font-size: 1.8rem;
+  color: #333;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: white;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+thead {
+  background-color: #007bff;
+  color: white;
+}
+
+th, td {
+  padding: 12px 15px;
+  text-align: left;
+  border: 1px solid #ddd;
+}
+
+tbody tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+tbody tr:hover {
+  background-color: #f1f1f1;
+}
+
+button {
+  background-color: #dc3545;
+  color: white;
+  padding: 6px 12px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+button:hover {
+  background-color: #c82333;
+}
+
+.error-message {
+  color: red;
+  text-align: center;
+  margin-bottom: 15px;
+  font-weight: 500;
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
   .admin-support-container {
-    width: 100%;
-    max-width: 1200px;
-    padding: 20px;
-    background-color: #fff;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    border-radius: 8px;
-    margin-left: 500px;
+    padding: 15px;
   }
-  
-  /* Title of the page */
-  .admin-support-container h2 {
-    text-align: center;
-    color: #333;
-    margin-bottom: 20px;
-  }
-  
-  /* Error message styling */
-  .error-message {
-    background-color: #f8d7da;
-    color: #721c24;
-    padding: 10px;
-    border-radius: 4px;
-    margin-bottom: 20px;
-    text-align: center;
-  }
-  
-  /* Table Styles */
+
   table {
-    width: 80%;
-    border-collapse: collapse;
-    margin-top: 20px;
+    font-size: 14px;
   }
-  
+
   th, td {
-    padding: 12px;
-    text-align: left;
-    border: 1px solid #ddd;
+    padding: 10px;
   }
-  
-  th {
-    background-color: #f8f9fa;
-    font-weight: bold;
-  }
-  
-  tr:nth-child(even) {
-    background-color: #f9f9f9;
-  }
-  
-  tr:hover {
-    background-color: #f1f1f1;
-  }
-  
-  /* Table Data Styling */
-  td {
-    font-size: 14px;
-    color: #555;
-  }
-  
-  /* Button Styling */
+
   button {
-    padding: 6px 12px;
+    padding: 5px 10px;
+    font-size: 13px;
+  }
+}
+
+@media (max-width: 480px) {
+  table, thead, tbody, th, td, tr {
+    display: block;
+  }
+
+  thead {
+    display: none;
+  }
+
+  tr {
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    padding: 10px;
+    border-radius: 8px;
+    background-color: white;
+  }
+
+  td {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 0;
     font-size: 14px;
-    background-color: #007bff;
-    color: #fff;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-    margin-right: 10px;
   }
-  
-  button:hover {
-    background-color: #0056b3;
+
+  td::before {
+    content: attr(data-label);
+    font-weight: bold;
+    color: #555;
+    flex-basis: 40%;
   }
-  
-  button:disabled {
-    background-color: #ccc;
-    cursor: not-allowed;
-  }
-  
-  button i {
-    margin-right: 5px;
-  }
-  
-  /* Button for Delete (Red) */
-  button.delete {
-    background-color: #dc3545;
-  }
-  
-  button.delete:hover {
-    background-color: #c82333;
-  }
-  
-  /* Button for View (Green) */
-  button.view {
-    background-color: #28a745;
-  }
-  
-  button.view:hover {
-    background-color: #218838;
-  }
-  
-  /* Media Queries for Responsiveness */
-  @media (max-width: 768px) {
-    .facility-management-content {
-      flex-direction: column;
-    }
-  
-    .admin-support-container {
-      padding: 15px;
-    }
-  
-    table {
-      font-size: 12px;
-    }
-  
-    button {
-      font-size: 12px;
-    }
-  }
-  
+}

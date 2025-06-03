@@ -14,12 +14,7 @@ const departments = [
   { name: 'Pediatrics', icon: '🌟' },
 ];
 
-const doctors = {
-  Cardiology: ['Dr. Smith', 'Dr. Johnson'],
-  Neurology: ['Dr. Adams', 'Dr. Lee'],
-  Orthopedics: ['Dr. Patel', 'Dr. Green'],
-  Dermatology: ['Dr. Brown', 'Dr. White'],
-};
+
 
 function PatientManagement() {
   const [patients, setPatients] = useState([]);
@@ -69,22 +64,22 @@ function PatientManagement() {
     }
   };
 
-  const handleDepartmentChange = (e) => {
-    const selectedDepartment = e.target.value;
-    if (editPatient) {
-      setEditPatient((prev) => ({
-        ...prev,
-        department: selectedDepartment,
-        doctor: doctors[selectedDepartment][0],
-      }));
-    } else {
-      setNewPatient((prev) => ({
-        ...prev,
-        department: selectedDepartment,
-        doctor: doctors[selectedDepartment][0],
-      }));
-    }
-  };
+  // const handleDepartmentChange = (e) => {
+  //   const selectedDepartment = e.target.value;
+  //   if (editPatient) {
+  //     setEditPatient((prev) => ({
+  //       ...prev,
+  //       department: selectedDepartment,
+  //       doctor: doctors[selectedDepartment][0],
+  //     }));
+  //   } else {
+  //     setNewPatient((prev) => ({
+  //       ...prev,
+  //       department: selectedDepartment,
+  //       doctor: doctors[selectedDepartment][0],
+  //     }));
+  //   }
+  // };
 
   const addPatient = () => {
     fetch('http://localhost:5000/patientops/addpatient', {
@@ -228,7 +223,7 @@ function PatientManagement() {
             ))}
           </div>
 
-          <h3 style={{marginLeft:'150px'}}>{selectedDepartment ? `${selectedDepartment} Patients` : 'Manage All Patients'}</h3>
+       <h3 className="responsive-heading">{selectedDepartment ? `${selectedDepartment} Patients` : 'Manage All Patients'}</h3> 
           <div className="patient-list">
             <Table striped bordered hover>
               <thead>
@@ -236,6 +231,7 @@ function PatientManagement() {
                   <th>First Name</th>
                   <th>Last Name</th>
                   <th>Age</th>
+                    <th>Gender</th>
                   <th>Blood Group</th>
                   <th>Address</th>
                   <th>Phone</th>
@@ -254,6 +250,7 @@ function PatientManagement() {
                       <td>{patient.firstname}</td>
                       <td>{patient.lastname}</td>
                       <td>{patient.age}</td>
+                         <td>{patient.gender}</td>
                       <td>{patient.bloodgroup}</td>
                       <td>{patient.address}</td>
                       <td>{patient.phonenumber}</td>
@@ -262,6 +259,165 @@ function PatientManagement() {
                         <Button variant="warning" onClick={() => editPatientDetails(patient)}>
                           Edit
                         </Button>
+                        {editPatient && (
+  <div className="edit-patient-modal">
+    <h4>Edit Patient Details</h4>
+    <form
+      onSubmit={(e) => {
+        e.preventDefault();
+        savePatient();
+      }}
+    >
+      <label>
+        First Name:
+        <input
+          type="text"
+          value={editPatient.firstname}
+          onChange={(e) => handleInputChange(e, 'firstname')}
+          required
+        />
+      </label>
+      <label>
+        Last Name:
+        <input
+          type="text"
+          value={editPatient.lastname}
+          onChange={(e) => handleInputChange(e, 'lastname')}
+          required
+        />
+      </label>
+      <label>
+        Gender:
+        <select
+          value={editPatient.gender}
+          onChange={(e) => handleInputChange(e, 'gender')}
+          required
+        >
+          <option value="">Select Gender</option>
+          <option value="Male">Male</option>
+          <option value="Female">Female</option>
+          <option value="Other">Other</option>
+        </select>
+      </label>
+      <label>
+        DOB:
+        <input
+          type="date"
+          value={editPatient.dob}
+          onChange={(e) => handleInputChange(e, 'dob')}
+          required
+        />
+      </label>
+      <label>
+        Phone:
+        <input
+          type="tel"
+          value={editPatient.phonenumber}
+          onChange={(e) => handleInputChange(e, 'phone')}
+          required
+        />
+      </label>
+      <label>
+        Email:
+        <input
+          type="email"
+          value={editPatient.email}
+          onChange={(e) => handleInputChange(e, 'email')}
+          required
+        />
+      </label>
+      {/* <label>
+        Department:
+        <select
+          value={editPatient.department}
+          onChange={handleDepartmentChange}
+          required
+        >
+          <option value="">Select Department</option>
+          {departments.map((dept) => (
+            <option key={dept.name} value={dept.name}>
+              {dept.name}
+            </option>
+          ))}
+        </select>
+      </label>
+       <label>
+        Doctor:
+        <select
+          value={editPatient.doctor}
+          onChange={(e) => handleInputChange(e, 'doctor')}
+          required
+        >
+          {editPatient.department &&
+            doctors[editPatient.department].map((doc) => (
+              <option key={doc} value={doc}>
+                {doc}
+              </option>
+            ))}
+        </select>
+      </label>  */}
+      <label>
+        Address:
+        <input
+          type="text"
+          value={editPatient.address}
+          onChange={(e) => handleInputChange(e, 'address')}
+          required
+        />
+      </label>
+      <label>
+        Age:
+        <input
+          type="number"
+          value={editPatient.age}
+          onChange={(e) => handleInputChange(e, 'age')}
+          required
+        />
+      </label>
+      <label>
+        Blood Group:
+        <input
+          type="text"
+          value={editPatient.bloodgroup}
+          onChange={(e) => handleInputChange(e, 'bloodgroup')}
+          required
+        />
+      </label>
+      <label>
+        Height:
+        <input
+          type="number"
+          value={editPatient.height}
+          onChange={(e) => handleInputChange(e, 'height')}
+          required
+        />
+      </label>
+      <label>
+        Weight:
+        <input
+          type="number"
+          value={editPatient.weight}
+          onChange={(e) => handleInputChange(e, 'weight')}
+          required
+        />
+      </label>
+
+      <div className="edit-form-buttons">
+        <button type="submit" className="btn btn-primary">
+          Save
+        </button>
+        <button
+          type="button"
+          className="btn btn-secondary"
+          onClick={() => setEditPatient(null)}
+        >
+          Cancel
+        </button>
+      </div>
+    </form>
+  </div>
+)}
+
                         <Button variant="danger" onClick={() => deletePatient(patient.uid)}>
                           Delete
                         </Button>

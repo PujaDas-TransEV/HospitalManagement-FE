@@ -1,7 +1,7 @@
 
   .staff-table {
     margin-top: 20px;
-    width: 80%;  /* Reduced width for the table */
+    width: 60%; 
     margin-left: auto;
     margin-right: auto;
   }
@@ -10,7 +10,7 @@
   .staff-table td {
     text-align: center;
     vertical-align: middle;
-    padding: 12px 15px; /* Adding padding for a cleaner look */
+    padding: 12px 15px;
   }
   
   .staff-table th {
@@ -55,7 +55,7 @@
     margin-top: 20px;
   }
   
-  /* Media queries for smaller screens */
+
   @media (max-width: 768px) {
     .staff-management-container {
       margin-left: 0;
@@ -65,12 +65,131 @@
       width: 100%;
     }
 
-    /* Adjusting table width on smaller screens */
+  
     .staff-table {
-      width: 95%;  /* Further reducing the width on smaller screens */
+      width: 95%; 
     }
 
     .staff-management-container button {
       width: 100%;
     }
   }
+/* Responsive form layout */
+form {
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
+  background-color: #ffffff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Label and input alignment */
+form .form-group {
+  margin-bottom: 15px;
+}
+
+form .form-label {
+  font-weight: 600;
+}
+
+/* Inputs */
+form .form-control {
+  border-radius: 5px;
+  font-size: 1rem;
+}
+
+/* Submit button */
+form button[type="submit"] {
+  margin-top: 10px;
+  font-weight: bold;
+  font-size: 1rem;
+  padding: 10px;
+}
+
+/* For smaller screens */
+@media (max-width: 768px) {
+  form {
+    padding: 15px;
+  }
+
+  form .form-control {
+    font-size: 0.95rem;
+  }
+
+  form button[type="submit"] {
+    font-size: 0.95rem;
+    padding: 8px;
+  }
+}
+
+@media (max-width: 576px) {
+  form {
+    padding: 10px;
+  }
+
+  .staff-management-container h2,
+  .staff-management-container h3 {
+    font-size: 1.3rem;
+    text-align: center;
+  }
+
+  form .form-control {
+    font-size: 0.9rem;
+  }
+
+  form button[type="submit"] {
+    font-size: 0.9rem;
+  }
+}
+/* Submit button styling */
+.submit-btn {
+  width: 100%;
+  padding: 12px;
+  font-size: 1rem;
+  font-weight: 600;
+  border-radius: 5px;
+}
+
+/* Medium screens */
+@media (max-width: 768px) {
+  .submit-btn {
+    font-size: 0.95rem;
+    padding: 10px;
+    width: 20%;
+  }
+}
+
+/* Small screens */
+@media (max-width: 576px) {
+  .submit-btn {
+    font-size: 0.9rem;
+    padding: 8px;
+  }
+}
+.toggle-form-btn {
+  margin: 10px 0;
+  padding: 10px 20px;
+  font-weight: 600;
+  width: fit-content;
+}
+
+/* Optional: Add some space from sidebar on medium and larger screens */
+@media (min-width: 768px) {
+  .toggle-form-btn {
+    margin-left: 150px; /* Adjust depending on sidebar width */
+  }
+}
+
+/* For small screens (mobile), ensure it's left-aligned and readable */
+@media (max-width: 576px) {
+  .toggle-form-btn {
+    width: 0%;
+    margin-left: 300;
+    padding: 10px;
+    font-size: 16px;
+    text-align: center;
+  }
+}
+

@@ -1,121 +1,177 @@
 
-/* Sidebar styling */
-.sidebar {
-    position: fixed;
-    top: 0;
-    left: 0;
-    height: 100%;
-    width: 250px;  /* Sidebar width when expanded */
-    background-color: #343a40;
-    color: white;
-    transition: width 0.3s ease;
-    padding-top: 20px;
-    display: flex;
-    flex-direction: column;  /* Stack the content vertically */
-    justify-content: flex-start; /* Align content at the top */
-  }
-  
-  /* Sidebar in collapsed state */
-  .sidebar.collapsed {
-    width: 80px;  /* Sidebar width when collapsed */
-  }
-  
-  /* Sidebar header (optional) */
-  .sidebar-header {
-    padding: 20px;
-    text-align: center;
-    font-size: 1.5rem;
-    color: #ffffff;
-  }
-  
-  /* Styling for navigation list */
-  .sidebar .nav {
-    display: flex;
-    flex-direction: column;
-    flex-grow: 1;
-    padding-top: 20px;
-  }
-  
-  /* Style for each nav item */
-  .sidebar .nav-item {
-    margin-bottom: 10px;  /* Space between items */
-    padding-left: 20px; /* Optional: add padding to align items better */
-  }
-  
-  /* Style for navigation links (icons and text) */
-  .nav-link {
-    color: white;
-    display: flex;
-    align-items: center;
-    padding: 10px 15px;
-    text-decoration: none;
-    font-size: 1.1rem;
-    transition: background-color 0.3s ease;
-  }
-  
-  /* Hover effect for nav links */
-  .nav-link:hover {
-    background-color: #495057;
-  }
-  
-  .nav-link svg {
-    margin-right: 10px; /* Space between icon and text */
-  }
-  
-  /* Sidebar text visibility */
-  .sidebar.collapsed .nav-link span {
-    display: none;  /* Hide text when sidebar is collapsed */
-  }
-  
-  .sidebar .nav-link span {
-    display: inline-block; /* Show text when sidebar is expanded */
-  }
-  
-  /* Active nav item */
-  .nav-link.active {
-    background-color: #007bff;
-  }
-  
-  /* Toggle button styling */
-  .toggle-btn {
-    position: absolute;
-    bottom: 20px;
-    left: 50%;
-    transform: translateX(-50%);
-    background-color: #343a40;
-    color: white;
-    padding: 12px;
-    font-size: 1.5rem;
-    cursor: pointer;
-    z-index: 1000;
-    margin-bottom: 800px;
+.sidebar-nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 70px;
+  background-color: rgb(16, 106, 106);
+  color: white;
+  display: flex;
+  flex-direction: column;
+  transition: width 0.3s ease, transform 0.3s ease;
+  z-index: 1000;
+  overflow: hidden;
+}
 
-  }
-  
-  /* Styling for icons to be visible even when sidebar is collapsed */
-  .nav-link svg {
-    font-size: 1.5rem;  /* Adjust icon size */
-  }
-  
-  /* Sidebar content area */
-  .sidebar .nav {
-    flex-grow: 1; /* Expand this area to take available space */
+.sidebar-expanded {
+  width: 240px;
+}
+
+.sidebar-collapsed .navigation-list span {
+  display: none;
+}
+
+/* Scrollable content container */
+.sidebar-content {
+  flex-grow: 1;
+  overflow-y: auto;
+  padding-bottom: 20px;
+}
+
+/* Custom scrollbar */
+.sidebar-content::-webkit-scrollbar {
+  width: 6px;
+}
+.sidebar-content::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 4px;
+}
+
+.navigation-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.nav-item {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.sidebar-expanded .nav-item {
+  justify-content: flex-start;
+}
+
+.nav-link {
+  color: white;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  padding: 10px 20px;
+  width: 100%;
+  transition: background-color 0.3s ease;
+  border-radius: 6px;
+  justify-content: center;
+}
+
+.sidebar-expanded .nav-link {
+  justify-content: flex-start;
+}
+
+.nav-link:hover {
+  background-color: #1c2a37;
+}
+
+.nav-link.active-link {
+  background-color: #497a8d;
+}
+
+.nav-icon {
+  font-size: 20px;
+  margin-right: 0;
+  transition: margin 0.3s ease;
+}
+
+.sidebar-expanded .nav-icon {
+  margin-right: 15px;
+}
+
+.expand-toggle-btnn {
+  position: fixed;
+  top: 10px;
+  left: 20px;
+  width: 40px;
+  height: 40px;
+  border: none;
+  background-color: #1c2a37;
+  color: white;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 4px;
+  z-index: 1100;
+  transition: left 0.3s ease;
+}
+
+.sidebar-expanded + .expand-toggle-btnn {
+  left: 220px;
+}
+
+.hamburger-btn {
+  display: none;
+  position: fixed;
+  top: 10px;
+  left: 10px;
+  z-index: 1200;
+  width: 40px;
+  height: 40px;
+  border: none;
+  background-color: #1c2a37;
+  color: white;
+  cursor: pointer;
+  border-radius: 4px;
+  justify-content: center;
+  align-items: center;
+}
+
+.sidebar-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 100vw;
+  background: rgba(0, 0, 0, 0.4);
+  z-index: 900;
+}
+
+@media (max-width: 768px) {
+  .hamburger-btn {
     display: flex;
-    flex-direction: column;
-    justify-content: flex-start; /* Align items to the top */
-    padding-top: 20px; /* Space between items */
   }
-  
-  /* Sidebar in collapsed state */
-  .sidebar.collapsed .nav-link {
-    justify-content: center; 
-    margin-top: 40px; /* Center the icons when collapsed */
+
+  .sidebar-nav {
+    transform: translateX(-100%);
+    width: 220px;
   }
-  
-  /* Sidebar transition (expand/collapse) */
-  .sidebar.collapsed {
-    width: 80px;
-    transition: width 0.3s ease-in-out;
-    margin-top: 40px;
+
+  .sidebar-nav.mobile-open {
+    transform: translateX(0);
   }
-  
+
+  .sidebar-nav.mobile-open .navigation-list span {
+    display: inline;
+  }
+
+  .expand-toggle-btnn {
+    display: none;
+  }
+
+  .sidebar-nav.mobile-open .nav-item,
+  .sidebar-nav.mobile-open .nav-link {
+    justify-content: flex-start;
+  }
+
+  .sidebar-nav.mobile-open .nav-icon {
+    margin-right: 15px;
+  }
+
+  .sidebar-content {
+    padding-bottom: 80px;
+  }
+}
