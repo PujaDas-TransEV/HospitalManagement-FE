@@ -1,180 +1,155 @@
-
+/* General page layout */
 .facility-management-page {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
+  font-family: Arial, sans-serif;
   background-color: #f9f9f9;
 }
-
 
 .facility-management-content {
   display: flex;
   flex: 1;
-  overflow: hidden;
+  background-color: #fff;
 }
 
-
+/* Admin panel container */
 .admin-panel {
   flex: 1;
   padding: 20px;
-  overflow-y: auto;
-  background: white;
-  box-shadow: 0 0 10px rgb(0 0 0 / 0.1);
+  background: #fff;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
   border-radius: 8px;
-  margin: 20px auto;      
-  max-width: 900px;       
-  width: 100%;            
-}
-
-
-.admin-panel h1 {
-  margin-bottom: 20px;
-  color: #004080;
-  font-weight: 700;
-  font-size: 1.8rem;
-}
-
-
-.responsive-table {
   overflow-x: auto;
-  width: 100%;
-  margin-bottom: 30px;
+ 
 }
 
-
-table {
+/* Table styles */
+.responsive-table {
   width: 100%;
+  overflow-x: auto;
+  margin-top: 15px;
+}
+
+.responsive-table table {
   border-collapse: collapse;
-  min-width: 600px; 
+  width: 100%;
+  min-width: 700px; /* minimum width to allow scrolling on smaller screens */
 }
-
-thead tr {
-  background-color: #004080;
-  color: white;
-  text-align: left;
-}
-
-th,
-td {
-  padding: 12px 15px;
-  border-bottom: 1px solid #ddd;
-  vertical-align: middle;
-  font-size: 0.95rem;
-}
-
-
-tbody tr:nth-child(even) {
-  background-color: #f5f7fb;
-}
-
 
 .responsive-table1 {
+  padding: 10px 15px;
+  background-color: #004080;
+  color: #fff;
+  text-align: left;
+  font-weight: 600;
+  border: 1px solid #ddd;
   white-space: nowrap;
 }
 
+.responsive-table table th,
+.responsive-table table td {
+  padding: 12px 15px;
+  border: 1px solid #ddd;
+  vertical-align: middle;
+  white-space: nowrap;
+}
 
+.responsive-table table tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+.responsive-table table tr:hover {
+  background-color: #e6f2ff;
+}
+
+/* Buttons */
 button {
-  padding: 7px 15px;
   background-color: #004080;
   border: none;
   color: white;
-  font-size: 0.9rem;
-  border-radius: 4px;
+  padding: 7px 14px;
+  font-size: 14px;
   cursor: pointer;
+  border-radius: 4px;
   transition: background-color 0.3s ease;
 }
 
 button:hover {
-  background-color: #002952;
+  background-color: #003366;
 }
 
-
+/* Form container */
 .form-container {
-  background: #f4f8ff;
+  margin-top: 20px;
   padding: 20px;
+  border: 1px solid #ddd;
   border-radius: 8px;
-  box-shadow: 0 0 8px rgb(0 0 0 / 0.1);
-  max-width: 500px;
-  margin: 0 auto 40px;
+  background-color: #f5faff;
+  max-width: 600px;
 }
 
 .form-container h2 {
   margin-bottom: 15px;
   color: #004080;
-  font-weight: 600;
-  font-size: 1.4rem;
-  text-align: center;
 }
 
-
-label {
+/* Form label */
+.form-container label {
   display: block;
-  margin-bottom: 15px;
+  margin-bottom: 12px;
   font-weight: 600;
-  color: #004080;
-  font-size: 1rem;
+  color: #333;
 }
 
-
-select {
+.form-container select {
   width: 100%;
   padding: 8px 10px;
-  margin-top: 5px;
-  border: 1.5px solid #004080;
-  border-radius: 5px;
-  font-size: 1rem;
-  color: black;
-  background-color: white;
-  appearance: none;
-  -webkit-appearance: none;
-  -moz-appearance: none;
+  margin-top: 6px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  font-size: 15px;
+  color: #000;
+  background-color: #fff;
+  box-sizing: border-box;
 }
 
-
+/* Form buttons container */
 .form-actions {
+  margin-top: 20px;
   display: flex;
-  justify-content: center;
   gap: 15px;
 }
 
-.form-actions button {
-  flex: 1;
-}
-
-
-@media (max-width: 768px) {
+/* Responsive adjustments */
+@media (max-width: 900px) {
   .admin-panel {
-    margin: 10px;
     padding: 15px;
   }
 
-  table {
-    min-width: unset;
+  .responsive-table table {
+    min-width: 600px;
+  }
+}
+
+@media (max-width: 700px) {
+  .responsive-table table {
+    min-width: 500px;
+  }
+}
+
+@media (max-width: 500px) {
+  .responsive-table table {
+    min-width: 400px;
   }
 
-  th,
-  td {
-    padding: 10px 8px;
-    font-size: 0.85rem;
+  button {
+    padding: 6px 10px;
+    font-size: 13px;
   }
 
   .form-container {
     max-width: 100%;
     padding: 15px;
-  }
-
-  button {
-    font-size: 0.85rem;
-  }
-}
-
-@media (max-width: 480px) {
-  .form-actions {
-    flex-direction: column;
-  }
-
-  .form-actions button {
-    flex: none;
-    width: 100%;
   }
 }

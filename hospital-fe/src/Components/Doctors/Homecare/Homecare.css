@@ -1,0 +1,66 @@
+.dashboard-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background-color: #f9f9f9;
+}
+
+.dashboard-content {
+  display: flex;
+  flex: 1;
+  padding: 20px;
+  background-color: #eaeaea;
+}
+
+.homecare-main {
+  flex: 1;
+  margin-left: 20px;
+  background: white;
+  padding: 25px;
+  border-radius: 8px;
+  box-shadow: 0 0 8px rgba(0,0,0,0.1);
+  margin-top: 60px;
+}
+
+.title {
+  font-size: 1.8rem;
+  margin-bottom: 20px;
+  font-weight: 700;
+  color: #333;
+}
+
+.table-container {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr 1fr 2fr;
+  gap: 10px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  background-color: #fff;
+  padding: 15px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.table-header {
+  font-weight: 700;
+  background-color: #f0f0f0;
+  border-bottom: 2px solid #ccc;
+  padding: 12px 8px;
+  text-align: center;
+  border-right: 1px solid #ccc;
+}
+
+.table-cell {
+  padding: 12px 8px;
+  border-bottom: 1px solid #eee;
+  border-right: 1px solid #eee;
+  text-align: center;
+  color: #444;
+}
+
+.no-requests {
+  padding: 15px;
+  text-align: center;
+  color: #777;
+  font-style: italic;
+  grid-column: span 4;
+}

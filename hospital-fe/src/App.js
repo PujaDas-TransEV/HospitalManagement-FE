@@ -221,7 +221,7 @@ import HomeCareRequest from './Components/Patients/HomecareService/HomecareServi
 import AdminHomecare from './Components/Admin/Homecare/Homecare';
 import Adminappointment from './Components/Admin/AdminDepartmentwiseAppointmentBook/AdminAppointmentBook';
 import DoctorForgetPassword from './Components/Authentication/DoctorForgetPassword/DoctorForgetPassword';
-
+import Doctorhomecare from './Components/Doctors/Homecare/Homecare';
 // ✅ Conditional Navbar using path matching
 const ConditionalNavbar = () => {
   const location = useLocation();
@@ -243,7 +243,7 @@ const ConditionalNavbar = () => {
     '/admin-support', '/patient-support',
     '/home-care-service', '/home-care-request', '/homecare',
     '/patients', '/patient-navbar', '/patient-sidebar',
-    '/doctor-navbar', '/doctor-sidebar', '/adnavbar', '/adsidebar'
+    '/doctor-navbar', '/doctor-sidebar', '/adnavbar', '/adsidebar','/doctor-homecare'
   ];
 
   const hidePatterns = [
@@ -322,6 +322,7 @@ function App() {
         <Route path="/home-care-service" element={<PatientHomecareService />} />
         <Route path="/home-care-request" element={<HomeCareRequest />} />
         <Route path="/homecare" element={<AdminHomecare />} />
+         <Route path="/doctor-homecare" element={<Doctorhomecare/>} />
       </Routes>
     </Router>
   );

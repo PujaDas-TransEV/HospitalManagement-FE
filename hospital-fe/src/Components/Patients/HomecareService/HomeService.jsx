@@ -4,9 +4,8 @@ import axios from 'axios';
 import Modal from 'react-modal';
 import { useNavigate } from 'react-router-dom';
 import './HomeService.css';
-import PatientNavbar  from '../Navbar/PatientNavbar';
+import PatientNavbar from '../Navbar/PatientNavbar';
 import PatientSidebar from '../Sidebar/PatientSidebar';
-
 
 const editableFields = [
   'timefrom',
@@ -25,6 +24,7 @@ const HomeCareServicePage = () => {
   const [requests, setRequests] = useState([]);
   const [selectedRequest, setSelectedRequest] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     const pid = localStorage.getItem('patientId');
@@ -47,7 +47,7 @@ const HomeCareServicePage = () => {
       );
       setRequests(res.data.data || []);
     } catch (e) {
-      alert('Failed to fetch home care requests.');
+      setError('Failed to fetch home care requests.');
     } finally {
       setLoading(false);
     }
@@ -96,36 +96,30 @@ const HomeCareServicePage = () => {
     }
   };
 
-  
-const handleDelete = async (uid) => {
-  if (!window.confirm('Are you sure you want to permanently delete this request?')) return;
+  const handleDelete = async (uid) => {
+    if (!window.confirm('Are you sure you want to permanently delete this request?')) return;
 
-  const formData = new FormData();
-  formData.append('homeuid', uid);
+    const formData = new FormData();
+    formData.append('homeuid', uid);
 
-  try {
-    const res = await axios.post('http://localhost:5000/management/deletehomecare', formData);
+    try {
+      const res = await axios.post('http://localhost:5000/management/deletehomecare', formData);
 
-    if (res.data.message === 'Delete success') {
-      alert('Request deleted successfully.');
-
-      // Remove the deleted request from state
-      setRequests((prevRequests) =>
-        prevRequests.filter((req) => req.homecare.uid !== uid)
-      );
-
-      // Close modal if it's open for this uid
-      if (selectedRequest?.homecare?.uid === uid) {
-        setSelectedRequest(null);
+      if (res.data.message === 'Delete success') {
+        alert('Request deleted successfully.');
+        setRequests((prevRequests) =>
+          prevRequests.filter((req) => req.homecare.uid !== uid)
+        );
+        if (selectedRequest?.homecare?.uid === uid) {
+          setSelectedRequest(null);
+        }
+      } else {
+        alert(res.data.message || 'Could not delete the request.');
       }
-    } else {
-      alert(res.data.message || 'Could not delete the request.');
+    } catch (err) {
+      alert('Delete request failed.');
     }
-  } catch (err) {
-    alert('Delete request failed.');
-  }
-};
-
+  };
 
   const openDetails = (req) => {
     setSelectedRequest({ ...req });
@@ -134,107 +128,146 @@ const handleDelete = async (uid) => {
   const formatDateForInput = (datetime) => {
     const date = new Date(datetime);
     const iso = date.toISOString();
-    return iso.substring(0, 16); // yyyy-MM-ddTHH:mm
+    return iso.substring(0, 16);
   };
 
   return (
-     <div className="dashboard-container">
-      {/* Navbar at the top */}
+    <div className="dashboard-container">
       <PatientNavbar />
-      
       <div className="dashboard-content">
-        {/* Sidebar for navigation */}
         <PatientSidebar />
-    <div className="homecare-page">
-      <h1>Home Care Services</h1>
+        <div className="homecare-page">
+          <h1>Home Care Services</h1>
+          <button className="primary-btn" onClick={() => navigate('/home-care-request')}>
+            Request Home Care Service
+          </button>
+          <h2>My Home Care Requests</h2>
 
-      <button className="primary-btn" onClick={() => navigate('/home-care-request')}>
-        Request Home Care Service
-      </button>
-
-      <h2>My Home Care Requests</h2>
-
-      {loading ? (
-        <p>Loading requests...</p>
-      ) : requests.length === 0 ? (
-        <p>No home care requests found.</p>
-      ) : (
-        <div className="requests-list">
-          {requests.map((req) => (
-            <div key={req.homecare.uid} className="request-card">
-              <p><strong>Status:</strong> {req.homecare.status}</p>
-              <p><strong>Time:</strong> {req.homecare.timefrom} - {req.homecare.timeto}</p>
-              <p><strong>Patient:</strong> {req.homecare.patientname}</p>
-              <p><strong>Home Care Booking:</strong> {req.homecare.caretype}</p>
-              <div className="card-actions">
-                <button onClick={() => openDetails(req)}>View Details</button>
-                {req.homecare.status === 'cancelled' && (
-                  <button className="delete-btn" onClick={() => handleDelete(req.homecare.uid)}>
-                    Delete
-                  </button>
-                )}
-              </div>
-            </div>
-          ))}
-        </div>
-      )}
-
-      <Modal
-        isOpen={!!selectedRequest}
-        onRequestClose={() => setSelectedRequest(null)}
-        contentLabel="Request Details"
-        ariaHideApp={false}
-        className="modal-content"
-        overlayClassName="modal-overlay"
-        shouldCloseOnOverlayClick={true}
-      >
-        {selectedRequest && (
-          <div>
-            <h2>Request Details</h2>
-            {Object.keys(selectedRequest.homecare).map((key) => {
-              const value = selectedRequest.homecare[key];
-              if (value === 'None' || value === null || value === undefined || value === '') return null;
-
-              const isEditable = editableFields.includes(key);
-              const isDateTime = key === 'timefrom' || key === 'timeto';
-
-              return (
-                <div key={key} className="modal-field">
-                  <label>{key}</label>
-                  <input
-                    type={isDateTime ? 'datetime-local' : 'text'}
-                    value={isDateTime ? formatDateForInput(value) : value}
-                    onChange={(e) =>
-                      setSelectedRequest({
-                        ...selectedRequest,
-                        homecare: {
-                          ...selectedRequest.homecare,
-                          [key]: isDateTime ? new Date(e.target.value).toISOString() : e.target.value
-                        }
-                      })
-                    }
-                    disabled={!isEditable}
-                  />
+          {loading ? (
+            <p>Loading requests...</p>
+          ) : error ? (
+            <p>{error}</p>
+          ) : requests.length === 0 ? (
+            <p>No home care requests found.</p>
+          ) : (
+            <div className="requests-list">
+              {requests.map((req) => (
+                <div key={req.homecare.uid} className="request-card">
+                  <p><strong>Status:</strong> {req.homecare.status}</p>
+                  <p><strong>Time:</strong> {req.homecare.timefrom} - {req.homecare.timeto}</p>
+                  <p><strong>Patient:</strong> {req.homecare.patientname}</p>
+                  <p><strong>Home Care Booking:</strong> {req.homecare.caretype}</p>
+                  <div className="card-actions">
+                    <button onClick={() => openDetails(req)}>View Details</button>
+                    {req.homecare.status === 'cancelled' && (
+                      <button className="delete-btn" onClick={() => handleDelete(req.homecare.uid)}>
+                        Delete
+                      </button>
+                    )}
+                  </div>
                 </div>
-              );
-            })}
-            <div className="modal-actions">
-              {canCancel(selectedRequest.homecare.timefrom) &&
-                selectedRequest.homecare.status !== 'cancelled' && (
-                  <button className="cancel-btn" onClick={() => handleCancel(selectedRequest.homecare.uid)}>
-                    Cancel Request
-                  </button>
-                )}
-              <button className="primary-btn" onClick={handleUpdate}>Update Request</button>
-              <button className="secondary-btn" onClick={() => setSelectedRequest(null)}>Close</button>
+              ))}
             </div>
-          </div>
-        )}
-      </Modal>
-    </div>
-    </div>
+          )}
+
+          <Modal
+            isOpen={!!selectedRequest}
+            onRequestClose={() => setSelectedRequest(null)}
+            contentLabel="Request Details"
+            ariaHideApp={false}
+            className="modal-content"
+            overlayClassName="modal-overlay"
+            shouldCloseOnOverlayClick={true}
+          >
+            {selectedRequest && (
+              <div>
+                <h2>Request Details</h2>
+                {Object.keys(selectedRequest.homecare).map((key) => {
+                  const value = selectedRequest.homecare[key];
+                  if (
+                    value === 'None' ||
+                    value === null ||
+                    value === undefined ||
+                    value === ''
+                  )
+                    return null;
+
+                  const isEditable = editableFields.includes(key);
+                  const isDateTime = key === 'timefrom' || key === 'timeto';
+
+                  return (
+                    <div key={key} className="modal-field">
+                      <label>{key}</label>
+                      <input
+                        type={isDateTime ? 'datetime-local' : 'text'}
+                        value={isDateTime ? formatDateForInput(value) : value}
+                        onChange={(e) =>
+                          setSelectedRequest({
+                            ...selectedRequest,
+                            homecare: {
+                              ...selectedRequest.homecare,
+                              [key]: isDateTime
+                                ? new Date(e.target.value).toISOString()
+                                : e.target.value,
+                            },
+                          })
+                        }
+                        disabled={!isEditable}
+                      />
+                    </div>
+                  );
+                })}
+
+                {/* Display assigned person info if available */}
+                {selectedRequest.homecare.status === 'approved' &&
+                  selectedRequest.homecare.caretype === 'doctor' &&
+                  selectedRequest.doctor && (
+                    <div className="assigned-info">
+                      <p><strong>Assigned Doctor Name:</strong> {selectedRequest.doctor.fullname}</p>
+                      <p><strong>Doctor UID:</strong> {selectedRequest.doctor.uid}</p>
+                    </div>
+                  )}
+
+                {selectedRequest.homecare.status === 'approved' &&
+                  selectedRequest.homecare.caretype !== 'doctor' &&
+                  selectedRequest.staff && (
+                    <div className="assigned-info">
+                      <p><strong>Assigned Staff Name:</strong> {selectedRequest.staff.fullname}</p>
+                      <p><strong>Staff UID:</strong> {selectedRequest.staff.uid}</p>
+                    </div>
+                  )}
+
+                <div className="modal-actions">
+                  {canCancel(selectedRequest.homecare.timefrom) &&
+                    selectedRequest.homecare.status !== 'cancelled' && (
+                      <button
+                        className="cancel-btn"
+                        onClick={() =>
+                          handleCancel(selectedRequest.homecare.uid)
+                        }
+                      >
+                        Cancel Request
+                      </button>
+                    )}
+                  <button className="primary-btn" onClick={handleUpdate}>
+                    Update Request
+                  </button>
+                  <button
+                    className="secondary-btn"
+                    onClick={() => setSelectedRequest(null)}
+                  >
+                    Close
+                  </button>
+                </div>
+              </div>
+            )}
+          </Modal>
+        </div>
+      </div>
     </div>
   );
 };
 
 export default HomeCareServicePage;
+
+ 

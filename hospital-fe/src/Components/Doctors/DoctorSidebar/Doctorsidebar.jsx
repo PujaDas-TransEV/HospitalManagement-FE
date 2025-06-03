@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { Nav, Button } from 'react-bootstrap';
 import {
   FaCalendar, FaCalendarCheck, FaEnvelope, FaCog,
-  FaBars, FaUser, FaCalendarAlt,FaHome 
+  FaBars, FaUser, FaCalendarAlt,FaHome ,FaClinicMedical
 } from 'react-icons/fa';
 import './Doctorsidebar.css';
 import { MdDashboard } from 'react-icons/md';
@@ -71,6 +71,10 @@ const location = useLocation();
           <Nav.Link href="/patients" className="sidebar-item" onClick={handleLinkClick}>
             <FaUser />
             {(isExpanded || isMobileOpen) && ' Patient List'}
+          </Nav.Link>
+           <Nav.Link href="/doctor-homecare" className="sidebar-item" onClick={handleLinkClick}>
+            <FaClinicMedical />
+            {(isExpanded || isMobileOpen) && ' Homecare'}
           </Nav.Link>
           {/* <Nav.Link href="/messages" className="sidebar-item" onClick={handleLinkClick}>
             <FaEnvelope />
