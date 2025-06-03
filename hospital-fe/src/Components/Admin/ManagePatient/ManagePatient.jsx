@@ -201,7 +201,40 @@ function PatientManagement() {
   const handleDepartmentClick = (department) => {
     navigate(`/patients/${department}`); // Navigate to doctors page for the clicked department
   };
+const [departments, setDepartments] = useState([]);
 
+useEffect(() => {
+  fetch('http://localhost:5000/facilityops/getallfacility')
+    .then((res) => res.json())
+    .then((data) => {
+      if (data && data.data) {
+        const departmentsWithIcons = data.data.map((dept, index) => ({
+          ...dept,
+          id: dept.department_name.toLowerCase(),     // lowercase id
+          name: dept.department_name,                 // display name
+          icon: assignDepartmentIcon(dept.department_name, index), // icon
+        }));
+        setDepartments(departmentsWithIcons);
+      }
+    })
+    .catch((err) => {
+      console.error('Error fetching departments:', err);
+    });
+}, []);
+
+const assignDepartmentIcon = (name, index) => {
+  const iconMap = {
+    Cardiology: '❤️',
+    Neurology: '🧠',
+    Orthopedics: '💪',
+    Dermatology: '🧴',
+    Pediatrics: '👶',
+    Surgery: '🔪',
+  };
+  // Fallback icons if not in map
+  const fallbackIcons = ['🏥', '🩺', '🔬', '💊', '📋', '🧬'];
+  return iconMap[name] || fallbackIcons[index % fallbackIcons.length];
+};
   return (
     <div className="manage-patients-container">
       <AdminNavbar />

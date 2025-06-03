@@ -1,122 +1,137 @@
+/* ==== Main Page Background ==== */
 #doctorSignUpBody {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    background-color: #f0f0f0;
-    background-image: url('../../Assests/signup-background.png');
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-image: url('../../Assests/signup-background.png');
+  background-size: cover;
+  background-position: center;
+  padding: 1rem;
+  position: relative;
+}
+
+#doctorSignUpBody::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 77, 0, 0.6); /* green overlay */
+  z-index: -1;
+}
+
+/* ==== Form Container ==== */
+.signup-form {
+  /* background-color: #ffffff; */
+  padding: 30px;
+  border-radius: 10px;
+  width: 100%;
+  max-width: 850px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+  z-index: 1;
+}
+
+/* ==== Title ==== */
+.signup-form h2 {
+  text-align: center;
+  margin-bottom: 25px;
+  font-size: 24px;
+  color: #004d00;
+}
+
+/* ==== Form Grid ==== */
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+}
+
+.form-grid-full {
+  grid-column: span 2;
+}
+
+.signup-form label {
+  font-weight: 500;
+  margin-bottom: 5px;
+  display: block;
+  color: #333;
+}
+
+.signup-form input,
+.signup-form select {
+  width: 100%;
+  padding: 10px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+  font-size: 16px;
+  transition: border-color 0.2s;
+}
+
+.signup-form input:focus,
+.signup-form select:focus {
+  border-color: #004d00;
+  outline: none;
+}
+
+/* ==== Submit Button ==== */
+.signup-form button {
+  margin-top: 25px;
+  padding: 12px;
+  background-color: #004d00;
+  color: #fff;
+  border: none;
+  font-size: 16px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.3s ease-in-out;
+  width: 100%;
+}
+
+.signup-form button:hover {
+  background-color: #006400;
+}
+
+.signup-form button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.text-danger {
+  font-size: 0.875rem;
+  color: red;
+  margin-top: 4px;
+}
+
+/* ==== Login Link ==== */
+.signup-form p {
+  text-align: center;
+  margin-top: 20px;
+  font-size: 0.95rem;
+}
+
+.signup-form a {
+  color: #004d00;
+  text-decoration: none;
+}
+
+.signup-form a:hover {
+  text-decoration: underline;
+}
+
+/* ==== Responsive ==== */
+@media (max-width: 768px) {
+  .form-grid {
+    grid-template-columns: 1fr;
   }
-  
-  #doctorSignUpBG {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: #004d00;
-    z-index: -1;
+
+  .form-grid-full {
+    grid-column: span 1;
   }
-  
-  .greenLayer {
-    background-color: rgba(0, 77, 0, 0.6);
-    height: 100%;
-  }
-  
+
   .signup-form {
-    background-color: white;
-    padding: 30px;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    width: 80%;
-    max-width: 800px;
+    padding: 20px;
   }
-  
-  .signup-form h2 {
-    text-align: center;
-    margin-bottom: 20px;
-  }
-  
-  .form-floating {
-    margin-bottom: 15px;
-  }
-  
-  .form-floating input,
-  .form-floating select {
-    padding: 10px;
-    border-radius: 5px;
-    border: 1px solid #ddd;
-    width: 100%;
-  }
-  
-  form #doctorSignUpform .d-flex {
-    margin-bottom: 15px;
-  }
-  
-  .d-flex .col-6 {
-    display: flex;
-    justify-content: space-between;
-  }
-  
-  .form-floating input[type="file"] {
-    padding: 10px;
-    background-color: #f0f0f0;
-  }
-  
-  #doctorSignUp {
-    background-color: #004d00;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 5px;
-    cursor: pointer;
-    width: 100%;
-    font-size: 16px;
-  }
-  
-  #doctorSignUp:hover {
-    background-color: #005700;
-  }
-  
-  #doctorSignUp:disabled {
-    background-color: #ccc;
-    cursor: not-allowed;
-  }
-  
-  .text-center {
-    text-align: center;
-  }
-  
-  .text-center a {
-    color: #004d00;
-    text-decoration: none;
-  }
-  
-  .text-center a:hover {
-    text-decoration: underline;
-  }
-  
-  .mx-2 {
-    margin-left: 10px;
-    margin-right: 10px;
-  }
-  
-  .text-danger {
-    font-size: 12px;
-    color: red;
-  }
-  
-  @media (max-width: 768px) {
-    .d-flex {
-      flex-direction: column;
-    }
-  
-    .d-flex .col-6 {
-      width: 100%;
-    }
-  
-    .signup-form {
-      padding: 20px;
-      width: 90%;
-    }
-  }
-  
+}

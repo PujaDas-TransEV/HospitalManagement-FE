@@ -113,6 +113,40 @@ const ManageDoctors = () => {
       })
       .catch((error) => console.error('Error:', error));
   };
+const [departments, setDepartments] = useState([]);
+
+useEffect(() => {
+  fetch('http://localhost:5000/facilityops/getallfacility')
+    .then((res) => res.json())
+    .then((data) => {
+      if (data && data.data) {
+        const departmentsWithIcons = data.data.map((dept, index) => ({
+          ...dept,
+          id: dept.department_name.toLowerCase(),     // lowercase id
+          name: dept.department_name,                 // display name
+          icon: assignDepartmentIcon(dept.department_name, index), // icon
+        }));
+        setDepartments(departmentsWithIcons);
+      }
+    })
+    .catch((err) => {
+      console.error('Error fetching departments:', err);
+    });
+}, []);
+
+const assignDepartmentIcon = (name, index) => {
+  const iconMap = {
+    Cardiology: '❤️',
+    Neurology: '🧠',
+    Orthopedics: '💪',
+    Dermatology: '🧴',
+    Pediatrics: '👶',
+    Surgery: '🔪',
+  };
+  // Fallback icons if not in map
+  const fallbackIcons = ['🏥', '🩺', '🔬', '💊', '📋', '🧬'];
+  return iconMap[name] || fallbackIcons[index % fallbackIcons.length];
+};
 
   return (
     <div className="manage-doctors-container">
@@ -122,22 +156,28 @@ const ManageDoctors = () => {
         <div className="manage-doctors-container">
           <h2>Manage Doctors</h2>
 
-          {/* Department Icons Section */}
-          <div className="department-icons-section">
-            {departments.map((department) => (
-              <div
-                key={department.name}
-                className="department-icon-item"
-                onClick={() => handleDepartmentClick(department)}
-                style={{ borderColor: department.color }}
-              >
-                <div className="department-icon-wrapper" style={{ color: department.color }}>
-                  {department.icon}
-                </div>
-                <h4 style={{ color: department.color }}>{department.name}</h4>
-              </div>
-            ))}
+        
+ <div className="department-icons-section">
+      {loading ? (
+        <p>Loading departments...</p> // 👈 You can replace this with a spinner
+      ) : departments.length === 0 ? (
+        <p>No departments available</p>
+      ) : (
+        departments.map((department) => (
+          <div
+            key={department.id}
+            className="department-icon-item"
+            onClick={() => handleDepartmentClick(department)}
+            style={{ borderColor: '#ccc' }}
+          >
+            <div className="department-icon-wrapper" style={{ fontSize: '2rem' }}>
+              {department.icon}
+            </div>
+            <h4>{department.name}</h4>
           </div>
+        ))
+      )}
+      </div>
 
           {/* Doctors Table */}
           <h3>All Doctors</h3>

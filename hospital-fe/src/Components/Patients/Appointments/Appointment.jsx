@@ -1,48 +1,38 @@
 
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import {jwtDecode} from 'jwt-decode'; // Fixed import to default import
+import { jwtDecode } from 'jwt-decode';
 import './Appointment.css';
 import PatientNavbar from '../Navbar/PatientNavbar';
 import PatientSidebar from '../Sidebar/PatientSidebar';
-
-const departments = [
-  { id: 'cardiology', name: 'Cardiology', icon: '❤️' },
-  { id: 'neurology', name: 'Neurology', icon: '🧠' },
-  { id: 'orthopedics', name: 'Orthopedics', icon: '💪' },
-  { id: 'dermatology', name: 'Dermatology', icon: '🧴' },
-  { id: 'pediatrics', name: 'Pediatrics', icon: '👶' },
-  { id: 'surgery', name: 'Surgery', icon: '🔪' },
-];
 
 const Appointment = () => {
   const navigate = useNavigate();
   const [appointments, setAppointments] = useState([]);
   const [upcomingAppointments, setUpcomingAppointments] = useState([]);
+  const [departments, setDepartments] = useState([]); // ✅ dynamic departments
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [patientId, setPatientId] = useState(null);
   const [isEditing, setIsEditing] = useState(false);
   const [currentAppointment, setCurrentAppointment] = useState(null);
 
+  // 🔄 Fetch patient ID from token
   useEffect(() => {
-    const fetchPatientProfile = () => {
-      const accessToken = localStorage.getItem('accessToken');
-      if (!accessToken) {
-        navigate('/login');
-        return;
-      }
-      try {
-        const decodedToken = jwtDecode(accessToken);
-        setPatientId(decodedToken.userid);
-      } catch {
-        navigate('/login');
-      }
-    };
-
-    fetchPatientProfile();
+    const accessToken = localStorage.getItem('accessToken');
+    if (!accessToken) {
+      navigate('/login');
+      return;
+    }
+    try {
+      const decodedToken = jwtDecode(accessToken);
+      setPatientId(decodedToken.userid);
+    } catch {
+      navigate('/login');
+    }
   }, [navigate]);
 
+  // 🔄 Fetch appointments
   useEffect(() => {
     if (!patientId) return;
 
@@ -52,7 +42,6 @@ const Appointment = () => {
     const formData = new FormData();
     formData.append('patientid', patientId);
 
-    // Fetch all appointments
     fetch('http://localhost:5000/getappoinmenthistory', {
       method: 'POST',
       body: formData,
@@ -60,7 +49,7 @@ const Appointment = () => {
       .then((res) => res.json())
       .then((data) => {
         const appointmentData = Array.isArray(data.data) ? data.data : [data.data];
-        setAppointments(appointmentData.filter(Boolean)); // Filter null/undefined
+        setAppointments(appointmentData.filter(Boolean));
         setLoading(false);
       })
       .catch(() => {
@@ -68,7 +57,6 @@ const Appointment = () => {
         setLoading(false);
       });
 
-    // Fetch upcoming appointments
     fetch('http://localhost:5000/getappoinmentdetails', {
       method: 'POST',
       body: formData,
@@ -82,6 +70,40 @@ const Appointment = () => {
         setError('Failed to fetch upcoming appointments');
       });
   }, [patientId]);
+
+  // ✅ Fetch departments dynamically
+  useEffect(() => {
+    fetch('http://localhost:5000/facilityops/getallfacility')
+      .then((res) => res.json())
+      .then((data) => {
+        if (data && data.data) {
+          const departmentsWithIcons = data.data.map((dept, index) => ({
+            ...dept,
+            id: dept.department_name.toLowerCase(),
+            name: dept.department_name,
+            icon: assignDepartmentIcon(dept.department_name, index),
+          }));
+          setDepartments(departmentsWithIcons);
+        }
+      })
+      .catch((err) => {
+        console.error('Error fetching departments:', err);
+      });
+  }, []);
+
+  // 🎯 Icon assignment logic
+  const assignDepartmentIcon = (name, index) => {
+    const iconMap = {
+      Cardiology: '❤️',
+      Neurology: '🧠',
+      Orthopedics: '💪',
+      Dermatology: '🧴',
+      Pediatrics: '👶',
+      Surgery: '🔪',
+    };
+    const fallbackIcons = ['🏥', '🩺', '🔬', '💊', '📋', '🧬'];
+    return iconMap[name] || fallbackIcons[index % fallbackIcons.length];
+  };
 
   const handleDepartmentClick = (departmentId) => {
     navigate(`/appointment/${departmentId}`);
@@ -106,9 +128,7 @@ const Appointment = () => {
           alert('Failed to delete appointment');
         }
       })
-      .catch(() => {
-        alert('Failed to delete appointment');
-      });
+      .catch(() => alert('Failed to delete appointment'));
   };
 
   const handleEditAppointment = (appointment) => {
@@ -175,9 +195,7 @@ const Appointment = () => {
               appointment && (
                 <tr key={appointment.uid}>
                   <td>{appointment.uid}</td>
-                  <td>
-                    {appointment.patient_firstname} {appointment.patient_lastname}
-                  </td>
+                  <td>{appointment.patient_firstname} {appointment.patient_lastname}</td>
                   <td>{appointment.doctor_fullname}</td>
                   <td>{appointment.appoinmenttime}</td>
                   <td>{appointment.appoinmentdetails}</td>
@@ -217,54 +235,36 @@ const Appointment = () => {
             <div className="edit-appointment-form">
               <h3>Edit Appointment</h3>
               <form onSubmit={handleSubmitEdit}>
-                <div>
-                  <label>Appointment Time:</label>
-                  <input
-                    type="datetime-local"
-                    name="appoinmenttime"
-                    value={currentAppointment.appoinmenttime}
-                    onChange={handleInputChange}
-                    required
-                  />
-                </div>
-                <div>
-                  <label>Details:</label>
-                  <textarea
-                    name="appoinmentdetails"
-                    value={currentAppointment.appoinmentdetails}
-                    onChange={handleInputChange}
-                    rows={4}
-                    required
-                  />
-                </div>
-                <button type="submit">Update Appointment</button>
-                <button type="button" onClick={() => setIsEditing(false)}>
-                  Cancel
-                </button>
+                <label>Appointment Time:</label>
+                <input
+                  type="datetime-local"
+                  name="appoinmenttime"
+                  value={currentAppointment.appoinmenttime}
+                  onChange={handleInputChange}
+                  required
+                />
+                <label>Details:</label>
+                <textarea
+                  name="appoinmentdetails"
+                  value={currentAppointment.appoinmentdetails}
+                  onChange={handleInputChange}
+                  rows={4}
+                  required
+                />
+                <button type="submit">Update</button>
+                <button type="button" onClick={() => setIsEditing(false)}>Cancel</button>
               </form>
             </div>
           )}
 
           <div className="appointment-details-container">
             <h3>Upcoming Appointments</h3>
-            {loading ? (
-              <div>Loading appointments...</div>
-            ) : error ? (
-              <div>{error}</div>
-            ) : (
-              renderAppointmentTable(upcomingAppointments)
-            )}
+            {loading ? <div>Loading...</div> : error ? <div>{error}</div> : renderAppointmentTable(upcomingAppointments)}
           </div>
 
           <div className="appointment-details-container">
             <h3>All Appointments</h3>
-            {loading ? (
-              <div>Loading appointments...</div>
-            ) : error ? (
-              <div>{error}</div>
-            ) : (
-              renderAppointmentTable(appointments)
-            )}
+            {loading ? <div>Loading...</div> : error ? <div>{error}</div> : renderAppointmentTable(appointments)}
           </div>
         </div>
       </div>
