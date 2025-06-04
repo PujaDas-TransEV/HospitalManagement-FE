@@ -12,7 +12,7 @@
   }
   
 
-  .hero-section {
+  .hero-sectionss {
     background-image: url('../img/slider/3(1).jpg');
     background-size: cover;
     background-position: center;
@@ -21,17 +21,17 @@
     padding: 100px 0;
   }
   
-  .hero-content h1 {
+  .hero-contents h1 {
     font-size: 3rem;
     margin-bottom: 20px;
   }
   
-  .hero-content p {
+  .hero-contents p {
     font-size: 1.2rem;
     margin-bottom: 30px;
   }
   
-  .cta-button {
+  .cta-buttons {
     background-color: #72c02c;
     color: white;
     padding: 10px 20px;
@@ -42,46 +42,46 @@
     transition: background-color 0.3s;
   }
   
-  .cta-button:hover {
+  .cta-buttons:hover {
     background-color: #5a9c1a;
   }
   
  
-  .about-section {
+  .about-sections {
     background-color: #fff;
   }
   
-  .about-section .section-heading {
+  .about-sections.section-heading {
     font-size: 2.5rem;
     margin-bottom: 20px;
     text-align: center;
   }
   
-  .about-section p {
+  .about-sections p {
     font-size: 1.1rem;
     line-height: 1.6;
     text-align: center;
     margin-bottom: 30px;
   }
 
-  .services-section {
+  .services-sections {
     background-color: #f1f1f1;
   }
   
-  .services-section .section-heading {
+  .services-sections .section-heading {
     font-size: 2.5rem;
     margin-bottom: 20px;
     text-align: center;
   }
   
-  .services-container {
+  .services-containers {
     display: flex;
     justify-content: space-around;
     flex-wrap: wrap;
     gap: 20px;
   }
   
-  .service-card {
+  .service-cards {
     background-color: white;
     padding: 20px;
     width: 30%;
@@ -90,43 +90,43 @@
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   }
   
-  .service-card img {
+  .service-cards img {
     max-width: 100%;
     height: auto;
     border-radius: 5px;
     margin-bottom: 15px;
   }
   
-  .service-card h3 {
+  .service-cards h3 {
     font-size: 1.5rem;
     color: #72c02c;
     margin-bottom: 10px;
   }
   
-  .service-card p {
+  .service-cards p {
     font-size: 1rem;
     color: #333;
     line-height: 1.5;
   }
   
- .departments-section {
+ .departments-sections {
     background-color: #fff;
   }
   
-  .departments-section .section-heading {
+  .departments-sections .section-heading {
     font-size: 2.5rem;
     margin-bottom: 20px;
     text-align: center;
   }
   
-  .departments-container {
+  .departments-containers {
     display: flex;
     justify-content: space-between;
     gap: 20px;
     flex-wrap: wrap;
   }
   
-  .department-card-medical {
+  .department-card-medicals {
     background-color: white;
     padding: 20px;
     width: 30%;
@@ -135,30 +135,30 @@
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   }
   
-  .department-card-medical h3 {
+  .department-card-medicals h3 {
     font-size: 1.5rem;
     color: #72c02c;
     margin-bottom: 10px;
   }
   
-  .department-card-medical p {
+  .department-card-medicals p {
     font-size: 1rem;
     color: #333;
     line-height: 1.5;
   } 
   
   
-  .doctors-section {
+  .doctors-sections {
     background-color: #f9f9f9;
   }
   
-  .doctors-section .section-heading {
+  .doctors-sections .section-heading {
     font-size: 2.5rem;
     margin-bottom: 20px;
     text-align: center;
   }
   
-  .doctor-card {
+  .doctor-cards {
     background-color: white;
     padding: 20px;
     width: 250px;
@@ -168,36 +168,36 @@
     margin: 0 auto;
   }
   
-  .doctor-card img {
+  .doctor-cards img {
     width: 100%;
     height: auto;
     border-radius: 50%;
     margin-bottom: 15px;
   }
   
-  .doctor-card h3 {
+  .doctor-cards h3 {
     font-size: 1.5rem;
     color: #72c02c;
     margin-bottom: 10px;
   }
   
-  .doctor-card p {
+  .doctor-cards p {
     font-size: 1rem;
     color: #333;
   }
   
  
-  .testimonials-section {
+  .testimonials-sections {
     background-color: #f1f1f1;
   }
   
-  .testimonials-section .section-heading {
+  .testimonials-sections .section-heading {
     font-size: 2.5rem;
     margin-bottom: 20px;
     text-align: center;
   }
   
-  .testimonial-card {
+  .testimonial-cards {
     background-color: white;
     padding: 20px;
     width: 80%;
@@ -207,37 +207,37 @@
     margin: 0 auto 30px auto;
   }
   
-  .testimonial-card img {
+  .testimonial-cards img {
     width: 80px;
     height: 80px;
     border-radius: 50%;
     margin-bottom: 15px;
   }
   
-  .testimonial-card p {
+  .testimonial-cards p {
     font-size: 1rem;
     color: #333;
     line-height: 1.6;
     margin-bottom: 10px;
   }
   
-  .testimonial-card small {
+  .testimonial-cards small {
     font-size: 0.9rem;
     color: #72c02c;
   }
   
  
-  .appointment-section {
+  .appointment-sections {
     background-color: #fff;
     text-align: center;
   }
   
-  .appointment-section .section-heading {
+  .appointment-sections .section-heading {
     font-size: 2.5rem;
     margin-bottom: 20px;
   }
   
-  .appointment-section .cta-button {
+  .appointment-sections .cta-button {
     background-color: #72c02c;
     color: white;
     padding: 10px 20px;
@@ -248,12 +248,12 @@
     transition: background-color 0.3s;
   }
   
-  .appointment-section .cta-button:hover {
+  .appointment-sections .cta-button:hover {
     background-color: #5a9c1a;
   }
   
 
-  .contact-section {
+  .contact-sections {
     background-image: url('../Assests/map.png');
     background-size: cover;
     background-position: center;
@@ -262,33 +262,33 @@
     text-align: center;
   }
   
-  .contact-section .content {
+  .contact-sections .content {
     background-color: rgba(0, 0, 0, 0.6);
     padding: 20px;
     border-radius: 10px;
   }
   
-  .contact-section h2 {
+  .contact-sections h2 {
     font-size: 2.5rem;
   }
   
-  .contact-section p {
+  .contact-sections p {
     font-size: 1.2rem;
     margin-bottom: 10px;
   }
   
 
-  .faq-section {
+  .faq-sections {
     background-color: #f9f9f9;
   }
   
-  .faq-section .section-heading {
+  .faq-sections .section-heading {
     font-size: 2.5rem;
     margin-bottom: 20px;
     text-align: center;
   }
   
-  .faq-item {
+  .faq-items {
     background-color: white;
     padding: 20px;
     width: 80%;
@@ -297,12 +297,12 @@
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   }
   
-  .faq-item h3 {
+  .faq-items h3 {
     font-size: 1.5rem;
     margin-bottom: 10px;
   }
   
-  .faq-item p {
+  .faq-items p {
     font-size: 1rem;
     color: #333;
     line-height: 1.6;
@@ -310,21 +310,21 @@
   
 
   @media (max-width: 768px) {
-    .services-container, .departments-container {
+    .services-containers, .departments-containers {
       flex-direction: column;
       align-items: center;
     }
   
-    .service-card, .department-card {
+    .service-cards, .department-cards {
       width: 80%;
       margin: 10px 0;
     }
   
-    .doctor-card {
+    .doctor-cards {
       width: 80%;
     }
   
-    .testimonial-card {
+    .testimonial-cards {
       width: 90%;
     }
   }
@@ -358,7 +358,7 @@
     border: 1px solid #ddd;
   }
   
-  .cta-button {
+  .cta-buttons {
     padding: 10px 20px;
     background-color: #0056b3;
     color: white;
@@ -366,7 +366,7 @@
     cursor: pointer;
   }
   
-  .cta-button:hover {
+  .cta-buttons:hover {
     background-color: #003f87;
   }
   
@@ -382,4 +382,117 @@
   .close-modal:hover {
     background-color: #d32f2f;
   }
-  
+  @media (max-width: 480px) {
+  .footer {
+    padding: 40px 10px;
+  }
+
+  .footer .text h3 {
+    font-size: 1rem;
+  }
+
+  .footer .text p {
+    font-size: 0.85rem;
+  }
+
+  .detail .contentText h1 {
+    font-size: 1rem;
+  }
+
+  .detail .contentText p {
+    font-size: 0.9rem;
+  }
+}
+.footer{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  padding: 66px;
+  margin-top: 66px;
+  background-color: rgb(11, 76, 76);
+  color: white;
+}
+.text p{
+  margin-top: 12px;
+} 
+.detail{
+  display: none;
+  position: fixed;
+  left: 50%;
+  right: 50%;
+  top: 5%;
+  transform: translate(-50%, 40%);
+  background-color: #fff;
+  padding: 22px;
+  width: 400px;
+  border-radius: 4px;
+   
+}
+.faq-section {
+  background-color: #f9f9f9;
+  padding: 50px 20px;
+  max-width: 900px;
+  margin: 40px auto;
+  border-radius: 10px;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+}
+
+.faq-container {
+  width: 100%;
+}
+
+.faq-heading {
+  text-align: center;
+  font-size: 2.2rem;
+  margin-bottom: 30px;
+  color: #004d4d;
+}
+
+.faq-item {
+  background: white;
+  margin-bottom: 15px;
+  border-radius: 6px;
+  border: 1px solid #ddd;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  padding: 15px 20px;
+}
+
+.faq-item:hover {
+  background-color: #e0f7f7;
+}
+
+.faq-question {
+  display: flex;
+  justify-content: space-between;
+  font-weight: 600;
+  font-size: 1.1rem;
+  color: #006666;
+  user-select: none;
+}
+
+.faq-icon {
+  font-weight: 700;
+  font-size: 1.5rem;
+  color: #009999;
+}
+
+.faq-answer {
+  margin-top: 12px;
+  color: #444;
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  .faq-heading {
+    font-size: 1.6rem;
+  }
+  .faq-question {
+    font-size: 1rem;
+  }
+  .faq-answer {
+    font-size: 0.9rem;
+  }
+}

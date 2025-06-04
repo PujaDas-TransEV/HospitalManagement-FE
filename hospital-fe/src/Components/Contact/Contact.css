@@ -16,26 +16,27 @@
   .hero-contentt p {
     font-size: 1.2rem;
     margin-bottom: 20px;
+    color:white
   }
   
  /* Contact Information Section Styling */
-.contact-info {
+.contact-infos {
     background-color: #f9f9f9; /* Light background color */
     padding: 50px 0;
   }
   
-  .contact-info .container {
+  .contact-infos .containers {
     display: flex;
     justify-content: space-between;  /* Aligns contact details and map to the sides */
     align-items: flex-start;         /* Aligns items to the top */
     gap: 30px;                       /* Space between the two sections */
   }
   
-  .contact-details {
+  .contact-detailss {
     width: 50%;                      /* Half the width for contact details */
   }
   
-  .contact-info-box {
+  .contact-info-boxs {
     background-color: #fff;         /* White background for each box */
     padding: 20px;
     margin-bottom: 20px;
@@ -45,30 +46,30 @@
     padding: 40px;
   }
   
-  .contact-info-box:hover {
+  .contact-info-boxs:hover {
     transform: translateY(-5px);     /* Slight lift effect on hover */
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15); /* Enhance shadow on hover */
   }
   
-  .contact-info-box h3 {
+  .contact-info-boxs h3 {
     font-size: 1.5rem;
     color: #333;
     margin-bottom: 10px;
     font-weight: 600;
   }
   
-  .contact-info-box p {
+  .contact-info-boxs p {
     font-size: 1rem;
     color: #555;
     margin: 0;
   }
   
-  .map {
+  .maps {
     width: 45%;                       /* Adjusts width of the map section */
     max-width: 600px;                 /* Max width for the map */
   }
   
-  .map img {
+  .maps img {
     width: 100%;
     height: auto;
     border-radius: 8px;              /* Rounded corners for the map */
@@ -171,4 +172,132 @@
   }
   
   
+ 
+/* Medium devices (tablets) */
+@media (max-width: 992px) {
+  .contact-infos .containers {
+    gap: 20px;
+  }
   
+  .contact-detailss,
+  .maps {
+    width: 100%; /* Full width for each section */
+    max-width: none;
+    padding: 0;
+  }
+  
+  .maps img {
+    padding: 15px;
+  }
+}
+
+/* Small devices (phones) */
+@media (max-width: 576px) {
+  .contact-infos {
+    padding: 30px 15px;
+  }
+  
+  .contact-info-boxs {
+    padding: 30px 15px;
+  }
+  
+  .maps img {
+    padding: 10px;
+  }
+  
+  .contact-info-boxs h3 {
+    font-size: 1.3rem;
+  }
+  
+  .contact-info-boxs p {
+    font-size: 0.9rem;
+  }
+}
+.our-teams {
+  padding: 50px 20px;
+  background-color: #f5f8fa;
+  text-align: center;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.our-teams .containers {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.our-teams h2 {
+  font-size: 2.5rem;
+  margin-bottom: 40px;
+  color: #222;
+  font-weight: 700;
+}
+
+.team-memberss {
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+  flex-wrap: wrap;
+}
+
+.team-members {
+  background-color: #fff;
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+  padding: 25px 20px;
+  max-width: 280px;
+  width: 100%;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  cursor: default;
+}
+
+.team-members:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 12px 25px rgba(0,0,0,0.15);
+}
+
+.team-members img {
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 20px;
+  border: 4px solid #007bff;
+}
+
+.team-members h4 {
+  font-size: 1.3rem;
+  margin: 10px 0 6px;
+  color: #007bff;
+  font-weight: 600;
+}
+
+.team-members p {
+  font-size: 1rem;
+  color: #555;
+  margin: 0;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .team-memberss {
+    justify-content: center;
+    gap: 30px;
+  }
+}
+
+@media (max-width: 480px) {
+  .our-teams h2 {
+    font-size: 2rem;
+  }
+
+  .team-members {
+    max-width: 90%;
+    padding: 20px 15px;
+  }
+
+  .team-members img {
+    width: 120px;
+    height: 120px;
+    margin-bottom: 15px;
+  }
+}

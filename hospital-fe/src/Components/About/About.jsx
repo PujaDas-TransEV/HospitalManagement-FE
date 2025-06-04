@@ -1,48 +1,57 @@
-import React from "react";
-import { Link } from "react-router-dom"; 
-import AboutImage from '../Assests/home.png';  
-import VisionImage from '../Assests/blog1.jpg';  
-import MissionImage from '../Assests/blog3.jpg';
-import ValuesImage from '../Assests/blog3.jpg'; 
-import CardiologyImage from '../Assests/medicine.webp'; 
-import NeurologyImage from '../img/slider/3(1).jpg'; 
-import OrthopedicsImage from '../img/slider/2(1).jpg'; 
-import PediatricsImage from '../img/slider/1(2).jpg';  
-import './About.css';  
 
+import React from "react";
+import { Link } from "react-router-dom";
+import AboutImage from '../Assests/home.png';
+import VisionImage from '../Assests/blog1.jpg';
+import MissionImage from '../Assests/blog3.jpg';
+import ValuesImage from '../Assests/blog3.jpg';
+import CardiologyImage from '../Assests/medicine.webp';
+import NeurologyImage from '../img/slider/3(1).jpg';
+import OrthopedicsImage from '../img/slider/2(1).jpg';
+import PediatricsImage from '../img/slider/1(2).jpg';
+import './About.css';  
 const About = () => {
   return (
     <div>
+
       {/* Background Section */}
       <div
-        className="min-h-screen flex flex-col justify-center lg:px-32 px-5 text-white bg-no-repeat bg-cover opacity-90"
-        style={{ backgroundImage: `url(${AboutImage})` }}
+        style={{
+          minHeight: '100vh',
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'center',
+          padding: '0 2rem',
+          color: 'white',
+          backgroundImage: `url(${AboutImage})`,
+          backgroundRepeat: 'no-repeat',
+          backgroundSize: 'cover',
+          opacity: 0.9,
+        }}
       >
-        <div className="w-full lg:w-4/5 space-y-5 mt-10">
-          <h1 className="text-5xl font-bold leading-tight">
+        <div style={{ width: '80%', marginTop: '10px' }}>
+          <h1 style={{ fontSize: '3rem', fontWeight: 'bold' }}>
             Empowering Health Choices for a Vibrant Life Your Trusted..
           </h1>
-          <p>
+          <p style={{ fontSize: '1.125rem' }}>
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Quam magnam
             omnis natus accusantium quos. Reprehenderit incidunt expedita
-            molestiae impedit at sequi dolorem iste sit culpa, optio voluptates
-            fugiat vero consequatur?
+             molestiae impedit at sequi dolorem iste sit culpa, optio voluptates
+             fugiat vero consequatur?
           </p>
         </div>
       </div>
 
       {/* About Section */}
-      <div className="container content-sm" style={{ marginTop: '-25px' }}>
-        <div 
-          className="headline-center" 
+      <div style={{ marginTop: '-25px', textAlign: 'center' }}>
+        <div
           style={{
-            marginBottom: '60px', 
-            textAlign: 'center', 
-            backgroundColor: '#fff', 
-            padding: '40px', 
-            borderRadius: '8px', 
-            boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)', 
-            maxWidth: '600px', 
+            marginBottom: '60px',
+            backgroundColor: '#fff',
+            padding: '40px',
+            borderRadius: '8px',
+            boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
+            maxWidth: '600px',
             margin: '0 auto'
           }}
         >
@@ -53,211 +62,177 @@ const About = () => {
       </div>
 
       {/* Unity Hospital Section */}
-      <div className="container content" style={{ marginTop: '-20px' }}>
-        <div className="row" style={{ marginBottom: '40px' }}>
-          <div className="col-md-12" style={{ marginBottom: '40px' }}>
-            <p>
-              <span style={{ color: '#72c02c' }}>Lifecare </span> Hospital is a multi/super speciality hospital located at the prime location of Vaishnodevi Circle, SG Road, Ahmedabad; with state-of-the-art facilities & treatments at an affordable cost, encompassing a wide spectrum of accurate diagnostics and elegant therapeutics created on the philosophical edifice of patient and ethical centricity ensuring humanistic dispensation.
-            </p>
-            <ul className="list-unstyled">
-              <li><i className="fa fa-check" style={{ color: 'green' }}></i> Multiple Options For Treatment.</li>
-              <li><i className="fa fa-check" style={{ color: 'green' }}></i> Full Of Latest Technologies and Equipments.</li>
-              <li><i className="fa fa-check" style={{ color: 'green' }}></i> Best Hospital Of 2020 Award Winner.</li>
-              <li><i className="fa fa-check" style={{ color: 'green' }}></i> 24/7 Ambulance Support.</li>
-              <li><i className="fa fa-check" style={{ color: 'green' }}></i> Eminent and Experienced Doctors.</li>
-            </ul> 
-            <blockquote>
-              <p>As a leading health organization in our region, we want to be a strong influence for better health and prevention, and there’s no better place to start than among our own employees.</p>
-              <small>CEO Harshil Patel</small>
-            </blockquote>
-          </div>
-        </div>
+    
+        <div style={{
+  padding: '2rem',
+  marginBottom: '40px',
+  backgroundColor: '#ffffff',
+  borderRadius: '8px',
+  boxShadow: '0 4px 8px rgba(0, 0, 0, 0.05)'
+}}>
+  <p style={{
+    fontSize: '1.25rem',
+    lineHeight: '1.8',
+    color: '#333'
+  }}>
+    <span style={{ color: '#72c02c', fontWeight: 'bold' }}>Lifecare</span> Hospital is a multi/super speciality hospital located at the prime location of Vaishnodevi Circle, SG Road, Ahmedabad; with state-of-the-art facilities & treatments at an affordable cost, encompassing a wide spectrum of accurate diagnostics and elegant therapeutics created on the philosophical edifice of patient and ethical centricity ensuring humanistic dispensation.
+  </p>
+
+  <ul style={{ listStyle: 'none', paddingLeft: 0, marginTop: '20px' }}>
+    {[
+      "Multiple Options For Treatment.",
+      "Full Of Latest Technologies and Equipments.",
+      "Best Hospital Of 2020 Award Winner.",
+      "24/7 Ambulance Support.",
+      "Eminent and Experienced Doctors."
+    ].map((item, i) => (
+      <li key={i} style={{
+        marginBottom: '12px',
+        fontSize: '1.15rem',
+        color: '#444',
+        display: 'flex',
+        alignItems: 'center'
+      }}>
+        <span style={{ color: 'green', fontWeight: 'bold', marginRight: '10px' }}>✓</span> {item}
+      </li>
+    ))}
+  </ul>
+
+
+        <blockquote style={{ fontStyle: 'italic', marginTop: '20px' }}>
+          <p>As a leading health organization in our region, we want to be a strong influence for better health and prevention, and there’s no better place to start than among our own employees.</p>
+          <small>— CEO Harshil Patel</small>
+        </blockquote>
       </div>
 
       {/* Mission Section */}
-      <div className="mission-container" style={{ backgroundColor: '#f0f8ff' }}>
-        <div className="service-block-v6">
-          <div className="col-md-6">
-            <img src={MissionImage} alt="Mission" />
-          </div>
-          <div className="service-desc">
-            <h2>Mission</h2>
-            <p>The ‘well being’ ensured by extension of Available, Accessible, Affordable, Safe, Efficacious, Professional and Ethical.</p>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla vel urna nec justo vehicula fermentum non eu justo. Aliquam vitae dolor felis. Integer nec dui tristique, iaculis arcu non, facilisis libero.</p>
-          </div>
+      <div style={{ backgroundColor: '#f0f8ff', padding: '40px', display: 'flex', flexWrap: 'wrap' }}>
+        <div style={{ flex: '1', padding: '10px' }}>
+          <img src={MissionImage} alt="Mission" style={{ width: '100%' }} />
+        </div>
+        <div style={{ flex: '1', padding: '10px' }}>
+          <h2>Mission</h2>
+          <p style={{
+    fontSize: '1.125rem'}}>The ‘well being’ ensured by extension of Available, Accessible, Affordable, Safe, Efficacious, Professional and Ethical.</p>
+          <p style={{
+    fontSize: '1.125rem'}}>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla vel urna nec justo vehicula fermentum non eu justo. Aliquam vitae dolor felis. Integer nec dui tristique, iaculis arcu non, facilisis libero.</p>
         </div>
       </div>
 
       {/* Vision Section */}
-      <div className="vision-container" style={{ backgroundColor: '#e6ffe6' }}>
-        <div className="service-block-v6">
-          <div className="service-desc">
-            <h2>Vision</h2>
-            <p>Ensuring ‘well being’ as a humane commitment to enliven humanity.</p>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla vel urna nec justo vehicula fermentum non eu justo. Aliquam vitae dolor felis. Integer nec dui tristique, iaculis arcu non, facilisis libero.</p>
-          </div>
-          <div className="col-md-6">
-            <img src={VisionImage} alt="Vision" />
-          </div>
+      <div style={{ backgroundColor: '#e6ffe6', padding: '40px', display: 'flex', flexWrap: 'wrap' }}>
+        <div style={{ flex: '1', padding: '10px' }}>
+          <h2>Vision</h2>
+          <p style={{
+    fontSize: '1.125rem'}}>Ensuring ‘well being’ as a humane commitment to enliven humanity.</p>
+          <p style={{
+    fontSize: '1.125rem'}}>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla vel urna nec justo vehicula fermentum non eu justo. Aliquam vitae dolor felis. Integer nec dui tristique, iaculis arcu non, facilisis libero.</p>
+        </div>
+        <div style={{ flex: '1', padding: '10px' }}>
+          <img src={VisionImage} alt="Vision" style={{ width: '100%' }} />
         </div>
       </div>
 
       {/* Values Section */}
-      <div className="values-container" style={{ backgroundColor: '#fdfd96' }}>
-        <div className="service-block-v6">
-          <div className="col-md-6">
-            <img src={ValuesImage} alt="Values" />
-          </div>
-          <div className="service-desc">
-            <h2>Values</h2>
-            <p>Providing consistent and high-quality care in a compassionate and patient-centered environment.</p>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla vel urna nec justo vehicula fermentum non eu justo. Aliquam vitae dolor felis. Integer nec dui tristique, iaculis arcu non, facilisis libero.</p>
-          </div>
+      <div style={{ backgroundColor: '#fdfd96', padding: '40px', display: 'flex', flexWrap: 'wrap' }}>
+        <div style={{ flex: '1', padding: '10px' }}>
+          <img src={ValuesImage} alt="Values" style={{ width: '100%' }} />
+        </div>
+        <div style={{ flex: '1', padding: '10px' }}>
+          <h2>Values</h2>
+          <p style={{
+    fontSize: '1.125rem'}}>Providing consistent and high-quality care in a compassionate and patient-centered environment.</p>
+          <p style={{
+    fontSize: '1.125rem'}}>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla vel urna nec justo vehicula fermentum non eu justo. Aliquam vitae dolor felis. Integer nec dui tristique, iaculis arcu non, facilisis libero.</p>
         </div>
       </div>
 
-     
-<div className="departments-container" style={{ backgroundColor: '#f9f9f9', padding: '60px 0' }}>
-  <div className="headline-center" style={{ marginBottom: '60px' }}>
-    <h2 style={{ fontSize: '2.5rem', textAlign: 'center', marginLeft:'700px' }}>
-      Our <span style={{ color: '#72c02c' }}>Departments</span>
-    </h2>
-  </div>
-
-  <div className="container">
-    <div className="department-cards-container" style={{marginLeft:'200px'}}>
-      {/* Cardiology */}
-      <div className="department-card-about" >
-        <img src={CardiologyImage} alt="Cardiology" className="department-img" />
-        <div className="department-info">
-          <h3>Cardiology</h3>
-          <p>Our Cardiology Department provides comprehensive heart care, including diagnosis, treatment, and ongoing management for all heart-related conditions.</p>
-        </div>
-      </div>
-
-      {/* Neurology */}
-      <div className="department-card-about">
-        <img src={NeurologyImage} alt="Neurology" className="department-img" />
-        <div className="department-info">
-          <h3>Neurology</h3>
-          <p>We offer advanced diagnostic and therapeutic services for neurological disorders such as stroke, epilepsy, and brain injuries.</p>
-        </div>
-      </div>
-
-      {/* Orthopedics */}
-      <div className="department-card-about">
-        <img src={OrthopedicsImage} alt="Orthopedics" className="department-img" />
-        <div className="department-info">
-          <h3>Orthopedics</h3>
-          <p>Our Orthopedics Department specializes in bone, joint, and musculoskeletal care, providing treatment for fractures, arthritis, and sports injuries.</p>
-        </div>
-      </div>
-
-      {/* Pediatrics */}
-      <div className="department-card-about">
-        <img src={PediatricsImage} alt="Pediatrics" className="department-img" />
-        <div className="department-info">
-          <h3>Pediatrics</h3>
-          <p>Our Pediatrics Department offers care for children from infancy through adolescence, ensuring their health and development are supported at every stage.</p>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-
-      {/* Latest Posts Section */}
-      <div className="latest-posts-container" style={{ backgroundColor: '#f4f4f4', padding: '60px 0' }}>
-        <div className="headline-center" style={{ marginBottom: '60px' }}>
-          <h2 style={{ fontSize: '2.5rem', textAlign: 'center' }}>
-            Our <span style={{ color: '#72c02c' }}>Latest Posts</span>
-          </h2>
-        </div>
-
-        <div className="container">
-          <div className="row">
-            <div className="col-md-4">
-              <div className="post-card">
-                <h3>Post Title One</h3>
-                <p>Short summary of the latest post...</p>
-                <Link to="/post/1" className="read-more">Read More</Link>
+      {/* Departments Section */}
+      <div style={{ backgroundColor: '#f9f9f9', padding: '60px 0' }}>
+        <h2 style={{ fontSize: '2.5rem', textAlign: 'center' }}>
+          Our <span style={{ color: '#72c02c' }}>Departments</span>
+        </h2>
+        <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: '20px', padding: '40px' }}>
+          {[
+            { img: CardiologyImage, title: 'Cardiology', desc: 'Our Cardiology Department provides comprehensive heart care, including diagnosis, treatment, and ongoing management for all heart-related conditions.' },
+            { img: NeurologyImage, title: 'Neurology', desc: 'We offer advanced diagnostic and therapeutic services for neurological disorders such as stroke, epilepsy, and brain injuries.' },
+            { img: OrthopedicsImage, title: 'Orthopedics', desc: 'Our Orthopedics Department specializes in bone, joint, and musculoskeletal care, providing treatment for fractures, arthritis, and sports injuries.' },
+            { img: PediatricsImage, title: 'Pediatrics', desc: 'Our Pediatrics Department offers care for children from infancy through adolescence, ensuring their health and development are supported at every stage.' },
+          ].map((dept, i) => (
+            <div key={i} style={{ width: '250px', backgroundColor: '#fff', boxShadow: '0 2px 8px rgba(0,0,0,0.1)', borderRadius: '8px', overflow: 'hidden' }}>
+              <img src={dept.img} alt={dept.title} style={{ width: '100%', height: '160px', objectFit: 'cover' }} />
+              <div style={{ padding: '15px' }}>
+                <h3>{dept.title}</h3>
+                <p style={{
+    fontSize: '1.125rem'}}>{dept.desc}</p>
               </div>
             </div>
-            <div className="col-md-4">
-              <div className="post-card">
-                <h3>Post Title Two</h3>
-                <p>Short summary of the latest post...</p>
-                <Link to="/post/2" className="read-more">Read More</Link>
-              </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Latest Posts */}
+      <div style={{ backgroundColor: '#f4f4f4', padding: '60px 0' }}>
+        <h2 style={{ fontSize: '2.5rem', textAlign: 'center' }}>
+          Our <span style={{ color: '#72c02c' }}>Latest Posts</span>
+        </h2>
+        <div style={{ display: 'flex', justifyContent: 'center', gap: '20px', marginTop: '40px' }}>
+          {[1, 2, 3].map((id) => (
+            <div key={id} style={{ width: '300px', backgroundColor: '#fff', padding: '20px', borderRadius: '8px' }}>
+              <h3>Post Title {id}</h3>
+              <p style={{
+    fontSize: '1.125rem'}}>Short summary of the latest post...</p>
+              {/* <Link to={`/post/${id}`} style={{ color: '#72c02c', textDecoration: 'underline' }}>Read More</Link> */}
+            <a href={`#post-${id}`} style={{ color: '#72c02c', textDecoration: 'underline' }}>
+  Read More
+</a>
+
             </div>
-            <div className="col-md-4">
-              <div className="post-card">
-                <h3>Post Title Three</h3>
-                <p>Short summary of the latest post...</p>
-                <Link to="/post/3" className="read-more">Read More</Link>
-              </div>
-            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Contact Info */}
+      <div style={{ backgroundColor: '#ffffff', padding: '60px 0' }}>
+        <h2 style={{ fontSize: '2.5rem', textAlign: 'center' }}>
+          Contact <span style={{ color: '#72c02c' }}>Information</span>
+        </h2>
+        <div style={{ display: 'flex', justifyContent: 'center', gap: '100px', marginTop: '40px', flexWrap: 'wrap' }}>
+          <div>
+            <h3>Address:</h3>
+            <p style={{
+    fontSize: '1.125rem'}}>123 Main Street, Ahmedabad, India</p>
+          </div>
+          <div>
+            <h3>Phone:</h3>
+            <p style={{
+    fontSize: '1.125rem'}}>(+91) 123 456 7890</p>
+          </div>
+          <div>
+            <h3>Email:</h3>
+            <p style={{
+    fontSize: '1.125rem'}}>transhospital@gmail.com</p>
           </div>
         </div>
       </div>
 
-      {/* Contact Information Section */}
-      <div className="contact-info-container" style={{ backgroundColor: '#ffffff', padding: '60px 0' }}>
-        <div className="headline-center" style={{ marginBottom: '60px' }}>
-          <h2 style={{ fontSize: '2.5rem', textAlign: 'center' }}>
-            Contact <span style={{ color: '#72c02c' }}>Information</span>
-          </h2>
-        </div>
-
-        <div className="container">
-          <div className="row">
-            <div className="col-md-6">
-              <h3>Address:</h3>
-              <p>123 Main Street, Ahmedabad, India</p>
-            </div>
-            <div className="col-md-6">
-              <h3>Phone:</h3>
-              <p>(+91) 123 456 7890</p>
-            </div>
-            <div className="col-md-6">
-              <h3>Email:</h3>
-              <p>transhospital@gmail.com</p>
-            </div>
+      {/* Footer */}
+      <div style={{ backgroundColor: ' #0B4C4C', color: 'white', display: 'flex', justifyContent: 'space-around', padding: '40px 20px', flexWrap: 'wrap' }}>
+        {[
+          { title: 'About Us', items: ['24 Hours', 'Top Doctor', 'Best Care', 'Patient'] },
+          { title: 'Speciality', items: ['Knee surgery', 'Spin surgery', 'Leg surgery', 'Tendon surgery'] },
+          { title: 'Best Teams', items: ['Doctors', 'Nursing', 'Staff', 'Hospital'] },
+          { title: 'Address', items: ['Near MG Road', 'Galaxy Care', '333-09093', '09-883-090'] },
+        ].map((section, i) => (
+          <div key={i} style={{ marginBottom: '20px' }}>
+            <h3>{section.title}</h3>
+            {section.items.map((item, j) => (
+              <p key={j} style={{ color: 'whitesmoke' }}>{item}</p>
+            ))}
           </div>
-        </div>
+        ))}
       </div>
 
-      {/* Footer Section */}
-      <div className="footer">
-        <div className="text">
-          <h3 style={{color:'white'}}>About Us</h3>
-          <p style={{color:'whitesmoke'}}>24 Hours</p>
-          <p style={{color:'whitesmoke'}}>Top Doctor</p>
-          <p style={{color:'whitesmoke'}}>Best Care</p>
-          <p style={{color:'whitesmoke'}}>Patient</p>
-        </div>
-        <div className="text">
-          <h3 style={{color:'white'}}>Speciality</h3>
-          <p style={{color:'whitesmoke'}}>Knee surgery</p>
-          <p style={{color:'whitesmoke'}}>Spin surgery</p>
-          <p style={{color:'whitesmoke'}}>Leg surgery</p>
-          <p style={{color:'whitesmoke'}}>Tendon surgery</p>
-        </div>
-        <div className="text">
-          <h3>Best Teams</h3>
-          <p style={{color:'whitesmoke'}}>Doctors</p>
-          <p style={{color:'whitesmoke'}}>Nursing</p>
-          <p style={{color:'whitesmoke'}}>Staff</p>
-          <p style={{color:'whitesmoke'}}>Hospital</p>
-        </div>
-        <div className="text">
-          <h3 style={{color:'white'}}>Address</h3>
-          <p style={{color:'whitesmoke'}}>Near MG Road</p>
-          <p style={{color:'whitesmoke'}}>Galaxy Care</p>
-          <p style={{color:'whitesmoke'}}>333-09093</p>
-          <p style={{color:'whitesmoke'}}>09-883-090</p>
-        </div>
-      </div>
     </div>
   );
 };

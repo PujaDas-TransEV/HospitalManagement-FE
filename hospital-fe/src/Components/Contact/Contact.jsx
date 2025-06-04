@@ -1,9 +1,7 @@
-import React, { useState } from 'react';
-import './Contact.css'; // Link to CSS file
 
-// Importing images (correcting paths)
- // Correct path if your image is here
-import mapImage from '../img/galary/hospital(1).jpg';  // Correct path if your map image is here
+import React, { useState } from 'react';
+import './Contact.css';
+import mapImage from '../Assests/hosmap.jpeg';
 
 const ContactPage = () => {
   const [formData, setFormData] = useState({
@@ -14,15 +12,13 @@ const ContactPage = () => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      [name]: value,
-    });
+    setFormData(prev => ({ ...prev, [name]: value }));
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
     alert('Your message has been sent successfully!');
+    setFormData({ name: '', email: '', message: '' });
   };
 
   return (
@@ -35,74 +31,63 @@ const ContactPage = () => {
         </div>
       </section>
 
-      {/* Contact Information Section */}
-      <section className="contact-info">
-  <div className="container">
-    <div className="contact-details">
-      <div className="contact-info-box">
-        <h3>Visit Us</h3>
-        <p>123 Health Street, City, Country</p>
+     
+<section className="contact-infos" style={{ backgroundColor: '#f9f9f9', padding: '50px 20px' }}>
+  <div className="containers" style={{ display: 'flex', flexWrap: 'wrap', gap: '30px', justifyContent: 'space-between', alignItems: 'flex-start' }}>
+    
+    <div className="contact-detailss" style={{ flex: '1 1 45%' }}>
+      <div className="contact-info-boxs" style={{ backgroundColor: '#d9f2e6', padding: '30px', borderRadius: '10px', marginBottom: '20px', boxShadow: '0 4px 12px rgba(0,0,0,0.1)' }}>
+        <h3 style={{ color: '#006644', fontSize: '1.5rem', marginBottom: '10px' }}>Visit Us</h3>
+        <p style={{ color: '#333' }}>123 Health Street, City, Country</p>
       </div>
-      <div className="contact-info-box">
-        <h3>Phone</h3>
-        <p>+123 456 7890</p>
+
+      <div className="contact-info-boxs" style={{ backgroundColor: '#ffe0cc', padding: '30px', borderRadius: '10px', marginBottom: '20px', boxShadow: '0 4px 12px rgba(0,0,0,0.1)' }}>
+        <h3 style={{ color: '#cc5200', fontSize: '1.5rem', marginBottom: '10px' }}>Phone</h3>
+        <p style={{ color: '#333' }}>+123 456 7890</p>
       </div>
-      <div className="contact-info-box">
-        <h3>Email</h3>
-        <p>contact@healthcareclinic.com</p>
+
+      <div className="contact-info-boxs" style={{ backgroundColor: '#e0e7ff', padding: '30px', borderRadius: '10px', boxShadow: '0 4px 12px rgba(0,0,0,0.1)' }}>
+        <h3 style={{ color: '#3b5bdb', fontSize: '1.5rem', marginBottom: '10px' }}>Email</h3>
+        <p style={{ color: '#333' }}>contact@healthcareclinic.com</p>
       </div>
     </div>
-    <div className="map">
-      <img src={mapImage} alt="Map Location" />
+
+    <div className="maps" style={{ flex: '1 1 45%', maxWidth: '600px' }}>
+      <img
+        src={mapImage}
+        alt="Map Location"
+        style={{
+          width: '100%',
+          height: 'auto',
+          borderRadius: '10px',
+          boxShadow: '0 4px 12px rgba(0,0,0,0.1)',
+        }}
+      />
     </div>
   </div>
 </section>
 
-
-      {/* Contact Form Section */}
-      <section className="contact-form">
-        <div className="container">
-          <h2>Send Us a Message</h2>
-          <form onSubmit={handleSubmit}>
-            <div className="form-group">
-              <label htmlFor="name">Name</label>
-              <input
-                type="text"
-                name="name"
-                id="name"
-                value={formData.name}
-                onChange={handleChange}
-                placeholder="Enter your name"
-                required
-              />
+      {/* New Section: Our Team */}
+      <section className="our-teams">
+        <div className="containers">
+          <h2>Meet Our Team</h2>
+          <div className="team-memberss">
+            <div className="team-members">
+              <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Dr. John Doe" />
+              <h4>Dr. John Doe</h4>
+              <p>Chief Surgeon</p>
             </div>
-            <div className="form-group">
-              <label htmlFor="email">Email</label>
-              <input
-                type="email"
-                name="email"
-                id="email"
-                value={formData.email}
-                onChange={handleChange}
-                placeholder="Enter your email"
-                required
-              />
+            <div className="team-members">
+              <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Nurse Jane Smith" />
+              <h4>Nurse Jane Smith</h4>
+              <p>Head Nurse</p>
             </div>
-            <div className="form-group">
-              <label htmlFor="message">Message</label>
-              <textarea
-                name="message"
-                id="message"
-                value={formData.message}
-                onChange={handleChange}
-                placeholder="Your message"
-                required
-              ></textarea>
+            <div className="team-members">
+              <img src="https://randomuser.me/api/portraits/men/76.jpg" alt="Dr. Mike Lee" />
+              <h4>Dr. Mike Lee</h4>
+              <p>Cardiologist</p>
             </div>
-            <button type="submit" className="cta-button">
-              Send Message
-            </button>
-          </form>
+          </div>
         </div>
       </section>
 
@@ -138,7 +123,6 @@ const ContactPage = () => {
         </div>
       </div>
     </div>
-
   );
 };
 

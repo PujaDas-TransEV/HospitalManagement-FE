@@ -720,3 +720,192 @@ ul li a:hover{
     width: 100%; 
   }
 }
+@media screen and (max-width: 1100px) {
+  .main {
+    flex-direction: column;
+    text-align: center;
+    height: auto;
+    padding: 40px 20px;
+  }
+
+  .mainText h1 {
+    font-size: 40px;
+    margin-top: 30px;
+  }
+
+  .mainText h3 {
+    font-size: 28px;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .mainText h1 {
+    font-size: 30px;
+  }
+
+  .mainText h3 {
+    font-size: 20px;
+  }
+
+  .mainText button {
+    width: 120px;
+    font-size: 16px;
+  }
+}
+@media screen and (max-width: 768px) {
+  .teams .card {
+    width: 80%;
+    margin: 20px auto;
+  }
+
+  .spCard {
+    width: 80%;
+    margin: 20px auto;
+  }
+}
+@media (max-width: 768px) {
+  .specialty-card {
+    width: 80%;
+  }
+}
+
+@media (max-width: 480px) {
+  .specialty-card {
+    width: 100%;
+  }
+}
+@media (max-width: 768px) {
+  .why-choose-us {
+    flex-direction: column;
+    gap: 30px;
+    padding: 30px 15px;
+  }
+
+  .why-choose-us-left-container,
+  .why-choose-us-right-container {
+    width: 100%;
+    margin-left: 0;
+    padding: 0;
+  }
+
+  .why-choose-us-left h2 {
+    font-size: 1.8rem;
+  }
+
+  .why-choose-us-left p {
+    font-size: 1rem;
+  }
+}
+@media screen and (max-width: 768px) {
+  .contact {
+    width: 90%;
+  }
+
+  .reviews {
+    width: 95%;
+  }
+
+  .patientReview img {
+    width: 100%;
+    max-width: 300px;
+    height: auto;
+  }
+
+  .review-card {
+    width: 80%;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .review-card {
+    width: 100%;
+  }
+}
+/* Media Queries */
+@media (max-width: 1024px) {
+  .about-us-content {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .about-us-left,
+  .about-us-right {
+    width: 100%;
+  }
+
+  .about-us-right p {
+    text-align: center;
+  }
+}
+
+@media (max-width: 480px) {
+  #about-us {
+    padding: 30px 15px;
+  }
+
+  .about-us-right h2 {
+    font-size: 1.5rem;
+  }
+
+  .about-us-right p {
+    font-size: 1rem;
+  }
+}
+/* Media Queries */
+@media (max-width: 768px) {
+  .footer {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .footer .text {
+    width: 100%;
+    margin-bottom: 20px;
+  }
+
+  .detail {
+    width: 90%;
+    padding: 15px;
+  }
+
+  .detail .content {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .detail .content img {
+    width: 90%;
+  }
+
+  .detail .contentText h1 {
+    font-size: 1.2rem;
+  }
+
+  .detail .contentText p {
+    font-size: 0.95rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .footer {
+    padding: 40px 10px;
+  }
+
+  .footer .text h3 {
+    font-size: 1rem;
+  }
+
+  .footer .text p {
+    font-size: 0.85rem;
+  }
+
+  .detail .contentText h1 {
+    font-size: 1rem;
+  }
+
+  .detail .contentText p {
+    font-size: 0.9rem;
+  }
+}

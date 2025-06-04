@@ -51,11 +51,40 @@ const Medicalcare = () => {
     });
   };
 
+const faqs = [
+  {
+    question: 'How do I book an appointment?',
+    answer: 'You can book an appointment online via our website or by calling our office.'
+  },
+  {
+    question: 'What insurance plans do you accept?',
+    answer: 'We accept a wide variety of insurance plans. Please contact us for more details.'
+  },
+  {
+    question: 'Is emergency service available?',
+    answer: 'Yes, we provide 24/7 emergency services at our hospital.'
+  },
+  {
+    question: 'Do you have specialist doctors?',
+    answer: 'Yes, we have a team of experienced specialists across various departments.'
+  },
+  {
+    question: 'How do I get my medical reports?',
+    answer: 'You can collect your reports from the reception or download them through our patient portal.'
+  }
+];
+
+
+    const [activeFAQIndex, setActiveFAQIndex] = useState(null);
+
+  const toggleFAQ = (index) => {
+    setActiveFAQIndex(activeFAQIndex === index ? null : index);
+  };
   return (
     <div>
       {/* Hero Section */}
-      <section className="hero-section" style={{ backgroundImage: `url(${heroImage})` }}>
-        <div className="hero-content">
+      <section className="hero-sectionss" style={{ backgroundImage: `url(${heroImage})` }}>
+        <div className="hero-contents">
           <h1>Welcome to HealthCare Clinic</h1>
           <p>Your health is our priority. Providing world-class care to our patients.</p>
           <button className="cta-button" onClick={handleBookNowClick}>Book an Appointment</button>
@@ -63,9 +92,9 @@ const Medicalcare = () => {
       </section>
 
       {/* About Us Section */}
-      <section className="about-section">
-        <div className="container">
-          <h2 className="section-heading">About Us</h2>
+      <section className="about-sections">
+        <div className="containers">
+          <h2 className="section-headings">About Us</h2>
           <p>
             HealthCare Clinic has been serving the community for over 25 years. Our team of dedicated professionals strives to provide comprehensive and compassionate care to every patient.
           </p>
@@ -73,16 +102,16 @@ const Medicalcare = () => {
       </section>
 
       {/* Our Services Section */}
-      <section className="services-section">
-        <div className="container">
-          <h2 className="section-heading">Our Services</h2>
-          <div className="services-container">
-            <div className="service-card">
+      <section className="services-sections">
+        <div className="containers">
+          <h2 className="section-headings">Our Services</h2>
+          <div className="services-containers">
+            <div className="service-cards">
               <img src={service1Image} alt="Service 1" />
               <h3>General Medicine</h3>
               <p>We offer primary care services for general health issues, chronic conditions, and preventive health checks.</p>
             </div>
-            <div className="service-card">
+            <div className="service-cards">
               <img src={service2Image} alt="Service 2" />
               <h3>Emergency Care</h3>
               <p>Our emergency department is open 24/7, ready to treat critical injuries and conditions.</p>
@@ -92,19 +121,19 @@ const Medicalcare = () => {
       </section>
 
       {/* Departments Section */}
-      <section className="departments-section">
-        <div className="container">
-          <h2 className="section-heading">Our Medical Departments</h2>
-          <div className="departments-container">
-            <div className="department-card-medical">
+      <section className="departments-sections">
+        <div className="containers">
+          <h2 className="section-headings">Our Medical Departments</h2>
+          <div className="departments-containers">
+            <div className="department-card-medicals">
               <h3>Cardiology</h3>
               <p>Providing advanced treatment for heart diseases and conditions with state-of-the-art equipment.</p>
             </div>
-            <div className="department-card-medical">
+            <div className="department-card-medicals">
               <h3>Neurology</h3>
               <p>Expert treatment for neurological disorders, including strokes, epilepsy, and Parkinson's disease.</p>
             </div>
-            <div className="department-card-medical">
+            <div className="department-card-medicals">
               <h3>Pediatrics</h3>
               <p>Comprehensive healthcare services for children from infancy to adolescence.</p>
             </div>
@@ -113,10 +142,10 @@ const Medicalcare = () => {
       </section>
 
       {/* Meet Our Doctors Section */}
-      <section className="doctors-section">
-        <div className="container">
-          <h2 className="section-heading">Meet Our Doctors</h2>
-          <div className="doctor-card">
+      <section className="doctors-sections">
+        <div className="containers">
+          <h2 className="section-headings">Meet Our Doctors</h2>
+          <div className="doctor-cards">
             <img src={doctorImage} alt="Doctor" />
             <h3>Dr. John Doe</h3>
             <p>Specialist in Cardiology</p>
@@ -125,10 +154,10 @@ const Medicalcare = () => {
       </section>
 
       {/* Patient Testimonials Section */}
-      <section className="testimonials-section">
-        <div className="container">
-          <h2 className="section-heading">What Our Patients Say</h2>
-          <div className="testimonial-card">
+      <section className="testimonials-sections">
+        <div className="containers">
+          <h2 className="section-headings">What Our Patients Say</h2>
+          <div className="testimonial-cards">
             <img src={testimonialImage} alt="Patient" />
             <p>"The care I received was exceptional. The staff was friendly, and I felt comfortable and cared for throughout my visit."</p>
             <small>- Jane Doe</small>
@@ -137,16 +166,16 @@ const Medicalcare = () => {
       </section>
 
       {/* Appointment Booking Section */}
-      <section className="appointment-section">
-        <div className="container">
-          <h2 className="section-heading">Book an Appointment</h2>
-          <button className="cta-button" onClick={handleBookNowClick}>Book Now</button>
+      <section className="appointment-sections">
+        <div className="containers">
+          <h2 className="section-headings">Book an Appointment</h2>
+          <button className="cta-buttons" onClick={handleBookNowClick}>Book Now</button>
         </div>
       </section>
 
       {/* Location & Contact Information Section */}
-      <section className="contact-section" style={{ backgroundImage: `url(${mapImage})` }}>
-        <div className="content">
+      <section className="contact-sections" style={{ backgroundImage: `url(${mapImage})` }}>
+        <div className="contents">
           <h2>Contact Us</h2>
           <p>Visit us at:</p>
           <p>123 Health Street, City, Country</p>
@@ -155,21 +184,27 @@ const Medicalcare = () => {
         </div>
       </section>
 
-      {/* FAQ Section */}
-      <section className="faq-section">
-        <div className="container">
-          <h2 className="section-heading">Frequently Asked Questions</h2>
-          <div className="faq-item">
-            <h3>How do I book an appointment?</h3>
-            <p>You can book an appointment online via our website or by calling our office.</p>
-          </div>
-          <div className="faq-item">
-            <h3>What insurance plans do you accept?</h3>
-            <p>We accept a wide variety of insurance plans. Please contact us for more details.</p>
-          </div>
+     
+  <section className="faq-section">
+        <div className="faq-container">
+          <h2 className="faq-heading">Frequently Asked Questions</h2>
+          {faqs.map((faq, index) => (
+            <div
+              key={index}
+              className={`faq-item ${activeFAQIndex === index ? 'active' : ''}`}
+              onClick={() => toggleFAQ(index)}
+            >
+              <div className="faq-question">
+                <span>{faq.question}</span>
+                <span className="faq-icon">{activeFAQIndex === index ? '−' : '+'}</span>
+              </div>
+              {activeFAQIndex === index && (
+                <p className="faq-answer">{faq.answer}</p>
+              )}
+            </div>
+          ))}
         </div>
       </section>
-
       {/* Modal for Booking Appointment */}
       {isModalOpen && (
         <div className="modal">
@@ -219,33 +254,38 @@ const Medicalcare = () => {
       {/* Footer Section */}
       <div className="footer">
         <div className="text">
-          <h3>About Us</h3>
-          <p>24 Hours</p>
-          <p>Top Doctor</p>
-          <p>Best Care</p>
-          <p>Patient</p>
+          <h3 style={{ color: 'white' }}>About Us</h3>
+        <p style={{ color: 'white' }}>24 Hours</p>
+<p style={{ color: 'white' }}>Top Doctor</p>
+<p style={{ color: 'white' }}>Best Care</p>
+<p style={{ color: 'white' }}>Patient</p>
+
         </div>
-        <div className="text">
-          <h3>Speciality</h3>
-          <p>Knee surgery</p>
-          <p>Spin surgery</p>
-          <p>Leg surgery</p>
-          <p>Tendon surgery</p>
-        </div>
-        <div className="text">
-          <h3>Best Teams</h3>
-          <p>Doctors</p>
-          <p>Nursing</p>
-          <p>Staff</p>
-          <p>Hospital</p>
-        </div>
-        <div className="text">
-          <h3>Address</h3>
-          <p>Near MG Road</p>
-          <p>Galaxy Care</p>
-          <p>333-09093</p>
-          <p>09-883-090</p>
-        </div>
+      <div className="text">
+  <h3 style={{ color: 'white' }}>Speciality</h3>
+  <p style={{ color: 'white' }}>Knee surgery</p>
+  <p style={{ color: 'white' }}>Spin surgery</p>
+  <p style={{ color: 'white' }}>Leg surgery</p>
+  <p style={{ color: 'white' }}>Tendon surgery</p>
+</div>
+
+<div className="text">
+  <h3 style={{ color: 'white' }}>Best Teams</h3>
+  <p style={{ color: 'white' }}>Doctors</p>
+  <p style={{ color: 'white' }}>Nursing</p>
+  <p style={{ color: 'white' }}>Staff</p>
+  <p style={{ color: 'white' }}>Hospital</p>
+</div>
+
+<div className="text">
+  <h3 style={{ color: 'white' }}>Address</h3>
+  <p style={{ color: 'white' }}>Near MG Road</p>
+  <p style={{ color: 'white' }}>Galaxy Care</p>
+  <p style={{ color: 'white' }}>333-09093</p>
+  <p style={{ color: 'white' }}>09-883-090</p>
+</div>
+
+       
       </div>
     </div>
   );
