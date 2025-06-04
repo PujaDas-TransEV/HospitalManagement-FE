@@ -104,7 +104,7 @@ const handleLogout = () => {
             </Link>
           </li>
           <li className="nav-item">
-            <Link to="/billing" className="nav-link" onClick={handleLinkClick}>
+            <Link to="/admin-billing" className="nav-link" onClick={handleLinkClick}>
               <FaMoneyBillWave className="nav-icon" />
               {showText && <span>Billing</span>}
             </Link>
