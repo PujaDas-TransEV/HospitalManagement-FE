@@ -4,8 +4,9 @@ import { Link, useLocation } from 'react-router-dom';
 import {
   FaHome, FaHeartbeat, FaCalendarCheck, FaNotesMedical,
   FaEnvelope, FaFileAlt, FaUser, FaBars, FaQuestionCircle, FaCog,
-  FaAngleDoubleLeft, FaAngleDoubleRight,FaRegClipboard,FaClinicMedical
+  FaAngleDoubleLeft, FaAngleDoubleRight,FaRegClipboard,FaClinicMedical, FaPrescriptionBottleAlt,
 } from 'react-icons/fa';
+import { MdMedicalServices } from 'react-icons/md';
 
 import './PatientSidebar.css';
 import { MdDashboard } from 'react-icons/md';
@@ -79,20 +80,26 @@ const PatientSidebar = () => {
           </li>
           <li className="nav-item">
             <Link to="/medical-history" className={`nav-link ${location.pathname === '/medical-history' ? 'active-link' : ''}`} onClick={handleLinkClick}>
-              <FaNotesMedical className="nav-icon" />
+              <MdMedicalServices className="nav-icon" />
               {(isExpanded || isMobileOpen)&& <span>Medical History</span>}
             </Link>
           </li>
-          <li className="nav-item">
+          {/* <li className="nav-item">
             <Link to="/messages" className={`nav-link ${location.pathname === '/messages' ? 'active-link' : ''}`} onClick={handleLinkClick}>
               <FaEnvelope className="nav-icon" />
               {(isExpanded || isMobileOpen) && <span>Messages</span>}
             </Link>
-          </li>
+          </li> */}
           <li className="nav-item">
             <Link to="/prescription" className={`nav-link ${location.pathname === '/reports' ? 'active-link' : ''}`} onClick={handleLinkClick}>
+              < FaPrescriptionBottleAlt className="nav-icon" />
+              {(isExpanded || isMobileOpen) && <span>Prescriptions</span>}
+            </Link>
+          </li>
+           <li className="nav-item">
+            <Link to="/labreport" className={`nav-link ${location.pathname === '/reports' ? 'active-link' : ''}`} onClick={handleLinkClick}>
               <FaFileAlt className="nav-icon" />
-              {(isExpanded || isMobileOpen) && <span>Reports</span>}
+              {(isExpanded || isMobileOpen) && <span>Lab Report</span>}
             </Link>
           </li>
           <li className="nav-item">

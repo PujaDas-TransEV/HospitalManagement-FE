@@ -147,7 +147,7 @@ const faqs = [
           <h2 className="section-headings">Meet Our Doctors</h2>
           <div className="doctor-cards">
             <img src={doctorImage} alt="Doctor" />
-            <h3>Dr. John Doe</h3>
+            <h3>Dr. Fatima Sekh</h3>
             <p>Specialist in Cardiology</p>
           </div>
         </div>

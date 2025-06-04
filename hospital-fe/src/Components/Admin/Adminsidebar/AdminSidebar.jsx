@@ -8,6 +8,7 @@ import {
 } from 'react-icons/fa';
 import './AdminSidebar.css';
 import { useNavigate } from "react-router-dom";
+import { MdMedicalServices } from 'react-icons/md';
 const AdminSidebar = () => {
   const [isExpanded, setIsExpanded] = useState(false);
   const [isMobileOpen, setIsMobileOpen] = useState(false);
@@ -94,6 +95,12 @@ const handleLogout = () => {
             <Link to="/staff-management" className="nav-link" onClick={handleLinkClick}>
               <FaUser className="nav-icon" />
               {showText && <span>Staff Management</span>}
+            </Link>
+          </li>
+           <li className="nav-item">
+            <Link to="/admin-labtest" className="nav-link" onClick={handleLinkClick}>
+              < MdMedicalServices className="nav-icon" />
+              {showText && <span>Lab Report Management</span>}
             </Link>
           </li>
           <li className="nav-item">

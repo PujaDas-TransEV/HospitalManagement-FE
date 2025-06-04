@@ -74,17 +74,17 @@ const ContactPage = () => {
           <div className="team-memberss">
             <div className="team-members">
               <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Dr. John Doe" />
-              <h4>Dr. John Doe</h4>
+              <h4>Dr. Himangsu Dey</h4>
               <p>Chief Surgeon</p>
             </div>
             <div className="team-members">
               <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Nurse Jane Smith" />
-              <h4>Nurse Jane Smith</h4>
+              <h4>Nurse Fatime Sekh</h4>
               <p>Head Nurse</p>
             </div>
             <div className="team-members">
               <img src="https://randomuser.me/api/portraits/men/76.jpg" alt="Dr. Mike Lee" />
-              <h4>Dr. Mike Lee</h4>
+              <h4>Dr. Sohel Sarkar</h4>
               <p>Cardiologist</p>
             </div>
           </div>

@@ -12,7 +12,7 @@
   flex-grow: 1;
   padding: 20px;
   margin-left: 250px; /* Sidebar width */
-  background-color: #ffffff;
+  /* background-color: #ffffff; */
   transition: margin-left 0.3s ease;
 }
 

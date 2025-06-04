@@ -1,0 +1,50 @@
+.admin-lab-report-page {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.admin-lab-report-page h2 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.admin-lab-report-page form {
+  display: flex;
+  flex-direction: column;
+}
+
+.admin-lab-report-page form div {
+  margin-bottom: 15px;
+}
+
+.admin-lab-report-page form label {
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.admin-lab-report-page form select,
+.admin-lab-report-page form input,
+.admin-lab-report-page form textarea {
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.admin-lab-report-page form button {
+  padding: 10px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.admin-lab-report-page form button:hover {
+  background-color: #0056b3;
+}
