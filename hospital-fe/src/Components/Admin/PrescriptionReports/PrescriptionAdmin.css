@@ -1,169 +1,64 @@
 
-.home-page {
-    background-color: #f9f9f9;
-    font-family: Arial, Helvetica, sans-serif;
-    padding: 20px;
-  }
-  
-  .home-content {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    margin-top: 30px;
-  }
-  
+   .prescription-wrapper {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background-color: #f0f2f5;
+}
+
+.main-content {
+  display: flex;
+  flex-direction: row;
+  min-height: calc(100vh - 60px); /* adjust if navbar height is different */
+}
+
+/* Content area */
+.prescription-page {
+  flex: 1;
+  padding: 30px;
+  background-color: #fff;
+  border-radius: 10px;
+  margin: 20px auto; /* Center horizontally */
+  overflow-x: auto;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  max-width: 1000px; /* 👈 Reduce width as needed */
+  width: 100%;
+}
+
+
+/* Heading */
+.prescription-page h2 {
+  font-size: 26px;
+  margin-bottom: 25px;
+  text-align: center;
+  color: #333;
+  border-bottom: 2px solid #3498db;
+  padding-bottom: 10px;
+}
+
+/* Table responsive wrapper */
+.table-responsive {
+  overflow-x: auto;
+}
+
+/* Embed styling for modal PDF */
+embed {
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+@media (max-width: 768px) {
   .prescription-page {
-    width: 80%;
-    background-color: white;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    margin-bottom: 850px;
-    
+    padding: 15px;
+    margin: 10px;
   }
-  
-  .prescription-page h2 {
-    text-align: center;
-    margin-bottom: 20px;
-    font-size: 24px;
-    color: #333;
-  }
-  
-  .table {
-    width: 100%;
-    margin-bottom: 20px;
-  }
-  
+
   .table th,
   .table td {
-    text-align: center;
-    padding: 12px;
-    font-size: 14px;
-    color: #333;
-  }
-  
-  .table th {
-    background-color: #007bff;
-    color: white;
-  }
-  
-  .table tbody tr:hover {
-    background-color: #f1f1f1;
-  }
-  
-  .table .btn {
-    padding: 6px 12px;
-    font-size: 14px;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    cursor: pointer;
-  }
-  
-  .table .btn:hover {
-    background-color: #0056b3;
-  }
-  
-
-  .modal-content {
-    background-color: #fff;
-    border-radius: 8px;
-    padding: 20px;
-  }
-  
-  .modal-header {
-    background-color: #007bff;
-    color: white;
-    border-radius: 8px 8px 0 0;
-    padding: 15px;
-  }
-  
-  .modal-header .close {
-    color: white;
-    opacity: 1;
-  }
-  
-  .modal-title {
-    font-size: 20px;
-  }
-  
-  .modal-body {
-    padding: 20px;
     font-size: 14px;
   }
-  
-  .modal-body p {
-    margin-bottom: 10px;
-  }
-  
-  .modal-footer {
-    background-color: #f7f7f7;
-    padding: 10px;
-  }
-  
-  .modal-footer .btn {
-    background-color: #28a745;
-    color: white;
-  }
-  
-  .modal-footer .btn:hover {
-    background-color: #218838;
-  }
-  
 
-  .alert {
-    margin-bottom: 20px;
-    font-size: 14px;
-  }
-  
-  .alert-danger {
-    background-color: #f8d7da;
-    color: #721c24;
-    border-color: #f5c6cb;
-  }
-  
-
-  .table tbody tr:hover {
-    background-color: #f8f9fa;
-  }
-  
-
-  .btn-info {
-    background-color: #007bff;
-    border-color: #007bff;
-    color: white;
-  }
-  
-  .btn-info:hover {
-    background-color: #0056b3;
-    border-color: #004085;
-  }
-  
- 
   embed {
-    margin-top: 15px;
-    border: 1px solid #ddd;
-    border-radius: 8px;
+    height: 400px;
   }
-  
-
-  .flex {
-    display: flex;
-  }
-  
-  .justify-center {
-    justify-content: center;
-  }
-  
-  .items-center {
-    align-items: center;
-  }
-  
-  .min-h-screen {
-    min-height: 100vh;
-  }
-  
-  .bg-gray-100 {
-    background-color: #f7fafc;
-  }
-  
+}

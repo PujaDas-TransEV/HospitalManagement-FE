@@ -1,6 +1,4 @@
-/* AdminProfile.css */
 
-/* Basic layout for the profile container */
 .profile-container {
     width: 60%;
     margin: 50px auto;
@@ -11,14 +9,14 @@
     text-align: center;
   }
   
-  /* Profile page title */
+
   .profile-title {
     font-size: 36px;
     color: #2c3e50;
     margin-bottom: 20px;
   }
   
-  /* Styling for the profile card */
+ 
   .profile-card {
     background-color: #fff;
     padding: 30px;
@@ -26,20 +24,20 @@
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   }
   
-  /* Styling for the profile information */
+
   .profile-info {
     font-size: 18px;
     color: #333;
     line-height: 1.8;
   }
   
-  /* Styling for the headings (Admin ID, Name, Email, Role) */
+
   .profile-info strong {
     color: #2980b9;
     font-weight: bold;
   }
   
-  /* Loading state styling */
+
   .loading {
     text-align: center;
     font-size: 20px;
@@ -47,20 +45,19 @@
     margin-top: 50px;
   }
   
-  /* Error state styling */
+
   .error {
     text-align: center;
     font-size: 20px;
     color: #e74c3c;
     margin-top: 50px;
   }
-  
-  /* Additional spacing for profile data */
+
   .profile-info p {
     margin-bottom: 15px;
   }
   
-  /* Responsive Design: For small screens */
+
   @media (max-width: 768px) {
     .profile-container {
       width: 90%;
