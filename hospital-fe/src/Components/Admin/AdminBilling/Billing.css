@@ -1,0 +1,194 @@
+/* .dashboard-container {
+  display: flex;
+}
+
+
+
+.billing-containera {
+  max-width: 1200px;
+  margin: 20px auto;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.billing-containera h2 {
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+.search-containera {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.search-containera input {
+  flex: 1;
+  padding: 8px;
+  font-size: 16px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+}
+
+.search-containera button {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.search-containera button:hover {
+  opacity: 0.9;
+}
+
+.billing-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+.billing-table th,
+.billing-table td {
+  padding: 12px;
+  border: 1px solid #ddd;
+  text-align: left;
+}
+
+.billing-table th {
+  background-color: #007bff;
+  color: white;
+}
+
+.billing-table td {
+  background-color: #f9f9f9;
+}
+
+.billing-table button {
+  padding: 6px 12px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-right: 5px;
+}
+
+.billing-table button:hover {
+  opacity: 0.9;
+}
+
+.billing-table button:nth-child(1) {
+  background-color: #17a2b8;
+  color: white;
+}
+
+.billing-table button:nth-child(2) {
+  background-color: #ffc107;
+  color: white;
+} */
+/* Billing.css */
+.billing-containera {
+  max-width: 1000px;
+  margin: 20px auto;
+  padding: 20px;
+  background: #fff;
+  border-radius: 8px;
+}
+
+.search-containera {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.billing-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.billing-table th, .billing-table td {
+  padding: 12px;
+  border: 1px solid #ddd;
+  text-align: left;
+}
+
+.billing-table th {
+  background-color: #007bff;
+  color: white;
+}
+
+/* .edit-popup {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.5);
+  display: flex; justify-content: center; align-items: center;
+}
+
+.edit-popup-inner {
+  background: white;
+  padding: 30px;
+  border-radius: 8px;
+  width: 400px;
+  position: relative;
+}
+
+.edit-popup-inner input, .edit-popup-inner select, .edit-popup-inner textarea {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 12px;
+}
+
+.close-btn {
+  position: absolute;
+  top: 10px; right: 10px;
+  background: none;
+  border: none;
+  font-size: 18px;
+  cursor: pointer;
+} */
+/* .edit-popup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 10;
+} */
+.edit-popup {
+  position: fixed;
+  top: 10%; /* ↓ shifted downward from top */
+  left: 0;
+  width: 100%;
+  height: 90%; /* optionally reduce height if needed */
+  background: rgba(0,0,0,0.5);
+  display: flex;
+  justify-content: center;
+  align-items: flex-start; /* align from top instead of center */
+  z-index: 10;
+  padding-top: 20px; /* optional spacing */
+}
+
+.edit-popup-inner {
+  background: #fff;
+  padding: 20px;
+  max-height: 90vh;
+  overflow-y: auto;
+  border-radius: 8px;
+  width: 500px;
+  position: relative;
+}
+
+.close-btn {
+  position: absolute;
+  top: -10px;
+  right: 10px;
+   background: transparent;
+  /* border: none;
+  font-size: 24px;  */
+  color: black;
+  cursor: pointer;
+}
