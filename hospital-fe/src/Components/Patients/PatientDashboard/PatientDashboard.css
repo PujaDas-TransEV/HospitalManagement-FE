@@ -78,7 +78,7 @@ body {
 .metric {
   text-align: center;
   font-size: 1rem;
-  color: #7f8c8d;
+  color: #deeff0;
 }
 
 .metric span:first-child {
@@ -189,4 +189,84 @@ body {
   .main-content-patient {
     margin-right: 20px;
   }
+}
+/* General card styling */
+.card {
+  padding: 20px;
+  margin-bottom: 20px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  color: #fff;
+}
+
+/* Individual card colors */
+.health-card {
+  background: linear-gradient(135deg, #558dce, #357ABD); /* Blue shades */
+}
+
+.appointments-card {
+  background: linear-gradient(135deg, #50e3c2, #2cb89a); /* Teal shades */
+  color: #222;
+}
+
+.messages-card {
+  background: linear-gradient(135deg, #f5a623, #e79d72); /* Orange shades */
+}
+
+.bills-card {
+  background: linear-gradient(135deg, #d496e0, #d18bd1); /* Red shades */
+}
+
+/* Nested components for better contrast */
+.card ul,
+.card li,
+.card p {
+  color: inherit;
+}
+
+.message {
+  background-color: rgba(255, 255, 255, 0.15);
+  padding: 10px;
+  border-radius: 8px;
+  margin-top: 10px;
+  color: #fff;
+}
+
+.bill-item {
+  background-color: rgba(255, 255, 255, 0.1);
+  padding: 12px;
+  border-radius: 8px;
+  margin-top: 10px;
+  color: #fff;
+}
+
+/* Button styling inside cards */
+.bill-item button {
+  background-color: #fff;
+  color: #d0021b;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  margin-top: 8px;
+  transition: background 0.3s ease;
+}
+
+.bill-item button:hover {
+  background-color: #fdd;
+}
+
+/* Metrics layout (Health Card) */
+.health-metrics {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.metric {
+  background: rgba(255, 255, 255, 0.2);
+  padding: 12px;
+  border-radius: 10px;
+  flex: 1;
+  text-align: center;
 }

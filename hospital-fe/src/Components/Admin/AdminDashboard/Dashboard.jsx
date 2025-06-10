@@ -1,72 +1,273 @@
+
+
+// import React, { useState, useEffect } from 'react';
+// import { Container, Row, Col, Card, Button, Spinner, Alert } from 'react-bootstrap';
+// import { FaUserMd, FaUserInjured, FaCalendarAlt, FaMoneyBillWave } from 'react-icons/fa';
+// import { Link } from 'react-router-dom';
+// import AdminNavbar from '../Adminnavbar/AdminNavbar';
+// import AdminSidebar from '../Adminsidebar/AdminSidebar';
+// import './Dashboard.css';
+
+// const AdminDashboard = () => {
+//   const [doctors, setDoctors] = useState([]);
+//   const [patients, setPatients] = useState([]);
+//   const [pendingBills, setPendingBills] = useState(0);
+//   const [upcomingAppointments, setUpcomingAppointments] = useState(5); // Dummy for now
+//   const [loading, setLoading] = useState(true);
+//   const [error, setError] = useState('');
+
+//   useEffect(() => {
+//     const fetchDashboardData = async () => {
+//       try {
+//         // Fetch doctors
+//         const doctorRes = await fetch('http://localhost:5000/doctorops/getalldoctor');
+//         const doctorData = await doctorRes.json();
+//         if (doctorRes.ok) {
+//           setDoctors(doctorData.data || []);
+//         } else {
+//           throw new Error('Failed to fetch doctor data');
+//         }
+
+//         // Fetch patients
+//         const patientRes = await fetch('http://localhost:5000/patientops/getallpatient');
+//         const patientData = await patientRes.json();
+//         if (patientRes.ok) {
+//           setPatients(patientData || []);
+//         } else {
+//           throw new Error('Failed to fetch patient data');
+//         }
+
+//         // Fetch bills and count only 'pending' status (case-insensitive)
+//         const billRes = await fetch('http://localhost:5000/billing/getallbill');
+//         const billData = await billRes.json();
+//         if (billRes.ok && Array.isArray(billData.bills)) {
+//           const pending = billData.bills.filter(
+//             bill =>
+//               typeof bill.status === 'string' &&
+//               bill.status.trim().toLowerCase() === 'pending'
+//           );
+//           setPendingBills(pending.length);
+//         } else {
+//           throw new Error('Failed to fetch billing data');
+//         }
+//       } catch (err) {
+//         setError(err.message || 'Something went wrong');
+//         console.error(err);
+//       } finally {
+//         setLoading(false);
+//       }
+//     };
+
+//     fetchDashboardData();
+//   }, []);
+
+//   return (
+//     <div className="dashboard-container">
+//       <AdminNavbar />
+//       <div className="dashboard-content">
+//         <AdminSidebar />
+
+//         <Container fluid>
+//           <h2 className="mt-4">Admin Dashboard</h2>
+
+//           {loading && (
+//             <div className="text-center my-4">
+//               <Spinner animation="border" variant="primary" />
+//               <p>Loading data...</p>
+//             </div>
+//           )}
+
+//           {error && (
+//             <Alert variant="danger" className="my-3">
+//               {error}
+//             </Alert>
+//           )}
+
+//           {!loading && !error && (
+//             <>
+//               <Row className="mt-4">
+//                 <Col md={6} className="mb-4">
+//                   <Card className="dashboard-card card-doctors">
+//                     <Card.Body>
+//                       <FaUserMd size={40} className="icon" />
+//                       <h5>Manage Doctors</h5>
+//                       <p>Total Doctors: {doctors.length}</p>
+//                       <Link to="/manage-doctors">
+//                         <Button variant="primary">View Details</Button>
+//                       </Link>
+//                     </Card.Body>
+//                   </Card>
+//                 </Col>
+
+//                 <Col md={6} className="mb-4">
+//                   <Card className="dashboard-card card-patients">
+//                     <Card.Body>
+//                       <FaUserInjured size={40} className="icon" />
+//                       <h5>Manage Patients</h5>
+//                       <p>Total Patients: {patients.length}</p>
+//                       <Link to="/manage-patients">
+//                         <Button variant="primary">View Details</Button>
+//                       </Link>
+//                     </Card.Body>
+//                   </Card>
+//                 </Col>
+//               </Row>
+
+//               <Row className="mt-4">
+//                 <Col md={6} className="mb-4">
+//                   <Card className="dashboard-card card-appointments">
+//                     <Card.Body>
+//                       <FaCalendarAlt size={40} className="icon" />
+//                       <h5>Appointments</h5>
+//                       <p>Upcoming Appointments: {upcomingAppointments}</p>
+//                       <Link to="/appointment-management">
+//                         <Button variant="primary">View Details</Button>
+//                       </Link>
+//                     </Card.Body>
+//                   </Card>
+//                 </Col>
+
+//                 <Col md={6} className="mb-4">
+//                   <Card className="dashboard-card card-billing">
+//                     <Card.Body>
+//                       <FaMoneyBillWave size={40} className="icon" />
+//                       <h5>Billing & Payments</h5>
+//                       <p>Total Bills: {pendingBills}</p>
+//                       <Link to="/admin-billing">
+//                         <Button variant="primary">View Details</Button>
+//                       </Link>
+//                     </Card.Body>
+//                   </Card>
+//                 </Col>
+//               </Row>
+
+//               <Row className="mt-4">
+//                 <Col>
+//                   <Card className="stats-card">
+//                     <Card.Body>
+//                       <h5>Recent Activity</h5>
+//                       <ul>
+//                         <li>New Doctor Added: Dr. John Doe</li>
+//                         <li>Patient Admitted: Jane Smith</li>
+//                         <li>Upcoming Surgery: Dr. Alice</li>
+//                       </ul>
+//                     </Card.Body>
+//                   </Card>
+//                 </Col>
+//               </Row>
+//             </>
+//           )}
+//         </Container>
+//       </div>
+//     </div>
+//   );
+// };
+
+// export default AdminDashboard;
 import React, { useState, useEffect } from 'react';
-import { Container, Row, Col, Card, Button } from 'react-bootstrap';
+import { Container, Row, Col, Card, Button, Spinner, Alert } from 'react-bootstrap';
 import { FaUserMd, FaUserInjured, FaCalendarAlt, FaMoneyBillWave } from 'react-icons/fa';
-import { Link } from 'react-router-dom';  // Import Link for navigation
+import { Link } from 'react-router-dom';
 import AdminNavbar from '../Adminnavbar/AdminNavbar';
 import AdminSidebar from '../Adminsidebar/AdminSidebar';
 import './Dashboard.css';
 
 const AdminDashboard = () => {
-  // Initialize state for doctors, patients, and counts
-  const [doctors, setDoctors] = useState([]);  // Empty array for doctors
-  const [patients, setPatients] = useState([]); // Empty array for patients
-  const [upcomingAppointments, setUpcomingAppointments] = useState(5); // Dummy value
-  const [pendingBills, setPendingBills] = useState(10); // Dummy value
+  const [doctors, setDoctors] = useState([]);
+  const [patients, setPatients] = useState([]);
+  const [pendingBills, setPendingBills] = useState(0);
+  const [upcomingAppointments, setUpcomingAppointments] = useState(0);
+  const [recentActivity, setRecentActivity] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState('');
 
-  // Fetch data from the API when the component mounts
   useEffect(() => {
-    const fetchDoctors = async () => {
+    const fetchDashboardData = async () => {
       try {
-        const response = await fetch('http://localhost:5000/doctorops/getalldoctor');
-        const data = await response.json();
-        if (response.ok) {
-          console.log('Doctors Data:', data); // Log response for debugging
-          setDoctors(data.data || []);  // Set the doctors array from the response
+        // Fetch doctors
+        const doctorRes = await fetch('http://localhost:5000/doctorops/getalldoctor');
+        const doctorData = await doctorRes.json();
+        if (doctorRes.ok) {
+          setDoctors(doctorData.data || []);
         } else {
-          console.error("Failed to fetch doctor data");
+          throw new Error('Failed to fetch doctor data');
         }
-      } catch (error) {
-        console.error("Error fetching doctor data:", error);
+
+        // Fetch patients
+        const patientRes = await fetch('http://localhost:5000/patientops/getallpatient');
+        const patientData = await patientRes.json();
+        if (patientRes.ok) {
+          setPatients(patientData || []);
+        } else {
+          throw new Error('Failed to fetch patient data');
+        }
+
+        // Fetch bills
+        const billRes = await fetch('http://localhost:5000/billing/getallbill');
+        const billData = await billRes.json();
+        if (billRes.ok && Array.isArray(billData.bills)) {
+          const pending = billData.bills.filter(
+            bill =>
+              typeof bill.status === 'string' &&
+              bill.status.trim().toLowerCase() === 'pending'
+          );
+          setPendingBills(pending.length);
+        } else {
+          throw new Error('Failed to fetch billing data');
+        }
+
+        // Fetch appointments
+        const appointmentRes = await fetch('http://localhost:5000/getallappoinment');
+        const appointmentData = await appointmentRes.json();
+        if (appointmentRes.ok && Array.isArray(appointmentData.data)) {
+          const now = new Date();
+          const upcoming = appointmentData.data.filter(item => {
+            const time = new Date(item.appoinmenttime);
+            return time > now;
+          });
+          setUpcomingAppointments(upcoming.length);
+
+          const sorted = [...appointmentData.data]
+            .sort((a, b) => new Date(b.created_at) - new Date(a.created_at))
+            .slice(0, 4);
+
+          setRecentActivity(sorted);
+        } else {
+          throw new Error('Failed to fetch appointment data');
+        }
+      } catch (err) {
+        setError(err.message || 'Something went wrong');
+        console.error(err);
+      } finally {
+        setLoading(false);
       }
     };
 
-    const fetchPatients = async () => {
-      try {
-        const response = await fetch('http://localhost:5000/patientops/getallpatient');
-        const data = await response.json();
-        if (response.ok) {
-          console.log('Patients Data:', data); // Log response for debugging
-          setPatients(data || []);  // Set the patients array from the response
-        } else {
-          console.error("Failed to fetch patient data");
-        }
-      } catch (error) {
-        console.error("Error fetching patient data:", error);
-      }
-    };
-
-    fetchDoctors();
-    fetchPatients();
-  }, []); // Empty dependency array ensures this runs only once on mount
+    fetchDashboardData();
+  }, []);
 
   return (
-    <div className="dashboard-container">
-      <AdminNavbar /> {/* Navbar for admin */}
-
+    <div className="dashboard-containerr">
+      <AdminNavbar />
       <div className="dashboard-content">
-        <AdminSidebar /> {/* Sidebar for admin navigation */}
+        <AdminSidebar />
 
         <Container fluid>
-          <Row className="mt-4">
-            {/* 1st Row: Dashboard Cards for different sections (2 cards per row side by side) */}
-            <Col md={6} className="mb-4">
-            {/* <Col xs={12} md={6} className="mb-4"> */}
+          <h2 className="mt-4">Admin Dashboard</h2>
 
+          {error && (
+            <Alert variant="danger" className="my-3">
+              {error}
+            </Alert>
+          )}
+
+          <Row className="mt-4">
+            <Col md={6} className="mb-4">
               <Card className="dashboard-card card-doctors">
                 <Card.Body>
                   <FaUserMd size={40} className="icon" />
                   <h5>Manage Doctors</h5>
-                  <p>Total Doctors: {doctors.length}</p> {/* Display number of doctors */}
+                  <p>Total Doctors: {loading ? <Spinner size="sm" animation="border" /> : doctors.length}</p>
                   <Link to="/manage-doctors">
                     <Button variant="primary">View Details</Button>
                   </Link>
@@ -79,7 +280,7 @@ const AdminDashboard = () => {
                 <Card.Body>
                   <FaUserInjured size={40} className="icon" />
                   <h5>Manage Patients</h5>
-                  <p>Total Patients: {patients.length}</p> {/* Display number of patients */}
+                  <p>Total Patients: {loading ? <Spinner size="sm" animation="border" /> : patients.length}</p>
                   <Link to="/manage-patients">
                     <Button variant="primary">View Details</Button>
                   </Link>
@@ -89,13 +290,12 @@ const AdminDashboard = () => {
           </Row>
 
           <Row className="mt-4">
-            {/* 2nd Row: More Cards for different sections (2 cards per row side by side) */}
             <Col md={6} className="mb-4">
               <Card className="dashboard-card card-appointments">
                 <Card.Body>
                   <FaCalendarAlt size={40} className="icon" />
                   <h5>Appointments</h5>
-                  <p>Upcoming Appointments: {upcomingAppointments}</p> {/* Dummy value */}
+                  <p>Upcoming Appointments: {loading ? <Spinner size="sm" animation="border" /> : upcomingAppointments}</p>
                   <Link to="/appointment-management">
                     <Button variant="primary">View Details</Button>
                   </Link>
@@ -108,8 +308,8 @@ const AdminDashboard = () => {
                 <Card.Body>
                   <FaMoneyBillWave size={40} className="icon" />
                   <h5>Billing & Payments</h5>
-                  <p>Pending Bills: {pendingBills}</p> {/* Dummy value */}
-                  <Link to="/billing-payments">
+                  <p>Total Bills: {loading ? <Spinner size="sm" animation="border" /> : pendingBills}</p>
+                  <Link to="/admin-billing">
                     <Button variant="primary">View Details</Button>
                   </Link>
                 </Card.Body>
@@ -117,21 +317,62 @@ const AdminDashboard = () => {
             </Col>
           </Row>
 
-          <Row className="mt-4">
-            {/* 3rd Row: Recent Activity Section (Single card spanning the full width of the row) */}
+          {/* <Row className="mt-4">
             <Col>
               <Card className="stats-card">
                 <Card.Body>
                   <h5>Recent Activity</h5>
-                  <ul>
-                    <li>New Doctor Added: Dr. John Doe</li>
-                    <li>Patient Admission: Jane Smith</li>
-                    <li>Upcoming Appointment: Dr. John</li>
-                  </ul>
+                  {loading ? (
+                    <Spinner animation="border" />
+                  ) : (
+                    <ul>
+                      {recentActivity.map((item, index) => (
+                        <li key={index}>
+                          Doctor: {item.doctor_fullname || 'Unknown'} — Patient: {item.patient_firstname} {item.patient_lastname} — Status: {item.appoinmentstatus}
+                        </li>
+                      ))}
+                    </ul>
+                  )}
                 </Card.Body>
               </Card>
             </Col>
-          </Row>
+          </Row> */}
+          <Row className="mt-4">
+  <Col>
+    <Card className="stats-card">
+      <Card.Body>
+        <h5>Recent Activity</h5>
+        {loading ? (
+          <Spinner animation="border" />
+        ) : (
+          <div className="recent-activity-list">
+            {recentActivity.map((item, index) => {
+              const status = item.appoinmentstatus?.toLowerCase();
+              return (
+                <div
+                  key={index}
+                  className={`activity-card activity-${status}`}
+                >
+                  <Row>
+                    <Col xs={12} md={4}>
+                      <strong>Doctor:</strong> {item.doctor_fullname || 'Unknown'}
+                    </Col>
+                    <Col xs={12} md={4}>
+                      <strong>Patient:</strong> {item.patient_firstname} {item.patient_lastname}
+                    </Col>
+                    <Col xs={12} md={4}>
+                      <strong>Status:</strong> {item.appoinmentstatus}
+                    </Col>
+                  </Row>
+                </div>
+              );
+            })}
+          </div>
+        )}
+      </Card.Body>
+    </Card>
+  </Col>
+</Row>
 
         </Container>
       </div>
@@ -140,4 +381,3 @@ const AdminDashboard = () => {
 };
 
 export default AdminDashboard;
-

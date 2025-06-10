@@ -9,6 +9,7 @@ import {
 import './AdminSidebar.css';
 import { useNavigate } from "react-router-dom";
 import { MdMedicalServices } from 'react-icons/md';
+import { MdDashboard } from 'react-icons/md';
 const AdminSidebar = () => {
   const [isExpanded, setIsExpanded] = useState(false);
   const [isMobileOpen, setIsMobileOpen] = useState(false);
@@ -45,7 +46,7 @@ const handleLogout = () => {
         <ul className="navigation-list">
           <li className="nav-item">
             <Link to="/ad-dashboard" className={`nav-link ${location.pathname === '/ad-dashboard' ? 'active-link' : ''}`} onClick={handleLinkClick}>
-              <FaTachometerAlt className="nav-icon" />
+              <MdDashboard className="nav-icon" />
               {showText && <span>Dashboard</span>}
             </Link>
           </li>

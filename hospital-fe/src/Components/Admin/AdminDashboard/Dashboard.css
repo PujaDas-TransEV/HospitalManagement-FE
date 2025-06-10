@@ -1,47 +1,150 @@
 
-.dashboard-card,
-.stats-card {
-  border-radius: 10px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  padding: 20px;
-  text-align: center;
-  background-color: #ffffff;
-  transition: all 0.3s ease;
-  margin-left: 280px;
+.dashboard-containerr {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
 }
 
-/* Card backgrounds */
+.dashboard-content {
+  display: flex;
+  flex-direction: row;
+}
+
+/* Main content area */
+.container-fluid {
+  padding: 2rem;
+  flex: 1;
+}
+
+/* Dashboard Cards (Main Stats) */
+.dashboard-card {
+  border: none;
+  border-radius: 12px;
+  color: #fff;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s;
+}
+
+.dashboard-card:hover {
+  transform: translateY(-5px);
+}
+
 .card-doctors {
-  background-color: #d1e7dd;
+  background: linear-gradient(to right, #00c6ff, #305f99);
 }
+
 .card-patients {
-  background-color: #f8d7da;
+  background: linear-gradient(to right, #f77062, #fe5196);
 }
+
 .card-appointments {
-  background-color: #fff3cd;
+  background: linear-gradient(to right, #43cea2, #185a9d);
 }
+
 .card-billing {
-  background-color: #dbe9ff;
+  background: linear-gradient(to right, #f7971e, #ffd200);
 }
 
-/* Responsive behavior */
-@media (max-width: 768px) {
-  .dashboard-card,
-  .stats-card {
-    width: 100% !important;
-    max-width: 100% !important;
-    margin-left: 0 !important;
-    margin-right: 0 !important;
-  }
-
-  .container,
-  .row,
-  .col {
-    padding-left: 0 !important;
-    padding-right: 0 !important;
-  }
-}
-.icon {
-  color: #007bff;
+/* Icon Styling */
+.dashboard-card .icon {
   margin-bottom: 10px;
+  color: #ffffff;
+}
+
+/* Buttons */
+.dashboard-card .btn {
+  margin-top: 10px;
+  background-color: #fff;
+  color: #333;
+  font-weight: bold;
+  border: none;
+}
+
+.dashboard-card .btn:hover {
+  background-color: #eaeaea;
+  color: #000;
+}
+
+/* Stats Card (Recent Activity) */
+.stats-card {
+  border-radius: 12px;
+  background-color: #ffffff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  padding: 20px;
+}
+
+.recent-activity-list {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin-top: 15px;
+}
+
+/* Activity Card Styles */
+.activity-card {
+  padding: 15px 20px;
+  border-radius: 10px;
+  color: #fff;
+  font-size: 0.95rem;
+  transition: all 0.3s ease;
+}
+
+/* Appointment status colors */
+.activity-applied {
+  background-color: #24aed8;
+}
+
+.activity-confirmed {
+  background-color: #28a745;
+}
+
+.activity-completed {
+  background-color: #6c757d;
+}
+
+.activity-cancelled {
+  background-color: #dc3545;
+}
+
+.activity-pending {
+  background-color: #af991d;
+  color: #333;
+}
+
+.activity-card strong {
+  display: inline-block;
+  min-width: 70px;
+  font-weight: 600;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  .dashboard-content {
+    flex-direction: column;
+  }
+
+  .dashboard-card {
+    margin-bottom: 20px;
+  }
+
+  .activity-card {
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .dashboard-card h5,
+  .dashboard-card p {
+    font-size: 0.95rem;
+  }
+
+  .activity-card {
+    padding: 12px;
+    font-size: 0.85rem;
+  }
+
+  .activity-card strong {
+    display: block;
+    margin-bottom: 5px;
+  }
 }
