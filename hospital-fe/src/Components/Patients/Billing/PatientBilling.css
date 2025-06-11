@@ -1,4 +1,4 @@
-
+/* 
 .invoice-page {
   max-width: 1000px;
   margin: auto;
@@ -53,4 +53,288 @@
 .error {
   color: red;
   font-weight: bold;
+}
+.survey-form {
+  margin-top: 10px;
+  padding: 12px;
+  background-color: #f3f3f3;
+  border-radius: 8px;
+  width: 100%;
+  max-width: 350px;
+  box-sizing: border-box;
+}
+
+.star-rating {
+  display: flex;
+  justify-content: start;
+  gap: 4px;
+}
+
+.star-rating span {
+  font-size: 24px;
+  cursor: pointer;
+  color: #ccc;
+  padding: 2px;
+}
+
+.star-rating .filled {
+  color: gold;
+}
+
+.survey-btn {
+  margin-left: 8px;
+  padding: 6px 10px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.submit-btn {
+  margin-top: 10px;
+  padding: 6px 12px;
+  background-color: #28a745;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+
+.survey-form textarea {
+  width: 100%;
+  padding: 6px;
+  margin-top: 8px;
+  resize: vertical;
+  font-size: 14px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+}
+
+
+@media (max-width: 768px) {
+  .survey-form {
+    max-width: 100%;
+    padding: 10px;
+  }
+
+  .survey-btn,
+  .submit-btn {
+    width: 100%;
+    margin-left: 0;
+    margin-top: 6px;
+  }
+
+  .star-rating {
+    justify-content: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .star-rating span {
+    font-size: 20px;
+  }
+
+  .survey-form {
+    padding: 8px;
+  }
+
+  .survey-form textarea {
+    font-size: 13px;
+  }
+} */
+/* Container Layout */
+/* .dashboard-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background-color: #f9f9f9;
+}
+
+.dashboard-content {
+  display: flex;
+  flex: 1;
+  padding: 20px;
+  flex-wrap: wrap;
+  gap: 20px;
+} */
+
+/* Invoice Section */
+.invoice-page {
+  flex: 1;
+  min-width: 300px;
+}
+
+.invoice-page h2 {
+  margin-bottom: 20px;
+  font-size: 24px;
+  color: #333;
+}
+
+/* Table Styling */
+.invoice-table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: #fff;
+  border-radius: 8px;
+  overflow-x: auto;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.invoice-table th,
+.invoice-table td {
+  padding: 12px 15px;
+  text-align: left;
+  border-bottom: 1px solid #eee;
+  font-size: 14px;
+}
+
+.invoice-table th {
+  background-color: #44c4c9;
+  color: white;
+  position: sticky;
+  top: 0;
+}
+
+.invoice-table td {
+  color: #444;
+}
+
+/* Buttons */
+.view-btn,
+.survey-btn,
+.submit-btn {
+  padding: 6px 12px;
+  font-size: 14px;
+  border-radius: 4px;
+  border: none;
+  cursor: pointer;
+  margin: 4px 4px 0 0;
+}
+
+.view-btn {
+  background-color: #28a745;
+  color: white;
+}
+
+.survey-btn {
+  background-color: #007bff;
+  color: white;
+}
+
+.submit-btn {
+  background-color: #28a745;
+  color: white;
+  margin-top: 10px;
+}
+
+/* Survey Form */
+.survey-form {
+  margin-top: 10px;
+  padding: 12px;
+  background-color: #f3f3f3;
+  border-radius: 8px;
+  max-width: 100%;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.survey-form h4 {
+  margin-bottom: 10px;
+  font-size: 16px;
+  color: #333;
+}
+
+.star-rating {
+  display: flex;
+  justify-content: start;
+  gap: 4px;
+  margin-bottom: 10px;
+}
+
+.star-rating span {
+  font-size: 24px;
+  cursor: pointer;
+  color: #ccc;
+}
+
+.star-rating .filled {
+  color: gold;
+}
+
+.survey-form select,
+.survey-form textarea {
+  width: 100%;
+  margin-top: 6px;
+  padding: 6px;
+  font-size: 14px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  resize: vertical;
+  box-sizing: border-box;
+}
+
+/* Error message */
+.error {
+  color: red;
+  font-weight: 500;
+  margin-top: 10px;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .dashboard-content {
+    flex-direction: column;
+  }
+
+  .invoice-table th,
+  .invoice-table td {
+    font-size: 13px;
+  }
+
+  .view-btn,
+  .survey-btn,
+  .submit-btn {
+    font-size: 13px;
+    padding: 5px 10px;
+  }
+
+  .star-rating span {
+    font-size: 20px;
+  }
+}
+
+@media (max-width: 600px) {
+  .invoice-page h2 {
+    font-size: 20px;
+  }
+
+  .invoice-table {
+    display: block;
+    overflow-x: auto;
+  }
+
+  .invoice-table th,
+  .invoice-table td {
+    font-size: 12px;
+    padding: 8px;
+  }
+
+  .survey-btn,
+  .view-btn {
+    width: 100%;
+    margin: 4px 0;
+  }
+
+  .survey-form {
+    padding: 10px;
+  }
+
+  .survey-form select,
+  .survey-form textarea {
+    font-size: 13px;
+  }
 }
