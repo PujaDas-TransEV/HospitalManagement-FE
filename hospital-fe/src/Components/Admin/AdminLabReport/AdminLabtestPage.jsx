@@ -20,7 +20,7 @@ const AdminLabTestPage = () => {
   const fetchAllReports = async () => {
     setLoading(true);
     try {
-      const res = await axios.get('http://192.168.0.105:5000/ops/labreportall');
+      const res = await axios.get('http://192.168.0.106:5000/ops/labreportall');
       const reports = Array.isArray(res.data?.data) ? res.data.data : (Array.isArray(res.data) ? res.data : []);
       setLabReports(reports);
     } catch (error) {
@@ -37,7 +37,7 @@ const AdminLabTestPage = () => {
     try {
       const formData = new FormData();
       formData.append('labreportid', searchId.trim());
-      const res = await axios.post('http://192.168.0.105:5000/labreport/labbyid', formData);
+      const res = await axios.post('http://192.168.0.106:5000/labreport/labbyid', formData);
       const result = res.data?.data || res.data;
       const reports = Array.isArray(result) ? result : [result];
       setLabReports(reports);
@@ -79,7 +79,7 @@ const AdminLabTestPage = () => {
       formData.append('typeoftest', editData.typeoftest || '');
       formData.append('finalreport', editData.finalreport || '');
 
-      await axios.post('http://192.168.0.105:5000/ops/labupdate', formData);
+      await axios.post('http://192.168.0.106:5000/ops/labupdate', formData);
       alert('Lab report updated successfully');
       setEditModalOpen(false);
       fetchAllReports();

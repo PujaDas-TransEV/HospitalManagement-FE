@@ -21,7 +21,7 @@ const PrescriptionPage = () => {
       setError(null);
 
       try {
-        const response = await fetch('http://192.168.0.105:5000/getallprescribe', {
+        const response = await fetch('http://192.168.0.106:5000/getallprescribe', {
           method: 'GET',
         });
 
@@ -49,7 +49,7 @@ const PrescriptionPage = () => {
       const formData = new FormData();
       formData.append('doctorid', doctorId);
 
-      const response = await fetch('http://192.168.0.105:5000/doctors/getbyid', {
+      const response = await fetch('http://192.168.0.106:5000/doctors/getbyid', {
         method: 'POST',
         body: formData,
       });

@@ -37,7 +37,7 @@ const PatientInvoicePage = () => {
         const email = decoded.email;
         if (!email) throw new Error('Email not found in token');
 
-        const response = await fetch('http://192.168.0.105:5000/billing/getbillbypatientemail', {
+        const response = await fetch('http://192.168.0.106:5000/billing/getbillbypatientemail', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ patientemailid: email })
@@ -67,7 +67,7 @@ const PatientInvoicePage = () => {
 
   const handleDownloadInvoice = async (billId) => {
     try {
-      const response = await fetch('http://192.168.0.105:5000/billing/getbillbybillid', {
+      const response = await fetch('http://192.168.0.106:5000/billing/getbillbybillid', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ billid: billId })
@@ -130,7 +130,7 @@ const PatientInvoicePage = () => {
       payload.append('feedbacktype', formData.feedbacktype);
       payload.append('feedbackmessage', formData.feedbackmessage);
 
-      const response = await fetch('http://192.168.0.105:5000/ops/surveycreate', {
+      const response = await fetch('http://192.168.0.106:5000/ops/surveycreate', {
         method: 'POST',
         body: payload
       });

@@ -39,7 +39,7 @@ const DepartmentPage = () => {
     formData.append('doctorspecialization', specialization);
 
     // Fetch the doctors data for the specific specialization
-    fetch('http://192.168.0.105:5000/doctors/getdoctorbyspc', {
+    fetch('http://192.168.0.106:5000/doctors/getdoctorbyspc', {
       method: 'POST',
       body: formData, // Send FormData as the request body
     })
@@ -70,7 +70,7 @@ const DepartmentPage = () => {
     formData.append('leaveid', leaveId);
     formData.append('status', newStatus);
 
-    fetch('http://192.168.0.105:5000/doctors/leaveupdate', {
+    fetch('http://192.168.0.106:5000/doctors/leaveupdate', {
       method: 'POST',
       body: formData,
     })

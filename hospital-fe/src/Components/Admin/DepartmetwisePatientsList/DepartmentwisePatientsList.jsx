@@ -41,7 +41,7 @@ const PatientListPage = () => {
     formData.append('doctorspecialization', specialization);
 
     // Fetch the patients data for the specific specialization
-    fetch('http://192.168.0.105:5000/patientview', {
+    fetch('http://192.168.0.106:5000/patientview', {
       method: 'POST',
       body: formData, // Send FormData as the request body
     })
@@ -71,7 +71,7 @@ const PatientListPage = () => {
         const formData = new FormData();
         formData.append('doctorid', doctorId); // Send doctorid
 
-        return fetch('http://192.168.0.105:5000/doctors/getbyid', {
+        return fetch('http://192.168.0.106:5000/doctors/getbyid', {
           method: 'POST',
           body: formData,
         })
@@ -93,7 +93,7 @@ const PatientListPage = () => {
         const formData = new FormData();
         formData.append('patientid', patientUid); // Send the UID (which is used as patientid)
 
-        return fetch('http://192.168.0.105:5000/ops/patientadmitstatus', {
+        return fetch('http://192.168.0.106:5000/ops/patientadmitstatus', {
           method: 'POST',
           body: formData,
         })

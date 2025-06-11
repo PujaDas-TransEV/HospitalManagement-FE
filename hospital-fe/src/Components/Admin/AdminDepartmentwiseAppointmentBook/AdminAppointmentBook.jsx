@@ -42,7 +42,7 @@ const AppointmentBookingPage = () => {
   useEffect(() => {
     const fetchDepartments = async () => {
       try {
-        const response = await axios.get('http://192.168.0.105:5000/facilityops/getallfacility');
+        const response = await axios.get('http://192.168.0.106:5000/facilityops/getallfacility');
         console.log('Departments API response:', response.data);
 
         // Assuming response.data is an array of departments
@@ -76,7 +76,7 @@ const AppointmentBookingPage = () => {
         const formData = new FormData();
         formData.append('doctorspecialization', selectedDepartment);
 
-        const response = await axios.post('http://192.168.0.105:5000/selectivedoctordata', formData);
+        const response = await axios.post('http://192.168.0.106:5000/selectivedoctordata', formData);
         if (response.data.data && Array.isArray(response.data.data)) {
           const doctorList = response.data.data.map((doctor) => ({
             id: doctor.uid,
@@ -103,7 +103,7 @@ const AppointmentBookingPage = () => {
   useEffect(() => {
     const fetchPatients = async () => {
       try {
-        const response = await axios.get('http://192.168.0.105:5000/patientops/getallpatient');
+        const response = await axios.get('http://192.168.0.106:5000/patientops/getallpatient');
         if (Array.isArray(response.data)) {
           const patientList = response.data.map((patient) => ({
             id: patient.uid,
@@ -153,7 +153,7 @@ const AppointmentBookingPage = () => {
       formData.append('appoinmenttime', appointmentDateTime);
       formData.append('appointmentdetails', appointmentDetails);
 
-      const response = await axios.post('http://192.168.0.105:5000/createappoinment', formData, {
+      const response = await axios.post('http://192.168.0.106:5000/createappoinment', formData, {
         headers: { 'Content-Type': 'multipart/form-data' },
       });
 

@@ -29,7 +29,7 @@ const PatientNavbar = () => {
         const formData = new FormData();
         formData.append("patientid", patientId);
 
-        const response = await fetch("http://192.168.0.105:5000/patients/profile/getbyid", {
+        const response = await fetch("http://192.168.0.106:5000/patients/profile/getbyid", {
           method: "POST",
           headers: {
             "Authorization": `Bearer ${accessToken}`,

@@ -21,7 +21,7 @@ const DoctorLoginPage = () => {
     formData.append('password', password);
 
     try {
-      const response = await fetch('http://192.168.0.105:5000/doctors/login', {
+      const response = await fetch('http://192.168.0.106:5000/doctors/login', {
         method: 'POST',
         body: formData,
       });
@@ -89,11 +89,11 @@ const DoctorLoginPage = () => {
             <button type="submit" className="login-button" style={{ marginRight: '10px' }} disabled={loading}>
               {loading ? 'Logging In...' : 'Login'}
             </button>
-            <Link to="/doctor/signup">
+            {/* <Link to="/doctor/signup">
               <button type="button" className="signup-button">
                 Sign Up
               </button>
-            </Link>
+            </Link> */}
           </div>
         </form>
 

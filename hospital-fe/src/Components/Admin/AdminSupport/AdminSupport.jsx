@@ -3,7 +3,7 @@ import { FaTrashAlt } from 'react-icons/fa'; // Import the icons
 import AdminNavbar from '../Adminnavbar/AdminNavbar';
 import AdminSidebar from '../Adminsidebar/AdminSidebar';
 
-const API_URL = 'http://192.168.0.105:5000'; // Base URL
+const API_URL = 'http://192.168.0.106:5000'; // Base URL
 
 const AdminSupport = () => {
   const [supportTickets, setSupportTickets] = useState([]);

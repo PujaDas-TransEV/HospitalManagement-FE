@@ -19,7 +19,7 @@ function DoctorForgotPasswordPage() {
     formData.append('email', email);
 
     // Send email to backend to trigger OTP sending
-    fetch('http://192.168.0.105:5000/doctorpasswordreset', {
+    fetch('http://192.168.0.106:5000/doctorpasswordreset', {
       method: 'POST',
       body: formData,
     })
@@ -54,7 +54,7 @@ function DoctorForgotPasswordPage() {
     formData.append('newpassword', newPassword);
 
     // Send new password, OTP, and email to backend for resetting
-    fetch('http://192.168.0.105:5000/doctorpasswordreset', {
+    fetch('http://192.168.0.106:5000/doctorpasswordreset', {
       method: 'POST',
       body: formData,
     })

@@ -32,7 +32,7 @@ const PatientDashboard = () => {
         const profileForm = new FormData();
         profileForm.append('patientid', patientId);
 
-        const profileRes = await fetch('http://192.168.0.105:5000/patients/profile/getbyid', {
+        const profileRes = await fetch('http://192.168.0.106:5000/patients/profile/getbyid', {
           method: 'POST',
           headers: {
             Authorization: `Bearer ${token}`,
@@ -48,7 +48,7 @@ const PatientDashboard = () => {
         const appointForm = new FormData();
         appointForm.append('patientid', patientId);
 
-        const appointRes = await fetch('http://192.168.0.105:5000/getappoinmenthistory', {
+        const appointRes = await fetch('http://192.168.0.106:5000/getappoinmenthistory', {
           method: 'POST',
           headers: {
             Authorization: `Bearer ${token}`,
@@ -85,7 +85,7 @@ const PatientDashboard = () => {
         const email = decoded.email;
         if (!email) throw new Error('Email not found in token');
 
-        const response = await fetch('http://192.168.0.105:5000/billing/getbillbypatientemail', {
+        const response = await fetch('http://192.168.0.106:5000/billing/getbillbypatientemail', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -119,7 +119,7 @@ const PatientDashboard = () => {
     try {
       if (!token) throw new Error('Token not found');
 
-      const response = await fetch('http://192.168.0.105:5000/billing/getbillbybillid', {
+      const response = await fetch('http://192.168.0.106:5000/billing/getbillbybillid', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

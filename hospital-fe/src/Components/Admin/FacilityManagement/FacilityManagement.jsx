@@ -29,7 +29,7 @@ const FacilityManagementPage = () => {
     setLoading(true);
     setError(null);
 
-    fetch('http://192.168.0.105:5000/facilityops/getallfacility')
+    fetch('http://192.168.0.106:5000/facilityops/getallfacility')
       .then((response) => response.json())
       .then((data) => {
         if (data.error) {
@@ -74,7 +74,7 @@ const FacilityManagementPage = () => {
 
     formDataObj.append('facilityid', currentFacilityId);
 
-    fetch('http://192.168.0.105:5000/facilityops/updatefacilitydata', {
+    fetch('http://192.168.0.106:5000/facilityops/updatefacilitydata', {
       method: 'POST',
       body: formDataObj,
     })
@@ -120,7 +120,7 @@ const FacilityManagementPage = () => {
     const formDataObj = new FormData();
     formDataObj.append('facilityid', facilityId);
 
-    fetch('http://192.168.0.105:5000/facilityops/deletefacility', {
+    fetch('http://192.168.0.106:5000/facilityops/deletefacility', {
       method: 'POST',
       body: formDataObj,
     })
@@ -149,7 +149,7 @@ const handleViewDetails = (facilityId) => {
   const formDataObj = new FormData();
   formDataObj.append('facilityid', facilityId);
 
-  fetch('http://192.168.0.105:5000/facilityops/getfacilitydetailsbyid', {
+  fetch('http://192.168.0.106:5000/facilityops/getfacilitydetailsbyid', {
     method: 'POST',
     body: formDataObj,
   })
@@ -190,7 +190,7 @@ const handleViewDetails = (facilityId) => {
       formDataObj.append(key, formData[key]);
     }
 
-    fetch('http://192.168.0.105:5000/facilityopscreate', {
+    fetch('http://192.168.0.106:5000/facilityopscreate', {
       method: 'POST',
       body: formDataObj,
     })

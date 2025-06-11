@@ -42,7 +42,7 @@ const navigate = useNavigate();
         formData.append('patientid', patientId);
 
         const response = await axios.post(
-          'http://192.168.0.105:5000/patients/profile/getbyid',
+          'http://192.168.0.106:5000/patients/profile/getbyid',
           formData,
           { headers: { 'Content-Type': 'multipart/form-data' } }
         );
@@ -69,7 +69,7 @@ const navigate = useNavigate();
   useEffect(() => {
     if (formData.caretype === 'doctor') {
       setLoadingDoctors(true);
-      axios.get('http://192.168.0.105:5000/doctorops/getalldoctor')
+      axios.get('http://192.168.0.106:5000/doctorops/getalldoctor')
         .then(response => {
           const doctorOptions = response.data.data.map(doctor => ({
             value: doctor.fullname,
@@ -119,7 +119,7 @@ const navigate = useNavigate();
         formPayload.append(key, value);
       }
 
-      await axios.post('http://192.168.0.105:5000/management/homecare', formPayload, {
+      await axios.post('http://192.168.0.106:5000/management/homecare', formPayload, {
         headers: { 'Content-Type': 'multipart/form-data' }
       });
 

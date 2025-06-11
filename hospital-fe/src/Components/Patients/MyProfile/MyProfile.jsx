@@ -46,7 +46,7 @@ const PatientProfile = () => {
         formData.append("patientid", patientId);
 
         // Fetch patient data from API
-        const response = await fetch("http://192.168.0.105:5000/patients/profile/getbyid", {
+        const response = await fetch("http://192.168.0.106:5000/patients/profile/getbyid", {
           method: "POST",
           headers: {
             "Authorization": `Bearer ${accessToken}`, // Add the Authorization header
@@ -108,7 +108,7 @@ const PatientProfile = () => {
     }
 
     try {
-      const response = await fetch("http://192.168.0.105:5000/patients/profile/update", {
+      const response = await fetch("http://192.168.0.106:5000/patients/profile/update", {
         method: "POST",
         headers: {
           "Authorization": `Bearer ${accessToken}`,

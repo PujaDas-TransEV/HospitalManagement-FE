@@ -42,7 +42,7 @@ const HomeCareServicePage = () => {
       const formData = new FormData();
       formData.append('patientid', patientId);
       const res = await axios.post(
-        'http://192.168.0.105:5000/management/homecare/gethomecarebypatientid',
+        'http://192.168.0.106:5000/management/homecare/gethomecarebypatientid',
         formData
       );
       setRequests(res.data.data || []);
@@ -67,7 +67,7 @@ const HomeCareServicePage = () => {
     formData.append('uid', uid);
     formData.append('status', 'cancelled');
     try {
-      await axios.post('http://192.168.0.105:5000/management/homecare/cancelstatus', formData);
+      await axios.post('http://192.168.0.106:5000/management/homecare/cancelstatus', formData);
       alert('Request cancelled.');
       setSelectedRequest(null);
       fetchRequests();
@@ -84,7 +84,7 @@ const HomeCareServicePage = () => {
     });
 
     try {
-      const res = await axios.post('http://192.168.0.105:5000/ops/updatehomecare', formData);
+      const res = await axios.post('http://192.168.0.106:5000/ops/updatehomecare', formData);
       alert('Updated successfully.');
       setSelectedRequest(prev => ({
         ...prev,
@@ -103,7 +103,7 @@ const HomeCareServicePage = () => {
     formData.append('homeuid', uid);
 
     try {
-      const res = await axios.post('http://192.168.0.105:5000/management/deletehomecare', formData);
+      const res = await axios.post('http://192.168.0.106:5000/management/deletehomecare', formData);
 
       if (res.data.message === 'Delete success') {
         alert('Request deleted successfully.');

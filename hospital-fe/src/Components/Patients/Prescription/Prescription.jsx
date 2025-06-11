@@ -36,7 +36,7 @@ const PrescriptionPage = () => {
     formData.append('patientid', patientId);
 
     try {
-      const response = await fetch('http://192.168.0.105:5000/doctors/getprescribebypatientid', {
+      const response = await fetch('http://192.168.0.106:5000/doctors/getprescribebypatientid', {
         method: 'POST',
         body: formData,
       });
@@ -68,7 +68,7 @@ const PrescriptionPage = () => {
       const formData = new FormData();
       formData.append('doctorid', doctorId);
 
-      const response = await fetch('http://192.168.0.105:5000/doctors/getbyid', {
+      const response = await fetch('http://192.168.0.106:5000/doctors/getbyid', {
         method: 'POST',
         body: formData,
       });

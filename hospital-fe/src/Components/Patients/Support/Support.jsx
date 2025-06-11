@@ -7,7 +7,7 @@ import PatientSidebar from '../Sidebar/PatientSidebar';
 import { jwtDecode } from 'jwt-decode';
 
 import './Support.css';
-const API_URL = 'http://192.168.0.105:5000';
+const API_URL = 'http://192.168.0.106:5000';
 const PatientSupport = () => {
   const [formData, setFormData] = useState({
     name: '',

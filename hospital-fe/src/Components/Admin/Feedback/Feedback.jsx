@@ -12,7 +12,7 @@ const AdminFeedbackPage = () => {
   useEffect(() => {
     const fetchFeedbacks = async () => {
       try {
-        const response = await fetch('http://192.168.0.105:5000/ops/getallsurvey');
+        const response = await fetch('http://192.168.0.106:5000/ops/getallsurvey');
         const data = await response.json();
         if (!response.ok) throw new Error(data.message || 'Failed to fetch feedbacks');
         setFeedbacks(data.data || []);

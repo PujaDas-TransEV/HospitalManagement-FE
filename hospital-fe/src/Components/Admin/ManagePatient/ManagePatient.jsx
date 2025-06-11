@@ -42,7 +42,7 @@ function PatientManagement() {
 
   useEffect(() => {
     // Fetch all patients on component mount
-    fetch('http://192.168.0.105:5000/patientops/getallpatient')
+    fetch('http://192.168.0.106:5000/patientops/getallpatient')
       .then((response) => response.json())
       .then((data) => {
         setPatients(data); // assuming the response is an array of patient objects
@@ -82,7 +82,7 @@ function PatientManagement() {
   // };
 
   const addPatient = () => {
-    fetch('http://192.168.0.105:5000/patientops/addpatient', {
+    fetch('http://192.168.0.106:5000/patientops/addpatient', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -138,7 +138,7 @@ function PatientManagement() {
     formData.append('address', editPatient.address);
     formData.append('email', editPatient.email);
 
-    fetch('http://192.168.0.105:5000/patients/profile/update', {
+    fetch('http://192.168.0.106:5000/patients/profile/update', {
       method: 'POST',
       body: formData,
     })
@@ -172,7 +172,7 @@ function PatientManagement() {
     const formData = new FormData();
     formData.append('patientid', uid);
 
-    fetch('http://192.168.0.105:5000/patientops/deleteprofile', {
+    fetch('http://192.168.0.106:5000/patientops/deleteprofile', {
       method: 'POST',
       body: formData,
     })
@@ -204,7 +204,7 @@ function PatientManagement() {
 const [departments, setDepartments] = useState([]);
 
 useEffect(() => {
-  fetch('http://192.168.0.105:5000/facilityops/getallfacility')
+  fetch('http://192.168.0.106:5000/facilityops/getallfacility')
     .then((res) => res.json())
     .then((data) => {
       if (data && data.data) {

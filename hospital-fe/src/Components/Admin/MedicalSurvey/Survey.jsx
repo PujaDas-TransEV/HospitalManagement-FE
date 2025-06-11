@@ -11,7 +11,7 @@ const AdminMedicalSurveyList = () => {
   useEffect(() => {
     const fetchSurveys = async () => {
       try {
-        const res = await fetch('http://192.168.0.105:5000/ops/getallms');
+        const res = await fetch('http://192.168.0.106:5000/ops/getallms');
         const data = await res.json();
 
         if (!res.ok) {

@@ -33,7 +33,7 @@ const DoctorHomecareRequests = () => {
       const formData = new FormData();
       formData.append('doctorid', doctorId);
 
-      const response = await fetch('http://192.168.0.105:5000/management/homecare/gethomecarebydocid', {
+      const response = await fetch('http://192.168.0.106:5000/management/homecare/gethomecarebydocid', {
         method: 'POST',
         body: formData,
       });

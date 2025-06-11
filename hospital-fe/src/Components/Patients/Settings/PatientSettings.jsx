@@ -54,7 +54,7 @@ const PatientSettings = () => {
         formData.append("patientid", patientId);
 
         // Make the API call to delete the account
-        const response = await fetch("http://192.168.0.105:5000/patientops/deleteprofile", {
+        const response = await fetch("http://192.168.0.106:5000/patientops/deleteprofile", {
           method: "POST",
           headers: {
             "Authorization": `Bearer ${accessToken}`, // Include token in the headers

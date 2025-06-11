@@ -43,7 +43,7 @@ const MedicalSurveyPage = () => {
       form.append(key, value);
     });
 
-    const response = await fetch('http://192.168.0.105:5000/ops/createmsurvey', {
+    const response = await fetch('http://192.168.0.106:5000/ops/createmsurvey', {
       method: 'POST',
       body: form,
     });

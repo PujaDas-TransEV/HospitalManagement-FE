@@ -31,7 +31,7 @@ const ManageDoctors = () => {
 
   // Fetch all doctors
   useEffect(() => {
-    fetch('http://192.168.0.105:5000/doctorops/getalldoctor')
+    fetch('http://192.168.0.106:5000/doctorops/getalldoctor')
       .then((response) => response.json())
       .then((data) => {
         if (data && Array.isArray(data.data)) {
@@ -69,7 +69,7 @@ const ManageDoctors = () => {
     const formData = new FormData();
     formData.append('doctorid', doctorId);
 
-    fetch('http://192.168.0.105:5000/doctorsops/deletedoctor', {
+    fetch('http://192.168.0.106:5000/doctorsops/deletedoctor', {
       method: 'POST',
       body: formData,
     })
@@ -95,7 +95,7 @@ const ManageDoctors = () => {
     formData.append('yoe', editDoctorData.yoe);
     formData.append('qualification', editDoctorData.qualification);
 
-    fetch('http://192.168.0.105:5000/doctors/profile/update', {
+    fetch('http://192.168.0.106:5000/doctors/updatedata', {
       method: 'POST',
       body: formData,
     })
@@ -116,7 +116,7 @@ const ManageDoctors = () => {
 const [departments, setDepartments] = useState([]);
 
 useEffect(() => {
-  fetch('http://192.168.0.105:5000/facilityops/getallfacility')
+  fetch('http://192.168.0.106:5000/facilityops/getallfacility')
     .then((res) => res.json())
     .then((data) => {
       if (data && data.data) {

@@ -25,7 +25,7 @@ const WardManagementPage = () => {
   // Function to fetch all wards
   const fetchAllWards = async () => {
     try {
-      const response = await axios.get('http://192.168.0.105:5000/ops/getallward');
+      const response = await axios.get('http://192.168.0.106:5000/ops/getallward');
       const data = Array.isArray(response.data.data) ? response.data.data : [];
       setAllWards(data);
     } catch (error) {
@@ -50,7 +50,7 @@ const WardManagementPage = () => {
     formData.append('ward_phoneno', wardPhoneNo);
 
     try {
-      const response = await axios.post('http://192.168.0.105:5000/ops/wardmanagement', formData, {
+      const response = await axios.post('http://192.168.0.106:5000/ops/wardmanagement', formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
@@ -83,7 +83,7 @@ const WardManagementPage = () => {
     formData.append('wardid', searchWardId);
 
     try {
-      const response = await axios.post('http://192.168.0.105:5000/ops/getwarddetailsbyid', formData);
+      const response = await axios.post('http://192.168.0.106:5000/ops/getwarddetailsbyid', formData);
 
       if (response.data && response.data.data && response.data.data.length > 0) {
         setWardDetails(response.data.data[0]); // Set the ward details from the response
@@ -103,7 +103,7 @@ const WardManagementPage = () => {
     formData.append('wardid', wardId);
 
     try {
-      const response = await axios.post('http://192.168.0.105:5000/ops/deleteward', formData);
+      const response = await axios.post('http://192.168.0.106:5000/ops/deleteward', formData);
 
       if (response.status === 200) {
         setSuccessMessage('Ward deleted successfully!');

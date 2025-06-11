@@ -56,7 +56,7 @@ const AppointmentBookingPage = () => {
         const formData = new FormData();
         formData.append('doctorspecialization', departmentId);
 
-        const response = await axios.post('http://192.168.0.105:5000/selectivedoctordata', formData, {
+        const response = await axios.post('http://192.168.0.106:5000/selectivedoctordata', formData, {
           headers: {
             'Content-Type': 'multipart/form-data',
           },
@@ -133,7 +133,7 @@ const AppointmentBookingPage = () => {
       formData.append('appoinmenttime', appointmentDateTime);
       formData.append('appointmentdetails', appointmentDetails);
 
-      const response = await axios.post('http://192.168.0.105:5000/createappoinment', formData, {
+      const response = await axios.post('http://192.168.0.106:5000/createappoinment', formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },

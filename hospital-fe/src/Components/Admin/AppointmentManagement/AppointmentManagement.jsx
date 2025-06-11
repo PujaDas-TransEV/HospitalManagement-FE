@@ -60,7 +60,7 @@ const AdminAppointments = () => {
 
   // Fetch all appointments (not limited to specific department)
   useEffect(() => {
-    fetch('http://192.168.0.105:5000/getallappoinment', {
+    fetch('http://192.168.0.106:5000/getallappoinment', {
       method: 'GET',
     })
       .then((response) => response.json())
@@ -77,7 +77,7 @@ const AdminAppointments = () => {
   // Fetch doctors for the selected department
   useEffect(() => {
     if (selectedDepartment) {
-      fetch(`http://192.168.0.105:5000/getdoctors/${selectedDepartment}`, {
+      fetch(`http://192.168.0.106:5000/getdoctors/${selectedDepartment}`, {
         method: 'GET',
       })
         .then((response) => response.json())
@@ -125,7 +125,7 @@ const AdminAppointments = () => {
     formData.append('time', newAppointment.time);
     formData.append('details', newAppointment.details);
 
-    fetch('http://192.168.0.105:5000/createappointment', {
+    fetch('http://192.168.0.106:5000/createappointment', {
       method: 'POST',
       body: formData,
     })
@@ -150,7 +150,7 @@ const AdminAppointments = () => {
       const formData = new FormData();
       formData.append('appoinid', appointmentId);
 
-      fetch('http://192.168.0.105:5000/ops/appoinmentdelete', {
+      fetch('http://192.168.0.106:5000/ops/appoinmentdelete', {
         method: 'POST',
         body: formData,
       })
@@ -204,7 +204,7 @@ const AdminAppointments = () => {
     formData.append('appoinmentdetails', selectedAppointment.appoinmentdetails);
     formData.append('appoinmentstatus', selectedAppointment.appoinmentstatus);
 
-    fetch('http://192.168.0.105:5000/update/appoinment', {
+    fetch('http://192.168.0.106:5000/update/appoinment', {
       method: 'POST',
       body: formData,
     })
@@ -230,7 +230,7 @@ const AdminAppointments = () => {
 
 
 useEffect(() => {
-  fetch('http://192.168.0.105:5000/facilityops/getallfacility')
+  fetch('http://192.168.0.106:5000/facilityops/getallfacility')
     .then((res) => res.json())
     .then((data) => {
       if (data && data.data) {

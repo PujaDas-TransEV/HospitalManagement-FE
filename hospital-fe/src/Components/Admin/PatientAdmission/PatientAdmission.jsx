@@ -32,7 +32,7 @@ const PatientAdmissionPage = () => {
   // Fetch all wards from the API
   const fetchWards = async () => {
     try {
-      const response = await axios.get('http://192.168.0.105:5000/ops/getallward');
+      const response = await axios.get('http://192.168.0.106:5000/ops/getallward');
       if (response.data && Array.isArray(response.data.data)) {
         setWards(response.data.data);
       }
@@ -44,7 +44,7 @@ const PatientAdmissionPage = () => {
   // Fetch all rooms from the API
   const fetchRooms = async () => {
     try {
-      const response = await axios.get('http://192.168.0.105:5000/ops/getallrooms');
+      const response = await axios.get('http://192.168.0.106:5000/ops/getallrooms');
       if (response.data && Array.isArray(response.data.data)) {
         setRooms(response.data.data);
       }
@@ -56,7 +56,7 @@ const PatientAdmissionPage = () => {
   // Fetch all patients from the API
   const fetchPatients = async () => {
     try {
-      const response = await axios.get('http://192.168.0.105:5000/patientops/getallpatient');
+      const response = await axios.get('http://192.168.0.106:5000/patientops/getallpatient');
       if (response.data && Array.isArray(response.data)) {
         setPatients(response.data);
       }
@@ -68,7 +68,7 @@ const PatientAdmissionPage = () => {
   // Fetch all bed details from the API
   const fetchBedDetails = async () => {
     try {
-      const response = await axios.get('http://192.168.0.105:5000/ops/getbeddetails');
+      const response = await axios.get('http://192.168.0.106:5000/ops/getbeddetails');
       if (response.data && Array.isArray(response.data.data)) {
         setBedDetails(response.data.data);
       }
@@ -92,7 +92,7 @@ const PatientAdmissionPage = () => {
     formData.append('patientid', patientId);
 
     try {
-      const response = await axios.post('http://192.168.0.105:5000/ops/patientadmit', formData, {
+      const response = await axios.post('http://192.168.0.106:5000/ops/patientadmit', formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
@@ -120,7 +120,7 @@ const PatientAdmissionPage = () => {
     formData.append('admissionid', admissionIdSearch);
 
     try {
-      const response = await axios.post('http://192.168.0.105:5000/ops/getbeddetails', formData);
+      const response = await axios.post('http://192.168.0.106:5000/ops/getbeddetails', formData);
       if (response.data && response.data.data) {
         // Set the fetched data for the searched admission ID
         setSearchedBedDetails(response.data.data);

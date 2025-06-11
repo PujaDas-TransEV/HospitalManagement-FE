@@ -20,7 +20,7 @@ function SuperAdminForgotPasswordPage() {
     formData.append('email', email);
 
     // Send email to backend to trigger OTP sending
-    fetch('http://192.168.0.105:5000/superadminpasswordreset', {
+    fetch('http://192.168.0.106:5000/superadminpasswordreset', {
       method: 'POST',
       body: formData,
     })
@@ -54,7 +54,7 @@ function SuperAdminForgotPasswordPage() {
     formData.append('newpassword', newPassword);
 
     // Send new password, OTP, and email to backend for resetting
-    fetch('http://192.168.0.105:5000/superadminpasswordreset', {
+    fetch('http://192.168.0.106:5000/superadminpasswordreset', {
       method: 'POST',
       body: formData,
     })

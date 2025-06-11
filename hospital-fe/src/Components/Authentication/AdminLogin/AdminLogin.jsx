@@ -17,7 +17,7 @@ function AdminLoginPage() {
     formData.append('password', password);
 
     // Send a POST request to the admin login endpoint
-    fetch('http://192.168.0.105:5000/admins/login', {
+    fetch('http://192.168.0.106:5000/admins/login', {
       method: 'POST',
       body: formData,
     })
