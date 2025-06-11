@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState } from 'react';
 import { jwtDecode } from 'jwt-decode';
 import { jsPDF } from 'jspdf';
@@ -179,27 +180,33 @@ const PatientDashboard = () => {
           {/* Health Overview */}
           <section className="card health-card">
             <h3>Health Overview</h3>
-            <div className="health-metrics">
-              <div className="metric">
-                <span>Blood Group</span>
-                <span>{profile?.bloodgroup || 'Loading...'}</span>
+            {profile ? (
+              <div className="health-metrics">
+                <div className="metric">
+                  <span>Blood Group</span>
+                  <span>{profile.bloodgroup || 'N/A'}</span>
+                </div>
+                <div className="metric">
+                  <span>Weight</span>
+                  <span>{profile.weight ? `${profile.weight} kg` : 'N/A'}</span>
+                </div>
+                <div className="metric">
+                  <span>Height</span>
+                  <span>{profile.height ? `${profile.height} cm` : 'N/A'}</span>
+                </div>
               </div>
-              <div className="metric">
-                <span>Weight</span>
-                <span>{profile?.weight ? `${profile.weight} kg` : 'Loading...'}</span>
-              </div>
-              <div className="metric">
-                <span>Height</span>
-                <span>{profile?.height ? `${profile.height} ft` : 'Loading...'}</span>
-              </div>
-            </div>
+            ) : (
+              <p>No profile data found.</p>
+            )}
           </section>
 
           {/* Upcoming Appointments */}
           <section className="card appointments-card">
             <h3>Upcoming Appointments</h3>
             <ul>
-              {appointments.length > 0 ? (
+              {loading ? (
+                <li>Loading upcoming appointments...</li>
+              ) : appointments.length > 0 ? (
                 appointments.map((appt, idx) => {
                   const dateObj = new Date(appt.appoinmenttime);
                   return (
@@ -209,7 +216,7 @@ const PatientDashboard = () => {
                   );
                 })
               ) : (
-                <li>Loading upcoming appointments...</li>
+                <li>No upcoming appointments found.</li>
               )}
             </ul>
           </section>
@@ -217,21 +224,25 @@ const PatientDashboard = () => {
           {/* Recent Messages */}
           <section className="card messages-card">
             <h3>Recent Messages</h3>
-            {appointments.length > 0 ? (
+            {loading ? (
+              <p>Loading messages...</p>
+            ) : appointments.length > 0 ? (
               appointments.map((appt, idx) => (
                 <div key={idx} className="message">
                   <p><strong>{appt.doctor_fullname || 'Doctor'}:</strong> {appt.message || 'No message available.'}</p>
                 </div>
               ))
             ) : (
-              <p>Loading messages...</p>
+              <p>No recent messages found.</p>
             )}
           </section>
 
           {/* Most Recent Bill */}
           <section className="card bills-card">
             <h3>Most Recent Bill</h3>
-            {bills.length > 0 ? (
+            {loading ? (
+              <p>Loading bill details...</p>
+            ) : bills.length > 0 ? (
               bills.map((bill) => (
                 <div key={bill.bill_id} className="bill-item">
                   <p><strong>Invoice ID:</strong> {bill.bill_id}</p>
@@ -242,7 +253,7 @@ const PatientDashboard = () => {
                 </div>
               ))
             ) : (
-              <p>Loading bill details...</p>
+              <p>No bill data found.</p>
             )}
           </section>
 

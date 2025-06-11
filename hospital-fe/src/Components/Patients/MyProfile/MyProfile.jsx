@@ -293,7 +293,9 @@ const PatientProfile = () => {
         name="height"
         value={formData.height}
         onChange={handleChange}
+        
       />
+       <span className="unit-text">cm</span>
     </div>
   </div>
 
