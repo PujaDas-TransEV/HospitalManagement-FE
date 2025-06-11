@@ -53,7 +53,7 @@ const DoctorAppointmentManagement = () => {
       const formData = new FormData();
       formData.append('doctorid', doctorId); // Append doctorId to form data
 
-      fetch('http://localhost:5000/getappoinmenthistory', {
+      fetch('http://192.168.0.105:5000/getappoinmenthistory', {
         method: 'POST',
         body: formData, // Send the form data with doctorId
       })
@@ -96,7 +96,7 @@ const DoctorAppointmentManagement = () => {
     formData.append('appoinmentstatus', newAppointment.status); // Send the new status
 
     try {
-      const response = await fetch('http://localhost:5000/update/appoinment', {
+      const response = await fetch('http://192.168.0.105:5000/update/appoinment', {
         method: 'POST',
         body: formData,  // Use FormData for multipart/form-data request
       });
@@ -126,7 +126,7 @@ const DoctorAppointmentManagement = () => {
         const formData = new FormData();
         formData.append('appoinid', appoinid); // Sending the appoinid to cancel
 
-        const response = await fetch('http://localhost:5000/ops/appoinmentdelete', {
+        const response = await fetch('http://192.168.0.105:5000/ops/appoinmentdelete', {
           method: 'POST',
           body: formData, // Sending the appointment id to cancel
         });

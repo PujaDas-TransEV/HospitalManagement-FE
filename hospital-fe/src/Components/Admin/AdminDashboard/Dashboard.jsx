@@ -20,7 +20,7 @@
 //     const fetchDashboardData = async () => {
 //       try {
 //         // Fetch doctors
-//         const doctorRes = await fetch('http://localhost:5000/doctorops/getalldoctor');
+//         const doctorRes = await fetch('http://192.168.0.105:5000/doctorops/getalldoctor');
 //         const doctorData = await doctorRes.json();
 //         if (doctorRes.ok) {
 //           setDoctors(doctorData.data || []);
@@ -29,7 +29,7 @@
 //         }
 
 //         // Fetch patients
-//         const patientRes = await fetch('http://localhost:5000/patientops/getallpatient');
+//         const patientRes = await fetch('http://192.168.0.105:5000/patientops/getallpatient');
 //         const patientData = await patientRes.json();
 //         if (patientRes.ok) {
 //           setPatients(patientData || []);
@@ -38,7 +38,7 @@
 //         }
 
 //         // Fetch bills and count only 'pending' status (case-insensitive)
-//         const billRes = await fetch('http://localhost:5000/billing/getallbill');
+//         const billRes = await fetch('http://192.168.0.105:5000/billing/getallbill');
 //         const billData = await billRes.json();
 //         if (billRes.ok && Array.isArray(billData.bills)) {
 //           const pending = billData.bills.filter(
@@ -185,7 +185,7 @@ const AdminDashboard = () => {
     const fetchDashboardData = async () => {
       try {
         // Fetch doctors
-        const doctorRes = await fetch('http://localhost:5000/doctorops/getalldoctor');
+        const doctorRes = await fetch('http://192.168.0.105:5000/doctorops/getalldoctor');
         const doctorData = await doctorRes.json();
         if (doctorRes.ok) {
           setDoctors(doctorData.data || []);
@@ -194,7 +194,7 @@ const AdminDashboard = () => {
         }
 
         // Fetch patients
-        const patientRes = await fetch('http://localhost:5000/patientops/getallpatient');
+        const patientRes = await fetch('http://192.168.0.105:5000/patientops/getallpatient');
         const patientData = await patientRes.json();
         if (patientRes.ok) {
           setPatients(patientData || []);
@@ -203,7 +203,7 @@ const AdminDashboard = () => {
         }
 
         // Fetch bills
-        const billRes = await fetch('http://localhost:5000/billing/getallbill');
+        const billRes = await fetch('http://192.168.0.105:5000/billing/getallbill');
         const billData = await billRes.json();
         if (billRes.ok && Array.isArray(billData.bills)) {
           const pending = billData.bills.filter(
@@ -217,7 +217,7 @@ const AdminDashboard = () => {
         }
 
         // Fetch appointments
-        const appointmentRes = await fetch('http://localhost:5000/getallappoinment');
+        const appointmentRes = await fetch('http://192.168.0.105:5000/getallappoinment');
         const appointmentData = await appointmentRes.json();
         if (appointmentRes.ok && Array.isArray(appointmentData.data)) {
           const now = new Date();

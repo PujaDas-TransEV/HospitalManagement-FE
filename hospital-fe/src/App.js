@@ -228,6 +228,9 @@ import AdminLabTestPage from './Components/Admin/AdminLabReport/AdminLabtestPage
 import AdminBilling from './Components/Admin/AdminBilling/Billing';
 import BillPage from './Components/Admin/AdminBilling/BillPage';
 import PatientBill from './Components/Patients/Billing/PatientBilling';
+import AdminFeedback from './Components/Admin/Feedback/Feedback';
+import MedicalSurvey from './Components/MedicalSurvey/Survey';
+import AdminMedicalSurvey from './Components/Admin/MedicalSurvey/Survey';
 // ✅ Conditional Navbar using path matching
 const ConditionalNavbar = () => {
   const location = useLocation();
@@ -250,7 +253,7 @@ const ConditionalNavbar = () => {
     '/home-care-service', '/home-care-request', '/homecare',
     '/patients', '/patient-navbar', '/patient-sidebar',
     '/doctor-navbar', '/doctor-sidebar', '/adnavbar', '/adsidebar','/doctor-homecare','/labreport',
-    '/admin/labreport','/admin-labtest','/admin-billing','/bill','/invoice'
+    '/admin/labreport','/admin-labtest','/admin-billing','/bill','/invoice','/admin-feedback','/admin-survey'
   ];
 
   const hidePatterns = [
@@ -330,12 +333,15 @@ function App() {
         <Route path="/home-care-request" element={<HomeCareRequest />} />
         <Route path="/homecare" element={<AdminHomecare />} />
          <Route path="/doctor-homecare" element={<Doctorhomecare/>} />
-          <Route path="/labreport" element={< PatientsLabreport/>} />
-           <Route path="/admin/labreport" element={< AdminLabreport/>} />
-             <Route path="/admin-labtest" element={< AdminLabTestPage/>} />
-               <Route path="/admin-billing" element={< AdminBilling/>} />
-                 <Route path="/bill" element={< BillPage/>} />
-                    <Route path="/invoice" element={< PatientBill/>} />
+        <Route path="/labreport" element={< PatientsLabreport/>} />
+         <Route path="/admin/labreport" element={< AdminLabreport/>} />
+          <Route path="/admin-labtest" element={< AdminLabTestPage/>} />
+          <Route path="/admin-billing" element={< AdminBilling/>} />
+           <Route path="/bill" element={< BillPage/>} />
+           <Route path="/invoice" element={< PatientBill/>} />
+            <Route path="/admin-feedback" element={<AdminFeedback/>} />
+             <Route path="/survey" element={<MedicalSurvey/>} />
+              <Route path="/admin-survey" element={<AdminMedicalSurvey/>} />
       </Routes>
     </Router>
   );

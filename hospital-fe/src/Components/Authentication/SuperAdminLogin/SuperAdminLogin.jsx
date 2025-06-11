@@ -17,7 +17,7 @@ function SuperAdminLoginPage() {
     formData.append('password', password);
 
     // Send a POST request to the super admin login endpoint
-    fetch('http://localhost:5000/superadmin/login', {
+    fetch('http://192.168.0.105:5000/superadmin/login', {
       method: 'POST',
       body: formData,
     })

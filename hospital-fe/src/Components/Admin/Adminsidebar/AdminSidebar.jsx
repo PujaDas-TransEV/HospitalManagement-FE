@@ -4,12 +4,13 @@ import { Link, useLocation } from 'react-router-dom';
 import {
   FaTachometerAlt, FaUserMd, FaUserInjured, FaCalendarAlt, FaMoneyBillWave,
   FaCogs, FaSignOutAlt, FaBars, FaPills, FaPlusCircle, FaBed, FaTools,
-  FaBuilding, FaUser, FaQuestionCircle, FaClinicMedical, FaAngleDoubleLeft, FaAngleDoubleRight
+  FaBuilding, FaUser, FaQuestionCircle, FaClinicMedical, FaAngleDoubleLeft, FaAngleDoubleRight,FaCommentDots
 } from 'react-icons/fa';
 import './AdminSidebar.css';
 import { useNavigate } from "react-router-dom";
 import { MdMedicalServices } from 'react-icons/md';
 import { MdDashboard } from 'react-icons/md';
+import { MdChecklist } from 'react-icons/md';
 const AdminSidebar = () => {
   const [isExpanded, setIsExpanded] = useState(false);
   const [isMobileOpen, setIsMobileOpen] = useState(false);
@@ -122,12 +123,24 @@ const handleLogout = () => {
               {showText && <span>Prescriptions</span>}
             </Link>
           </li>
+           <li className="nav-item">
+              <Link to="/admin-feedback" className="nav-link" onClick={handleLinkClick}>
+                <FaCommentDots className="nav-icon" />
+                {showText && <span>Feedbacks</span>}
+              </Link>
+            </li>
           <li className="nav-item">
             <Link to="/admin-support" className="nav-link" onClick={handleLinkClick}>
               <FaQuestionCircle className="nav-icon" />
               {showText && <span>Support</span>}
             </Link>
           </li>
+           <li className="nav-item">
+              <Link to="/admin-survey" className="nav-link" onClick={handleLinkClick}>
+                <MdChecklist className="nav-icon" />
+                {showText && <span>Medical survey</span>}
+              </Link>
+            </li>
           <li className="nav-item">
             <Link to="/admin-settings" className="nav-link" onClick={handleLinkClick}>
               <FaCogs className="nav-icon" />

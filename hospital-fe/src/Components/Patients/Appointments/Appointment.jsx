@@ -42,7 +42,7 @@ const Appointment = () => {
     const formData = new FormData();
     formData.append('patientid', patientId);
 
-    fetch('http://localhost:5000/getappoinmenthistory', {
+    fetch('http://192.168.0.105:5000/getappoinmenthistory', {
       method: 'POST',
       body: formData,
     })
@@ -57,7 +57,7 @@ const Appointment = () => {
         setLoading(false);
       });
 
-    fetch('http://localhost:5000/getappoinmentdetails', {
+    fetch('http://192.168.0.105:5000/getappoinmentdetails', {
       method: 'POST',
       body: formData,
     })
@@ -73,7 +73,7 @@ const Appointment = () => {
 
   // ✅ Fetch departments dynamically
   useEffect(() => {
-    fetch('http://localhost:5000/facilityops/getallfacility')
+    fetch('http://192.168.0.105:5000/facilityops/getallfacility')
       .then((res) => res.json())
       .then((data) => {
         if (data && data.data) {
@@ -115,7 +115,7 @@ const Appointment = () => {
     const formData = new FormData();
     formData.append('appoinid', appointmentId);
 
-    fetch('http://localhost:5000/ops/appoinmentdelete', {
+    fetch('http://192.168.0.105:5000/ops/appoinmentdelete', {
       method: 'POST',
       body: formData,
     })
@@ -144,7 +144,7 @@ const Appointment = () => {
     formData.append('appoinmenttime', currentAppointment.appoinmenttime);
     formData.append('appointmentdetails', currentAppointment.appoinmentdetails);
 
-    fetch('http://localhost:5000/update/appoinment', {
+    fetch('http://192.168.0.105:5000/update/appoinment', {
       method: 'POST',
       body: formData,
     })

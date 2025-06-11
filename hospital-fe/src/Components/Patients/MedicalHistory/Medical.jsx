@@ -46,7 +46,7 @@
 //       formData.append('patientid', patientId);
 
 //       // Send a POST request to fetch patient admission details
-//       fetch('http://localhost:5000/ops/patientadmitstatus', {
+//       fetch('http://192.168.0.105:5000/ops/patientadmitstatus', {
 //         method: 'POST',
 //         body: formData,
 //       })
@@ -164,7 +164,7 @@ const PatientMedicalHistoryPage = () => {
       const formData = new FormData();
       formData.append('patientid', patientId);
 
-      fetch('http://localhost:5000/ops/patientadmitstatus', {
+      fetch('http://192.168.0.105:5000/ops/patientadmitstatus', {
         method: 'POST',
         body: formData,
       })

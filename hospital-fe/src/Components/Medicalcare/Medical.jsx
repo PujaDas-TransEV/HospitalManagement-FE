@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import './Medical.css';
-
+import { useNavigate } from 'react-router-dom';
 // Import images for different sections (replace with actual image paths)
 import heroImage from '../img/slider/3(1).jpg';
 import service1Image from '../img/bg/1.jpg';
@@ -22,9 +22,18 @@ const Medicalcare = () => {
   });
 
   // Function to open the modal
-  const handleBookNowClick = () => {
-    setIsModalOpen(true);
-  };
+  // const handleBookNowClick = () => {
+  //   setIsModalOpen(true);
+  // };
+const handleBookNowClick = () => {
+  const token = localStorage.getItem("accessToken"); // Or whatever key you use
+
+  if (!token) {
+    navigate('/login');
+  } else {
+    navigate('/patient-Appointments'); // Replace with your actual appointment route
+  }
+};
 
   // Function to close the modal
   const closeModal = () => {
@@ -50,7 +59,11 @@ const Medicalcare = () => {
       [name]: value,
     });
   };
+ const navigate = useNavigate(); // ✅ setup navigation
 
+  const goToSurveyPage = () => {
+    navigate('/survey');
+  };
 const faqs = [
   {
     question: 'How do I book an appointment?',
@@ -172,7 +185,13 @@ const faqs = [
           <button className="cta-buttons" onClick={handleBookNowClick}>Book Now</button>
         </div>
       </section>
-
+ <section className="survey-section">
+        <div className="containers" style={{ textAlign: 'center', marginTop: '30px' }}>
+          <h2 className="section-headings">🏥 Participate in Medical Survey</h2>
+          <p>Help us improve community health by submitting your household medical information.</p>
+          <button className="cta-button" onClick={goToSurveyPage}>Fill Medical Survey</button>
+        </div>
+      </section>
       {/* Location & Contact Information Section */}
       <section className="contact-sections" style={{ backgroundImage: `url(${mapImage})` }}>
         <div className="contents">
@@ -205,6 +224,7 @@ const faqs = [
           ))}
         </div>
       </section>
+      
       {/* Modal for Booking Appointment */}
       {isModalOpen && (
         <div className="modal">

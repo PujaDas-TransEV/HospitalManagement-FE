@@ -33,7 +33,7 @@ function SignupPage() {
     formData.append('confirm_password', confirmPassword);
 
     // Send the form data to the backend to send OTP for super admin signup
-    fetch('http://localhost:5000/superadmin/signup', {
+    fetch('http://192.168.0.105:5000/superadmin/signup', {
       method: 'POST',
       body: formData,
     })
@@ -69,7 +69,7 @@ function SignupPage() {
     formData.append('otp', otp); // OTP entered by the user
 
     // Send the OTP for verification along with the other details (name, email, password, confirm_password) to the backend
-    fetch('http://localhost:5000/superadmin/signup', {
+    fetch('http://192.168.0.105:5000/superadmin/signup', {
       method: 'POST',
       body: formData,
     })

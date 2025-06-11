@@ -55,7 +55,7 @@
 //     }
 
 //     // Send the form data to the backend to send OTP
-//     fetch('http://localhost:5000/doctor/signup', {
+//     fetch('http://192.168.0.105:5000/doctor/signup', {
 //       method: 'POST',
 //       body: formData,
 //     })
@@ -104,7 +104,7 @@
 //     }
 
 //     // Send the OTP for verification along with the other details (name, email, password, confirm_password) to the backend
-//     fetch('http://localhost:5000/doctor/signup', {
+//     fetch('http://192.168.0.105:5000/doctor/signup', {
 //       method: 'POST',
 //       body: formData,
 //     })
@@ -411,7 +411,7 @@ function DoctorSignupPage() {
 
   // Fetch departments on mount
   useEffect(() => {
-    fetch('http://localhost:5000/facilityops/getallfacility')
+    fetch('http://192.168.0.105:5000/facilityops/getallfacility')
       .then(res => res.json())
       .then(data => {
         if (data && data.data) {
@@ -462,7 +462,7 @@ function DoctorSignupPage() {
     formData.append('confirm_password', confirmPassword);
     if (profilePicture) formData.append('profilepicture', profilePicture);
 
-    fetch('http://localhost:5000/doctor/signup', {
+    fetch('http://192.168.0.105:5000/doctor/signup', {
       method: 'POST',
       body: formData,
     })
@@ -501,7 +501,7 @@ function DoctorSignupPage() {
     formData.append('otp', otp);
     if (profilePicture) formData.append('profilepicture', profilePicture);
 
-    fetch('http://localhost:5000/doctor/signup', {
+    fetch('http://192.168.0.105:5000/doctor/signup', {
       method: 'POST',
       body: formData,
     })

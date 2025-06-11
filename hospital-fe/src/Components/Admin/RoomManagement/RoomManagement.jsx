@@ -30,7 +30,7 @@ const RoomManagementPage = () => {
   // Function to fetch all wards
   const fetchWards = async () => {
     try {
-      const response = await axios.get('http://localhost:5000/ops/getallward');
+      const response = await axios.get('http://192.168.0.105:5000/ops/getallward');
       if (response.data && Array.isArray(response.data.data)) {
         setWards(response.data.data); // save wards in state
       }
@@ -42,7 +42,7 @@ const RoomManagementPage = () => {
   // Function to fetch all rooms
   const fetchAllRooms = async () => {
     try {
-      const response = await axios.get('http://localhost:5000/ops/getallrooms');
+      const response = await axios.get('http://192.168.0.105:5000/ops/getallrooms');
       const data = Array.isArray(response.data.data) ? response.data.data : [];
       setAllRooms(data); // Save all rooms in state
     } catch (error) {
@@ -66,7 +66,7 @@ const RoomManagementPage = () => {
     formData.append('capacity', capacity);
 
     try {
-      const response = await axios.post('http://localhost:5000/ops/roomfacilitycreate', formData, {
+      const response = await axios.post('http://192.168.0.105:5000/ops/roomfacilitycreate', formData, {
         headers: {
           'Content-Type': 'multipart/form-data'
         }
@@ -97,7 +97,7 @@ const RoomManagementPage = () => {
     formData.append('roomid', roomIdSearch);
 
     try {
-      const response = await axios.post('http://localhost:5000/ops/getroombyid', formData);
+      const response = await axios.post('http://192.168.0.105:5000/ops/getroombyid', formData);
       
       if (response.data && response.data.data && response.data.data.length > 0) {
         setRoomDetails(response.data.data[0]);
@@ -130,7 +130,7 @@ const RoomManagementPage = () => {
     formData.append('roomid', roomId);
 
     try {
-      const response = await axios.post('http://localhost:5000/ops/deleteroom', formData, {
+      const response = await axios.post('http://192.168.0.105:5000/ops/deleteroom', formData, {
         headers: {
           'Content-Type': 'multipart/form-data'
         }

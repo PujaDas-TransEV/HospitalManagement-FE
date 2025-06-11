@@ -17,7 +17,7 @@ const LabReportPage = () => {
       formData.append('patientid', patientId);
 
       const response = await axios.post(
-        'http://localhost:5000/labreport/bypatientid',
+        'http://192.168.0.105:5000/labreport/bypatientid',
         formData,
         {
           headers: {
@@ -47,7 +47,7 @@ const LabReportPage = () => {
       const formData = new FormData();
       formData.append('labreportid', labreportid);
 
-      await axios.post('http://localhost:5000/ops/deletelabs', formData, {
+      await axios.post('http://192.168.0.105:5000/ops/deletelabs', formData, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem('token')}`,
           'Content-Type': 'multipart/form-data',

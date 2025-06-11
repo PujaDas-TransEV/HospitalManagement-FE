@@ -36,7 +36,7 @@ const DoctorLeave = () => {
         const formData = new FormData();
         formData.append("doctorid", doctorIdFromToken);
 
-        const response = await fetch("http://localhost:5000/doctors/getallleavebydocid", {
+        const response = await fetch("http://192.168.0.105:5000/doctors/getallleavebydocid", {
           method: "POST",
           headers: { Authorization: `Bearer ${accessToken}` },
           body: formData,
@@ -72,7 +72,7 @@ const DoctorLeave = () => {
     formData.append("doctorid", doctorId);
 
     try {
-      const response = await fetch("http://localhost:5000/doctors/leaveupdate", {
+      const response = await fetch("http://192.168.0.105:5000/doctors/leaveupdate", {
         method: "POST",
         headers: { Authorization: `Bearer ${accessToken}` },
         body: formData,
@@ -111,7 +111,7 @@ const DoctorLeave = () => {
     formData.append("doctorid", doctorId);
 
     try {
-      const response = await fetch("http://localhost:5000/doctors/create/leave", {
+      const response = await fetch("http://192.168.0.105:5000/doctors/create/leave", {
         method: "POST",
         headers: { Authorization: `Bearer ${accessToken}` },
         body: formData,
@@ -137,7 +137,7 @@ const DoctorLeave = () => {
     formData.append("leaveid", leaveId);
 
     try {
-      const response = await fetch("http://localhost:5000/doctorsops/deleteleave", {
+      const response = await fetch("http://192.168.0.105:5000/doctorsops/deleteleave", {
         method: "POST",
         headers: { Authorization: `Bearer ${accessToken}` },
         body: formData,

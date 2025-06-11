@@ -47,7 +47,7 @@ const AdminProfilePage = () => {
       const formData = new FormData();
       formData.append('adminid', adminId);  // Send adminId as part of the form data
 
-      const response = await fetch('http://localhost:5000/admin/getdetails', {
+      const response = await fetch('http://192.168.0.105:5000/admin/getdetails', {
         method: 'POST',
         body: formData,
       });

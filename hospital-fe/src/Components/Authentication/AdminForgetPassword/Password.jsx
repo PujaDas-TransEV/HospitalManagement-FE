@@ -19,7 +19,7 @@ function AdminForgotPasswordPage() {
     formData.append('email', email);
 
     // Send email to backend to trigger OTP sending
-    fetch('http://localhost:5000/adminpasswordreset', {
+    fetch('http://192.168.0.105:5000/adminpasswordreset', {
       method: 'POST',
       body: formData,
     })
@@ -53,7 +53,7 @@ function AdminForgotPasswordPage() {
     formData.append('newpassword', newPassword);
 
     // Send new password, OTP, and email to backend for resetting
-    fetch('http://localhost:5000/adminpasswordreset', {
+    fetch('http://192.168.0.105:5000/adminpasswordreset', {
       method: 'POST',
       body: formData,
     })

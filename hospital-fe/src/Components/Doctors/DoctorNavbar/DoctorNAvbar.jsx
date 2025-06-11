@@ -30,7 +30,7 @@ const DoctorNavbar = () => {
         const formData = new FormData();
         formData.append("doctorid", doctorId);
 
-        const response = await fetch("http://localhost:5000/doctors/getbyid", {
+        const response = await fetch("http://192.168.0.105:5000/doctors/getbyid", {
           method: "POST",
           body: formData,
         });

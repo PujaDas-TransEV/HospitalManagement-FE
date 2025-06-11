@@ -33,7 +33,7 @@ const EquipmentManagementPage = () => {
   }, []);
 
   const fetchEquipments = () => {
-    fetch('http://localhost:5000/ops/getallequipment')
+    fetch('http://192.168.0.105:5000/ops/getallequipment')
       .then((response) => response.json())
       .then((data) => {
         if (data.message === 'All equipment data hasbeen fetched successfully') {
@@ -52,7 +52,7 @@ const EquipmentManagementPage = () => {
     const formData = new FormData();
     formData.append('equipid', searchID);
 
-    fetch('http://localhost:5000/ops/getallequipmentbyid', {
+    fetch('http://192.168.0.105:5000/ops/getallequipmentbyid', {
       method: 'POST',
       body: formData,
     })
@@ -88,7 +88,7 @@ const EquipmentManagementPage = () => {
       formData.append(key, equipmentDetails[key]);
     });
 
-    fetch('http://localhost:5000/ops/createequipment', {
+    fetch('http://192.168.0.105:5000/ops/createequipment', {
       method: 'POST',
       body: formData,
     })
@@ -134,7 +134,7 @@ const EquipmentManagementPage = () => {
       formData.append(key, equipmentDetails[key]);
     });
 
-    fetch('http://localhost:5000/ops/updatedata', {
+    fetch('http://192.168.0.105:5000/ops/updatedata', {
       method: 'POST',
       body: formData,
     })
@@ -158,7 +158,7 @@ const EquipmentManagementPage = () => {
     const formData = new FormData();
     formData.append('equipmentid', equipmentID); // Append the equipment ID to the form data
   
-    fetch('http://localhost:5000/ops/deleteequipment', {
+    fetch('http://192.168.0.105:5000/ops/deleteequipment', {
       method: 'POST',
       body: formData, // Send the form data in the request body
     })

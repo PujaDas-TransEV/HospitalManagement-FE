@@ -23,7 +23,7 @@ function HomecareAdminPanel() {
   // Fetch all requests
   const fetchRequests = async () => {
     try {
-      const response = await fetch('http://localhost:5000/management/homecare');
+      const response = await fetch('http://192.168.0.105:5000/management/homecare');
       const data = await response.json();
 
       setRequests(data);
@@ -45,7 +45,7 @@ function HomecareAdminPanel() {
           formData.append('staffid', staffid);
 
           try {
-            const response = await fetch('http://localhost:5000/ops/getstaffdetailsbyid', {
+            const response = await fetch('http://192.168.0.105:5000/ops/getstaffdetailsbyid', {
               method: 'POST',
               body: formData,
             });
@@ -69,7 +69,7 @@ function HomecareAdminPanel() {
   // Fetch list of staff
   const fetchStaff = async () => {
     try {
-      const res = await fetch('http://localhost:5000/ops/listofstaff');
+      const res = await fetch('http://192.168.0.105:5000/ops/listofstaff');
       const data = await res.json();
       setStaffList(data.data || []);
     } catch (err) {
@@ -80,7 +80,7 @@ function HomecareAdminPanel() {
   // Fetch list of doctors
   const fetchDoctors = async () => {
     try {
-      const res = await fetch('http://localhost:5000/doctorops/getalldoctor');
+      const res = await fetch('http://192.168.0.105:5000/doctorops/getalldoctor');
       const data = await res.json();
       setDoctors(data.data || []);
     } catch (err) {
@@ -116,7 +116,7 @@ function HomecareAdminPanel() {
     });
 
     try {
-      await axios.post('http://localhost:5000/ops/updatehomecare', formDataToSend);
+      await axios.post('http://192.168.0.105:5000/ops/updatehomecare', formDataToSend);
       alert('Updated successfully.');
 
       const updatedStaff = staffList.find(staff => staff.uid === formData.assignedstaffid);

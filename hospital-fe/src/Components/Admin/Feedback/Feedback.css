@@ -1,0 +1,61 @@
+
+.admin-feedback-container {
+  padding: 20px;
+  background-color: #f9f9f9;
+  flex: 1;
+  margin-left: 230px; /* sidebar width on large screens */
+  transition: margin-left 0.3s ease;
+}
+
+/* Medium screens (tablets) */
+@media (max-width: 992px) {
+  .admin-feedback-container {
+    margin-left: 180px; /* smaller sidebar or collapsed sidebar */
+  }
+}
+
+/* Small screens (mobile) */
+@media (max-width: 768px) {
+  .admin-feedback-container {
+    margin-left: 0; /* no left margin, sidebar probably overlays */
+    padding: 15px 10px;
+  }
+}
+
+/* Grid container for feedback cards */
+.feedback-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); /* 3 per row approx */
+  gap: 20px;
+}
+
+/* Individual feedback card styling */
+.feedback-card {
+  background-color: #fff;
+  padding: 15px 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  transition: box-shadow 0.3s ease;
+}
+
+.feedback-card:hover {
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+}
+
+.feedback-card h3 {
+  margin-top: 0;
+  margin-bottom: 10px;
+  font-size: 18px;
+  color: #007bff; /* or any accent color */
+}
+
+.feedback-card p {
+  margin: 5px 0;
+  font-size: 14px;
+  color: #555;
+}
+
+.error {
+  color: red;
+  font-weight: 500;
+}

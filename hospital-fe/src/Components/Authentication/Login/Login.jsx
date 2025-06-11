@@ -21,7 +21,7 @@
 //     formData.append('password', password);
 
 //     try {
-//       const response = await fetch('http://localhost:5000/patients/login', {
+//       const response = await fetch('http://192.168.0.105:5000/patients/login', {
 //         method: 'POST',
 //         body: formData,
 //       });
@@ -131,7 +131,7 @@ const LoginPage = () => {
     formData.append('password', password);
 
     try {
-      const response = await fetch('http://localhost:5000/patients/login', {
+      const response = await fetch('http://192.168.0.105:5000/patients/login', {
         method: 'POST',
         body: formData,
       });

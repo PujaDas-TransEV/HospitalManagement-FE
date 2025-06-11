@@ -1,0 +1,65 @@
+.medical-survey-container {
+  max-width: 600px;
+  margin: 20px auto;
+  padding: 20px;
+  background: #f2f2f2;
+  border-radius: 8px;
+  font-family: Arial, sans-serif;
+}
+
+.medical-survey-container h2 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.survey-form label {
+  display: block;
+  margin-bottom: 12px;
+  font-weight: bold;
+}
+
+.survey-form input,
+.survey-form textarea {
+  width: 100%;
+  padding: 8px;
+  margin-top: 4px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+}
+
+.survey-form textarea {
+  resize: vertical;
+  min-height: 60px;
+}
+
+.survey-form button {
+  margin-top: 16px;
+  width: 100%;
+  padding: 12px;
+  background-color: #007bff;
+  border: none;
+  border-radius: 6px;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.survey-form button:disabled {
+  background-color: #5a9bf6;
+  cursor: not-allowed;
+}
+
+.success-message {
+  margin-top: 15px;
+  color: green;
+  font-weight: 600;
+  text-align: center;
+}
+
+.error-message {
+  margin-top: 15px;
+  color: red;
+  font-weight: 600;
+  text-align: center;
+}

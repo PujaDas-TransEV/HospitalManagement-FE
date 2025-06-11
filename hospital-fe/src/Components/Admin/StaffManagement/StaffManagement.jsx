@@ -32,7 +32,7 @@ const StaffManagement = () => {
   }, []);
 
   const fetchStaffList = () => {
-    fetch('http://localhost:5000/ops/listofstaff')
+    fetch('http://192.168.0.105:5000/ops/listofstaff')
       .then((response) => response.json())
       .then((data) => {
         if (data.data && Array.isArray(data.data)) {
@@ -50,7 +50,7 @@ const StaffManagement = () => {
     const formData = new FormData();
     formData.append('staffid', searchID);
 
-    fetch('http://localhost:5000/ops/getstaffdetailsbyid', {
+    fetch('http://192.168.0.105:5000/ops/getstaffdetailsbyid', {
       method: 'POST',
       body: formData,
     })
@@ -86,7 +86,7 @@ const StaffManagement = () => {
       formData.append(key, staffDetails[key]);
     });
 
-    fetch('http://localhost:5000/ops/createstaff', {
+    fetch('http://192.168.0.105:5000/ops/createstaff', {
       method: 'POST',
       body: formData,
     })
@@ -133,7 +133,7 @@ const StaffManagement = () => {
       formData.append(key, staffDetails[key]);
     });
 
-    fetch('http://localhost:5000/staffops/updatestaff', {
+    fetch('http://192.168.0.105:5000/staffops/updatestaff', {
       method: 'POST',
       body: formData,
     })
@@ -157,7 +157,7 @@ const StaffManagement = () => {
     const formData = new FormData();
     formData.append('staffid', staffID); // Pass the staff ID (uid) to delete
 
-    fetch('http://localhost:5000/ops/staffdelete', {
+    fetch('http://192.168.0.105:5000/ops/staffdelete', {
       method: 'POST',
       body: formData,
     })

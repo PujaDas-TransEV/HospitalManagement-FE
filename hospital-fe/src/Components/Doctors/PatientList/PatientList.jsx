@@ -53,7 +53,7 @@ const DoctorPatientListPage = () => {
       const formData = new FormData();
       formData.append('doctorid', doctorid);
 
-      fetch('http://localhost:5000/patientview', {
+      fetch('http://192.168.0.105:5000/patientview', {
         method: 'POST',
         body: formData,
       })
@@ -95,7 +95,7 @@ const DoctorPatientListPage = () => {
     formData.append('patientid', patient.uid);
 
     try {
-      const response = await fetch('http://localhost:5000/doctors/getprescribebypatientid', {
+      const response = await fetch('http://192.168.0.105:5000/doctors/getprescribebypatientid', {
         method: 'POST',
         body: formData,
       });
@@ -129,7 +129,7 @@ const DoctorPatientListPage = () => {
     formData.append('diagonistics', diagonistics);
 
     try {
-      const response = await fetch('http://localhost:5000/createprescription', {
+      const response = await fetch('http://192.168.0.105:5000/createprescription', {
         method: 'POST',
         body: formData,
       });

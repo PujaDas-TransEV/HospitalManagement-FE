@@ -57,7 +57,7 @@ function AdminSettingsPage() {
       const formData = new FormData();
       formData.append('adminid', adminId);  // Send adminId as FormData
 
-      const response = await fetch('http://localhost:5000/adminops/deleteadminprofile', {
+      const response = await fetch('http://192.168.0.105:5000/adminops/deleteadminprofile', {
         method: 'POST',
         body: formData,  // Pass FormData in the body
       });

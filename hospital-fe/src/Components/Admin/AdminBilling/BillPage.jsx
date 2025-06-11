@@ -39,9 +39,9 @@ const CreateBillPage = () => {
     const fetchData = async () => {
       try {
         const [patientsRes, doctorsRes, roomsRes] = await Promise.all([
-          fetch('http://localhost:5000/patientops/getallpatient').then(res => res.json()),
-          fetch('http://localhost:5000/doctorops/getalldoctor').then(res => res.json()),
-          fetch('http://localhost:5000/ops/getallrooms').then(res => res.json()),
+          fetch('http://192.168.0.105:5000/patientops/getallpatient').then(res => res.json()),
+          fetch('http://192.168.0.105:5000/doctorops/getalldoctor').then(res => res.json()),
+          fetch('http://192.168.0.105:5000/ops/getallrooms').then(res => res.json()),
         ]);
 
         if (Array.isArray(patientsRes)) setPatients(patientsRes);
@@ -108,7 +108,7 @@ const CreateBillPage = () => {
         }
       }
 
-      await axios.post('http://localhost:5000/billing/createbill', payload, {
+      await axios.post('http://192.168.0.105:5000/billing/createbill', payload, {
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded',
         },
