@@ -227,7 +227,7 @@ const handleView = async (billId) => {
   Reset
 </button>
 
-<button onClick={() => navigate('/newbill')} style={{ backgroundColor: '#2196F3', color: 'white' }}>
+<button onClick={() => navigate('/bill')} style={{ backgroundColor: '#2196F3', color: 'white' }}>
   <FaPlus /> New Bill
 </button>
           </div>
