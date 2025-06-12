@@ -16,55 +16,68 @@ const Navbar = () => {
     setIsActive(!isActive);
   };
 
-  useEffect(() => {
-    const token = localStorage.getItem('accessToken');
+ 
+useEffect(() => {
+  const token = localStorage.getItem('accessToken');
+  if (!token) return;
 
-    if (token) {
+  try {
+    const decoded = jwtDecode(token);
+    const userId = decoded.userid || decoded.doctorid;
+    const role = decoded.userType || decoded.role; // 'patient' or 'doctor'
+
+    setIsLoggedIn(true);
+    setUserType(role);
+
+    const fetchProfile = async () => {
+      let url = '';
+      const formData = new FormData();
+
+      if (role === 'doctor') {
+        url = 'http://192.168.0.106:5000/doctors/getbyid';
+        formData.append('doctorid', userId);
+      } else if (role === 'patient') {
+        url = 'http://192.168.0.106:5000/patients/profile/getbyid';
+        formData.append('patientid', userId);
+      } else {
+        console.warn('Unknown user role:', role);
+        return;
+      }
+
       try {
-        const decoded = jwtDecode(token);
-        const userId = decoded.userid || decoded.doctorid; // assume either field
-        const type = decoded.userType || decoded.role; // 'patient' or 'doctor'
-        setIsLoggedIn(true);
-        setUserType(type);
+        const response = await fetch(url, {
+          method: 'POST',
+          headers: { Authorization: `Bearer ${token}` },
+          body: formData,
+        });
 
-        const fetchProfile = async () => {
-          let url = '';
-          let formData = new FormData();
-          formData.append(type === 'doctor' ? 'doctorid' : 'patientid', userId);
-          if (type === 'patient') {
-            url = 'http://192.168.0.106:5000/patients/profile/getbyid';
-          } else if (type === 'doctor') {
-            url = 'http://192.168.0.106:5000/doctors/profile/getbyid';
-          }
+        const data = await response.json();
 
-          const response = await fetch(url, {
-            method: 'POST',
-            headers: { Authorization: `Bearer ${token}` },
-            body: formData,
-          });
-
-          const data = await response.json();
-          if (response.ok && data.data?.profilepicture) {
-            setProfilePic(`data:image/jpeg;base64,${data.data.profilepicture}`);
-          } else {
-            setProfilePic('/images/default-profile.jpg');
-          }
-        };
-
-        fetchProfile();
-      } catch (error) {
-        console.error('Token decode or profile fetch error:', error);
-        setIsLoggedIn(false);
+        const picture = data?.data?.profilepictures || data?.data?.profilepicture;
+        if (response.ok && picture) {
+          setProfilePic(`data:image/jpeg;base64,${picture}`);
+        } else {
+          setProfilePic('/images/default-profile.jpg');
+        }
+      } catch (fetchErr) {
+        console.error('Error fetching profile:', fetchErr);
         setProfilePic('/images/default-profile.jpg');
       }
-    }
-  }, []);
+    };
+
+    fetchProfile();
+  } catch (err) {
+    console.error('Token decode error:', err);
+    setIsLoggedIn(false);
+    setProfilePic('/images/default-profile.jpg');
+  }
+}, []);
 
   const goToProfile = () => {
     if (userType === 'doctor') {
-      navigate('/doctor/dashboard');
+      navigate('/doctordashboard');
     } else {
-      navigate('/profile');
+      navigate('/patient-dashboard');
     }
   };
 

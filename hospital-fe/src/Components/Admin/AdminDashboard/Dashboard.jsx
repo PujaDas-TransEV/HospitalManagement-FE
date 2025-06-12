@@ -280,16 +280,15 @@ const AdminDashboard = () => {
         <h5>Manage Doctors</h5>
         <p>Total Doctors: {loading ? <Spinner size="sm" animation="border" /> : doctors.length}</p>
 
-        {/* Button group with space between */}
-      <div className="d-flex justify-content-between gap-2">
+      
+<div className="button-group-custom">
   <Link to="/manage-doctors">
     <Button variant="primary">View Details</Button>
   </Link>
-  <Link to="/register-doctor">
+  <Link to="/doctor-signup">
     <Button variant="success">Register New Doctor</Button>
   </Link>
 </div>
-
 
       </Card.Body>
     </Card>

@@ -286,7 +286,7 @@ const assignDepartmentIcon = (name, index) => {
           {appointments.map((appointment) => (
             <tr key={appointment.uid}>
               <td>{appointment.uid}</td>
-              <td>{appointment.department || "N/A"}</td>
+              <td>{appointment.doctor_specialization|| "N/A"}</td>
               <td>{appointment.doctor_fullname || "N/A"}</td>
               <td>{appointment.patient_firstname} {appointment.patient_lastname}</td>
               <td>{appointment.appoinmenttime}</td>

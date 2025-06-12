@@ -151,3 +151,8 @@
 .dashboard-card .btn + .btn {
   margin-left: 10px;
 }
+.button-group-custom {
+  display: flex;
+  gap: 12px; /* or any value you prefer */
+  flex-wrap: wrap;
+}

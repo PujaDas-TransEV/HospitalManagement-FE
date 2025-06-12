@@ -93,12 +93,12 @@ const location = useLocation();
   <FaUserMd />
   {(isExpanded || isMobileOpen) && ' Profile'}
 </Nav.Link>
-{/* <li className="nav-item">
+ <li className="nav-item">
             <Link to="/" className={`nav-link ${location.pathname === '/' ? 'active-link' : ''}`} onClick={handleLinkClick}>
               <FaHome className="nav-icon" />
               {(isExpanded || isMobileOpen) && <span>Return To Home</span>}
             </Link>
-          </li> */}
+          </li> 
       </div>
 
       {/* Mobile overlay */}

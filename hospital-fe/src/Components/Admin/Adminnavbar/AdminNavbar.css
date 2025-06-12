@@ -1,14 +1,13 @@
 
+
 .admin-navbar {
   width: 100%;
   background-color: rgb(16, 106, 106);
   color: white;
-  padding: 25px 20px; /* More padding = more height */
+  padding: 15px 20px;
   position: sticky;
   top: 0;
   z-index: 1000;
-  /* display: flex; */
-  align-items: center;
 }
 
 .navbar-content {
@@ -28,6 +27,7 @@
   align-items: center;
   position: relative;
   cursor: pointer;
+  gap: 8px; /* maintains spacing between elements */
 }
 
 .admin-profile-img {
@@ -35,7 +35,6 @@
   height: 40px;
   border-radius: 50%;
   object-fit: cover;
-  margin-right: 10px;
   border: 2px solid #fff;
 }
 
@@ -45,86 +44,121 @@
   white-space: nowrap;
 }
 
-/* Dropdown */
+.dropdown-icon {
+  cursor: pointer;
+  font-size: 16px;
+  user-select: none;
+  color: white;
+  line-height: 1;
+}
+
+/* ==================== DROPDOWN ==================== */
+
 .dropdown-menu {
   position: absolute;
-  top: 100%;
+  top: 110%;
   right: 0;
   background-color: white;
   color: black;
-  border-radius: 6px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
-  overflow: hidden;
-  margin-top: 8px;
-  z-index: 10;
-  min-width: 160px;
-}
-
-.dropdown-items {
-  padding: 10px 15px;
-  background: none;
-  border: none;
-  text-align: left;
-  width: 100%;
-  font-size: 0.95rem;
-  cursor: pointer;
-  transition: background-color 0.2s;
-}
-
-.dropdown-items:hover {
-  background-color: #f0f0f0;
-}
-
-/* Responsive adjustments */
-@media (max-width: 768px) {
-  .navbar-content {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-
-  .admin-profile-section {
-    margin-top: 10px;
-    width: 100%;
-    justify-content: flex-start;
-  }
-
-  .admin-name {
-    font-size: 1rem;
-  }
-
-  .dropdown-menu {
-    right: auto;
-    left: 0;
-  }
-}
-/* Dropdown Menu */
-.dropdown-menu {
-  position: absolute;
-  top: 60px; /* adjust as needed */
-  right: 10px;
-  background-color: #ffffff;
   border: 1px solid #ddd;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  border-radius: 6px;
+  border-radius: 5px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
   z-index: 1000;
   min-width: 160px;
   padding: 8px 0;
 }
 
-/* Dropdown items */
 .dropdown-item {
-  background: none;
-  border: none;
-  text-align: left;
   width: 100%;
   padding: 10px 16px;
+  text-align: left;
+  background: none;
+  border: none;
   font-size: 14px;
   color: #333;
   cursor: pointer;
   transition: background-color 0.2s ease;
 }
 
-/* Hover effect */
 .dropdown-item:hover {
   background-color: #f0f0f0;
+}
+
+/* ==================== RESPONSIVE BREAKPOINTS ==================== */
+
+/* Medium Screens (tablets) */
+@media (max-width: 992px) {
+  .navbar-content {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .brand-name {
+    font-size: 1.4rem;
+    margin-bottom: 10px;
+  }
+
+  .admin-profile-section {
+    margin-top: 10px;
+    justify-content: flex-start;
+  }
+
+  .dropdown-menu {
+    min-width: 100%;
+    right: 0;
+    left: 0;
+    top: 100%;
+    box-shadow: none;
+  }
+}
+
+/* Small Screens (phones) */
+@media (max-width: 768px) {
+  .brand-name {
+    font-size: 1.2rem;
+  }
+
+  .admin-profile-section {
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .admin-name {
+    font-size: 0.95rem;
+  }
+
+  .dropdown-icon {
+    font-size: 14px;
+  }
+
+  .dropdown-menu {
+    width: 100%;
+    left: 0;
+    right: auto;
+  }
+
+  .dropdown-item {
+    font-size: 15px;
+    padding: 12px 16px;
+  }
+}
+
+/* Extra Small Devices */
+@media (max-width: 480px) {
+  .brand-name {
+    font-size: 1rem;
+  }
+
+  .admin-name {
+    font-size: 0.9rem;
+  }
+
+  .dropdown-icon {
+    font-size: 13px;
+  }
+
+  .admin-profile-img {
+    width: 36px;
+    height: 36px;
+  }
 }
