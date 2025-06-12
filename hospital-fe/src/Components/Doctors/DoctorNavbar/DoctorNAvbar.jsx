@@ -1,5 +1,3 @@
-
-
 import React, { useState, useEffect } from "react";
 import { Navbar, Nav, Dropdown } from "react-bootstrap";
 import { jwtDecode } from "jwt-decode";
