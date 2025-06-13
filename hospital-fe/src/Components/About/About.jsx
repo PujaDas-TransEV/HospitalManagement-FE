@@ -4,13 +4,18 @@ import { Link } from "react-router-dom";
 import AboutImage from '../Assests/home.png';
 import VisionImage from '../Assests/blog1.jpg';
 import MissionImage from '../Assests/blog3.jpg';
-import ValuesImage from '../Assests/blog3.jpg';
+import ValuesImage from '../Assests/hospital.jpg';
 import CardiologyImage from '../Assests/medicine.webp';
 import NeurologyImage from '../img/slider/3(1).jpg';
 import OrthopedicsImage from '../img/slider/2(1).jpg';
 import PediatricsImage from '../img/slider/1(2).jpg';
 import './About.css';  
 const About = () => {
+  const lines = [
+  "Empowering Health Choices for a Vibrant Life — Your Trusted Partner in Wellness",
+  "At LifeCare Hospital, we are committed to delivering compassionate and expert care tailored to your unique needs.",
+  "Your health is our priority, and together, we build a healthier future."
+];
   return (
     <div>
 
@@ -29,7 +34,7 @@ const About = () => {
           opacity: 0.9,
         }}
       >
-        <div style={{ width: '80%', marginTop: '10px' }}>
+        {/* <div style={{ width: '80%', marginTop: '10px' }}>
           <h1 style={{ fontSize: '3rem', fontWeight: 'bold' }}>
             Empowering Health Choices for a Vibrant Life Your Trusted..
           </h1>
@@ -39,7 +44,25 @@ const About = () => {
              molestiae impedit at sequi dolorem iste sit culpa, optio voluptates
              fugiat vero consequatur?
           </p>
-        </div>
+        </div> */}
+        <div style={{ width: '80%', marginTop: '10px', color: 'white' }}>
+  {lines.map((line, index) => (
+    <p
+      key={index}
+      className="slide-in"
+      style={{ 
+        fontSize: index === 0 ? '3rem' : '1.125rem',
+        fontWeight: index === 0 ? 'bold' : 'normal',
+        animationDelay: `${index * 0.5}s`,
+        color: 'white'  // Ensures white text color
+      }}
+    >
+      {line}
+    </p>
+  ))}
+</div>
+
+
       </div>
 
       {/* About Section */}
@@ -115,7 +138,16 @@ const About = () => {
           <p style={{
     fontSize: '1.125rem'}}>The ‘well being’ ensured by extension of Available, Accessible, Affordable, Safe, Efficacious, Professional and Ethical.</p>
           <p style={{
-    fontSize: '1.125rem'}}>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla vel urna nec justo vehicula fermentum non eu justo. Aliquam vitae dolor felis. Integer nec dui tristique, iaculis arcu non, facilisis libero.</p>
+    fontSize: '1.125rem'}}>  We are committed to advancing health outcomes through compassionate care, innovation, and a patient-centered approach that respects the dignity and uniqueness of every individual.</p>
+    <p style={{ fontSize: '1.125rem' }}>
+    Through continuous improvement and dedication, we strive to foster a supportive environment where patients and their families feel empowered, informed, and cared for at every stage of their health journey.
+  </p>
+  <p style={{ fontSize: '1.125rem' }}>
+    Our goal is to blend cutting-edge medical technology with empathy and respect to transform lives and build healthier communities.
+  </p>
+   <p style={{ fontSize: '1.125rem' }}>
+    Compassion is the heart of our mission to create a welcoming and supportive atmosphere for all who seek our care.
+  </p>
         </div>
       </div>
 
@@ -125,8 +157,15 @@ const About = () => {
           <h2>Vision</h2>
           <p style={{
     fontSize: '1.125rem'}}>Ensuring ‘well being’ as a humane commitment to enliven humanity.</p>
-          <p style={{
-    fontSize: '1.125rem'}}>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla vel urna nec justo vehicula fermentum non eu justo. Aliquam vitae dolor felis. Integer nec dui tristique, iaculis arcu non, facilisis libero.</p>
+        <p style={{ fontSize: '1.125rem' }}>
+  Our vision is to be a beacon of hope and excellence in healthcare, pioneering innovative solutions that transform lives and communities. We strive to create a future where quality healthcare is accessible to all, fostering healthier generations through compassion, integrity, and continuous advancement.
+</p>
+<p style={{ fontSize: '1.125rem' }}>
+  We envision a world where every individual receives personalized care that respects their unique needs and dignity. By integrating cutting-edge technology with empathetic service, we aim to set new standards in medical excellence and patient satisfaction.
+</p>
+<p style={{ fontSize: '1.125rem' }}>
+  Our commitment extends beyond treatment to promoting wellness and prevention, empowering people to lead healthier, happier lives.
+</p>
         </div>
         <div style={{ flex: '1', padding: '10px' }}>
           <img src={VisionImage} alt="Vision" style={{ width: '100%' }} />
@@ -140,10 +179,24 @@ const About = () => {
         </div>
         <div style={{ flex: '1', padding: '10px' }}>
           <h2>Values</h2>
-          <p style={{
-    fontSize: '1.125rem'}}>Providing consistent and high-quality care in a compassionate and patient-centered environment.</p>
-          <p style={{
-    fontSize: '1.125rem'}}>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla vel urna nec justo vehicula fermentum non eu justo. Aliquam vitae dolor felis. Integer nec dui tristique, iaculis arcu non, facilisis libero.</p>
+         <p style={{ fontSize: '1.125rem' }}>
+  Providing consistent and high-quality care in a compassionate and patient-centered environment.
+</p>
+<p style={{ fontSize: '1.125rem' }}>
+  We uphold integrity, respect, and excellence in everything we do, ensuring that every patient is treated with dignity and empathy.
+</p>
+<p style={{ fontSize: '1.125rem' }}>
+  Commitment to teamwork and continuous learning allows us to innovate and improve the healthcare experience for our community.
+</p>
+<p style={{ fontSize: '1.125rem' }}>
+  We value transparency, accountability, and ethical practices as the foundation of trust between caregivers and patients.
+</p>
+<p style={{ fontSize: '1.125rem' }}>
+  Sustainability and responsibility guide our efforts to minimize environmental impact while maximizing community health benefits.
+</p>
+<p style={{ fontSize: '1.125rem' }}>
+  We believe in empowering patients through education and open communication to foster informed health decisions.
+</p>
         </div>
       </div>
 
@@ -172,7 +225,7 @@ const About = () => {
       </div>
 
       {/* Latest Posts */}
-      <div style={{ backgroundColor: '#f4f4f4', padding: '60px 0' }}>
+      {/* <div style={{ backgroundColor: '#f4f4f4', padding: '60px 0' }}>
         <h2 style={{ fontSize: '2.5rem', textAlign: 'center' }}>
           Our <span style={{ color: '#72c02c' }}>Latest Posts</span>
         </h2>
@@ -182,14 +235,48 @@ const About = () => {
               <h3>Post Title {id}</h3>
               <p style={{
     fontSize: '1.125rem'}}>Short summary of the latest post...</p>
-              {/* <Link to={`/post/${id}`} style={{ color: '#72c02c', textDecoration: 'underline' }}>Read More</Link> */}
+            
             <a href={`#post-${id}`} style={{ color: '#72c02c', textDecoration: 'underline' }}>
   Read More
 </a>
 
             </div>
           ))}
-        </div>
+        </div> */}
+        <div style={{ backgroundColor: '#f4f4f4', padding: '60px 0' }}>
+  <h2 style={{ fontSize: '2.5rem', textAlign: 'center' }}>
+    Our <span style={{ color: '#72c02c' }}>Latest Posts</span>
+  </h2>
+  <div style={{ display: 'flex', justifyContent: 'center', gap: '20px', marginTop: '40px', flexWrap: 'wrap' }}>
+    {[
+      {
+        id: 1,
+        title: 'Advancements in Cardiac Care',
+        summary: 'Discover how our cardiology department uses cutting-edge technology to save lives and improve heart health.'
+      },
+      {
+        id: 2,
+        title: 'COVID-19 Safety Protocols',
+        summary: 'Learn about the latest measures LifeCare Hospital is taking to keep patients and staff safe during the pandemic.'
+      },
+      {
+        id: 3,
+        title: 'Nutrition Tips for Recovery',
+        summary: 'Explore dietary recommendations from our experts to help patients recover faster and maintain optimal health.'
+      }
+    ].map(({ id, title, summary }) => (
+      <div key={id} style={{ width: '300px', backgroundColor: '#fff', padding: '20px', borderRadius: '8px' }}>
+      <h3 style={{ color: '#337ab7' }}>{title}</h3>
+
+        <p style={{ fontSize: '1.125rem' }}>{summary}</p>
+        <a href={`#post-${id}`} style={{ color: '#72c02c', textDecoration: 'underline' }}>
+          Read More
+        </a>
+      </div>
+    ))}
+  </div>
+
+
       </div>
 
       {/* Contact Info */}
@@ -201,17 +288,17 @@ const About = () => {
           <div>
             <h3>Address:</h3>
             <p style={{
-    fontSize: '1.125rem'}}>123 Main Street, Ahmedabad, India</p>
+    fontSize: '1.125rem'}}>MANI CASADONA,UNIT-10ES06, Kolkata, India</p>
           </div>
           <div>
             <h3>Phone:</h3>
             <p style={{
-    fontSize: '1.125rem'}}>(+91) 123 456 7890</p>
+    fontSize: '1.125rem'}}>(+91) 79080 03488</p>
           </div>
           <div>
             <h3>Email:</h3>
             <p style={{
-    fontSize: '1.125rem'}}>transhospital@gmail.com</p>
+    fontSize: '1.125rem'}}>tgwbin@gmail.com</p>
           </div>
         </div>
       </div>

@@ -197,9 +197,9 @@ const faqs = [
         <div className="contents">
           <h2>Contact Us</h2>
           <p>Visit us at:</p>
-          <p>123 Health Street, City, Country</p>
-          <p>Phone: (+123) 456-7890</p>
-          <p>Email: contact@healthcareclinic.com</p>
+          <p>MANI CASADONA,UNIT-10ES06, Kolkata, India</p>
+          <p>Phone: (+91) 79080 03488</p>
+          <p>Email: tgwbin@gmail.com</p>
         </div>
       </section>
 

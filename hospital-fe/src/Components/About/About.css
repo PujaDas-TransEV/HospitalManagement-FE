@@ -150,3 +150,18 @@ footer{
   background-color: rgb(11, 76, 76);
   color: white;
 }
+.slide-in {
+  opacity: 0;
+  transform: translateX(-50px);
+  animation-fill-mode: forwards;
+  animation-name: slideInFromLeft;
+  animation-duration: 0.6s;
+  animation-timing-function: ease;
+}
+
+@keyframes slideInFromLeft {
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}

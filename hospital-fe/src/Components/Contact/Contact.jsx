@@ -38,17 +38,17 @@ const ContactPage = () => {
     <div className="contact-detailss" style={{ flex: '1 1 45%' }}>
       <div className="contact-info-boxs" style={{ backgroundColor: '#d9f2e6', padding: '30px', borderRadius: '10px', marginBottom: '20px', boxShadow: '0 4px 12px rgba(0,0,0,0.1)' }}>
         <h3 style={{ color: '#006644', fontSize: '1.5rem', marginBottom: '10px' }}>Visit Us</h3>
-        <p style={{ color: '#333' }}>123 Health Street, City, Country</p>
+        <p style={{ color: '#333' }}>MANI CASADONA,UNIT-10ES06,11F/04, NEWTOWN, KOLKATA-700156, INDIA</p>
       </div>
 
       <div className="contact-info-boxs" style={{ backgroundColor: '#ffe0cc', padding: '30px', borderRadius: '10px', marginBottom: '20px', boxShadow: '0 4px 12px rgba(0,0,0,0.1)' }}>
         <h3 style={{ color: '#cc5200', fontSize: '1.5rem', marginBottom: '10px' }}>Phone</h3>
-        <p style={{ color: '#333' }}>+123 456 7890</p>
+        <p style={{ color: '#333' }}>(+91) 79080 03488 / 033-4601 5366</p>
       </div>
 
       <div className="contact-info-boxs" style={{ backgroundColor: '#e0e7ff', padding: '30px', borderRadius: '10px', boxShadow: '0 4px 12px rgba(0,0,0,0.1)' }}>
         <h3 style={{ color: '#3b5bdb', fontSize: '1.5rem', marginBottom: '10px' }}>Email</h3>
-        <p style={{ color: '#333' }}>contact@healthcareclinic.com</p>
+        <p style={{ color: '#333' }}>tgwbin@gmail.com</p>
       </div>
     </div>
 

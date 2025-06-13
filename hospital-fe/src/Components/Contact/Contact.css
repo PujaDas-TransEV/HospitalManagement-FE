@@ -27,28 +27,28 @@
   
   .contact-infos .containers {
     display: flex;
-    justify-content: space-between;  /* Aligns contact details and map to the sides */
-    align-items: flex-start;         /* Aligns items to the top */
-    gap: 30px;                       /* Space between the two sections */
+    justify-content: space-between;  
+    align-items: flex-start;         
+    gap: 30px;                     
   }
   
   .contact-detailss {
-    width: 50%;                      /* Half the width for contact details */
+    width: 50%;                      
   }
   
   .contact-info-boxs {
-    background-color: #fff;         /* White background for each box */
+    background-color: #fff;       
     padding: 20px;
     margin-bottom: 20px;
     border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Add a subtle shadow */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
     transition: transform 0.3s, box-shadow 0.3s;
     padding: 40px;
   }
   
   .contact-info-boxs:hover {
-    transform: translateY(-5px);     /* Slight lift effect on hover */
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15); /* Enhance shadow on hover */
+    transform: translateY(-5px);    
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15); 
   }
   
   .contact-info-boxs h3 {
@@ -65,42 +65,42 @@
   }
   
   .maps {
-    width: 45%;                       /* Adjusts width of the map section */
-    max-width: 600px;                 /* Max width for the map */
+    width: 45%;                       
+    max-width: 600px;               
   }
   
   .maps img {
     width: 100%;
     height: auto;
-    border-radius: 8px;              /* Rounded corners for the map */
+    border-radius: 8px;             
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    padding: 30px; /* Subtle shadow effect for the map */
+    padding: 30px; 
   }
   
  /* Contact Form Section */
 .contact-form {
-    background-color: #f4f4f4;  /* Light gray background for the section */
-    padding: 50px 0;             /* Padding around the section */
+    background-color: #f4f4f4;  
+    padding: 50px 0;           
   }
   
   .contact-form .container {
-    max-width: 800px;            /* Restrict width to prevent it from being too wide */
-    margin: 0 auto;              /* Center the form */
-    background-color: #5cb1b4;   /* White background for the form */
-    padding: 30px;               /* Padding inside the form */
-    border-radius: 8px;          /* Rounded corners for the form */
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);  /* Subtle shadow around the form */
+    max-width: 800px;            
+    margin: 0 auto;             
+    background-color: #5cb1b4;   
+    padding: 30px;             
+    border-radius: 8px;       
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); 
   }
   
   .contact-form h2 {
-    font-size: 2rem;             /* Heading size */
-    color: #333;                 /* Dark text color */
-    margin-bottom: 30px;         /* Space below the heading */
-    text-align: center;          /* Center the heading */
+    font-size: 2rem;             
+    color: #333;                
+    margin-bottom: 30px;      
+    text-align: center;         
   }
   
   .contact-form .form-group {
-    margin-bottom: 20px;         /* Space between each form group */
+    margin-bottom: 20px;        
   }
   
   .contact-form label {

@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import {  useNavigate } from 'react-router-dom';
 import './Home.css'; // Ensure you have corresponding CSS
@@ -19,6 +20,8 @@ import Choose from '../Assests/Hospitalback.jpg';
 import cardiologyImage from '../img/slider/1(2).jpg';
 import neurologyImage from '../img/slider/2(1).jpg';
 import orthopedicsImage from '../img/slider/3(1).jpg';
+import pediatricsImage from '../img/slider/2(1).jpg';
+import oncologyImage from '../img/slider/3(1).jpg';
 import cath_lab from '../img/galary/cath_lab.jpg';
 import hospital from '../img/galary/hospital(1).jpg';
 import opd from '../img/galary/opd.jpg';
@@ -30,7 +33,7 @@ import patient3 from '../Assests/p3.jpg';
 import patient4 from '../Assests/p4.jpg';
 import patient5 from '../Assests/p5.jpg';
 import doctor from '../Assests/h1.avif';
-
+import MainSlider from '../Home/MainSlider';
 
 
 const HospitalDashboard = () => {
@@ -50,21 +53,21 @@ const HospitalDashboard = () => {
   ];
 
   const galleryImages = [
-    { image: cath_lab, alt: "Image 1", description: "Beautiful Landscape 1" },
-    { image: hospital, alt: "Image 2", description: "Beautiful Landscape 2" },
-    { image: opd, alt: "Image 3", description: "Beautiful Landscape 3" },
-    { image: parking, alt: "Image 4", description: "Beautiful Landscape 4" },
-    { image: platinum_wing, alt: "Image 5", description: "Beautiful Landscape 5" },
+    { image: cath_lab, alt: "Image 1", description: "Surgery Room" },
+    { image: hospital, alt: "Image 2", description: "Hospital Back Side" },
+    { image: opd, alt: "Image 3", description: "Waiting Room" },
+    { image: parking, alt: "Image 4", description: "Parking Space" },
+    { image: platinum_wing, alt: "Image 5", description: "Beautiful Reception area" },
    
   ];
   
 
   const reviews = [
-    { image: patient1, name: "John Doe", review: "Excellent service!" },
-    { image: patient2, name: "Jane Smith", review: "Very professional staff!" },
-    { image: patient3, name: "Alice Johnson", review: "Great experience overall." },
-    { image: patient4, name: "Bob Brown", review: "Would highly recommend!" },
-    { image: patient5, name: "Tom Wilson", review: "Top-notch care and attention!" },
+    { image: patient1, name: "Sime Roy", review: "Excellent service!" },
+    { image: patient2, name: "Arup Mandal", review: "Very professional staff!" },
+    { image: patient3, name: "Sanjana Routh", review: "Great experience overall." },
+    { image: patient4, name: "Simran Das", review: "Would highly recommend!" },
+    { image: patient5, name: "Tom Ganguly", review: "Top-notch care and attention!" },
   ];
 
   // Data for slides, doctor cards, and specialties
@@ -78,16 +81,45 @@ const HospitalDashboard = () => {
   ];
 
   const doctorCards = [
-    { imgSrc: dt1, name: "Alexa", description: "Lorem ipsum dolor sit amet." },
-    { imgSrc: dt2, name: "Dr. Smith", description: "Lorem ipsum dolor sit amet." },
-    { imgSrc: dt3, name: "Dr. Johnson", description: "Lorem ipsum dolor sit amet." },
-    { imgSrc: doctor, name: "Dr. Panja", description: "Lorem ipsum dolor sit amet." },
+    { imgSrc: dt1, name: "Dr.Shreya ", description: "She is a highly experienced cardiologist." },
+    { imgSrc: dt2, name: "Dr. Ananya", description: "Expert in neurology, Dr. Ananya " },
+    { imgSrc: dt3, name: "Dr.Praduth", description: "He is a compassionate pediatrician ." },
+    { imgSrc: doctor, name: "Dr. Panja", description: "A skilled surgeon." },
   ];
 
   const specialtyCards = [
-    { imgSrc: heart, title: "Heart Surgery", description: "Lorem ipsum dolor sit amet." },
-    { imgSrc: medicine, title: "General Medicine", description: "Lorem ipsum dolor sit amet." },
-    { imgSrc: s3, title: "Leg Surgery", description: "Lorem ipsum dolor sit amet." },
+ { 
+  imgSrc: heart, 
+  title: "Heart Surgery", 
+  description: "Our expert cardiac surgeons perform advanced surgical procedures using the latest techniques and technology to restore heart function, reduce symptoms, and improve your overall quality of life. We provide personalized care tailored to each patient’s needs, ensuring safety and the best possible outcomes." 
+},
+{ 
+  imgSrc: medicine, 
+  title: "General Medicine", 
+  description: "Offering comprehensive medical care for patients of all ages, our general medicine department focuses on preventive care, early diagnosis, and effective treatment of acute and chronic conditions. Our team is dedicated to promoting wellness and managing health for lifelong vitality." 
+},
+{
+  imgSrc: s3,
+  title: "Leg Surgery",
+  description: "Our highly skilled orthopedic surgeons specialize in minimally invasive and traditional leg surgeries to treat fractures, joint disorders, and other injuries. We aim to restore mobility, reduce pain, and help patients return to an active lifestyle quickly and safely."
+},
+// {
+//   imgSrc: neurologyImage,
+//   title: "Neurology",
+//   description: "Providing expert diagnosis and treatment for neurological conditions such as stroke, epilepsy, Parkinson’s disease, and multiple sclerosis. Our neurologists combine advanced imaging and therapies with compassionate care to improve patient outcomes and quality of life."
+// },
+{
+  imgSrc: pediatricsImage,
+  title: "Pediatrics",
+  description: "Our dedicated pediatricians provide specialized care tailored to infants, children, and adolescents, focusing on growth, development, immunizations, and treatment of childhood illnesses. We partner with families to support the healthy development of every child."
+},
+{
+  imgSrc: oncologyImage,
+  title: "Oncology",
+  description: "Our oncology department offers comprehensive cancer care, including diagnosis, chemotherapy, radiation, and supportive services. We utilize the latest treatments and clinical trials to provide compassionate, personalized care designed to improve survival and quality of life."
+}
+
+
   ];
 
   // Slide Show effect (auto slide)
@@ -131,19 +163,19 @@ const HospitalDashboard = () => {
       
 
       {/* Main Content */}
-      <div className="main">
+      {/* <div className="main">
         <div className="mainText">
           <h1>The Hospital that <br /> Care for you</h1>
           <h3 style={{color:'white'}}>Best Team's</h3>
-          {/* <button>Show more</button> */}
+          
           <button style={{ color: 'white', backgroundColor: 'black', border: 'none', padding: '10px 20px', borderRadius: '5px', cursor: 'pointer',height:'50px',width:'150px' }} onClick={handleShowMore}>
   Show more
 </button>
 
         </div>
         <img src={mainsImage} alt="Hospital" />
-      </div>
-
+      </div> */}
+   <MainSlider />
       {/* About Us Section */}
       <div id="about-us">
         <div className="about-us-content">
@@ -186,15 +218,18 @@ const HospitalDashboard = () => {
       </div>
 
      
-      <div className="why-choose-us">
+     
+ <div className="why-choose-us">
   <div className="why-choose-us-left-container">
     <div className="why-choose-us-left">
       <h2>Why Choose Us</h2>
       <p>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero. Sed
-        cursus ante dapibus diam. Sed nisi. Nulla quis sem at nibh elementum imperdiet. Duis sagittis ipsum.
-        Praesent mauris. Fusce nec tellus sed augue semper porta. Mauris massa. Vestibulum lacinia arcu eget
-        nulla.
+        <strong>Expert Medical Team:</strong> Our doctors and staff are highly qualified professionals dedicated to providing you with the best care possible.<br /><br />
+        <strong>State-of-the-Art Facilities:</strong> We use the latest technology and advanced treatments to ensure accurate diagnosis and effective treatment.<br /><br />
+        <strong>Patient-Centered Care:</strong> Every patient is unique — we listen, understand, and tailor our care plans to fit your individual needs.<br /><br />
+        <strong>24/7 Emergency Support:</strong> Around-the-clock emergency services mean we’re here whenever you need us.<br /><br />
+        <strong>Compassionate Environment:</strong> We foster a caring and supportive atmosphere that promotes healing and comfort.<br /><br />
+        <strong>Proven Track Record:</strong> Thousands of satisfied patients trust LifeCare Hospital for their health and well-being.
       </p>
     </div>
   </div>
@@ -219,13 +254,7 @@ const HospitalDashboard = () => {
   </div>
 </div>
 
-
-     
-      
-{/* Patient Reviews Section */}
-
-
-      {/* Doctors Section */}
+{/* Doctors Section */}
       <div id="doctor">
         <div className="head">
           <h1>Our Doctors</h1>
@@ -234,8 +263,10 @@ const HospitalDashboard = () => {
           {doctorCards.map((card, index) => (
             <div key={index} className="card" onClick={() => handleCardClick(card)}>
               <img src={card.imgSrc} alt={card.name} />
-              <p>{card.name}</p>
-              <p>{card.description}</p>
+           
+              <p style={{ color: 'black' }}>{card.name}</p>
+<p style={{ color: 'black' }}>{card.description}</p>
+
             </div>
           ))}
         </div>
@@ -257,7 +288,7 @@ const HospitalDashboard = () => {
         </div>
        
       </div>
-      
+      {/* Patient Reviews Section */}
       <div className="reviews-section">
   <h2>Patient Reviews</h2>
   <div className="reviews-container">
