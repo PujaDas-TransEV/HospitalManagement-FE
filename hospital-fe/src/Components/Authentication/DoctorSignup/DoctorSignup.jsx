@@ -135,7 +135,7 @@ function DoctorSignupPage() {
   };
 
   return (
-    <div className="login-page" style={{ maxWidth: '600px', margin: 'auto', padding: '1rem' }}>
+    <div className="loginn-page" style={{ maxWidth: '600px', margin: 'auto', padding: '1rem' }}>
       <div className="signup-form">
         <h2>Create Doctor Account</h2>
         <form onSubmit={isOtpSent ? handleVerifyOtp : handleSubmit}>
@@ -198,7 +198,7 @@ function DoctorSignupPage() {
             value={password}
             onChange={e => setPassword(e.target.value)}
             required
-            placeholder="At least 7 characters"
+            placeholder="At least 6 characters"
           />
           <div style={{ color: 'red' }}>{passwordValidationMessage}</div>
 
@@ -236,7 +236,7 @@ function DoctorSignupPage() {
           </button>
 
           <p style={{ marginTop: '1rem' }}>
-            Already have an account? <NavLink to="/doctor/login">Login</NavLink>
+            Already have an account? <NavLink to="/doctor-login">Login</NavLink>
           </p>
         </form>
       </div>
