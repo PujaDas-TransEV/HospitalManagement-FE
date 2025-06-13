@@ -85,7 +85,7 @@ const MedicalSurveyPage = () => {
 
       <form className="survey-form" onSubmit={handleSubmit}>
         <label>
-          Surveyor Name:
+         Name:
           <input
             type="text"
             name="surveyor_name"
@@ -96,7 +96,7 @@ const MedicalSurveyPage = () => {
         </label>
 
         <label>
-          Surveyor Contact:
+         Contact:
           <input
             type="tel"
             name="surveyor_contact"

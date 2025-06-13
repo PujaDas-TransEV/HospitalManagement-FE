@@ -217,21 +217,29 @@ const About = () => {
       </div>
 
       {/* Footer */}
-      <div style={{ backgroundColor: ' #0B4C4C', color: 'white', display: 'flex', justifyContent: 'space-around', padding: '40px 20px', flexWrap: 'wrap' }}>
-        {[
-          { title: 'About Us', items: ['24 Hours', 'Top Doctor', 'Best Care', 'Patient'] },
-          { title: 'Speciality', items: ['Knee surgery', 'Spin surgery', 'Leg surgery', 'Tendon surgery'] },
-          { title: 'Best Teams', items: ['Doctors', 'Nursing', 'Staff', 'Hospital'] },
-          { title: 'Address', items: ['Near MG Road', 'Galaxy Care', '333-09093', '09-883-090'] },
-        ].map((section, i) => (
-          <div key={i} style={{ marginBottom: '20px' }}>
-            <h3>{section.title}</h3>
-            {section.items.map((item, j) => (
-              <p key={j} style={{ color: 'whitesmoke' }}>{item}</p>
-            ))}
-          </div>
-        ))}
-      </div>
+   
+<div style={{
+  backgroundColor: '#0B4C4C',
+  color: 'white',
+  display: 'flex',
+  justifyContent: 'space-around',
+  padding: '40px 20px',
+  flexWrap: 'wrap'
+}}>
+  {[
+    { title: 'About Us', items: ['24 Hours', 'Top Doctor', 'Best Care', 'Patient'] },
+    { title: 'Speciality', items: ['Knee surgery', 'Spin surgery', 'Leg surgery', 'Tendon surgery'] },
+    { title: 'Best Teams', items: ['Doctors', 'Nursing', 'Staff', 'Hospital'] },
+    { title: 'Address', items: ['Near MG Road', 'Galaxy Care', '333-09093', '09-883-090'] },
+  ].map((section, i) => (
+    <div key={i} style={{ marginBottom: '20px' }}>
+      <h3 style={{ color: 'white' }}>{section.title}</h3>
+      {section.items.map((item, j) => (
+        <p key={j} style={{ color: 'whitesmoke' }}>{item}</p>
+      ))}
+    </div>
+  ))}
+</div>
 
     </div>
   );
