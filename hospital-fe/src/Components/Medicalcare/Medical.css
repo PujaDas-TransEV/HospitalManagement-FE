@@ -758,3 +758,28 @@
     font-size: 1.1rem;
   }
 }
+.appointment-card {
+  position: relative;
+  background: #d5f1e7; /* Slightly different bg for emphasis */
+  box-shadow: 0 6px 16px rgba(0, 123, 85, 0.15);
+}
+
+.appointment-card h3 {
+  color: #007b55; /* Darker green */
+}
+
+.appointment-button {
+  margin-top: 15px;
+  background-color: #007b55;
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  font-size: 1rem;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.appointment-button:hover {
+  background-color: #005936;
+}

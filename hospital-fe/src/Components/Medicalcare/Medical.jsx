@@ -206,7 +206,7 @@ const faqs = [
           <button className="appointment-button" onClick={handleBooksNowClick}>Book Now</button>
       </div>
       {/* New Appointment Card */}
-      <div className="homecare-card appointment-card">
+      <div className="homecare-card">
         <img src="https://img.icons8.com/color/96/000000/doctor-male.png" alt="Doctor Appointment" />
         <h3>Doctor Appointment</h3>
         <p>Schedule a home visit with our qualified doctors for personalized medical consultation and care.</p>
