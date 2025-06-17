@@ -169,3 +169,4 @@ const PatientSettings = () => {
 };
 
 export default PatientSettings;
+

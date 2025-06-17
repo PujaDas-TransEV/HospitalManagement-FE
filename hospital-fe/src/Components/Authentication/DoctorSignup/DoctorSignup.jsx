@@ -184,7 +184,7 @@ function DoctorSignupPage() {
           <input type="text" value={licenseNumber} onChange={e => setLicenseNumber(e.target.value)} required />
 
           {/* Email */}
-          <label>Email</label>
+          <label>Work Email</label>
           <input type="email" value={email} onChange={e => setEmail(e.target.value)} required />
 
           {/* Phone Number */}
