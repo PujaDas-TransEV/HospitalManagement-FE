@@ -237,7 +237,7 @@ const faqs = [
           <div className="testimonial-cards">
             <img src={testimonialImage} alt="Patient" />
             <p>"The care I received was exceptional. The staff was friendly, and I felt comfortable and cared for throughout my visit."</p>
-            <small>- Jane Doe</small>
+            <small>- Alice Dey</small>
           </div>
         </div>
       </section>
