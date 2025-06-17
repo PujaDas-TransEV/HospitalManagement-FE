@@ -118,12 +118,7 @@ const AdminDashboard = () => {
       </Card.Body>
     </Card>
   </Col>
-
-
-
-
-
-            <Col md={6} className="mb-4">
+<Col md={6} className="mb-4">
               <Card className="dashboard-card card-patients">
                 <Card.Body>
                   <FaUserInjured size={40} className="icon" />
@@ -189,7 +184,9 @@ const AdminDashboard = () => {
   <Col>
     <Card className="stats-card">
       <Card.Body>
-        <h5>Recent Activity</h5>
+        {/* <h5>Recent Activity</h5> */}
+        <h5 style={{ color: 'black' }}>Recent Activity</h5>
+
         {loading ? (
           <Spinner animation="border" />
         ) : (
