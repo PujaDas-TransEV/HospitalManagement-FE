@@ -34,7 +34,15 @@ const handleBookNowClick = () => {
     navigate('/patient-Appointments'); // Replace with your actual appointment route
   }
 };
+const handleBooksNowClick = () => {
+  const token = localStorage.getItem("accessToken"); // Or whatever key you use
 
+  if (!token) {
+    navigate('/login');
+  } else {
+    navigate('/home-care-service'); // Replace with your actual appointment route
+  }
+};
   // Function to close the modal
   const closeModal = () => {
     setIsModalOpen(false);
@@ -105,12 +113,27 @@ const faqs = [
       </section>
 
       {/* About Us Section */}
-      <section className="about-sections">
+      {/* <section className="about-sections">
         <div className="containers">
           <h2 className="section-headings">About Us</h2>
           <p>
             HealthCare Clinic has been serving the community for over 25 years. Our team of dedicated professionals strives to provide comprehensive and compassionate care to every patient.
           </p>
+        </div>
+      </section> */}
+{/* About Medical Care Section */}
+      <section className="about-sections">
+        <div className="containers">
+          <h2 className="section-headings">About Our Medical Care</h2>
+          <p>
+            At Lifecare Clinic, we combine cutting-edge technology with compassionate care to offer a wide range of medical services tailored to our patients' needs. With over 25 years of experience, we provide expert treatment across various specialties, backed by a team of skilled professionals dedicated to your health.
+          </p>
+          <ul className="about-list">
+            <li> 24/7 Emergency and Critical Care Units</li>
+            <li> State-of-the-art Diagnostic and Surgical Facilities</li>
+            <li> Comprehensive Inpatient and Outpatient Services</li>
+            <li> Patient-centered Approach and Friendly Staff</li>
+          </ul>
         </div>
       </section>
 
@@ -153,6 +176,47 @@ const faqs = [
           </div>
         </div>
       </section>
+<section className="homecare-sections">
+  <div className="containers">
+    <h2 className="section-headings">Our Homecare Services</h2>
+    <p>
+      We provide compassionate, personalized homecare to support your health and well-being in the comfort of your own home. Our trained caregivers offer a variety of services tailored to meet your unique needs.
+    </p>
+   
+    <div className="homecare-services-container">
+      <div className="homecare-card">
+        <img src="https://img.icons8.com/color/96/000000/heart-with-pulse.png" alt="Nursing Care" />
+        <h3>Nursing Care</h3>
+        <p>Professional medical care and monitoring by licensed nurses to support your recovery and chronic condition management.</p>
+          <button className="appointment-button" onClick={handleBooksNowClick}>Book Now</button>
+      </div>
+    
+     <div className="homecare-card labtest-card">
+  <img src="https://img.icons8.com/color/96/000000/test-tube.png" alt="Lab Test at Home" />
+  <h3>Lab Test at Home</h3>
+  <p>Convenient collection of blood and other samples at your home with accurate and timely lab testing.</p>
+  <button className="appointment-button" onClick={handleBooksNowClick}>Book Now</button>
+</div>
+
+
+      <div className="homecare-card">
+        <img src="https://img.icons8.com/color/96/000000/physical-therapy.png" alt="Rehabilitation" />
+        <h3>Rehabilitation Support</h3>
+        <p>Assistance with physical therapy exercises and mobility support to help regain independence.</p>
+          <button className="appointment-button" onClick={handleBooksNowClick}>Book Now</button>
+      </div>
+      {/* New Appointment Card */}
+      <div className="homecare-card appointment-card">
+        <img src="https://img.icons8.com/color/96/000000/doctor-male.png" alt="Doctor Appointment" />
+        <h3>Doctor Appointment</h3>
+        <p>Schedule a home visit with our qualified doctors for personalized medical consultation and care.</p>
+     
+          <button className="appointment-button" onClick={handleBooksNowClick}>Book Now</button>
+      </div>
+    </div>
+  </div>
+</section>
+
 
       {/* Meet Our Doctors Section */}
       <section className="doctors-sections">
