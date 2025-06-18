@@ -232,6 +232,7 @@ import AdminFeedback from './Components/Admin/Feedback/Feedback';
 import MedicalSurvey from './Components/MedicalSurvey/Survey';
 import AdminMedicalSurvey from './Components/Admin/MedicalSurvey/Survey';
 import GuestLogin  from './Components/Authentication/GuestLogin/guestlogin';
+import AdminNotification from './Components/Admin/AdminNotification/Notification';
 // ✅ Conditional Navbar using path matching
 const ConditionalNavbar = () => {
   const location = useLocation();
@@ -341,9 +342,10 @@ function App() {
            <Route path="/bill" element={< BillPage/>} />
            <Route path="/invoice" element={< PatientBill/>} />
             <Route path="/admin-feedback" element={<AdminFeedback/>} />
-             <Route path="/survey" element={<MedicalSurvey/>} />
-              <Route path="/admin-survey" element={<AdminMedicalSurvey/>} />
-               <Route path="/guest/login" element={<GuestLogin/>} />
+            <Route path="/survey" element={<MedicalSurvey/>} />
+           <Route path="/admin-survey" element={<AdminMedicalSurvey/>} />
+            <Route path="/guest/login" element={<GuestLogin/>} />
+            <Route path="/admin/notification" element={<AdminNotification/>} />
       </Routes>
     </Router>
   );

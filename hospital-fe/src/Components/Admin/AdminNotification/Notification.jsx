@@ -1,0 +1,202 @@
+
+// import React, { useState, useEffect } from 'react';
+// import AdminNotificationForm from './AdminNotificationform';
+// import './Notification.css';
+
+// const AdminNotificationList = () => {
+//   const [notifications, setNotifications] = useState([]);
+//   const [showForm, setShowForm] = useState(false);
+//   const [loading, setLoading] = useState(false);
+
+//   const fetchNotifications = async () => {
+//     setLoading(true);
+//     try {
+//       const res = await fetch('http://localhost:5000/notify/show/all');
+//       const data = await res.json();
+//       if (!res.ok) throw new Error(data.message || 'Failed to fetch');
+//       setNotifications(data);
+//     } catch (err) {
+//       console.error('Fetch error:', err);
+//     } finally {
+//       setLoading(false);
+//     }
+//   };
+
+//   useEffect(() => {
+//     fetchNotifications();
+//   }, []);
+
+//   const handleDelete = async (uid) => {
+//     if (!window.confirm('Delete this notification?')) return;
+//     try {
+//       const res = await fetch(`http://localhost:5000/notify/delete/${uid}`, {
+//         method: 'DELETE',
+//       });
+//       if (!res.ok) throw new Error('Delete failed');
+//       setNotifications((prev) => prev.filter((n) => n.uid !== uid));
+//     } catch (err) {
+//       alert(err.message);
+//     }
+//   };
+
+//   return (
+//     <div className="notification-wrapper">
+//       <h2>Admin Notifications</h2>
+
+//       <button onClick={() => setShowForm(true)} className="create-button">
+//         ➕ Create Notification
+//       </button>
+
+//       {showForm && (
+//         <AdminNotificationForm
+//           onClose={() => setShowForm(false)}
+//           onSuccess={fetchNotifications}
+//         />
+//       )}
+
+//       {loading ? (
+//         <p>Loading notifications...</p>
+//       ) : notifications.length === 0 ? (
+//         <p>No notifications found.</p>
+//       ) : (
+//         <div className="notification-list">
+//           {notifications.map((n) => (
+//             <div key={n.uid} className="notification-card">
+//               <div className="notification-header">
+//                 <h3>{n.notificationtitle}</h3>
+//                 <button onClick={() => handleDelete(n.uid)} className="delete-btn">🗑</button>
+//               </div>
+//               <p><strong>Type:</strong> {n.notificationtype}</p>
+//               <p>{n.notificationdescription}</p>
+//               <p><small>{new Date(n.created_at).toLocaleString()}</small></p>
+//             </div>
+//           ))}
+//         </div>
+//       )}
+//     </div>
+//   );
+// };
+
+// export default AdminNotificationList;
+import React, { useState, useEffect } from 'react';
+import AdminNotificationForm from './AdminNotificationform';
+import './Notification.css';
+
+const AdminNotificationList = () => {
+  const [notifications, setNotifications] = useState([]);
+  const [showForm, setShowForm] = useState(false);
+  const [loading, setLoading] = useState(false);
+
+  // Fetch all notifications
+  const fetchNotifications = async () => {
+    setLoading(true);
+    try {
+      const res = await fetch('http://localhost:5000/notify/show/all');
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.message || 'Failed to fetch');
+      setNotifications(data);
+    } catch (err) {
+      console.error('Fetch error:', err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchNotifications();
+  }, []);
+
+  // Handle delete notification
+  const handleDelete = async (uid) => {
+    if (!window.confirm('Delete this notification?')) return;
+    try {
+      const res = await fetch('http://localhost:5000/notify/delete', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ notificationuid: uid }),
+      });
+      if (!res.ok) throw new Error('Delete failed');
+      setNotifications((prev) => prev.filter((n) => n.uid !== uid));
+    } catch (err) {
+      alert(err.message);
+    }
+  };
+
+  // Handle update notification status
+  const handleStatusToggle = async (uid, currentStatus) => {
+    const newStatus = currentStatus === 'active' ? 'inactive' : 'active';
+    try {
+      const res = await fetch('http://localhost:5000/notify/update', {
+        method: 'POST',
+        body: new URLSearchParams({
+          notificationuid: uid,
+          notificationstatus: newStatus,
+        }),
+      });
+      if (!res.ok) throw new Error('Status update failed');
+      setNotifications((prev) =>
+        prev.map((n) =>
+          n.uid === uid ? { ...n, notificationstatus: newStatus } : n
+        )
+      );
+    } catch (err) {
+      alert(err.message);
+    }
+  };
+
+  return (
+    <div className="notification-wrapper">
+      <h2>Admin Notifications</h2>
+
+      <button onClick={() => setShowForm(true)} className="create-button">
+        ➕ Create Notification
+      </button>
+
+      {showForm && (
+        <AdminNotificationForm
+          onClose={() => setShowForm(false)}
+          onSuccess={fetchNotifications}
+        />
+      )}
+
+      {loading ? (
+        <p>Loading notifications...</p>
+      ) : notifications.length === 0 ? (
+        <p>No notifications found.</p>
+      ) : (
+        <div className="notification-list">
+          {notifications.map((n) => (
+            <div key={n.uid} className="notification-card">
+              <div className="notification-header">
+                <h3>{n.notificationtitle}</h3>
+                <button
+                  onClick={() => handleDelete(n.uid)}
+                  className="delete-btn"
+                >
+                  🗑
+                </button>
+              </div>
+              <p><strong>Type:</strong> {n.notificationtype}</p>
+              <p>{n.notificationdescription}</p>
+              <p>
+                <small>{new Date(n.created_at).toLocaleString()}</small>
+              </p>
+              <div className="status-toggle">
+                <button
+                  onClick={() =>
+                    handleStatusToggle(n.uid, n.notificationstatus)
+                  }
+                  className={n.notificationstatus === 'active' ? 'active' : 'inactive'}
+                >
+                  {n.notificationstatus === 'active' ? 'Deactivate' : 'Activate'}
+                </button>
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+};
+
+export default AdminNotificationList;
