@@ -4,22 +4,22 @@ import './Contact.css';
 import mapImage from '../Assests/hosmap.jpeg';
 import Footer from '../Footer/Footer'
 const ContactPage = () => {
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    message: '',
-  });
+  // const [formData, setFormData] = useState({
+  //   name: '',
+  //   email: '',
+  //   message: '',
+  // });
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData(prev => ({ ...prev, [name]: value }));
-  };
+  // const handleChange = (e) => {
+  //   const { name, value } = e.target;
+  //   setFormData(prev => ({ ...prev, [name]: value }));
+  // };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    alert('Your message has been sent successfully!');
-    setFormData({ name: '', email: '', message: '' });
-  };
+  // const handleSubmit = (e) => {
+  //   e.preventDefault();
+  //   alert('Your message has been sent successfully!');
+  //   setFormData({ name: '', email: '', message: '' });
+  // };
 
   return (
     <div className="contact-container">
@@ -79,7 +79,7 @@ const ContactPage = () => {
             </div>
             <div className="team-members">
               <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Nurse Jane Smith" />
-              <h4>Nurse Fatime Sekh</h4>
+              <h4>Nurse Shyamali Sen</h4>
               <p>Head Nurse</p>
             </div>
             <div className="team-members">
