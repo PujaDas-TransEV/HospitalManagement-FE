@@ -179,7 +179,7 @@ useEffect(() => {
                     {patients.length > 0 ? (
                       patients.map((patient) => (
                         <ListGroup.Item key={patient.id}>
-                          {patient.name} - Age: {patient.age} - Condition: {patient.condition}
+                          {patient.name} - Age: {patient.age} - Blood Group: {patient.condition}
                            <Link to="/patients" className="float-end">
                           <Button variant="outline-primary" size="sm" className="float-end">
                             View Record
