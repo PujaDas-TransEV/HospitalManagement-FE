@@ -8,7 +8,7 @@ import service2Image from '../Assests/hospital.jpg';
 import doctorImage from '../Assests/dt2.jpg';
 import testimonialImage from '../Assests/h1.avif';
 import mapImage from '../Assests/map.png';
-
+import Footer from '../Footer/Footer';
 const Medicalcare = () => {
   // State to control the modal visibility
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -336,7 +336,7 @@ const faqs = [
       )}
 
       {/* Footer Section */}
-      <div className="footer">
+       {/* <div className="footer">
         <div className="text">
           <h3 style={{ color: 'white' }}>About Us</h3>
         <p style={{ color: 'white' }}>24 Hours</p>
@@ -367,10 +367,11 @@ const faqs = [
   <p style={{ color: 'white' }}>Galaxy Care</p>
   <p style={{ color: 'white' }}>333-09093</p>
   <p style={{ color: 'white' }}>09-883-090</p>
-</div>
+</div> 
 
        
-      </div>
+      </div> */}
+      <Footer/>
     </div>
   );
 };

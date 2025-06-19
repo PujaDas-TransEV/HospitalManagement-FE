@@ -10,6 +10,7 @@ import NeurologyImage from '../img/slider/3(1).jpg';
 import OrthopedicsImage from '../img/slider/2(1).jpg';
 import PediatricsImage from '../img/slider/1(2).jpg';
 import './About.css';  
+import Footer from '../Footer/Footer';
 const About = () => {
   const lines = [
   "Empowering Health Choices for a Vibrant Life — Your Trusted Partner in Wellness",
@@ -305,28 +306,8 @@ const About = () => {
 
       {/* Footer */}
    
-<div style={{
-  backgroundColor: '#0B4C4C',
-  color: 'white',
-  display: 'flex',
-  justifyContent: 'space-around',
-  padding: '40px 20px',
-  flexWrap: 'wrap'
-}}>
-  {[
-    { title: 'About Us', items: ['24 Hours', 'Top Doctor', 'Best Care', 'Patient'] },
-    { title: 'Speciality', items: ['Knee surgery', 'Spin surgery', 'Leg surgery', 'Tendon surgery'] },
-    { title: 'Best Teams', items: ['Doctors', 'Nursing', 'Staff', 'Hospital'] },
-    { title: 'Address', items: ['Near MG Road', 'Galaxy Care', '333-09093', '09-883-090'] },
-  ].map((section, i) => (
-    <div key={i} style={{ marginBottom: '20px' }}>
-      <h3 style={{ color: 'white' }}>{section.title}</h3>
-      {section.items.map((item, j) => (
-        <p key={j} style={{ color: 'whitesmoke' }}>{item}</p>
-      ))}
-    </div>
-  ))}
-</div>
+
+<Footer/>
 
     </div>
   );
