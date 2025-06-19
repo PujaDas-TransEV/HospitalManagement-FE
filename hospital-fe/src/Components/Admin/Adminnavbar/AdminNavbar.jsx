@@ -1,3 +1,4 @@
+
 // import React, { useState, useEffect } from "react";
 // import { useNavigate } from "react-router-dom";
 // import { jwtDecode } from "jwt-decode";
@@ -7,7 +8,7 @@
 //   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 //   const [adminData, setAdminData] = useState({
 //     name: "",
-//     profilePicture: "/images/default-profile.jpg", // Default profile picture
+//     profilePicture: "/images/default-profile.jpg",
 //   });
 
 //   const navigate = useNavigate();
@@ -37,7 +38,7 @@
 
 //         const data = await response.json();
 
-//         if (response.ok) {
+//         if (response.ok && data.data) {
 //           setAdminData({
 //             name: data.data.name,
 //             profilePicture: data.data.profilepicture
@@ -56,7 +57,7 @@
 //   }, [navigate]);
 
 //   const toggleDropdown = () => {
-//     setIsDropdownOpen(!isDropdownOpen);
+//     setIsDropdownOpen((prev) => !prev);
 //   };
 
 //   const handleMyProfile = () => {
@@ -70,43 +71,37 @@
 //   };
 
 //   return (
-//   <div className="admin-navbar">
-//     <div className="navbar-content">
-//       <div className="brand-name">LifeCare Admin</div>
-//     <div className="admin-profile-section" onClick={toggleDropdown}>
-//   <span className="admin-name" style={{ marginRight: '10px' }}>
-//     {adminData.name}
-//   </span>
-//   {/* <img
-//     src={adminData.profilePicture}
-//     alt="Admin"
-//     className="admin-profile-img"
-//   /> */}
+//     <div className="admin-navbar">
+//       <div className="navbar-content">
+//         <div className="brand-name">LifeCare Admin</div>
 
+//         <div className="admin-profile-section">
+//           <span className="admin-name">{adminData.name}</span>
+//           <span className="dropdown-icon" onClick={toggleDropdown}>
+//             ▼
+//           </span>
 
-//         {/* <span className="admin-name">{adminData.name}</span> */}
-
-//         {isDropdownOpen && (
-//           <div className="dropdown-menu">
-//             <button className="dropdown-item" onClick={handleMyProfile}>
-//               Profile Settings
-//             </button>
-//             <button className="dropdown-item" onClick={handleLogout}>
-//               Logout
-//             </button>
-//           </div>
-//         )}
+//           {isDropdownOpen && (
+//             <div className="dropdown-menu">
+//               <button className="dropdown-item" onClick={handleMyProfile}>
+//                 Profile Settings
+//               </button>
+//               <button className="dropdown-item" onClick={handleLogout}>
+//                 Logout
+//               </button>
+//             </div>
+//           )}
+//         </div>
 //       </div>
 //     </div>
-//   </div>
-// );
- 
+//   );
 // };
 
 // export default AdminNavbar;
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { jwtDecode } from "jwt-decode";
+import { FaBell } from "react-icons/fa"; // 👈 Notification icon import
 import "./AdminNavbar.css";
 
 const AdminNavbar = () => {
@@ -175,12 +170,19 @@ const AdminNavbar = () => {
     navigate("/admin/login");
   };
 
+  const handleNotifications = () => {
+    navigate("/admin/notification");
+  };
+
   return (
     <div className="admin-navbar">
       <div className="navbar-content">
         <div className="brand-name">LifeCare Admin</div>
 
         <div className="admin-profile-section">
+          {/* 👇 Notification icon */}
+          <FaBell className="notification-icon" onClick={handleNotifications} title="Notifications" />
+
           <span className="admin-name">{adminData.name}</span>
           <span className="dropdown-icon" onClick={toggleDropdown}>
             ▼

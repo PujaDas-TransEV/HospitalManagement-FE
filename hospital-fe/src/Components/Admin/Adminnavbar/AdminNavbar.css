@@ -162,3 +162,32 @@
     height: 36px;
   }
 }
+.notification-icon {
+  font-size: 1.25rem; /* scales with root font size */
+  color: #ffffff;
+  margin-right: 1rem;
+  cursor: pointer;
+  transition: color 0.2s, transform 0.2s;
+}
+
+/* Hover effect */
+.notification-icon:hover {
+  color: #ffc107;
+  transform: scale(1.1); /* slight zoom effect */
+}
+
+/* For tablets (≤ 768px) */
+@media (max-width: 768px) {
+  .notification-icon {
+    font-size: 1.1rem;
+    margin-right: 0.75rem;
+  }
+}
+
+/* For phones (≤ 480px) */
+@media (max-width: 480px) {
+  .notification-icon {
+    font-size: 1rem;
+    margin-right: 0.5rem;
+  }
+}

@@ -255,7 +255,7 @@ const ConditionalNavbar = () => {
     '/home-care-service', '/home-care-request', '/homecare',
     '/patients', '/patient-navbar', '/patient-sidebar',
     '/doctor-navbar', '/doctor-sidebar', '/adnavbar', '/adsidebar','/doctor-homecare','/labreport',
-    '/admin/labreport','/admin-labtest','/admin-billing','/bill','/invoice','/admin-feedback','/admin-survey'
+    '/admin/labreport','/admin-labtest','/admin-billing','/bill','/invoice','/admin-feedback','/admin-survey','/admin/notification'
   ];
 
   const hidePatterns = [
