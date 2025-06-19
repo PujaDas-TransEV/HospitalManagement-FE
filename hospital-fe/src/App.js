@@ -233,6 +233,7 @@ import MedicalSurvey from './Components/MedicalSurvey/Survey';
 import AdminMedicalSurvey from './Components/Admin/MedicalSurvey/Survey';
 import GuestLogin  from './Components/Authentication/GuestLogin/guestlogin';
 import AdminNotification from './Components/Admin/AdminNotification/Notification';
+import DoctorNotification from './Components/Doctors/DoctorNotification/DoctorNotification';
 // ✅ Conditional Navbar using path matching
 const ConditionalNavbar = () => {
   const location = useLocation();
@@ -255,7 +256,7 @@ const ConditionalNavbar = () => {
     '/home-care-service', '/home-care-request', '/homecare',
     '/patients', '/patient-navbar', '/patient-sidebar',
     '/doctor-navbar', '/doctor-sidebar', '/adnavbar', '/adsidebar','/doctor-homecare','/labreport',
-    '/admin/labreport','/admin-labtest','/admin-billing','/bill','/invoice','/admin-feedback','/admin-survey','/admin/notification'
+    '/admin/labreport','/admin-labtest','/admin-billing','/bill','/invoice','/admin-feedback','/admin-survey','/admin/notification','/doctor/notification'
   ];
 
   const hidePatterns = [
@@ -346,6 +347,7 @@ function App() {
            <Route path="/admin-survey" element={<AdminMedicalSurvey/>} />
             <Route path="/guest/login" element={<GuestLogin/>} />
             <Route path="/admin/notification" element={<AdminNotification/>} />
+              <Route path="/doctor/notification" element={<DoctorNotification/>} />
       </Routes>
     </Router>
   );

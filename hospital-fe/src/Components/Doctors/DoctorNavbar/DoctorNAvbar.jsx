@@ -1,7 +1,9 @@
+
 import React, { useState, useEffect } from "react";
-import { Navbar, Nav, Dropdown } from "react-bootstrap";
+import { Navbar, Nav, Dropdown, Badge } from "react-bootstrap";
 import { jwtDecode } from "jwt-decode";
 import { useNavigate } from "react-router-dom";
+import { FaBell } from "react-icons/fa";
 import './DoctorNavbar.css';
 
 const DoctorNavbar = () => {
@@ -10,6 +12,8 @@ const DoctorNavbar = () => {
     fullname: "",
     profilepictures: "/images/default-profile.jpg",
   });
+  const [unseenCount, setUnseenCount] = useState(0);
+  const [unseenNotifications, setUnseenNotifications] = useState([]);
 
   const navigate = useNavigate();
 
@@ -18,9 +22,8 @@ const DoctorNavbar = () => {
   useEffect(() => {
     const fetchDoctorInfo = async () => {
       const accessToken = localStorage.getItem("accessToken");
-      if (!accessToken) {
-        return;
-      }
+      if (!accessToken) return;
+
       try {
         const decodedToken = jwtDecode(accessToken);
         const doctorId = decodedToken.doctorid;
@@ -48,8 +51,47 @@ const DoctorNavbar = () => {
       }
     };
 
+    const fetchUnseenNotifications = async () => {
+      try {
+        const res = await fetch("http://localhost:5000/notify/show/unseen");
+        const data = await res.json();
+        if (res.ok && Array.isArray(data.notifications)) {
+          setUnseenCount(data.unseen_count || 0);
+          setUnseenNotifications(data.notifications);
+        }
+      } catch (err) {
+        console.error("Error fetching unseen notifications:", err);
+      }
+    };
+
     fetchDoctorInfo();
+    fetchUnseenNotifications();
   }, []);
+
+  const handleBellClick = async () => {
+    try {
+      for (const notification of unseenNotifications) {
+        const formData = new FormData();
+        formData.append("notificationuid", notification.uid);
+
+        const res = await fetch("http://localhost:5000/notify/unseen/update", {
+          method: "POST",
+          body: formData,
+        });
+
+        if (!res.ok) {
+          console.error("Failed to update notification:", notification.uid);
+        }
+      }
+
+      // Reset unseen count after all updates
+      setUnseenCount(0);
+    } catch (error) {
+      console.error("Failed to update notification seen status:", error);
+    }
+
+    navigate("/doctor/notification");
+  };
 
   const handleLogout = () => {
     localStorage.removeItem("accessToken");
@@ -59,10 +101,20 @@ const DoctorNavbar = () => {
   return (
     <Navbar bg="dark" variant="dark" expand="lg" className="doctor-navbar" fixed="top">
       <Navbar.Brand href="/">LifeCare</Navbar.Brand>
-      {/* <Navbar.Toggle aria-controls="basic-navbar-nav" /> */}
 
       <Navbar.Collapse id="basic-navbar-nav" className="justify-content-end">
-        <Nav>
+        <Nav className="align-items-center">
+          {/* Notification Icon with Badge */}
+          <div className="notification-icon" onClick={handleBellClick}>
+            <FaBell size={20} color="white" />
+            {unseenCount > 0 && (
+              <Badge pill bg="danger" className="notification-badge">
+                {unseenCount}
+              </Badge>
+            )}
+          </div>
+
+          {/* Profile Dropdown */}
           <Dropdown
             align="end"
             show={profileOpen}

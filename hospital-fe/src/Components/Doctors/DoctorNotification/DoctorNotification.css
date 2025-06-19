@@ -1,0 +1,95 @@
+.doctor-navbar .notification-icon-wrapper {
+  position: relative;
+  margin-right: 1rem;
+  cursor: pointer;
+}
+
+.notification-icon {
+  font-size: 1.25rem;
+  color: #fff;
+}
+
+.notification-count {
+  position: absolute;
+  top: -6px;
+  right: -8px;
+  font-size: 0.75rem;
+}
+.doctor-notifications-page {
+  padding-top: 70px; /* To offset fixed navbar */
+  background-color: #f8f9fa;
+  min-height: 100vh;
+}
+
+.notification-content {
+  max-width: 900px;
+  margin: auto;
+  padding: 20px;
+}
+
+.notification-content h2 {
+  text-align: center;
+  margin-bottom: 30px;
+  color: #333;
+}
+
+.notification-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.notification-item {
+  background: #fff;
+  border-left: 5px solid #007bff;
+  padding: 15px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+  border-radius: 5px;
+}
+
+.notification-info {
+  flex-grow: 1;
+}
+
+.notification-info h4 {
+  margin: 0 0 8px;
+  color: #007bff;
+}
+
+.notification-info p {
+  margin: 0 0 5px;
+  color: #444;
+}
+
+.timestamp {
+  font-size: 0.85rem;
+  color: #666;
+}
+
+.delete-button {
+  background: transparent;
+  border: none;
+  color: #dc3545;
+  font-size: 1.2rem;
+  cursor: pointer;
+  margin-left: 15px;
+}
+
+.delete-button:hover {
+  color: #a30000;
+}
+
+@media (max-width: 600px) {
+  .notification-item {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .delete-button {
+    align-self: flex-end;
+    margin-top: 10px;
+  }
+}
