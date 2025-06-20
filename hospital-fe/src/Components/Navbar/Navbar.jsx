@@ -96,6 +96,10 @@ const Navbar = () => {
     navigate('/doctor-login');
     setShowDropdown(false);
   };
+  const handleGuestLogin = () => {
+    navigate('/guest/login');
+    setShowDropdown(false);
+  };
 
   const handleLogout = () => {
     localStorage.removeItem('accessToken');
@@ -133,6 +137,7 @@ const Navbar = () => {
             <div className="dropdown-menu">
               <button onClick={handlePatientLogin}>Patient Login</button>
               <button onClick={handleDoctorLogin}>Doctor Login</button>
+               <button onClick={handleGuestLogin}>Guest Login</button>
             </div>
           )}
         </div>

@@ -1,7 +1,7 @@
-
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { PDFDownloadLink } from '@react-pdf/renderer';
+import { Button, Spinner, Alert } from 'react-bootstrap';
 import LabReportPDF from './LabreportPdf';
 import PatientNavbar from '../Navbar/PatientNavbar';
 import PatientSidebar from '../Sidebar/PatientSidebar';
@@ -9,9 +9,18 @@ import PatientSidebar from '../Sidebar/PatientSidebar';
 const LabReportPage = () => {
   const [labReports, setLabReports] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [togglingAccessId, setTogglingAccessId] = useState(null);
+  const [error, setError] = useState(null);
+
   const patientId = localStorage.getItem('patientId');
+  const token = localStorage.getItem('token');
+  const userRole = localStorage.getItem('role'); // 'patient' or 'guest'
+  const isGuest = userRole === 'guest';
 
   const fetchLabReports = async () => {
+    setLoading(true);
+    setError(null);
+
     try {
       const formData = new FormData();
       formData.append('patientid', patientId);
@@ -21,15 +30,22 @@ const LabReportPage = () => {
         formData,
         {
           headers: {
-            Authorization: `Bearer ${localStorage.getItem('token')}`,
+            Authorization: `Bearer ${token}`,
             'Content-Type': 'multipart/form-data',
           },
         }
       );
 
-      setLabReports(response.data.data || []);
+      let reports = response.data.data || [];
+
+      if (isGuest) {
+        reports = reports.filter((report) => report.guestaccess === 'yes');
+      }
+
+      setLabReports(reports);
     } catch (error) {
       console.error('Error fetching lab reports:', error);
+      setError('Failed to fetch lab reports.');
     } finally {
       setLoading(false);
     }
@@ -39,7 +55,6 @@ const LabReportPage = () => {
     if (patientId) fetchLabReports();
   }, [patientId]);
 
-  // DELETE handler
   const handleDelete = async (labreportid) => {
     if (!window.confirm('Are you sure you want to delete this lab report?')) return;
 
@@ -49,15 +64,54 @@ const LabReportPage = () => {
 
       await axios.post('http://192.168.0.106:5000/ops/deletelabs', formData, {
         headers: {
-          Authorization: `Bearer ${localStorage.getItem('token')}`,
+          Authorization: `Bearer ${token}`,
           'Content-Type': 'multipart/form-data',
         },
       });
 
-      // Refresh list after delete
       fetchLabReports();
     } catch (error) {
       console.error('Error deleting lab report:', error);
+      setError('Failed to delete lab report.');
+    }
+  };
+
+  const toggleGuestAccess = async (report) => {
+    const newAccess = report.guestaccess === 'yes' ? 'no' : 'yes';
+    setTogglingAccessId(report.labreportid);
+    setError(null);
+
+    try {
+      const formData = new FormData();
+      formData.append('patientid', patientId);
+      formData.append('labid', report.labreportid);
+      formData.append('guestaccess', newAccess);
+
+      const response = await axios.post(
+        'http://localhost:5000/patientops/labdataaccessupdate',
+        formData,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            'Content-Type': 'multipart/form-data',
+          },
+        }
+      );
+
+      if (response.status === 200) {
+        setLabReports((prev) =>
+          prev.map((r) =>
+            r.labreportid === report.labreportid ? { ...r, guestaccess: newAccess } : r
+          )
+        );
+      } else {
+        setError('Failed to update guest access.');
+      }
+    } catch (error) {
+      console.error('Failed to update guest access:', error);
+      setError('Error updating guest access.');
+    } finally {
+      setTogglingAccessId(null);
     }
   };
 
@@ -69,8 +123,9 @@ const LabReportPage = () => {
         <div className="lab-report-page" style={{ padding: '30px', flex: 1 }}>
           <h2 style={{ color: '#0056b3', marginBottom: '20px' }}>Your Lab Reports</h2>
 
+          {error && <Alert variant="danger">{error}</Alert>}
           {loading ? (
-            <p style={{ color: '#333' }}>Loading your lab reports, please wait...</p>
+            <Spinner animation="border" variant="primary" />
           ) : labReports.length > 0 ? (
             labReports.map((report) => (
               <div
@@ -96,7 +151,11 @@ const LabReportPage = () => {
                 <p><strong>Report ID:</strong> {report.labreportid}</p>
                 <p><strong>Created At:</strong> {new Date(report.createdat).toLocaleString()}</p>
 
-                <div style={{ display: 'flex', gap: '10px', marginTop: '20px' }}>
+                {!isGuest && (
+                  <p><strong>Guest Access:</strong> {report.guestaccess === 'yes' ? 'Granted' : 'Denied'}</p>
+                )}
+
+                <div style={{ display: 'flex', gap: '10px', marginTop: '20px', flexWrap: 'wrap' }}>
                   <PDFDownloadLink
                     document={<LabReportPDF report={report} />}
                     fileName={`Lab_Report_${report.labreportid}.pdf`}
@@ -113,25 +172,37 @@ const LabReportPage = () => {
                     {({ loading }) => (loading ? 'Generating PDF...' : 'Download PDF')}
                   </PDFDownloadLink>
 
-                  <button
-                    onClick={() => handleDelete(report.labreportid)}
-                    style={{
-                      backgroundColor: '#dc3545',
-                      color: '#fff',
-                      padding: '10px 20px',
-                      border: 'none',
-                      borderRadius: '5px',
-                      fontSize: '14px',
-                      cursor: 'pointer',
-                    }}
-                  >
-                    Delete Report
-                  </button>
+                  {!isGuest && (
+                    <>
+                      <Button
+                        variant="danger"
+                        onClick={() => handleDelete(report.labreportid)}
+                      >
+                        Delete Report
+                      </Button>
+
+                      <Button
+                        variant={report.guestaccess === 'yes' ? 'danger' : 'success'}
+                        onClick={() => toggleGuestAccess(report)}
+                        disabled={togglingAccessId === report.labreportid}
+                      >
+                        {togglingAccessId === report.labreportid
+                          ? 'Updating...'
+                          : report.guestaccess === 'yes'
+                          ? 'Revoke Access'
+                          : 'Grant Access'}
+                      </Button>
+                    </>
+                  )}
                 </div>
               </div>
             ))
           ) : (
-            <p style={{ color: '#888' }}>No lab reports found for this patient.</p>
+            <p style={{ color: '#888' }}>
+              {isGuest
+                ? 'No lab reports are currently accessible to guests.'
+                : 'No lab reports found for this patient.'}
+            </p>
           )}
         </div>
       </div>

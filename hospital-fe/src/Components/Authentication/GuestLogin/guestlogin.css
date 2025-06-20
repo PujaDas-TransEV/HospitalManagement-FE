@@ -1,76 +1,101 @@
-/* GuestLogin.css */
-
-.guest-login-container {
-  max-width: 600px;
+/* Wrapper */
+.guest-login-wrapper {
+  max-width: 450px;
   margin: 40px auto;
-  padding: 30px;
-  background: #ffffff;
+  padding: 30px 25px;
+  background: #f9f9f9;
   border-radius: 10px;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-.guest-login-container h2,
-.guest-login-container h3 {
+/* Heading */
+.guest-login-wrapper h2 {
   text-align: center;
-  color: #0056b3;
-  margin-bottom: 20px;
+  margin-bottom: 25px;
+  color: #333;
 }
 
-.guest-login-container input[type='text'],
-.guest-login-container input[type='email'] {
-  width: 100%;
-  padding: 12px;
-  margin-bottom: 15px;
-  border: 1px solid #ccc;
+/* Form container */
+.guest-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+/* Inputs */
+.guest-form input[type="email"],
+.guest-form input[type="text"] {
+  padding: 12px 15px;
+  font-size: 1rem;
+  border: 1.8px solid #ccc;
   border-radius: 6px;
-  font-size: 16px;
+  transition: border-color 0.3s ease;
 }
 
-.guest-login-container button {
-  width: 100%;
+.guest-form input[type="email"]:focus,
+.guest-form input[type="text"]:focus {
+  border-color: #72c02c;
+  outline: none;
+}
+
+/* Buttons */
+.guest-form button {
   padding: 12px;
-  background-color: #007bff;
-  color: #fff;
-  font-size: 16px;
+  font-size: 1rem;
+  font-weight: 600;
+  color: white;
+  background-color: #72c02c;
   border: none;
   border-radius: 6px;
   cursor: pointer;
   transition: background-color 0.3s ease;
 }
 
-.guest-login-container button:hover {
-  background-color: #0056b3;
+.guest-form button:hover {
+  background-color: #5a9600;
 }
 
-.guest-login-container .message {
+/* Message paragraph */
+.guest-message {
+  margin-top: 20px;
   text-align: center;
-  margin-top: 15px;
-  color: #333;
-  font-size: 15px;
+  font-weight: 600;
+  color: #72c02c;
 }
 
+/* Lab reports section */
+.lab-reports-section {
+  margin-top: 30px;
+}
+
+.lab-reports-section h3 {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+/* Lab report cards */
 .lab-report-card {
-  margin-top: 25px;
-  padding: 20px;
-  border-radius: 10px;
-  background-color: #f8f9fa;
-  border-left: 5px solid #007bff;
-  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.1);
+  background-color: white;
+  padding: 20px 18px;
+  margin-bottom: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(114, 192, 44, 0.15);
+  color: #333;
+  font-size: 0.95rem;
+  line-height: 1.4;
+  transition: box-shadow 0.3s ease;
+}
+
+.lab-report-card:hover {
+  box-shadow: 0 6px 16px rgba(114, 192, 44, 0.35);
 }
 
 .lab-report-card p {
-  margin: 5px 0;
-  font-size: 15px;
+  margin: 6px 0;
 }
 
-@media screen and (max-width: 600px) {
-  .guest-login-container {
-    margin: 20px;
-    padding: 20px;
-  }
-
-  .lab-report-card {
-    padding: 15px;
-  }
+.lab-report-card strong {
+  color: #72c02c;
 }

@@ -1,5 +1,7 @@
+
 import React, { useState } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';  // import useNavigate
 import './guestlogin.css';
 
 const GuestLogin = () => {
@@ -13,8 +15,7 @@ const GuestLogin = () => {
 
   const [step, setStep] = useState(1);
   const [message, setMessage] = useState('');
-  const [labReports, setLabReports] = useState([]);
-  const [token, setToken] = useState(null);
+  const navigate = useNavigate();  // initialize navigate
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -34,6 +35,8 @@ const GuestLogin = () => {
       if (response.status === 200) {
         setMessage('OTP sent successfully. Check your email or phone.');
         setStep(2);
+      } else {
+        setMessage('Failed to send OTP. Please check your details.');
       }
     } catch (error) {
       setMessage('Error sending OTP. Please check your input.');
@@ -56,32 +59,20 @@ const GuestLogin = () => {
       if (otpResponse.status === 200 && otpResponse.data?.session?.patient_uid) {
         const patientId = otpResponse.data.session.patient_uid;
         const authToken = otpResponse.data.token;
-        setToken(authToken);
 
-        setMessage('OTP verified. Fetching lab reports...');
+        // Store token & patientId in localStorage for dashboard use
+        localStorage.setItem('guestToken', authToken);
+        localStorage.setItem('guestPatientId', patientId);
 
-        const labDataResponse = await axios.post(
-          'http://localhost:5000/guestlogin/allguestaccesslabdata',
-          { patientid: patientId },
-          {
-            headers: {
-              'Content-Type': 'application/json',
-              Authorization: `Bearer ${authToken}`
-            }
-          }
-        );
-
-        if (labDataResponse.data?.data?.length > 0) {
-          setLabReports(labDataResponse.data.data);
-          setMessage('Lab reports fetched successfully.');
-        } else {
-          setMessage('No accessible lab reports found.');
-        }
+        setMessage('OTP verified! Redirecting to your dashboard...');
+        
+        // Redirect to guest dashboard
+        navigate('/guest-dashboard');
       } else {
         setMessage('Invalid OTP or session data missing.');
       }
     } catch (error) {
-      setMessage('Error verifying OTP or fetching lab reports.');
+      setMessage('Error verifying OTP.');
       console.error(error);
     }
   };
@@ -92,39 +83,52 @@ const GuestLogin = () => {
 
       {step === 1 && (
         <div className="guest-form">
-          <input type="email" name="hospital_email" placeholder="Hospital Email" value={formData.hospital_email} onChange={handleChange} />
-          <input type="text" name="hospital_mobile" placeholder="Hospital Mobile" value={formData.hospital_mobile} onChange={handleChange} />
-          <input type="email" name="patient_email" placeholder="Patient Email" value={formData.patient_email} onChange={handleChange} />
-          <input type="text" name="patient_mobile" placeholder="Patient Mobile" value={formData.patient_mobile} onChange={handleChange} />
+          <input
+            type="email"
+            name="hospital_email"
+            placeholder="Hospital Email"
+            value={formData.hospital_email}
+            onChange={handleChange}
+          />
+          <input
+            type="text"
+            name="hospital_mobile"
+            placeholder="Hospital Mobile"
+            value={formData.hospital_mobile}
+            onChange={handleChange}
+          />
+          <input
+            type="email"
+            name="patient_email"
+            placeholder="Patient Email"
+            value={formData.patient_email}
+            onChange={handleChange}
+          />
+          <input
+            type="text"
+            name="patient_mobile"
+            placeholder="Patient Mobile"
+            value={formData.patient_mobile}
+            onChange={handleChange}
+          />
           <button onClick={sendOTP}>Send OTP</button>
         </div>
       )}
 
       {step === 2 && (
         <div className="guest-form">
-          <input type="text" name="otp" placeholder="Enter OTP" value={formData.otp} onChange={handleChange} />
-          <button onClick={verifyOTPAndFetchData}>Verify OTP & Fetch Reports</button>
+          <input
+            type="text"
+            name="otp"
+            placeholder="Enter OTP"
+            value={formData.otp}
+            onChange={handleChange}
+          />
+          <button onClick={verifyOTPAndFetchData}>Verify OTP & Go to Dashboard</button>
         </div>
       )}
 
       {message && <p className="guest-message">{message}</p>}
-
-      {labReports.length > 0 && (
-        <div className="lab-reports-section">
-          <h3>Accessible Lab Reports</h3>
-          {labReports.map((report, idx) => (
-            <div key={idx} className="lab-report-card">
-              <p><strong>Patient:</strong> {report.patientname}</p>
-              <p><strong>Age:</strong> {report.patientage}</p>
-              <p><strong>Symptoms:</strong> {report.patientsymptoms}</p>
-              <p><strong>Test Type:</strong> {report.typeoftest}</p>
-              <p><strong>Doctor:</strong> {report.doctorreferal}</p>
-              <p><strong>Final Report:</strong> {report.finalreport}</p>
-              <p><strong>Created At:</strong> {new Date(report.created_at).toLocaleString()}</p>
-            </div>
-          ))}
-        </div>
-      )}
     </div>
   );
 };

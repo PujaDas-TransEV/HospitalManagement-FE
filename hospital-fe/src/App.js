@@ -235,6 +235,9 @@ import GuestLogin  from './Components/Authentication/GuestLogin/guestlogin';
 import AdminNotification from './Components/Admin/AdminNotification/Notification';
 import DoctorNotification from './Components/Doctors/DoctorNotification/DoctorNotification';
 import Footer from './Components/Footer/Footer';
+import GuestDashboardWrapper from './Components/Guest/GuestDashboard';
+import Guestlabreport from './Components/Guest/Guestlabreport.jsx/labreport';
+import GuestPrescription from './Components/Guest/GuestPrescription/Prescription';
 // ✅ Conditional Navbar using path matching
 const ConditionalNavbar = () => {
   const location = useLocation();
@@ -257,7 +260,7 @@ const ConditionalNavbar = () => {
     '/home-care-service', '/home-care-request', '/homecare',
     '/patients', '/patient-navbar', '/patient-sidebar',
     '/doctor-navbar', '/doctor-sidebar', '/adnavbar', '/adsidebar','/doctor-homecare','/labreport',
-    '/admin/labreport','/admin-labtest','/admin-billing','/bill','/invoice','/admin-feedback','/admin-survey','/admin/notification','/doctor/notification'
+    '/admin/labreport','/admin-labtest','/admin-billing','/bill','/invoice','/admin-feedback','/admin-survey','/admin/notification','/doctor/notification','/guest-dashboard','/guest/lab-reports','/guest/prescriptions'
   ];
 
   const hidePatterns = [
@@ -350,6 +353,9 @@ function App() {
             <Route path="/admin/notification" element={<AdminNotification/>} />
               <Route path="/doctor/notification" element={<DoctorNotification/>} />
                   <Route path="/footer" element={<Footer/>} />
+                   <Route path="/guest-dashboard" element={<GuestDashboardWrapper/>} />
+                      <Route path="/guest/lab-reports" element={<Guestlabreport/>} />
+                        <Route path="/guest/prescriptions" element={<GuestPrescription/>} />
       </Routes>
     </Router>
   );

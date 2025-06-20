@@ -1,0 +1,84 @@
+.guest-dashboard {
+  max-width: 800px;
+  margin: 40px auto;
+  padding: 25px;
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 5px 18px rgba(0,0,0,0.1);
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.guest-dashboard h2 {
+  text-align: center;
+  color: #005B96;
+  margin-bottom: 25px;
+}
+
+.patient-card {
+  background: #F9FAFB;
+  border: 1px solid #E5E9F0;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 20px;
+}
+
+.patient-info p {
+  font-size: 16px;
+  color: #333;
+  margin-bottom: 8px;
+}
+
+.patient-info strong {
+  color: #005B96;
+}
+
+.patient-actions {
+  display: flex;
+  justify-content: space-evenly;
+  gap: 15px;
+  flex-wrap: wrap;
+}
+
+.action-btn {
+  background-color: #005B96;
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  font-size: 15px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.action-btn:hover {
+  background-color: #003f6b;
+}
+
+.prescription-btn {
+  background-color: #028090;
+}
+
+.prescription-btn:hover {
+  background-color: #016877;
+}
+
+.centered-message {
+  text-align: center;
+  margin-top: 60px;
+  font-size: 18px;
+  color: #666;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 600px) {
+  .patient-card {
+    padding: 15px;
+  }
+  
+  .action-btn {
+    width: 100%;
+    margin-bottom: 10px;
+  }
+}
