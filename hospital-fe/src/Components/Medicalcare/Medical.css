@@ -280,7 +280,7 @@
   }
   
   .testimonial-cards {
-    background-color: white;
+    background-color: rgb(170, 231, 226);
     padding: 20px;
     width: 80%;
     text-align: center;
@@ -309,7 +309,7 @@
   }
   
  
-  .appointment-sections {
+  /* .appointment-sections {
     background-color: #fff;
     text-align: center;
   }
@@ -332,8 +332,34 @@
   
   .appointment-sections .cta-button:hover {
     background-color: #5a9c1a;
-  }
-  
+  } */
+  .appointment-sections {
+  background: linear-gradient(135deg, #e0f7fa, #ffffff); /* Light aqua gradient */
+  padding: 60px 20px;
+  text-align: center;
+}
+
+.section-headings {
+  font-size: 2.5rem;
+  color: #2c3e50;
+  margin-bottom: 30px;
+}
+
+.cta-buttons {
+  background-color: #72c02c;
+  color: white;
+  font-size: 18px;
+  padding: 14px 30px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.cta-buttons:hover {
+  background-color: #5aa421;
+}
+
 
   .contact-sections {
     background-image: url('../Assests/map.png');
