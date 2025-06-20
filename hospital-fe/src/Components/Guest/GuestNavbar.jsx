@@ -1,14 +1,15 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import './GuestNavbar.css'; // Make sure CSS is imported
 
 const GuestNavbar = () => {
   const navigate = useNavigate();
 
   const handleLogout = () => {
-    // Remove the token from localStorage
-    localStorage.removeItem('token');
-    localStorage.removeItem('role'); // optional, remove role too
-    localStorage.removeItem('patientId'); // optional, if exists
+    // Remove guest data from localStorage
+    localStorage.removeItem('guestToken');
+    localStorage.removeItem('guestPatientId');
+    localStorage.removeItem('role'); // optional
 
     // Redirect to guest login/home page
     navigate('/');
