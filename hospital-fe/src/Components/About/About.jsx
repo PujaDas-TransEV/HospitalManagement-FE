@@ -174,7 +174,7 @@ const About = () => {
       </div>
 
       {/* Values Section */}
-      <div style={{ backgroundColor: '#fdfd96', padding: '40px', display: 'flex', flexWrap: 'wrap' }}>
+      <div style={{ backgroundColor: '#fffacd', padding: '40px', display: 'flex', flexWrap: 'wrap' }}>
         <div style={{ flex: '1', padding: '10px' }}>
           <img src={ValuesImage} alt="Values" style={{ width: '100%' }} />
         </div>

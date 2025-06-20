@@ -1,46 +1,71 @@
-import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom'; // Import Link and useNavigate hook
-import './AdminLogin.css';  // You can reuse the same CSS file for styling
+import React, { useState, useEffect } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { jwtDecode } from 'jwt-decode';
+import './AdminLogin.css';
 
 function AdminLoginPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const navigate = useNavigate();  // Initialize the useNavigate hook
+  const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
-  // Handle form submission for admin login
-  const handleSubmit = (event) => {
+  // ✅ Check token on component mount
+  useEffect(() => {
+    const token = localStorage.getItem('accessToken');
+    if (token) {
+      try {
+        const decoded = jwtDecode(token);
+        if (decoded.exp * 1000 > Date.now()) {
+          // Token valid - redirect to dashboard
+          navigate('/ad-dashboard', { replace: true });
+        } else {
+          // Token expired
+          localStorage.removeItem('accessToken');
+          localStorage.removeItem('adminEmail');
+        }
+      } catch (err) {
+        // Invalid token
+        localStorage.removeItem('accessToken');
+        localStorage.removeItem('adminEmail');
+      }
+    }
+  }, [navigate]);
+
+  // ✅ Handle admin login
+  const handleSubmit = async (event) => {
     event.preventDefault();
+    setLoading(true);
+    setError(null);
 
-    // Prepare the form data to be sent as multipart/form-data
     const formData = new FormData();
     formData.append('email', email);
     formData.append('password', password);
 
-    // Send a POST request to the admin login endpoint
-    fetch('http://192.168.0.106:5000/admins/login', {
-      method: 'POST',
-      body: formData,
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        // Check if login is successful
-        if (data.message === 'Login successful!') {
-          // Store the access token in localStorage
-          localStorage.setItem('accessToken', data.token);  // Assuming 'data.token' contains the JWT token
-
-          // Optionally, you can store other info like user data in localStorage if needed
-          localStorage.setItem('adminEmail', email); // Store the admin email (if needed)
-
-          alert('Login successful!');
-          navigate('/ad-dashboard');  // Redirect to admin dashboard after successful login
-        } else {
-          alert('Login failed! Please check your credentials.');
-        }
-      })
-      .catch((error) => {
-        console.error('Error during login:', error);
-        alert('An error occurred during login. Please try again.');
+    try {
+      const response = await fetch('http://192.168.0.106:5000/admins/login', {
+        method: 'POST',
+        body: formData,
       });
+
+      const data = await response.json();
+
+      if (!response.ok || !data.token) {
+        throw new Error(data.error || 'Invalid credentials');
+      }
+
+      // Save token
+      localStorage.setItem('accessToken', data.token);
+      localStorage.setItem('adminEmail', email);
+
+      // Navigate to dashboard
+      navigate('/ad-dashboard');
+    } catch (err) {
+      console.error('Login error:', err);
+      setError(err.message);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -48,7 +73,6 @@ function AdminLoginPage() {
       <div className="admin-login-card">
         <h1 style={{ fontSize: '24px', color: '#87CEEB' }}>Admin Login</h1>
 
-        {/* Login Form */}
         <form onSubmit={handleSubmit}>
           <div className="input-group">
             <label htmlFor="email">Email</label>
@@ -56,38 +80,40 @@ function AdminLoginPage() {
               type="email"
               id="email"
               value={email}
-              onChange={(event) => setEmail(event.target.value)}
-              placeholder="Enter your email id"
+              onChange={(e) => setEmail(e.target.value)}
+              placeholder="Enter your email"
+              required
             />
           </div>
+
           <div className="input-group">
             <label htmlFor="password">Password</label>
             <input
               type="password"
               id="password"
               value={password}
-              onChange={(event) => setPassword(event.target.value)}
+              onChange={(e) => setPassword(e.target.value)}
               placeholder="Enter your password"
+              required
             />
           </div>
 
-          {/* Buttons placed side by side */}
           <div className="button-group">
-            <button type="submit" className="login-button" style={{ marginRight: '10px' }}>
-              Login
+            <button type="submit" className="login-button" style={{ marginRight: '10px' }} disabled={loading}>
+              {loading ? 'Logging in...' : 'Login'}
             </button>
+
             <Link to="/admin/signup">
-              <button type="button" className="signup-button">
-                Sign Up
-              </button>
+              <button type="button" className="signup-button">Sign Up</button>
             </Link>
           </div>
         </form>
 
-        {/* Forgot Password link */}
         <div className="forgot-password">
           <Link to="/admin/password">Forgot Password?</Link>
         </div>
+
+        {error && <p style={{ color: 'red' }}>{error}</p>}
       </div>
     </div>
   );
