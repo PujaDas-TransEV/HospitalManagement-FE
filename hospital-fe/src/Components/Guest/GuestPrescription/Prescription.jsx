@@ -24,7 +24,7 @@ const GuestPrescriptions = () => {
         formData.append('patientid', patientId);
 
         const { data: res } = await axios.post(
-          'http://localhost:5000/guestlogin/allguestaccessprescribedata',
+          'http://192.168.0.106:5000/guestlogin/allguestaccessprescribedata',
           formData,
           {
             headers: {

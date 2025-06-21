@@ -25,7 +25,7 @@ const GuestLabReports = () => {
         formData.append('patientid', patientId);
 
         const { data: res } = await axios.post(
-          'http://localhost:5000/guestlogin/allguestaccesslabdata',
+          'http://192.168.0.106:5000/guestlogin/allguestaccesslabdata',
           formData,
           {
             headers: {
