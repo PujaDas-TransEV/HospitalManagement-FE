@@ -1,6 +1,4 @@
-
-
-#signUpBody {
+/* #signUpBody {
     height: 100vh;
     width: 100%;
     display: grid;
@@ -11,7 +9,7 @@
 
 
 #signUpBG {
-    background-image: url('../../Assests/signup-background.png');
+    background-image: url('../../Assests/hos.png');
     background-repeat: no-repeat;
     background-size: cover;
     height: 100%;
@@ -136,4 +134,133 @@ input[type=checkbox] {
         font-size: 14px;
     }
 }
+ */
+/* Full-screen container with background image */
+#signUpBody {
+    height: 100vh;
+    width: 100%;
+    background-image: url('../../Assests/hospitalimage.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    justify-content: flex-end; /* Align form to the right */
+    align-items: center;
+    position: relative;
+}
 
+/* Optional green overlay layer */
+.greenLayer {
+    background-color: rgba(126, 211, 165, 0.44);
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    z-index: 0;
+}
+
+/* Signup form on right side */
+.signup-form {
+    background-color: skyblue; /* Sky blue form background */
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    padding: 40px;
+    max-width: 450px;
+    width: 90%;
+    margin-right: 5%; /* Space from right edge */
+    z-index: 1;
+    position: relative;
+}
+
+/* Title */
+h2 {
+    color: #045d58;
+    font-size: 28px;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+/* Form container */
+#signUpform {
+    width: 100%;
+    margin: auto;
+}
+
+/* Input styles */
+input,
+select {
+    width: 100%;
+    padding: 12px;
+    margin: 10px 0;
+    border: none !important;
+    border-bottom: 2px solid #ccc !important;
+    border-radius: 0 !important;
+    outline: none;
+    font-size: 16px;
+}
+
+input:focus, select:focus {
+    border-color: #31b372;
+}
+
+.text-danger {
+    font-size: 14px;
+    color: red;
+    margin-top: 5px;
+}
+
+/* Signup button */
+#signUp {
+    padding: 15px 30px;
+    color: rgb(153, 223, 228);
+    background-color: #609e91;
+    border: none;
+    border-radius: 5px;
+    font-size: 18px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    width: 100%;
+}
+
+#signUp:hover {
+    background-color: #28a55d;
+}
+
+.text-center a {
+    color: #048C7F;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.text-center a:hover {
+    text-decoration: underline;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+    #signUpBody {
+        justify-content: center;
+        padding: 20px;
+    }
+
+    .signup-form {
+        width: 100%;
+        margin-right: 0;
+        padding: 20px;
+    }
+
+    h2 {
+        font-size: 24px;
+    }
+
+    #signUp {
+        padding: 12px 25px;
+        font-size: 16px;
+    }
+
+    input,
+    select {
+        font-size: 14px;
+    }
+}

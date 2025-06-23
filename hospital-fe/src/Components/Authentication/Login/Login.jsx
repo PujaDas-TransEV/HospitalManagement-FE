@@ -1,6 +1,7 @@
+
 import React, { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import { jwtDecode } from 'jwt-decode';
+import {jwtDecode} from 'jwt-decode';  // fixed import
 import './Login.css';
 
 const LoginPage = () => {
@@ -11,22 +12,18 @@ const LoginPage = () => {
 
   const navigate = useNavigate();
 
-  // ✅ Redirect to dashboard if already logged in with valid token
   useEffect(() => {
     const token = localStorage.getItem('accessToken');
     if (token) {
       try {
         const decoded = jwtDecode(token);
         if (decoded.exp * 1000 > Date.now()) {
-          // Token is still valid — redirect to dashboard
           navigate('/patient-dashboard', { replace: true });
         } else {
-          // Token expired — remove it
           localStorage.removeItem('accessToken');
           localStorage.removeItem('patientId');
         }
       } catch (err) {
-        // Invalid token — remove it
         localStorage.removeItem('accessToken');
         localStorage.removeItem('patientId');
       }
@@ -64,7 +61,6 @@ const LoginPage = () => {
         localStorage.setItem('patientId', patientId);
       }
 
-      // ✅ Redirect to dashboard after successful login
       navigate('/patient-dashboard');
     } catch (error) {
       setError(error.message);
@@ -75,53 +71,56 @@ const LoginPage = () => {
 
   return (
     <div className="login-page">
-      <div className="login-card">
-        <h1 style={{ fontSize: '24px', color: '#87CEEB' }}>
-          Welcome Back! Please log in to your account
-        </h1>
+      <div className="login-content">
+        <div className="login-card" style={{ backgroundColor: '#4682b4'}}>
+          <h1 style={{ fontSize: '24px', color: '#87CEEB' }}>
+            Welcome Back! Please log in to your account
+          </h1>
 
-        <form onSubmit={handleLogin}>
-          <div className="input-group">
-            <label htmlFor="email">Email</label>
-            <input
-              type="email"
-              id="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              placeholder="Enter your email"
-              required
-            />
-          </div>
+          <form onSubmit={handleLogin}  style={{ backgroundColor: '#e0f7fa', padding: '20px', borderRadius: '8px' }}>
+            <div className="input-group">
+              <label htmlFor="email">Email</label>
+              <input
+                type="email"
+                id="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="Enter your email"
+                required
+              />
+            </div>
 
-          <div className="input-group">
-            <label htmlFor="password">Password</label>
-            <input
-              type="password"
-              id="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              placeholder="Enter your password"
-              required
-            />
-          </div>
+            <div className="input-group">
+              <label htmlFor="password">Password</label>
+              <input
+                type="password"
+                id="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                placeholder="Enter your password"
+                required
+              />
+            </div>
 
-          <div className="button-group">
-            <button type="submit" className="login-button" style={{ marginRight: '10px' }}>
-              {loading ? 'Logging in...' : 'Login'}
-            </button>
-            <Link to="/signup">
-              <button type="button" className="signup-button">
-                Sign Up
+            <div className="button-group">
+              <button type="submit" className="login-buttonn" style={{ marginRight: '10px' }}>
+                {loading ? 'Logging in...' : 'Login'}
               </button>
-            </Link>
+              <Link to="/signup">
+                <button type="button" className="signup-buttonn">Sign Up</button>
+              </Link>
+            </div>
+          </form>
+
+       <div className="forgot-password">
+         <Link to="/password" style={{ color: '#ff0000', textDecoration: 'none' }}>
+  Forgot Password?
+</Link>
+
           </div>
-        </form>
 
-        <div className="forgot-password">
-          <Link to="/password">Forgot Password?</Link>
+          {error && <p className="error-message">{error}</p>}
         </div>
-
-        {error && <p className="error-message">{error}</p>}
       </div>
     </div>
   );

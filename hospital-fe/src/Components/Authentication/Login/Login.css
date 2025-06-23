@@ -1,99 +1,106 @@
-   /* Full page height and margin reset */
-body, html {
-    height: 100%;
-    margin: 0;
-  }
-  
-  /* Center the login page vertically and horizontally */
-  .login-page {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    background-image: url('../../Assests/login-background.png'); /* Replace with your background image URL */
-    background-size: cover;
-    background-position: center;
-  }
-  
-  /* Login card styles */
-  .login-card {
-    background-color: rgba(255, 255, 255, 0.9); /* Semi-transparent white */
-    padding: 40px;
-    border-radius: 8px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    width: 100%;
-    max-width: 450px;
-    text-align: center;
-  }
-  
-  /* Input fields and labels styling */
-  .input-group {
-    margin-bottom: 15px;
-    text-align: left;
-  }
-  
-  .input-group label {
-    display: block;
-    margin-bottom: 5px;
-    font-size: 14px;
-    font-weight: bold;
-  }
-  
-  .input-group input {
-    width: 100%;
-    padding: 10px;
-    margin: 5px 0;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    box-sizing: border-box;
-    font-size: 16px;
-  }
-  
-  /* Styling for login and sign up buttons */
-  
-  
-  .login-button, .signup-button {
-    width: 48%;
-    padding: 12px;
-    font-size: 16px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    
-  }
-  
-  .login-button {
-    background-color: #007bff;
-    color: white;
 
-  }
-  
-  .login-button:hover {
-    background-color: #0056b3;
-  }
-  
-  .signup-button {
-    background-color: #28a745;
-    color: white;
-  }
-  
-  .signup-button:hover {
-    background-color: #218838;
-  }
-  
-  /* Forgot password link */
-  .forgot-password {
-    margin-top: 15px;
-    text-align: center;
-  }
-  
-  .forgot-password a {
-    color: #007bff;
-    text-decoration: none;
-  }
-  
-  .forgot-password a:hover {
-    text-decoration: underline;
-  }
-  
+body, html {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+/* Background full page with image */
+.login-page {
+  display: flex;
+  height: 100vh;
+  background-image: url('../../Assests/patientlogin.jpg'); /* Replace with your image path */
+  background-size: cover;
+  background-position: center;
+}
+
+/* Container for right side alignment */
+.login-content {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  width: 100%;
+  padding-right: 60px; /* Space from the right edge */
+}
+
+/* Login form card */
+.login-card {
+  background-color: rgba(154, 221, 226, 0.95);
+  padding: 40px;
+  border-radius: 10px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+  width: 100%;
+  max-width: 450px;
+  text-align: center;
+}
+
+/* Inputs container */
+.input-group {
+  margin-bottom: 15px;
+  text-align: left;
+}
+
+.input-group label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+  font-size: 14px;
+}
+
+.input-group input {
+  width: 100%;
+  padding: 10px;
+  margin-top: 5px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+/* Buttons container */
+.button-group {
+  margin-top: 20px;
+  display: flex;
+  justify-content: space-between;
+}
+
+/* Common button styles */
+.login-buttonn {
+  width: 25%;
+  padding: 5px 9px; /* 5px top & bottom, 9px left & right */
+  font-size: 8px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  color: white;
+  background: linear-gradient( #093386); /* mix of green and blue */
+}
+
+/* Hover effect for both buttons */
+.login-buttonn:hover,
+.signup-buttonn:hover {
+  background: linear-gradient(135deg, #2a7a50, #2a4e99); /* darker green-blue gradient */
+}
+
+/* Forgot password link */
+.forgot-password {
+  margin-top: 15px;
+  text-align: center;
+}
+
+.forgot-password a {
+  color: #007bff;
+  text-decoration: none;
+}
+
+.forgot-password a:hover {
+  text-decoration: underline;
+}
+
+/* Error message */
+.error-message {
+  color: red;
+  margin-top: 15px;
+  font-weight: bold;
+}

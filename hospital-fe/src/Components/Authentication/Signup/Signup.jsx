@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import './Signup.css';
 import { NavLink } from 'react-router-dom';
@@ -13,14 +14,12 @@ function SignupPage() {
   const [otp, setOtp] = useState('');
   const [passwordMatchDisplay, setPasswordMatchDisplay] = useState('none');
   const [passwordValidationMessage, setPasswordValidationMessage] = useState('');
-  const [isOtpSent, setIsOtpSent] = useState(false); // Flag to check if OTP is sent
-  const [isSignupComplete, setIsSignupComplete] = useState(false); // Flag to check if signup is complete
+  const [isOtpSent, setIsOtpSent] = useState(false);
+  const [isSignupComplete, setIsSignupComplete] = useState(false);
 
-  // Handle form submission for signup (send OTP)
   const handleSubmit = (event) => {
     event.preventDefault();
 
-    // Validate if password and confirm password match
     if (password !== confirmPassword) {
       setPasswordMatchDisplay('block');
       return;
@@ -32,16 +31,14 @@ function SignupPage() {
     formData.append('password', password);
     formData.append('confirm_password', confirmPassword);
 
-    // Send the form data to the backend to send OTP
     fetch('http://192.168.0.106:5000/patients/signup', {
       method: 'POST',
       body: formData,
     })
       .then(response => response.json())
       .then(data => {
-        // Ensure backend responds with OTP sent confirmation
         if (data.message === 'OTP sent to your email! Please verify.') {
-          setIsOtpSent(true); // OTP sent successfully, show OTP field
+          setIsOtpSent(true);
         } else {
           console.error(data.errors || data.error);
         }
@@ -51,24 +48,20 @@ function SignupPage() {
       });
   };
 
-  // Handle OTP verification after signup (when OTP is entered)
   const handleVerifyOtp = (event) => {
     event.preventDefault();
 
-    // Validate if password and confirm password match again before sending data
     if (password !== confirmPassword) {
       setPasswordMatchDisplay('block');
       return;
     }
 
     const formData = new FormData();
-    // formData.append('name', fullName); // Add name to formData
-    formData.append('email', email); // Reuse email from state
-    formData.append('password', password); // Reuse password from state
-    formData.append('confirm_password', confirmPassword); // Reuse confirm password from state
-    formData.append('otp', otp); // OTP entered by the user
+    formData.append('email', email);
+    formData.append('password', password);
+    formData.append('confirm_password', confirmPassword);
+    formData.append('otp', otp);
 
-    // Send the OTP for verification along with the other details (name, email, password, confirm_password) to the backend
     fetch('http://192.168.0.106:5000/patients/signup', {
       method: 'POST',
       body: formData,
@@ -78,7 +71,7 @@ function SignupPage() {
         if (data.message === 'Signup successful!') {
           alert('Signup Successful!');
           setIsSignupComplete(true);
-          navigate('/login'); // Navigate to homepage or login page after successful signup
+          navigate('/login');
         } else {
           alert('OTP verification failed! Please try again.');
         }
@@ -88,9 +81,8 @@ function SignupPage() {
       });
   };
 
-  // Effect to handle password validation and matching
   useEffect(() => {
-    if (password.length > 0 && password?.trim()?.length <= 6) {
+    if (password.length > 0 && password.trim().length <= 6) {
       setPasswordValidationMessage('Password length must be greater than 6 characters');
     } else {
       setPasswordValidationMessage('');
@@ -105,27 +97,26 @@ function SignupPage() {
 
   return (
     <div id="signUpBody">
-      <div id="signUpBG">
-        <div className="greenLayer"></div>
-      </div>
-      <div className="signup-form">
+      <div className="greenLayer"></div> {/* Optional overlay */}
+    <div className="signup-form" style={{ backgroundColor: '#d0f0fd' }}>
+
         <h2>Create An Account</h2>
-        <form id="signUpform" name="signUpform" onSubmit={isOtpSent ? handleVerifyOtp : handleSubmit}>
-          {/* <div className="d-flex flex-row mt-5">
-            <div className="col-6 form-floating mx-2">
-              <label htmlFor="fullName">Full Name</label>
-              <input
-                type="text"
-                id="fullName"
-                name="fullName"
-                className="form-control"
-                placeholder="Full name"
-                value={fullName}
-                required
-                onChange={(event) => setFullName(event.target.value)}
-              />
-            </div>
+        <form id="signUpform" name="signUpform" onSubmit={isOtpSent ? handleVerifyOtp : handleSubmit} style={{ backgroundColor: '#e0f7fa', padding: '20px', borderRadius: '8px' }}>
+          {/* Full Name (optional) */}
+          {/* <div className="form-floating mt-3 col-12 mx-2">
+            <label htmlFor="fullName">Full Name</label>
+            <input
+              type="text"
+              id="fullName"
+              name="fullName"
+              placeholder="Full name"
+              value={fullName}
+              onChange={(event) => setFullName(event.target.value)}
+              className="form-control"
+              required
+            />
           </div> */}
+
           <div className="form-floating mt-3 col-12 mx-2">
             <label htmlFor="email">Email</label>
             <input
@@ -139,6 +130,7 @@ function SignupPage() {
               className="form-control"
             />
           </div>
+
           <div className="form-floating mt-3 col-12 mx-2">
             <label htmlFor="password">Password</label>
             <input
@@ -152,7 +144,9 @@ function SignupPage() {
               placeholder="password"
             />
           </div>
+
           <div className="mx-2 text-danger">{passwordValidationMessage}</div>
+
           <div className="form-floating mt-3 col-12 mx-2">
             <label htmlFor="confirmPassword">Confirm Password</label>
             <input
@@ -166,7 +160,8 @@ function SignupPage() {
               placeholder="confirm password"
             />
           </div>
-          <div className="mx-2 text-danger" style={{ display: `${passwordMatchDisplay}` }}>
+
+          <div className="mx-2 text-danger" style={{ display: passwordMatchDisplay }}>
             Passwords do not match
           </div>
 
@@ -186,12 +181,33 @@ function SignupPage() {
             </div>
           )}
 
-          <div className="text-center">
+          {/* <div className="text-center mt-3">
             <button id="signUp" type="submit">
               {isOtpSent ? 'Verify OTP' : 'Sign Up'}
             </button>
-          </div>
-          <div className="text-center">
+          </div> */}
+          <div className="text-center mt-3">
+  <button
+    id="signUp"
+    type="submit"
+    style={{
+      backgroundColor: '#30cfcf',
+      width: '200px',       // Adjust width as needed
+      color: 'black',       // Optional: better contrast on light bg
+      border: 'none',
+      borderRadius: '5px',
+      padding: '12px',
+      fontSize: '16px',
+      fontWeight: 'bold',
+      cursor: 'pointer'
+    }}
+  >
+    {isOtpSent ? 'Verify OTP' : 'Sign Up'}
+  </button>
+</div>
+
+
+          <div className="text-center mt-2">
             Already have an account? <NavLink to="/login">Sign In</NavLink>
           </div>
         </form>
