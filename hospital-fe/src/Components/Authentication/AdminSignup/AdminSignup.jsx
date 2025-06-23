@@ -111,7 +111,7 @@ function AdminSignupPage() {
       </div>
       <div className="signup-form">
         <h2>Create Admin Account</h2>
-        <form id="adminSignUpform" name="adminSignUpform" onSubmit={isOtpSent ? handleVerifyOtp : handleSubmit}>
+        <form id="adminSignUpform" name="adminSignUpform" onSubmit={isOtpSent ? handleVerifyOtp : handleSubmit}  style={{ backgroundColor: '#e0f7fa', padding: '20px', borderRadius: '8px' }}>
           <div className="d-flex flex-row mt-5">
             <div className="col-6 form-floating mx-2">
               <label htmlFor="fullName">Full Name</label>
@@ -189,9 +189,28 @@ function AdminSignupPage() {
           )}
 
           <div className="text-center">
-            <button id="adminSignUp" type="submit">
+            {/* <button id="adminSignUp" type="submit">
               {isOtpSent ? 'Verify OTP' : 'Sign Up'}
-            </button>
+            </button> */}
+            <button
+  id="adminSignUp"
+  type="submit"
+  style={{
+    width: '150px',               // Smaller width
+    padding: '10px',
+    fontSize: '15px',
+    border: 'none',
+    borderRadius: '4px',
+    backgroundColor: '#1e88e5',   // Blue color
+    color: 'white',
+    cursor: 'pointer',
+    display: 'block',
+    margin: '20px auto'           // Center horizontally
+  }}
+>
+  {isOtpSent ? 'Verify OTP' : 'Sign Up'}
+</button>
+
           </div>
           <div className="text-center">
             Already have an account? <NavLink to="/admin/login">Login</NavLink>

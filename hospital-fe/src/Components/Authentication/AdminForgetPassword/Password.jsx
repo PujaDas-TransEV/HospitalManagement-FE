@@ -79,7 +79,7 @@ function AdminForgotPasswordPage() {
 
         {/* Step 1: Email submission form */}
         {!isOtpSent && (
-          <form onSubmit={handleEmailSubmit}>
+          <form onSubmit={handleEmailSubmit}  style={{ backgroundColor: '#d0f0f8', padding: '20px', borderRadius: '8px' }}>
             <div className="input-group">
               <label htmlFor="email">Enter Your Email:</label>
               <input

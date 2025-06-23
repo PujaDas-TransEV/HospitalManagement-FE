@@ -1,6 +1,7 @@
+
 import React, { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import { jwtDecode } from 'jwt-decode';
+import {jwtDecode} from 'jwt-decode';  // corrected import
 import './DoctorLogin.css';
 
 const DoctorLoginPage = () => {
@@ -11,22 +12,18 @@ const DoctorLoginPage = () => {
 
   const navigate = useNavigate();
 
-  // ✅ Redirect to dashboard if already logged in
   useEffect(() => {
     const token = localStorage.getItem('accessToken');
     if (token) {
       try {
         const decoded = jwtDecode(token);
         if (decoded.exp * 1000 > Date.now()) {
-          // Valid token exists — redirect to dashboard
           navigate('/doctordashboard', { replace: true });
         } else {
-          // Token expired — clear it
           localStorage.removeItem('accessToken');
           localStorage.removeItem('doctorId');
         }
       } catch (err) {
-        // Invalid token — clear it
         localStorage.removeItem('accessToken');
         localStorage.removeItem('doctorId');
       }
@@ -47,7 +44,6 @@ const DoctorLoginPage = () => {
         method: 'POST',
         body: formData,
       });
-
       const data = await response.json();
 
       if (!response.ok) {
@@ -56,19 +52,15 @@ const DoctorLoginPage = () => {
 
       const accessToken = data.token;
       localStorage.setItem('accessToken', accessToken);
-
       const decodedToken = jwtDecode(accessToken);
       const doctorId = decodedToken.userid || decodedToken.doctorId || decodedToken.id;
-
       if (doctorId) {
         localStorage.setItem('doctorId', doctorId);
       }
 
-      // ✅ Redirect after successful login
       navigate('/doctordashboard');
-    } catch (error) {
-      console.error('Login error:', error);
-      setError(error.message);
+    } catch (err) {
+      setError(err.message);
     } finally {
       setLoading(false);
     }
@@ -76,19 +68,22 @@ const DoctorLoginPage = () => {
 
   return (
     <div className="login-page-doctor">
-      <div className="login-card">
-        <h1 style={{ fontSize: '24px', color: '#87CEEB' }}>
+      <div className="login-card" style={{ backgroundColor: '#d0f0e0' }}>
+        <h1 style={{ fontSize: '24px', color: '#4169e1' }}>
           Doctor Login - Welcome Back!
         </h1>
 
-        <form onSubmit={handleLogin}>
+        <form
+          onSubmit={handleLogin}
+          style={{ backgroundColor: '#e0f7fa', padding: '20px', borderRadius: '8px' }}
+        >
           <div className="input-group">
             <label htmlFor="email">Email</label>
             <input
               type="email"
               id="email"
               value={email}
-              onChange={(event) => setEmail(event.target.value)}
+              onChange={(e) => setEmail(e.target.value)}
               placeholder="Enter your email"
               required
             />
@@ -100,24 +95,26 @@ const DoctorLoginPage = () => {
               type="password"
               id="password"
               value={password}
-              onChange={(event) => setPassword(event.target.value)}
+              onChange={(e) => setPassword(e.target.value)}
               placeholder="Enter your password"
               required
             />
           </div>
 
           <div className="button-group">
-            <button type="submit" className="login-button" style={{ marginRight: '10px' }} disabled={loading}>
+            <button type="submit" className="login-buttonn" disabled={loading}>
               {loading ? 'Logging In...' : 'Login'}
             </button>
           </div>
         </form>
 
         <div className="forgot-password">
-          <Link to="/doctor-password">Forgot Password?</Link>
+          <Link to="/doctor-password" style={{ color: '#4169e1', textDecoration: 'none' }}>
+            Forgot Password?
+          </Link>
         </div>
 
-        {error && <p style={{ color: 'red' }}>{error}</p>}
+        {error && <p style={{ color: 'red', marginTop: '10px' }}>{error}</p>}
       </div>
     </div>
   );

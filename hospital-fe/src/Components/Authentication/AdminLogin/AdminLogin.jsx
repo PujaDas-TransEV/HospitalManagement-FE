@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { jwtDecode } from 'jwt-decode';
@@ -10,29 +11,24 @@ function AdminLoginPage() {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
-  // ✅ Check token on component mount
   useEffect(() => {
     const token = localStorage.getItem('accessToken');
     if (token) {
       try {
         const decoded = jwtDecode(token);
         if (decoded.exp * 1000 > Date.now()) {
-          // Token valid - redirect to dashboard
           navigate('/ad-dashboard', { replace: true });
         } else {
-          // Token expired
           localStorage.removeItem('accessToken');
           localStorage.removeItem('adminEmail');
         }
       } catch (err) {
-        // Invalid token
         localStorage.removeItem('accessToken');
         localStorage.removeItem('adminEmail');
       }
     }
   }, [navigate]);
 
-  // ✅ Handle admin login
   const handleSubmit = async (event) => {
     event.preventDefault();
     setLoading(true);
@@ -54,11 +50,9 @@ function AdminLoginPage() {
         throw new Error(data.error || 'Invalid credentials');
       }
 
-      // Save token
       localStorage.setItem('accessToken', data.token);
       localStorage.setItem('adminEmail', email);
 
-      // Navigate to dashboard
       navigate('/ad-dashboard');
     } catch (err) {
       console.error('Login error:', err);
@@ -70,10 +64,13 @@ function AdminLoginPage() {
 
   return (
     <div className="admin-login-page">
-      <div className="admin-login-card">
-        <h1 style={{ fontSize: '24px', color: '#87CEEB' }}>Admin Login</h1>
+      <div className="admin-login-card" style={{ backgroundColor: 'rgba(143, 214, 219, 0.95)' }}>
+        <h1 style={{ fontSize: '24px', color: '#007BFF' }}>Admin Login</h1>
 
-        <form onSubmit={handleSubmit}>
+        <form
+          onSubmit={handleSubmit}
+          style={{ backgroundColor: '#d0f0f8', padding: '20px', borderRadius: '8px' }}
+        >
           <div className="input-group">
             <label htmlFor="email">Email</label>
             <input
@@ -99,21 +96,47 @@ function AdminLoginPage() {
           </div>
 
           <div className="button-group">
-            <button type="submit" className="login-button" style={{ marginRight: '10px' }} disabled={loading}>
+            <button
+              type="submit"
+              style={{
+                backgroundColor: '#007BFF',
+                color: 'white',
+                padding: '10px 20px',
+                borderRadius: '4px',
+                border: 'none',
+                cursor: 'pointer',
+                marginRight: '10px',
+                width: '100px',
+              }}
+              disabled={loading}
+            >
               {loading ? 'Logging in...' : 'Login'}
             </button>
 
             <Link to="/admin/signup">
-              <button type="button" className="signup-button">Sign Up</button>
+              <button
+                type="button"
+                style={{
+                  backgroundColor: '#007BFF',
+                  color: 'white',
+                  padding: '10px 20px',
+                  borderRadius: '4px',
+                  border: 'none',
+                  cursor: 'pointer',
+                  width: '100px',
+                }}
+              >
+                Sign Up
+              </button>
             </Link>
           </div>
         </form>
 
         <div className="forgot-password">
-          <Link to="/admin/password">Forgot Password?</Link>
+          <Link to="/admin/password" style={{ color: '#28a745' }}>Forgot Password?</Link>
         </div>
 
-        {error && <p style={{ color: 'red' }}>{error}</p>}
+        {error && <p style={{ color: 'red', marginTop: '10px' }}>{error}</p>}
       </div>
     </div>
   );

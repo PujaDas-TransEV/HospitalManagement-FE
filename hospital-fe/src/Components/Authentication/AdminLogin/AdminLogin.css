@@ -1,4 +1,4 @@
-
+/* 
 body, html {
     height: 100%;
     margin: 0;
@@ -9,7 +9,7 @@ body, html {
     justify-content: center;
     align-items: center;
     height: 100vh;
-    background-image: url('../../Assests/adminloginback.jpg'); 
+    background-image: url('../../Assests/patientlogin.jpg'); 
     background-size: cover;
     background-position: center;
 }
@@ -111,4 +111,91 @@ body, html {
         width: 100%;
         margin-bottom: 10px;
     }
-} 
+}  */
+body, html {
+  height: 100%;
+  margin: 0;
+  font-family: Arial, sans-serif;
+}
+
+.admin-login-page {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  height: 100vh;
+  background-image: url('../../Assests/patientlogin.jpg');
+  background-size: cover;
+  background-position: center;
+  padding-right: 5%;
+}
+
+.admin-login-card {
+  width: 100%;
+  max-width: 450px;
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.input-group {
+  margin-bottom: 15px;
+  text-align: left;
+}
+
+.input-group label {
+  display: block;
+  margin-bottom: 5px;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.input-group input {
+  width: 100%;
+  padding: 10px;
+  margin: 5px 0;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 16px;
+  box-sizing: border-box;
+}
+
+.button-group {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+  gap: 10px;
+}
+
+.forgot-password {
+  margin-top: 15px;
+  text-align: center;
+}
+
+.forgot-password a {
+  text-decoration: none;
+  color: #007bff;
+}
+
+.forgot-password a:hover {
+  text-decoration: underline;
+}
+
+@media (max-width: 768px) {
+  .admin-login-page {
+    justify-content: center;
+    padding: 20px;
+  }
+
+  .admin-login-card {
+    padding: 20px;
+  }
+
+  .button-group {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .button-group button {
+    width: 100%;
+  }
+}
