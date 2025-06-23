@@ -11,7 +11,7 @@ const DoctorNotifications = () => {
   const fetchNotifications = async () => {
     setLoading(true);
     try {
-      const res = await fetch("http://localhost:5000/notify/show/active");
+      const res = await fetch("http://192.168.0.106:5000/notify/show/active");
       const data = await res.json();
       if (res.ok && Array.isArray(data)) {
         setNotifications(data);
@@ -32,7 +32,7 @@ const DoctorNotifications = () => {
       const formData = new FormData();
       formData.append("notificationuid", uid);
 
-      const res = await fetch("http://localhost:5000/notify/delete", {
+      const res = await fetch("http://192.168.0.106:5000/notify/delete", {
         method: "POST",
         body: formData,
       });

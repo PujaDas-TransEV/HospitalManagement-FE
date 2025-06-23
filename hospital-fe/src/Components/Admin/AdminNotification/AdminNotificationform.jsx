@@ -53,8 +53,8 @@ const AdminNotificationForm = ({ onClose, onSuccess, notification }) => {
 
       const res = await fetch(
         notification
-          ? 'http://localhost:5000/notify/update'
-          : 'http://localhost:5000/notify/create',
+          ? 'http://192.168.0.106:5000/notify/update'
+          : 'http://192.168.0.106:5000/notify/create',
         {
           method: 'POST',
           body: formData,

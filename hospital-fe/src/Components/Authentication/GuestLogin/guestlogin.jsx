@@ -23,7 +23,7 @@ const GuestLogin = () => {
 
   const sendOTP = async () => {
     try {
-      const response = await axios.post('http://localhost:5000/guest/login', {
+      const response = await axios.post('http://192.168.0.106:5000/guest/login', {
         hospital_email: formData.hospital_email,
         hospital_mobile: formData.hospital_mobile,
         patient_email: formData.patient_email,
@@ -46,7 +46,7 @@ const GuestLogin = () => {
 
   const verifyOTPAndFetchData = async () => {
     try {
-      const otpResponse = await axios.post('http://localhost:5000/guest/login', {
+      const otpResponse = await axios.post('http://192.168.0.106:5000/guest/login', {
         hospital_email: formData.hospital_email,
         hospital_mobile: formData.hospital_mobile,
         patient_email: formData.patient_email,

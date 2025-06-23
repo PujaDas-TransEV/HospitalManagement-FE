@@ -127,7 +127,7 @@ const PrescriptionPage = () => {
     formData.append('guestaccess', newAccess);
 
     try {
-      const response = await fetch('http://localhost:5000/patientops/prescribeaccessupdate', {
+      const response = await fetch('http://192.168.0.106:5000/patientops/prescribeaccessupdate', {
         method: 'POST',
         body: formData,
       });

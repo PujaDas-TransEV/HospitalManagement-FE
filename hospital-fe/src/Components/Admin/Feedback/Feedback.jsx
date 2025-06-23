@@ -30,7 +30,7 @@ const AdminFeedbackPage = () => {
     formData.append('uid', uid);
 
     try {
-      const response = await fetch('http://localhost:5000/ops/deleteappsurvey', {
+      const response = await fetch('http://192.168.0.106:5000/ops/deleteappsurvey', {
         method: 'POST',
         body: formData
       });

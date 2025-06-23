@@ -39,7 +39,7 @@ const AdminMedicalSurveyList = () => {
     formData.append('uid', uid);
 
     try {
-      const res = await fetch('http://localhost:5000/ops/deletemedicalsurvey', {
+      const res = await fetch('http://192.168.0.106:5000/ops/deletemedicalsurvey', {
         method: 'POST',
         body: formData,
       });

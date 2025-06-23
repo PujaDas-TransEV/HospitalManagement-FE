@@ -32,7 +32,7 @@ useEffect(() => {
       const formData = new FormData();
       formData.append('doctorid', doctorId);
 
-      const response = await fetch('http://localhost:5000/doctors/getbyid', {
+      const response = await fetch('http://192.168.0.106:5000/doctors/getbyid', {
         method: 'POST',
         body: formData,
       });
@@ -72,7 +72,7 @@ useEffect(() => {
         const formData = new FormData();
         formData.append('doctorid', doctorId);
 
-        const response = await fetch('http://localhost:5000/getappoinmentdetails', {
+        const response = await fetch('http://192.168.0.106:5000/getappoinmentdetails', {
           method: 'POST',
           body: formData,
         });
@@ -105,7 +105,7 @@ useEffect(() => {
         const formData = new FormData();
         formData.append('doctorid', doctorId);
 
-        const response = await fetch('http://localhost:5000/patientview', {
+        const response = await fetch('http://192.168.0.106:5000/patientview', {
           method: 'POST',
           body: formData,
         });
