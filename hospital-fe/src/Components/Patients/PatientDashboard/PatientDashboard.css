@@ -1,272 +1,149 @@
 
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-/* Body styling */
-body {
-  font-family: Arial, sans-serif;
-  background-color: #f4f7fa;
-  color: #333;
-}
-
-/* Dashboard container */
-.dashboard-containers {
-  display: flex;
-  flex-direction: column;
+.dashboard-container-patient {
+  position: relative;
+  background-image: url('../../Assests/background.jpg');
+  background-size: cover;
+  background-position: center;
   min-height: 100vh;
-   
+  z-index: 0;
 }
 
-/* Navbar styling */
-.patient-navbar {
-  background-color: #007bff;
-  color: white;
-  padding: 15px;
+.dashboard-container-patient::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-color: rgba(16, 100, 75, 0.4); 
+  z-index: 1;
+  pointer-events: none;
+}
+
+
+
+.dashboard-main-patient {
+  position: relative;  
+  z-index: 2;          
+  flex: 1;
+  padding: 30px;
+ 
+  background-color: rgba(209, 229, 236, 0.9);
+  min-height: 60vh;
+}
+
+
+.dashboard-content { display: flex; }
+
+
+
+
+.dashboard-header h1 {
+  font-size: 2rem; color: #333; margin-bottom: 20px;
+}
+
+
+.vital-bar {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  background: #e3f2fd;
+  padding: 12px;
+  border-left: 6px solid #1976d2;
+  border-radius: 8px;
+  margin-bottom: 30px;
+}
+.notif-icon { cursor: pointer; margin-left: auto;  color: #1565c0; }
+.notif-dropdown {
+  position: absolute;
+  right: 0; top: 100%;
+  background: white;
+  width: 280px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  border-radius: 6px;
+  margin-top: 8px;
+  z-index: 10;
+}
+.dropdown-section { padding: 10px; border-bottom: 1px solid #eee; }
+.dropdown-section:last-child { border-bottom: none; }
+.dropdown-section h4 { margin: 0 0 8px; font-size: 0.95rem; color: #555; }
+.dropdown-item {
   display: flex;
   justify-content: space-between;
   align-items: center;
-}
-
-/* Sidebar styling */
-.patient-sidebar {
-  width: 250px;
-  background-color: #ffffff;
-  padding: 20px;
-  box-shadow: 2px 0px 10px rgba(0, 0, 0, 0.1);
-  position: sticky;
-  top: 0;
-}
-
-/* Main content area */
-.dashboard-content {
-  display: flex;
-  flex: 1;
-  padding: 30px;
-  flex-wrap: wrap;
-}
-
-/* Main content styling */
-.main-content-patient {
-  flex: 1;
-  padding: 20px;
-  background-color: #fff;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  border-radius: 8px;
-  margin-right: 20px;
-  margin-bottom: 20px;
-}
-
-/* Health overview section */
-.health-overview {
-  background-color: #ffeb3b;
-  padding: 20px;
-  border-radius: 8px;
-  margin-bottom: 20px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-/* Health metrics styling */
-.health-metrics {
-  display: flex;
-  justify-content: space-between;
-}
-
-/* Metric styling */
-.metric {
-  text-align: center;
-  font-size: 1rem;
-  color: #deeff0;
-}
-
-.metric span:first-child {
-  font-weight: bold;
-  display: block;
-  margin-bottom: 5px;
-}
-
-/* Appointments section */
-.appointments {
-  background-color: aquamarine;
-  padding: 20px;
-  border-radius: 8px;
-  margin-bottom: 20px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-/* Appointments list styling */
-.appointments ul {
-  list-style-type: none;
-  padding: 0;
-}
-
-/* Message section */
-.messages {
-  background-color: bisque;
-  padding: 20px;
-  border-radius: 8px;
-  margin-bottom: 20px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-/* Message styling */
-.message {
-  margin-bottom: 10px;
-}
-
-.message p {
-  font-size: 1rem;
-  color: #7f8c8d;
-}
-
-.message strong {
-  color: #2c3e50;
-}
-
-/* Bills section */
-.bills {
-  background-color: aliceblue;
-  padding: 20px;
-  border-radius: 8px;
-  margin-bottom: 20px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-/* Bills list styling */
-.bills ul {
-  list-style-type: none;
-  padding: 0;
-}
-
-/* Bills item styling */
-.bills ul li {
-  font-size: 1rem;
-  margin-bottom: 10px;
-}
-
-.bills ul li span {
-  font-weight: bold;
-}
-
-.bills ul li {
-  padding: 10px;
-  border-bottom: 1px solid #f0f0f0;
-}
-
-/* Media Queries for Responsiveness */
-
-/* Tablets and below */
-@media (max-width: 768px) {
-  .dashboard-content {
-    flex-direction: column;
-    padding: 15px;
-  }
-
-  .patient-sidebar {
-    width: 100%;
-    margin-bottom: 20px;
-  }
-
-  .main-content-patient {
-    margin-right: 0;
-  }
-}
-
-/* Large screens and above */
-@media (min-width: 1024px) {
-  .dashboard-content {
-    flex-direction: row;
-    padding: 30px;
-  }
-
-  .patient-sidebar {
-    width: 250px;
-    margin-right: 20px;
-  }
-
-  .main-content-patient {
-    margin-right: 20px;
-  }
-}
-/* General card styling */
-.card {
-  padding: 20px;
-  margin-bottom: 20px;
-  border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  color: #fff;
-}
-
-/* Individual card colors */
-.health-card {
-  background: linear-gradient(135deg, #558dce, #357ABD); /* Blue shades */
-}
-
-.appointments-card {
-  background: linear-gradient(135deg, #50e3c2, #2cb89a); /* Teal shades */
-  color: #222;
-}
-
-.messages-card {
-  background: linear-gradient(135deg, #f5a623, #e79d72); /* Orange shades */
-}
-
-.bills-card {
-  background: linear-gradient(135deg, #d496e0, #d18bd1); /* Red shades */
-}
-
-/* Nested components for better contrast */
-.card ul,
-.card li,
-.card p {
-  color: inherit;
-}
-
-.message {
-  background-color: rgba(255, 255, 255, 0.15);
-  padding: 10px;
-  border-radius: 8px;
-  margin-top: 10px;
-  color: #fff;
-}
-
-.bill-item {
-  background-color: rgba(255, 255, 255, 0.1);
-  padding: 12px;
-  border-radius: 8px;
-  margin-top: 10px;
-  color: #fff;
-}
-
-/* Button styling inside cards */
-.bill-item button {
-  background-color: #fff;
-  color: #d0021b;
-  border: none;
-  padding: 8px 16px;
-  border-radius: 6px;
+  padding: 6px 0;
+  font-size: 0.9rem;
   cursor: pointer;
-  margin-top: 8px;
-  transition: background 0.3s ease;
+}
+.dropdown-item button {
+  background: transparent;
+  color: #007bff;
+  border: none;
+  cursor: pointer;
+  font-size: 0.85rem;
 }
 
-.bill-item button:hover {
-  background-color: #fdd;
+
+.info-section { padding: 20px; border-radius: 10px; background: #cae2e1; box-shadow: 0 2px 6px rgba(0,0,0,0.05); }
+.feature-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(120px,1fr));
+  gap: 24px;
 }
 
-/* Metrics layout (Health Card) */
-.health-metrics {
-  display: flex;
-  justify-content: space-between;
-  gap: 16px;
-}
-
-.metric {
-  background: rgba(255, 255, 255, 0.2);
-  padding: 12px;
-  border-radius: 10px;
-  flex: 1;
+.feature-card {
   text-align: center;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+.feature-card:hover { transform: translateY(-4px); }
+.icon-circle {
+  width: 56px; height: 56px;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  margin: 0 auto 8px auto;
+}
+.feature-label { font-size: 0.9rem; color: #333; }
+
+
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 20;
+}
+.modal-content {
+  background: white;
+  padding: 24px;
+  border-radius: 8px;
+  position: relative;
+  width: 90%;
+  max-width: 400px;
+}
+.modal-close {
+  position: absolute;
+  top: 8px; right: 12px;
+  background: none;
+  border: none;
+  font-size: 1.2rem;
+  cursor: pointer;
+}
+
+
+.dashboard-error { color: red; text-align: center; margin-top: 20px; }
+
+
+@media (max-width: 768px) {
+  .feature-grid { grid-template-columns: repeat(2, 1fr); }
+  .notif-dropdown { width: 90%; right: 5%; }
+}
+/* Highlight styles */
+.dropdown-section.upcoming {
+  background-color: #e8f5e9; /* Light green */
+  border-left: 4px solid #43a047;
+}
+.dropdown-section.bill {
+  background-color: #fff3e0; /* Light orange */
+  border-left: 4px solid #fb8c00;
 }
