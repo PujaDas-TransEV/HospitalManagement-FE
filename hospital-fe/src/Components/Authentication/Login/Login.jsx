@@ -102,14 +102,44 @@ const LoginPage = () => {
               />
             </div>
 
+          
             <div className="button-group">
-              <button type="submit" className="login-buttonn" style={{ marginRight: '10px' }}>
-                {loading ? 'Logging in...' : 'Login'}
-              </button>
-              <Link to="/signup">
-                <button type="button" className="signup-buttonn">Sign Up</button>
-              </Link>
-            </div>
+  <button
+    type="submit"
+    style={{
+      width: '120px',
+      padding: '8px 0',
+      fontSize: '14px',
+      border: 'none',
+      borderRadius: '4px',
+      cursor: 'pointer',
+      color: 'white',
+      background: 'linear-gradient(to right, #0a3b84, #2568a8)',
+      marginRight: '10px'
+    }}
+  >
+    {loading ? 'Logging in...' : 'Login'}
+  </button>
+
+  <Link to="/signup">
+    <button
+      type="button"
+      style={{
+        width: '120px',
+        padding: '8px 0',
+        fontSize: '14px',
+        border: 'none',
+        borderRadius: '4px',
+        cursor: 'pointer',
+        color: 'white',
+        background: 'linear-gradient(to right, #0a3b84, #2568a8)'
+      }}
+    >
+      Sign Up
+    </button>
+  </Link>
+</div>
+
           </form>
 
        <div className="forgot-password">

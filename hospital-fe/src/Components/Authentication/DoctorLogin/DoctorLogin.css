@@ -51,7 +51,7 @@ body, html {
 }
 
 
-.button-group {
+/* .button-group {
   margin-top: 20px;
 }
 
@@ -70,7 +70,7 @@ body, html {
 
 .login-buttonn:hover:enabled {
   background-color: #1565c0;
-}
+} */
 
 
 .forgot-password {
