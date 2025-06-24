@@ -80,7 +80,7 @@ function DoctorForgotPasswordPage() {
 
         {/* Step 1: Email submission form */}
         {!isOtpSent && (
-          <form onSubmit={handleEmailSubmit}style={{ backgroundColor: '#e0f7fa', padding: '20px', borderRadius: '8px' }}>
+          <form onSubmit={handleEmailSubmit} style={{ backgroundColor: '#e0f7fa', padding: '20px', borderRadius: '8px' }}>
             <div className="input-group">
               <label htmlFor="email">Enter Your Email:</label>
               <input

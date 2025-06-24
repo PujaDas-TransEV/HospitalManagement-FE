@@ -1,7 +1,15 @@
 
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { jwtDecode } from 'jwt-decode';
+import {jwtDecode} from 'jwt-decode';
+import {
+  FaSpinner,
+  FaCheckCircle,
+  FaTimesCircle,
+  FaEdit,
+  FaTrash,
+  FaTimes
+} from 'react-icons/fa';
 import './Appointment.css';
 import PatientNavbar from '../Navbar/PatientNavbar';
 import PatientSidebar from '../Sidebar/PatientSidebar';
@@ -9,265 +17,297 @@ import PatientSidebar from '../Sidebar/PatientSidebar';
 const Appointment = () => {
   const navigate = useNavigate();
   const [appointments, setAppointments] = useState([]);
-  const [upcomingAppointments, setUpcomingAppointments] = useState([]);
-  const [departments, setDepartments] = useState([]); // ✅ dynamic departments
+  const [upcoming, setUpcoming] = useState([]);
+  const [departments, setDepartments] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const [actionLoading, setActionLoading] = useState(false);
   const [patientId, setPatientId] = useState(null);
   const [isEditing, setIsEditing] = useState(false);
-  const [currentAppointment, setCurrentAppointment] = useState(null);
+  const [current, setCurrent] = useState(null);
+  const [popup, setPopup] = useState(null);
 
-  // 🔄 Fetch patient ID from token
   useEffect(() => {
-    const accessToken = localStorage.getItem('accessToken');
-    if (!accessToken) {
+    const token = localStorage.getItem('accessToken');
+    if (!token) {
       navigate('/login');
       return;
     }
     try {
-      const decodedToken = jwtDecode(accessToken);
-      setPatientId(decodedToken.userid);
+      setPatientId(jwtDecode(token).userid);
     } catch {
       navigate('/login');
     }
   }, [navigate]);
 
-  // 🔄 Fetch appointments
   useEffect(() => {
     if (!patientId) return;
-
     setLoading(true);
-    setError(null);
+    const fd = new FormData();
+    fd.append('patientid', patientId);
 
-    const formData = new FormData();
-    formData.append('patientid', patientId);
-
-    fetch('http://192.168.0.106:5000/getappoinmenthistory', {
-      method: 'POST',
-      body: formData,
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        const appointmentData = Array.isArray(data.data) ? data.data : [data.data];
-        setAppointments(appointmentData.filter(Boolean));
+    Promise.all([
+      fetch('http://192.168.0.106:5000/getappoinmenthistory', { method: 'POST', body: fd }).then(res => res.json()),
+      fetch('http://192.168.0.106:5000/getappoinmentdetails', { method: 'POST', body: fd }).then(res => res.json())
+    ])
+      .then(([histData, upcData]) => {
+        const histArr = Array.isArray(histData.data) ? histData.data : [histData.data].filter(Boolean);
+        const upcArr = Array.isArray(upcData.data) ? upcData.data : [upcData.data].filter(Boolean);
+        setAppointments(histArr);
+        setUpcoming(upcArr);
         setLoading(false);
       })
-      .catch(() => {
-        setError('Failed to fetch appointments');
-        setLoading(false);
-      });
-
-    fetch('http://192.168.0.106:5000/getappoinmentdetails', {
-      method: 'POST',
-      body: formData,
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        const upcomingData = Array.isArray(data.data) ? data.data : [data.data];
-        setUpcomingAppointments(upcomingData.filter(Boolean));
-      })
-      .catch(() => {
-        setError('Failed to fetch upcoming appointments');
-      });
+      .catch(() => setLoading(false));
   }, [patientId]);
 
-  // ✅ Fetch departments dynamically
   useEffect(() => {
     fetch('http://192.168.0.106:5000/facilityops/getallfacility')
-      .then((res) => res.json())
-      .then((data) => {
-        if (data && data.data) {
-          const departmentsWithIcons = data.data.map((dept, index) => ({
-            ...dept,
-            id: dept.department_name.toLowerCase(),
-            name: dept.department_name,
-            icon: assignDepartmentIcon(dept.department_name, index),
-          }));
-          setDepartments(departmentsWithIcons);
-        }
+      .then(res => res.json())
+      .then(data => {
+        const mapIcon = {
+          Cardiology: '❤️',
+          Neurology: '🧠',
+          Orthopedics: '💪',
+          Dermatology: '🧴',
+          Pediatrics: '👶',
+          Surgery: '🔪'
+        };
+        const depts = (data?.data || []).map(d => ({
+          id: d.department_name.toLowerCase(),
+          name: d.department_name,
+          icon: mapIcon[d.department_name] || '🏥'
+        }));
+        setDepartments(depts);
       })
-      .catch((err) => {
-        console.error('Error fetching departments:', err);
-      });
+      .catch(() => {});
   }, []);
 
-  // 🎯 Icon assignment logic
-  const assignDepartmentIcon = (name, index) => {
-    const iconMap = {
-      Cardiology: '❤️',
-      Neurology: '🧠',
-      Orthopedics: '💪',
-      Dermatology: '🧴',
-      Pediatrics: '👶',
-      Surgery: '🔪',
-    };
-    const fallbackIcons = ['🏥', '🩺', '🔬', '💊', '📋', '🧬'];
-    return iconMap[name] || fallbackIcons[index % fallbackIcons.length];
+  const showPopup = (type, msg) => {
+    setPopup({ type, msg });
+    setTimeout(() => setPopup(null), 3000);
   };
 
-  const handleDepartmentClick = (departmentId) => {
-    navigate(`/appointment/${departmentId}`);
-  };
+  const handleDelete = uid => {
+    if (!window.confirm('Delete this appointment?')) return;
+    setActionLoading(true);
+    const fd = new FormData();
+    fd.append('appoinid', uid);
 
-  const handleDeleteAppointment = (appointmentId) => {
-    if (!window.confirm('Are you sure you want to delete this appointment?')) return;
-
-    const formData = new FormData();
-    formData.append('appoinid', appointmentId);
-
-    fetch('http://192.168.0.106:5000/ops/appoinmentdelete', {
-      method: 'POST',
-      body: formData,
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        if (data.message) {
-          setAppointments((prev) => prev.filter((a) => a.uid !== appointmentId));
-          setUpcomingAppointments((prev) => prev.filter((a) => a.uid !== appointmentId));
-        } else {
-          alert('Failed to delete appointment');
-        }
+    fetch('http://192.168.0.106:5000/ops/appoinmentdelete', { method: 'POST', body: fd })
+      .then(res => res.json())
+      .then(() => {
+        setAppointments(prev => prev.filter(a => a.uid !== uid));
+        setUpcoming(prev => prev.filter(a => a.uid !== uid));
+        showPopup('success', 'Appointment deleted');
       })
-      .catch(() => alert('Failed to delete appointment'));
+      .catch(() => showPopup('error', 'Delete failed'))
+      .finally(() => setActionLoading(false));
   };
 
-  const handleEditAppointment = (appointment) => {
+  const handleEdit = appt => {
     setIsEditing(true);
-    setCurrentAppointment({ ...appointment });
+    setCurrent({ ...appt });
   };
 
-  const handleSubmitEdit = (e) => {
+  const submitEdit = e => {
     e.preventDefault();
+    setActionLoading(true);
+    const fd = new FormData();
+    fd.append('appoinid', current.uid);
+    fd.append('appoinmenttime', current.appoinmenttime);
+    fd.append('appointmentdetails', current.appoinmentdetails);
 
-    const formData = new FormData();
-    formData.append('appoinid', currentAppointment.uid);
-    formData.append('appoinmenttime', currentAppointment.appoinmenttime);
-    formData.append('appointmentdetails', currentAppointment.appoinmentdetails);
-
-    fetch('http://192.168.0.106:5000/update/appoinment', {
-      method: 'POST',
-      body: formData,
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        if (data.message) {
-          alert('Appointment updated successfully');
-          setAppointments((prev) =>
-            prev.map((a) => (a.uid === currentAppointment.uid ? currentAppointment : a))
-          );
-          setUpcomingAppointments((prev) =>
-            prev.map((a) => (a.uid === currentAppointment.uid ? currentAppointment : a))
-          );
-        } else {
-          alert('Failed to update appointment');
-        }
-        setIsEditing(false);
-        setCurrentAppointment(null);
+    fetch('http://192.168.0.106:5000/update/appoinment', { method: 'POST', body: fd })
+      .then(res => res.json())
+      .then(() => {
+        setAppointments(prev => prev.map(a => a.uid === current.uid ? current : a));
+        setUpcoming(prev => prev.map(a => a.uid === current.uid ? current : a));
+        showPopup('success', 'Appointment updated');
       })
-      .catch(() => alert('Failed to update appointment'));
-  };
-
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setCurrentAppointment((prev) => ({ ...prev, [name]: value }));
-  };
-
-  const renderAppointmentTable = (appointmentsList) => {
-    if (!appointmentsList || appointmentsList.length === 0) {
-      return <div>No appointments found.</div>;
-    }
-
-    return (
-      <table className="appointments-table">
-        <thead>
-          <tr>
-            <th>Appointment ID</th>
-            <th>Patient Name</th>
-            <th>Doctor Name</th>
-            <th>Appointment Time</th>
-            <th>Details</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {appointmentsList.map(
-            (appointment) =>
-              appointment && (
-                <tr key={appointment.uid}>
-                  <td>{appointment.uid}</td>
-                  <td>{appointment.patient_firstname} {appointment.patient_lastname}</td>
-                  <td>{appointment.doctor_fullname}</td>
-                  <td>{appointment.appoinmenttime}</td>
-                  <td>{appointment.appoinmentdetails}</td>
-                  <td>
-                    <button onClick={() => handleEditAppointment(appointment)}>Edit</button>
-                    <button onClick={() => handleDeleteAppointment(appointment.uid)}>Delete</button>
-                  </td>
-                </tr>
-              )
-          )}
-        </tbody>
-      </table>
-    );
+      .catch(() => showPopup('error', 'Update failed'))
+      .finally(() => {
+        setActionLoading(false);
+        setIsEditing(false);
+      });
   };
 
   return (
-    <div className="dashboard-container">
+    <div className="dashboard-container-appointment">
       <PatientNavbar />
       <div className="dashboard-content">
         <PatientSidebar />
-        <div className="home-container">
-          <h2>Select Department</h2>
-          <div className="departments">
-            {departments.map((dept) => (
+        <main className="appointment-main" style={{ backgroundColor: '#f0f7ff'}}>
+          <h2>Select Department For Appointment Booking</h2>
+
+          <section className="departments">
+            {departments.map(d => (
               <div
-                key={dept.id}
-                className="department-card"
-                onClick={() => handleDepartmentClick(dept.id)}
+                key={d.id}
+                className="dept-card"
+                onClick={() => navigate(`/appointment/${d.id}`)}
+                tabIndex={0}
+                role="button"
+                onKeyPress={e => e.key === 'Enter' && navigate(`/appointment/${d.id}`)}
               >
-                <div className="department-icon">{dept.icon}</div>
-                <div className="department-name">{dept.name}</div>
+                <div className="dept-icon">{d.icon}</div>
+                <div className="dept-name">{d.name}</div>
               </div>
             ))}
-          </div>
+          </section>
 
-          {isEditing && currentAppointment && (
-            <div className="edit-appointment-form">
-              <h3>Edit Appointment</h3>
-              <form onSubmit={handleSubmitEdit}>
-                <label>Appointment Time:</label>
-                <input
-                  type="datetime-local"
-                  name="appoinmenttime"
-                  value={currentAppointment.appoinmenttime}
-                  onChange={handleInputChange}
-                  required
-                />
-                <label>Details:</label>
-                <textarea
-                  name="appoinmentdetails"
-                  value={currentAppointment.appoinmentdetails}
-                  onChange={handleInputChange}
-                  rows={4}
-                  required
-                />
-                <button type="submit">Update</button>
-                <button type="button" onClick={() => setIsEditing(false)}>Cancel</button>
-              </form>
+          {loading && (
+            <div className="modal-overlay">
+              <div className="modal-content"  style={{ backgroundColor: '#e0f7fa'}}>
+                <FaSpinner className="spin large" />
+                <p>Loading appointments...</p>
+              </div>
             </div>
           )}
 
-          <div className="appointment-details-container">
-            <h3>Upcoming Appointments</h3>
-            {loading ? <div>Loading...</div> : error ? <div>{error}</div> : renderAppointmentTable(upcomingAppointments)}
-          </div>
+          {!loading && (
+            <>
+              {isEditing && (
+                <section className="edit-form">
+                  <h3>Edit Appointment</h3>
+                  <form onSubmit={submitEdit} style={{ backgroundColor: '#e0f7fa'}}>
+                    <label htmlFor="appt-time">Time:</label>
+                    <input
+                      id="appt-time"
+                      type="datetime-local"
+                      value={current.appoinmenttime}
+                      onChange={e => setCurrent({ ...current, appoinmenttime: e.target.value })}
+                      required
+                    />
+                    <label htmlFor="appt-details">Details:</label>
+                    <textarea
+                      id="appt-details"
+                      rows="3"
+                      value={current.appoinmentdetails}
+                      onChange={e => setCurrent({ ...current, appoinmentdetails: e.target.value })}
+                      required
+                    />
+                    {/* <div className="edit-buttons">
+                      <button type="submit" disabled={actionLoading}>
+                        {actionLoading ? <FaSpinner className="spin" /> : 'Update'}
+                      </button>
+                      <button type="button" onClick={() => setIsEditing(false)}>Cancel</button>
+                    </div> */}
+                    <div className="edit-buttons">
+  <button type="submit" disabled={actionLoading} >
+    {actionLoading ? (
+      <FaSpinner className="spin" />
+    ) : (
+      <>
+        <FaEdit style={{ color: 'yellow', marginRight: '6px' }} />
+       
+      </>
+    )}
+  </button>
+  <button type="button" onClick={() => setIsEditing(false)}>
+    <FaTimes style={{ color: 'red', marginRight: '6px' }} />
+    
+  </button>
+</div>
 
-          <div className="appointment-details-container">
-            <h3>All Appointments</h3>
-            {loading ? <div>Loading...</div> : error ? <div>{error}</div> : renderAppointmentTable(appointments)}
-          </div>
-        </div>
+                  </form>
+                </section>
+              )}
+
+              <section className="appointments-container">
+                <aside className="upcoming-section">
+                  <h3>Upcoming Appointments</h3>
+                  {upcoming.length === 0 ? (
+                    <p>No upcoming appointments</p>
+                  ) : (
+                    upcoming.map(a => (
+                      <article key={a.uid} className="upcoming-card" style={{ backgroundColor: '#fff9c4' }}>
+                        <div className="upcoming-info">
+                          <time>{new Date(a.appoinmenttime).toLocaleString()}</time>
+                          <p>with <strong>{a.doctor_fullname}</strong></p>
+                        </div>
+                        <div className="upcoming-actions">
+                          <button
+                            className="btn-icon"
+                            onClick={() => handleEdit(a)}
+                            title="Edit appointment"
+                          >
+                            <FaEdit />
+                          </button>
+                        </div>
+                      </article>
+                    ))
+                  )}
+                </aside>
+
+                <section className="history-section">
+                  <h3>Appointment History</h3>
+                
+                  <table className="history-tables" style={{ width: '100%' }}>
+  <thead>
+    <tr>
+      <th className="history-table" style={{ backgroundColor: '#87CEEB' }}>ID</th>
+      <th style={{ backgroundColor: '#87CEEB' }}>Time</th>
+      <th style={{ backgroundColor: '#87CEEB' }}>Doctor</th>
+      <th style={{ backgroundColor: '#87CEEB' }}>Details</th>
+      <th style={{ backgroundColor: '#87CEEB' }}>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    {appointments.length === 0 ? (
+      <tr>
+        <td
+          colSpan="5"
+          style={{
+            textAlign: 'center',
+            padding: '50px 20px',
+            fontSize: '1.5rem',
+            color: '#555',
+            backgroundColor: '#e8f6fc', // light sky-blueish
+            fontWeight: '500',
+            letterSpacing: '0.5px'
+          }}
+        >
+          📅 No Appointment History Found
+        </td>
+      </tr>
+    ) : (
+      appointments.map(a => (
+        <tr key={a.uid}>
+          <td data-label="ID">{a.uid}</td>
+          <td data-label="Time">{new Date(a.appoinmenttime).toLocaleString()}</td>
+          <td data-label="Doctor">{a.doctor_fullname}</td>
+          <td data-label="Details">{a.appoinmentdetails}</td>
+          <td data-label="Actions" className="action-buttons">
+            <button className="btnn-icon" onClick={() => handleEdit(a)} title="Edit">
+              <FaEdit />
+            </button>
+            <button
+              className="btn-icon btn-delete"
+              onClick={() => handleDelete(a.uid)}
+              disabled={actionLoading}
+              title="Delete"
+            >
+              <FaTrash />
+            </button>
+          </td>
+        </tr>
+      ))
+    )}
+  </tbody>
+</table>
+
+                </section>
+              </section>
+            </>
+          )}
+        </main>
       </div>
+
+      {popup && (
+        <div className={`popup ${popup.type}`}>
+          {popup.type === 'success' ? <FaCheckCircle /> : <FaTimesCircle />}
+          <span>{popup.msg}</span>
+        </div>
+      )}
     </div>
   );
 };

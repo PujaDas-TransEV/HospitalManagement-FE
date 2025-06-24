@@ -309,7 +309,19 @@ const HomeCareService = () => {
                   />
                 </label>
 
-                <button type="submit">Submit Request</button>
+              
+                <button
+  type="submit"
+  style={{
+    display: 'block',        
+    margin: '0 auto',        
+    width: '260px',         
+    padding: '10px',       
+  }}
+>
+  Submit Request
+</button>
+
               </form>
             </div>
           </div>

@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Modal from 'react-modal';
 import { useNavigate } from 'react-router-dom';
-import { FaEye, FaTimesCircle, FaSave, FaBan, FaTrash, FaHome } from 'react-icons/fa';
+import { FaEye, FaTimesCircle, FaSave, FaBan, FaTrash, FaHome,FaClock } from 'react-icons/fa';
 import './HomeService.css';
 import PatientNavbar from '../Navbar/PatientNavbar';
 import PatientSidebar from '../Sidebar/PatientSidebar';
@@ -153,7 +153,7 @@ const HomeCareServicePage = () => {
             className="primary-btn"
             onClick={() => navigate('/home-care-request')}
           >
-            Book Home Care Service
+            Book Home Care Service <FaClock style={{ marginLeft: '8px', verticalAlign: 'middle', color: '#2980b9' }} />
           </button>
 
           <h2>My Home Care Requests</h2>
