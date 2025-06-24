@@ -81,7 +81,7 @@ const PatientSidebar = () => {
           <li className="nav-item">
             <Link to="/medical-history" className={`nav-link ${location.pathname === '/medical-history' ? 'active-link' : ''}`} onClick={handleLinkClick}>
               <MdMedicalServices className="nav-icon" />
-              {(isExpanded || isMobileOpen)&& <span>Medical History</span>}
+              {(isExpanded || isMobileOpen)&& <span>Admission Details</span>}
             </Link>
           </li>
           {/* <li className="nav-item">

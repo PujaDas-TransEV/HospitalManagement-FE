@@ -1,6 +1,12 @@
+
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { jwtDecode } from 'jwt-decode';
+import {
+  FaUser, FaEnvelope, FaPhone, FaCalendarAlt,
+  FaVenusMars, FaBed, FaHospital, FaDoorClosed,
+  FaInfoCircle, FaSpinner
+} from 'react-icons/fa';
 import './Medical.css';
 import PatientNavbar from '../Navbar/PatientNavbar';
 import PatientSidebar from '../Sidebar/PatientSidebar';
@@ -8,31 +14,22 @@ import PatientSidebar from '../Sidebar/PatientSidebar';
 const PatientMedicalHistoryPage = () => {
   const navigate = useNavigate();
   const [patientDetails, setPatientDetails] = useState(null);
-  const [errorMessage, setErrorMessage] = useState('');
-  const [successMessage, setSuccessMessage] = useState('');
   const [isFetching, setIsFetching] = useState(false);
   const [patientId, setPatientId] = useState(null);
 
   useEffect(() => {
-    const fetchPatientProfile = async () => {
-      const accessToken = localStorage.getItem('accessToken');
-
-      if (!accessToken) {
-        navigate('/login'); 
-        return;
-      }
-
-      try {
-        const decodedToken = jwtDecode(accessToken);
-        const patientId = decodedToken.userid;
-        setPatientId(patientId);
-      } catch (error) {
-        console.error('Error decoding token:', error);
-        navigate('/login');
-      }
-    };
-
-    fetchPatientProfile();
+    const accessToken = localStorage.getItem('accessToken');
+    if (!accessToken) {
+      navigate('/login');
+      return;
+    }
+    try {
+      const decodedToken = jwtDecode(accessToken);
+      setPatientId(decodedToken.userid);
+    } catch (error) {
+      console.error('Token decode failed:', error);
+      navigate('/login');
+    }
   }, [navigate]);
 
   useEffect(() => {
@@ -45,57 +42,80 @@ const PatientMedicalHistoryPage = () => {
         method: 'POST',
         body: formData,
       })
-        .then((response) => response.json())
-        .then((data) => {
+        .then(res => res.json())
+        .then(data => {
           if (data.data) {
             setPatientDetails(data.data);
-            setSuccessMessage(data.message);
           } else {
-            // setErrorMessage('No admission details found for this patient');
+            setPatientDetails(null);
           }
           setIsFetching(false);
         })
-        .catch((error) => {
-          console.error('Error fetching patient details:', error);
-          setErrorMessage('Failed to fetch patient details');
+        .catch(err => {
+          console.error('Fetch error:', err);
           setIsFetching(false);
         });
     }
   }, [patientId]);
 
   return (
-    <div className="dashboard-container">
+    <div className="dashboard-container-medical" style={{ backgroundColor: '#e0f7fa'}}>
       <PatientNavbar />
-      <div className="dashboard-content">
+      <div className="dashboard-content"style={{ backgroundColor: '#e0f7fa'}}>
         <PatientSidebar />
 
-        <div className="container">
-          <h2 className="page-title">Patient Medical History</h2>
+        <div className="medical-container">
+          <h2 className="page-title">Patient Admission History</h2>
 
-          {errorMessage && <div className="error-message">{errorMessage}</div>}
-          {successMessage && <div className="success-message">{successMessage}</div>}
+          {isFetching && (
+            <div className="modal-overlay">
+                         <div className="modal-content"  style={{ backgroundColor: '#e0f7fa'}}>
+                           <FaSpinner className="spin large" />
+                           <p>Loading admission...</p>
+                         </div>
+            </div>
+          )}
 
-          <div className="patient-details-card">
-            {patientDetails ? (
-              <>
-                <h3>Patient Details</h3>
-                <p><strong>Name:</strong> {patientDetails.patientfirstname}</p>
-                <p><strong>Age:</strong> {patientDetails.patientage}</p>
-                <p><strong>Email:</strong> {patientDetails.patientemail}</p>
-                <p><strong>Gender:</strong> {patientDetails.patientgender}</p>
-                <p><strong>Phone Number:</strong> {patientDetails.patientphoneno}</p>
-                <p><strong>Admission Status:</strong> {patientDetails.admitstatus}</p>
-                <p><strong>Ward Name:</strong> {patientDetails.wardname}</p>
-                <p><strong>Ward Email:</strong> {patientDetails.wardemail}</p>
-                <p><strong>Room Number:</strong> {patientDetails.room_number}</p>
-                <p><strong>Room Type:</strong> {patientDetails.room_type}</p>
-              </>
-            ) : (
-              <div className="no-patient-details">
-                <p>No admission details found for this patient.</p>
+          {!isFetching && patientDetails ? (
+            <div className="patient-info-list">
+              <div className="patient-info-item patient-name">
+                <FaUser className="icon" /> <strong>Name:</strong> {patientDetails.patientfirstname}{patientDetails.patientlastname}
               </div>
-            )}
-          </div>
+              <div className="patient-info-item patient-age">
+                <FaCalendarAlt className="icon" /> <strong>Age:</strong> {patientDetails.patientage}
+              </div>
+              <div className="patient-info-item patient-email">
+                <FaEnvelope className="icon" /> <strong>Email:</strong> {patientDetails.patientemail}
+              </div>
+              <div className="patient-info-item patient-gender">
+                <FaVenusMars className="icon" /> <strong>Gender:</strong> {patientDetails.patientgender}
+              </div>
+              <div className="patient-info-item patient-phone">
+                <FaPhone className="icon" /> <strong>Phone:</strong> {patientDetails.patientphoneno}
+              </div>
+              <div className="patient-info-item patient-status">
+                <FaInfoCircle className="icon" /> <strong>Status:</strong> {patientDetails.admitstatus}
+              </div>
+              <div className="patient-info-item patient-ward">
+                <FaHospital className="icon" /> <strong>Ward:</strong> {patientDetails.wardname}
+              </div>
+              <div className="patient-info-item patient-wardmail">
+                <FaEnvelope className="icon" /> <strong>Ward Email:</strong> {patientDetails.wardemail}
+              </div>
+              <div className="patient-info-item patient-room">
+                <FaDoorClosed className="icon" /> <strong>Room No:</strong> {patientDetails.room_number}
+              </div>
+              <div className="patient-info-item patient-type">
+                <FaBed className="icon" /> <strong>Room Type:</strong> {patientDetails.room_type}
+              </div>
+            </div>
+          ) : (
+            !isFetching && (
+              <div className="no-details-message">
+                 No admission details found for this patient.
+              </div>
+            )
+          )}
         </div>
       </div>
     </div>

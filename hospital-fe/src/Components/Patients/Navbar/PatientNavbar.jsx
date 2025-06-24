@@ -79,7 +79,7 @@ const PatientNavbar = () => {
           alt="Profile"
           className="profile-img"
         />
-        <span className="patient-name">{profileData.firstname} {profileData.lastname}</span>
+        <span className="patient-names">{profileData.firstname} {profileData.lastname}</span>
 
         {isDropdownOpen && (
           <div className="dropdown-menu">

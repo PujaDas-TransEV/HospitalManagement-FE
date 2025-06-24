@@ -21,7 +21,7 @@ import './PatientDashboard.css';
 const FEATURE_BUTTONS = [
   { icon: FaHome, label: 'Homecare Service', path: '/home-care-service', color: '#ff6b6b' },
   { icon: FaCalendarCheck, label: 'Appointment Booking', path: '/patient-Appointments', color: '#4dabf7' },
-  { icon: FaHistory, label: 'Medical History', path: '/medical-history', color: '#ffa94d' },
+  { icon: FaHistory, label: 'Admission History', path: '/medical-history', color: '#ffa94d' },
   { icon: FaPrescriptionBottleAlt, label: 'Prescriptions', path: '/prescription', color: '#63e6be' },
   { icon: FaFlask, label: 'Lab Report', path: '/labreport', color: '#9775fa' },
   { icon: FaFileInvoice, label: 'Invoice', path: '/invoice', color: '#ff922b' },
