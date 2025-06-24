@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Modal from 'react-modal';
 import { useNavigate } from 'react-router-dom';
+import { FaEye, FaTimesCircle, FaSave, FaBan, FaTrash, FaHome } from 'react-icons/fa';
 import './HomeService.css';
 import PatientNavbar from '../Navbar/PatientNavbar';
 import PatientSidebar from '../Sidebar/PatientSidebar';
@@ -25,6 +26,7 @@ const HomeCareServicePage = () => {
   const [selectedRequest, setSelectedRequest] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [popupMessage, setPopupMessage] = useState(null);
 
   useEffect(() => {
     const pid = localStorage.getItem('patientId');
@@ -46,6 +48,7 @@ const HomeCareServicePage = () => {
         formData
       );
       setRequests(res.data.data || []);
+      setError(null);
     } catch (e) {
       setError('Failed to fetch home care requests.');
     } finally {
@@ -105,14 +108,18 @@ const HomeCareServicePage = () => {
     try {
       const res = await axios.post('http://192.168.0.106:5000/management/deletehomecare', formData);
 
-      if (res.data.message === 'Delete success') {
-        alert('Request deleted successfully.');
+      if (res.data.message === 'delete success' || res.data.message === 'Delete success') {
         setRequests((prevRequests) =>
           prevRequests.filter((req) => req.homecare.uid !== uid)
         );
+
         if (selectedRequest?.homecare?.uid === uid) {
           setSelectedRequest(null);
         }
+
+        setPopupMessage('Homecare deleted successfully.');
+        setTimeout(() => setPopupMessage(null), 3000);
+
       } else {
         alert(res.data.message || 'Could not delete the request.');
       }
@@ -132,56 +139,100 @@ const HomeCareServicePage = () => {
   };
 
   return (
-    <div className="dashboard-container">
+    <div className="dashboard-container-homecare">
       <PatientNavbar />
-      <div className="dashboard-content">
+      <div className="dashboard-content-homecare">
         <PatientSidebar />
+        
         <div className="homecare-page">
-          <h1>Home Care Services</h1>
-          <button className="primary-btn" onClick={() => navigate('/home-care-request')}>
-            Request Home Care Service
+          <h1>
+            Home Care Services 🏠
+            
+          </h1>
+          <button
+            className="primary-btn"
+            onClick={() => navigate('/home-care-request')}
+          >
+            Book Home Care Service
           </button>
+
           <h2>My Home Care Requests</h2>
 
-          {loading ? (
-            <p>Loading requests...</p>
-          ) : error ? (
-            <p>{error}</p>
-          ) : requests.length === 0 ? (
-            <p>No home care requests found.</p>
-          ) : (
+          {/* Loading modal */}
+          <Modal
+            isOpen={loading}
+            ariaHideApp={false}
+            className="loading-modal"
+            overlayClassName="modal-overlay"
+            shouldCloseOnOverlayClick={false}
+          >
+            <div className="spinner"></div>
+            <p>Loading Booking...</p>
+          </Modal>
+
+          {error && <p className="error-msg">{error}</p>}
+
+          {!loading && !error && requests.length === 0 && (
+            <p className="no-requests-msg">No Home care Booking found.</p>
+          )}
+
+          {!loading && !error && requests.length > 0 && (
             <div className="requests-list">
-              {requests.map((req) => (
-                <div key={req.homecare.uid} className="request-card">
-                  <p><strong>Status:</strong> {req.homecare.status}</p>
-                  <p><strong>Time:</strong> {req.homecare.timefrom} - {req.homecare.timeto}</p>
-                  <p><strong>Patient:</strong> {req.homecare.patientname}</p>
-                  <p><strong>Home Care Booking:</strong> {req.homecare.caretype}</p>
-                  <div className="card-actions">
-                    <button onClick={() => openDetails(req)}>View Details</button>
-                    {req.homecare.status === 'cancelled' && (
-                      <button className="delete-btn" onClick={() => handleDelete(req.homecare.uid)}>
-                        Delete
+              {requests
+                .slice()
+                .sort((a, b) => new Date(b.homecare.timefrom) - new Date(a.homecare.timefrom))
+                .map((req) => (
+                  <div key={req.homecare.uid} className="request-card">
+                    <p><strong>Status:</strong> <span className={`status-${req.homecare.status}`}>{req.homecare.status}</span></p>
+                    <p><strong>Time:</strong> {new Date(req.homecare.timefrom).toLocaleString()} - {new Date(req.homecare.timeto).toLocaleString()}</p>
+                    <p><strong>Patient:</strong> {req.homecare.patientname}</p>
+                    <p><strong>Home Care Booking:</strong> {req.homecare.caretype}</p>
+                    <div className="card-actions">
+                      <button
+                        className="icon-btn view-btn"
+                        onClick={() => openDetails(req)}
+                        title="View Details"
+                      >
+                        <FaEye />
                       </button>
-                    )}
+                      {req.homecare.status === 'cancelled' && (
+                        <button
+                          className="icon-btn delete-btn"
+                          onClick={() => handleDelete(req.homecare.uid)}
+                          title="Delete Request"
+                        >
+                          <FaTrash />
+                        </button>
+                      )}
+                    </div>
                   </div>
-                </div>
-              ))}
+                ))}
             </div>
           )}
+
+          
 
           <Modal
             isOpen={!!selectedRequest}
             onRequestClose={() => setSelectedRequest(null)}
             contentLabel="Request Details"
             ariaHideApp={false}
-            className="modal-content"
+            className="modal-content-homecare"
             overlayClassName="modal-overlay"
             shouldCloseOnOverlayClick={true}
           >
             {selectedRequest && (
               <div>
-                <h2>Request Details</h2>
+                <div className="modal-header-homecare">
+                  <h2>Request Details</h2>
+                  <button
+                    className="icon-btn close-btn"
+                    onClick={() => setSelectedRequest(null)}
+                    title="Close"
+                  >
+                    <FaTimesCircle />
+                  </button>
+                </div>
                 {Object.keys(selectedRequest.homecare).map((key) => {
                   const value = selectedRequest.homecare[key];
                   if (
@@ -197,7 +248,7 @@ const HomeCareServicePage = () => {
 
                   return (
                     <div key={key} className="modal-field">
-                      <label>{key}</label>
+                      <label>{key.replace(/([A-Z])/g, ' $1').replace(/^./, str => str.toUpperCase())}</label>
                       <input
                         type={isDateTime ? 'datetime-local' : 'text'}
                         value={isDateTime ? formatDateForInput(value) : value}
@@ -218,45 +269,43 @@ const HomeCareServicePage = () => {
                   );
                 })}
 
-                {/* Display assigned person info if available */}
-                {selectedRequest.homecare.status === 'approved' &&
+                {(selectedRequest.homecare.status === 'approved' &&
                   selectedRequest.homecare.caretype === 'doctor' &&
-                  selectedRequest.doctor && (
+                  selectedRequest.doctor) && (
                     <div className="assigned-info">
                       <p><strong>Assigned Doctor Name:</strong> {selectedRequest.doctor.fullname}</p>
                       <p><strong>Doctor UID:</strong> {selectedRequest.doctor.uid}</p>
                     </div>
-                  )}
+                )}
 
-                {selectedRequest.homecare.status === 'approved' &&
+                {(selectedRequest.homecare.status === 'approved' &&
                   selectedRequest.homecare.caretype !== 'doctor' &&
-                  selectedRequest.staff && (
+                  selectedRequest.staff) && (
                     <div className="assigned-info">
                       <p><strong>Assigned Staff Name:</strong> {selectedRequest.staff.fullname}</p>
                       <p><strong>Staff UID:</strong> {selectedRequest.staff.uid}</p>
                     </div>
-                  )}
+                )}
 
                 <div className="modal-actions">
                   {canCancel(selectedRequest.homecare.timefrom) &&
                     selectedRequest.homecare.status !== 'cancelled' && (
                       <button
-                        className="cancel-btn"
+                        className="icon-btn cancel-btn"
                         onClick={() =>
                           handleCancel(selectedRequest.homecare.uid)
                         }
+                        title="Cancel Request"
                       >
-                        Cancel Request
+                        <FaBan /> Cancel Request
                       </button>
                     )}
-                  <button className="primary-btn" onClick={handleUpdate}>
-                    Update Request
-                  </button>
                   <button
-                    className="secondary-btn"
-                    onClick={() => setSelectedRequest(null)}
+                    className="icon-btn primary-btn"
+                    onClick={handleUpdate}
+                    title="Update Request"
                   >
-                    Close
+                    <FaSave /> Update Request
                   </button>
                 </div>
               </div>
@@ -269,5 +318,3 @@ const HomeCareServicePage = () => {
 };
 
 export default HomeCareServicePage;
-
- 

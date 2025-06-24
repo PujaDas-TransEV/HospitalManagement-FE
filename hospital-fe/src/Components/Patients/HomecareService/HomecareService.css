@@ -1,84 +1,214 @@
- .homecare-container {
-  padding: 30px;
-  background-color: #f0f4f8;
-  min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
-}
+/* 
 
-.homecare-box {
-  background: white;
-  padding: 25px 30px;
-  border-radius: 10px;
+.homecare-container {
   width: 100%;
-  max-width: 700px;
-  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  padding: 40px 20px;
+  background: #f9f9f9;
+  box-sizing: border-box;
 }
 
-.homecare-box h2 {
-  text-align: center;
-  margin-bottom: 20px;
-  color: #007bff;
+
+.homecare-form {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); 
+  gap: 24px 40px;
+  width: 80%;
+  max-width: 1600px;
+  margin: 0 auto;
+  margin-left: 250px;
 }
 
-.success-message {
-  background-color: #d4edda;
-  color: #155724;
-  padding: 10px;
-  margin-bottom: 15px;
-  border-radius: 5px;
+.homecare-form label {
+  display: flex;
+  flex-direction: column;
+  font-weight: 600;
+  font-size: 1rem;
+}
+
+.homecare-form input,
+.homecare-form textarea,
+.homecare-form select {
+  margin-top: 6px;
+  padding: 12px 14px;
+  font-size: 1rem;
+  border: 1.5px solid #ccc;
+  border-radius: 6px;
+  box-sizing: border-box;
+  width: 100%;
+}
+
+.homecare-form textarea {
+  min-height: 80px;
+  resize: vertical;
+}
+
+.homecare-form button[type="submit"] {
+  grid-column: 1 / -1; 
+  padding: 16px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.homecare-form button[type="submit"]:hover {
+  background-color: #0056b3;
+}
+
+
+.select-with-spinner {
+  position: relative;
+}
+
+.small-spinner {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 20px;
+  height: 20px;
+  border: 3px solid #007bff;
+  border-top: 3px solid transparent;
+  border-radius: 50%;
+  animation: spin 0.9s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+
+@media (max-width: 992px) {
+  .homecare-form {
+    grid-template-columns: 1fr;
+  }
+
+  .homecare-box {
+    padding: 30px 20px;
+  }
+} */
+.homecare-container {
+  width: 100%;
+  padding: 40px 20px;
+  background: #bce4e2;
+  box-sizing: border-box;
+}
+
+/* Optional heading styling */
+.homecare-container h2 {
+  margin-bottom: 30px;
+  font-size: 1.8rem;
+  color: #333;
   text-align: center;
 }
 
 .homecare-form {
-  display: flex;
-  flex-direction: column;
-}
-
-.homecare-form label {
-  margin-bottom: 15px;
-  font-weight: 500;
-  color: #333;
-}
-
-.homecare-form input,
-.homecare-form select,
-.homecare-form textarea {
-  padding: 10px;
-  margin-top: 5px;
-  font-size: 15px;
-  border: 1px solid #ccc;
-  border-radius: 6px;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); /* Two columns layout */
+  gap: 24px 40px;
   width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+  background: #e0f7fa;
+  border-radius: 10px;
+  padding: 50px;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.1);
   box-sizing: border-box;
 }
 
+.homecare-form label {
+  display: flex;
+  flex-direction: column;
+  font-weight: 600;
+  font-size: 1rem;
+}
+
+.homecare-form input,
+.homecare-form textarea,
+.homecare-form select {
+  margin-top: 6px;
+  padding: 12px 14px;
+  font-size: 1rem;
+  border: 1.5px solid #ccc;
+  border-radius: 6px;
+  box-sizing: border-box;
+  width: 100%;
+}
+
 .homecare-form textarea {
-  resize: vertical;
   min-height: 80px;
+  resize: vertical;
 }
 
-
-
-@media (max-width: 600px) {
-  .homecare-box {
-    padding: 20px;
-  }
-}
 .homecare-form button[type="submit"] {
-  background-color: #3498db;
+  grid-column: 1 / -1; 
+  padding: 10px;
+  background-color: #0056b3;
   color: white;
-  padding: 12px 20px;
-  font-size: 1.1rem;
-  font-weight: 700;
   border: none;
-  border-radius: 10px;
+  border-radius: 8px;
+  font-size: 1.1rem;
   cursor: pointer;
-  transition: background-color 0.25s ease;
-  margin-top: 1rem;
+  transition: background 0.3s ease;
 }
 
 .homecare-form button[type="submit"]:hover {
-  background-color: #2980b9;
+  background-color: #304177;
+}
+
+/* Spinner styling for async inputs */
+.select-with-spinner {
+  position: relative;
+}
+
+.small-spinner {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 20px;
+  height: 20px;
+  border: 3px solid #007bff;
+  border-top: 3px solid transparent;
+  border-radius: 50%;
+  animation: spin 0.9s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Responsive behavior */
+@media (max-width: 992px) {
+  .homecare-form {
+    grid-template-columns: 1fr;
+    padding: 30px 20px;
+  }
+}
+
+@media (max-width: 600px) {
+  .homecare-container h2 {
+    font-size: 1.5rem;
+  }
+
+  .homecare-form {
+    padding: 20px;
+  }
+
+  .homecare-form input,
+  .homecare-form textarea,
+  .homecare-form select {
+    font-size: 0.95rem;
+  }
+
+  .homecare-form button[type="submit"] {
+    font-size: 1rem;
+  }
 }

@@ -1,173 +1,344 @@
 
-.homecare-page {
-  max-width: 960px;
-  margin: 2rem auto;
-  padding: 2rem;
-  background: #f8f9fa;
-  border-radius: 10px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+ .dashboard-container-homecare {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #cae7eb, #cae7eb);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #004d40;
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
 }
 
-.homecare-page h1{
+ .dashboard-content-homecare {
+  display: flex;
+  flex-grow: 1;
+  padding: 20px;
+  gap: 20px;
+} 
 
-  text-align: center;
-  margin-bottom: 1.5rem; /* spacing below the heading */
+  
+.homecare-page {
+  flex-grow: 1;
+  background: #d1e0e4dd;
+  border-radius: 12px;
+  padding: 30px;
+  max-width: 1400px;         /* Limit the width */
+  width: 100%;             /* Make it responsive */
+  margin: 0 auto;           /* Center horizontally */
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+  min-height: 80vh;
+  display: flex;
+  flex-direction: column;
+}
+
+
+
+
+.homecare-page h1 {
+  margin-bottom: 20px;
+  color: #2e3b3e;
   font-weight: 700;
-  font-size: 2.5rem;
-  color: #3a8994;
+  font-size: 2.2rem;
 }
 
+.homecare-page h2 {
+  margin-top: 40px;
+  margin-bottom: 25px;
+  color: #004d40;
+  font-weight: 600;
+  font-size: 1.6rem;
+}
 
-
-
-.primary-btn,
-.secondary-btn,
-.cancel-btn {
-  margin: 5px;
-  padding: 10px 16px;
+.primary-btn {
+  background-color: #00796b;
+  color: white;
+  padding: 14px 30px;
   border: none;
-  border-radius: 5px;
+  border-radius: 10px;
+  font-size: 1.1rem;
   cursor: pointer;
-  font-weight: bold;
-}
-.primary-btn {
-  padding: 6px 12px;
-  font-size: 14px;
-  max-width: 180px;
-  border-radius: 4px;
-  transition: all 0.3s ease;
+  transition: background-color 0.3s ease;
+  align-self: flex-start;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 600;
 }
 
-/* Smaller buttons on very small screens */
-@media (max-width: 480px) {
-  .primary-btn {
-    padding: 4px 10px;
-    font-size: 12px;
-    max-width: 140px;
-  }
-}
-
-/* Medium devices */
-@media (max-width: 768px) and (min-width: 481px) {
-  .primary-btn {
-    padding: 5px 11px;
-    font-size: 13px;
-    max-width: 160px;
-  }
-}
-
-
-.primary-btn {
-  background-color: #28c5ab;
-  color: white;
-}
-
-.secondary-btn {
-  background-color: #6c757d;
-  color: white;
-}
-
-.cancel-btn {
-  background-color: #dc3545;
-  color: white;
+.primary-btn:hover {
+  background-color: #004d40;
 }
 
 .requests-list {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 1rem;
-  justify-content: center;
-  margin-top: 20px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill,minmax(320px,1fr));
+  gap: 22px;
 }
 
 .request-card {
-  background: white;
-  border: 1px solid #ccc;
-  padding: 1rem;
-  border-radius: 8px;
-  width: 280px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  background-color: #b2dfdb;
+  border-radius: 14px;
+  padding: 20px;
+  box-shadow: 0 3px 8px rgba(0,0,0,0.12);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: transform 0.2s ease;
+  font-size: 1rem;
+  font-weight: 500;
 }
 
-.modal-content {
-  background: white;
-  padding: 2rem;
-  border-radius: 10px;
-  max-width: 600px;
-  max-height: 80vh; 
-  overflow-y: auto;  
-  margin: auto;
-  position: relative;
+.request-card:hover {
+  transform: translateY(-6px);
 }
-@media screen and (max-width: 768px) {
-  .modal-content {
-    width: 90%;
-    max-height: 85vh;
-    padding: 1.5rem;
-  }
+
+.status-cancelled {
+  color: #d32f2f;
+  font-weight: 700;
+  text-transform: capitalize;
+}
+
+.status-approved {
+  color: #388e3c;
+  font-weight: 700;
+  text-transform: capitalize;
+}
+
+.status-pending {
+  color: #fbc02d;
+  font-weight: 700;
+  text-transform: capitalize;
+}
+
+.card-actions {
+  margin-top: 18px;
+  display: flex;
+  justify-content: flex-end;
+  gap: 14px;
+}
+
+.icon-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1.4rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 12px;
+  border-radius: 8px;
+  transition: background-color 0.3s ease;
+  color: #004d40;
+}
+
+.icon-btn:hover {
+  background-color: #004d40;
+  color: white;
+}
+
+.view-btn {
+  color: #0277bd;
+}
+
+.view-btn:hover {
+  background-color: #01579b;
+  color: white;
+}
+
+.delete-btn {
+  color: #d32f2f;
+}
+
+.delete-btn:hover {
+  background-color: #b71c1c;
+  color: white;
 }
 
 
 .modal-overlay {
-  background-color: rgba(0, 0, 0, 0.6);
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
+  background-color: rgba(0,0,0,0.5);
+  z-index: 1000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
 }
 
-.modal-field {
-  margin-bottom: 1rem;
+
+.modal-content-homecare {
+  background-color: #e0f7fa;
+  color: white;
+  max-width: 650px;
+  width: 100%;
+  border-radius: 15px;
+  padding: 30px 35px;
+  box-shadow: 0 0 15px #7ad8dfaa;
+  position: relative;
+  max-height: 85vh;
+  overflow-y: auto;
+  font-weight: 500;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
-.card-actions {
+
+
+.modal-header-homecare {
   display: flex;
   justify-content: space-between;
-  gap: 10px;
-  margin-top: 10px;
+  align-items: center;
+  margin-bottom: 28px;
 }
 
-.delete-btn {
-  background-color: #dc3545;
-  color: white;
+.close-btn {
+  font-size: 1.7rem;
+  color: #ff7961;
+  background: transparent;
   border: none;
-  padding: 8px 14px;
-  border-radius: 5px;
   cursor: pointer;
-  font-weight: bold;
+  transition: color 0.3s ease;
 }
 
-.delete-btn:hover {
-  background-color: #c82333;
+.close-btn:hover {
+  color: #ff3d00;
 }
 
+
+.modal-field {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20px;
+}
 
 .modal-field label {
-  display: block;
-  font-weight: bold;
-  margin-bottom: 5px;
-  color: #333;
+  font-weight: 600;
+  margin-bottom: 6px;
+  text-transform: capitalize;
+  font-size: 1.1rem;
+  color: #a5d6a7;
 }
 
 .modal-field input {
-  width: 100%;
-  padding: 8px;
-  border-radius: 4px;
-  border: 1px solid #ccc;
+  padding: 8px 12px;
+  font-size: 1rem;
+  border-radius: 8px;
+  border: none;
+  outline: none;
+  transition: background-color 0.25s ease;
+  background-color: #51d1cb;
+  color: #004d40;
 }
 
+.modal-field input:disabled {
+  background-color: #d5e6e4;
+  cursor: not-allowed;
+  color: #004d40cc;
+}
+
+
+.assigned-info {
+  background-color: #00796b;
+  padding: 16px 22px;
+  border-radius: 12px;
+  margin-top: 24px;
+  color: #e0f2f1;
+  font-weight: 600;
+  font-size: 1.05rem;
+}
+
+
 .modal-actions {
+  margin-top: 30px;
   display: flex;
+  gap: 18px;
   justify-content: flex-end;
+}
+
+.cancel-btn {
+  background-color: #c62828;
+  color: white;
+  border-radius: 10px;
+  padding: 12px 25px;
+  font-weight: 600;
+  font-size: 1rem;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
   gap: 10px;
-  margin-top: 20px;
+  transition: background-color 0.3s ease;
 }
-@media (max-width: 600px) {
-  .homecare-page {
-    padding: 1rem;
-    margin: 1rem;
-  }
+
+.cancel-btn:hover {
+  background-color: #b71c1c;
 }
+
+.primary-btn.icon-btn {
+  background-color: #2e7d32;
+  color: white;
+  padding: 12px 25px;
+  border-radius: 10px;
+  font-weight: 600;
+  font-size: 1rem;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  transition: background-color 0.3s ease;
+}
+
+.primary-btn.icon-btn:hover {
+  background-color: #1b5e20;
+}
+
+
+.error-msg {
+  color: #b71c1c;
+  font-weight: 700;
+  font-size: 1.2rem;
+  text-align: center;
+  margin-top: 25px;
+}
+
+
+.no-requests-msg {
+  font-size: 1.9rem;
+  font-weight: 700;
+  color: #00796b;
+  text-align: center;
+  margin-top: 80px;
+  user-select: none;
+}
+
+
+.loading-modal {
+  background-color: #73d6ddcc;
+  border-radius: 20px;
+  padding: 35px 45px;
+  color: white;
+  font-weight: 600;
+  font-size: 1.3rem;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+  align-items: center;
+  max-width: 320px;
+  width: 100%;
+  box-shadow: 0 0 40px #00796baa;
+  user-select: none;
+}
+
+
+.spinner {
+  width: 50px;
+  height: 50px;
+  border: 7px solid #80cbc4;
+  border-top: 7px solid #1897a8;
+  border-radius: 50%;
+  animation: spin 1.2s linear infinite;
+  margin: 0 auto;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+} 

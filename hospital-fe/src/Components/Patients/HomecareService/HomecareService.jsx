@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Select from 'react-select';
 import './HomecareService.css';
-import PatientNavbar  from '../Navbar/PatientNavbar';
+import PatientNavbar from '../Navbar/PatientNavbar';
 import PatientSidebar from '../Sidebar/PatientSidebar';
 import { useNavigate } from 'react-router-dom';
 
@@ -25,25 +25,31 @@ const HomeCareService = () => {
     caretype: '',
     assignedstaffid: ''
   });
-const navigate = useNavigate();
 
   const [submitted, setSubmitted] = useState(false);
   const [doctors, setDoctors] = useState([]);
   const [loadingDoctors, setLoadingDoctors] = useState(false);
 
-  // Fetch patient profile
+  // Track loading spinner per field (here only doctor select)
+  const [fieldLoading, setFieldLoading] = useState({
+    refrencedoctorname: false,
+  });
+
+  const navigate = useNavigate();
+
+  // Fetch patient profile on mount
   useEffect(() => {
     const fetchPatientProfile = async () => {
       const patientId = localStorage.getItem('patientId');
       if (!patientId) return;
 
       try {
-        const formData = new FormData();
-        formData.append('patientid', patientId);
+        const formDataPayload = new FormData();
+        formDataPayload.append('patientid', patientId);
 
         const response = await axios.post(
           'http://192.168.0.106:5000/patients/profile/getbyid',
-          formData,
+          formDataPayload,
           { headers: { 'Content-Type': 'multipart/form-data' } }
         );
 
@@ -65,10 +71,10 @@ const navigate = useNavigate();
     fetchPatientProfile();
   }, []);
 
-  // Fetch doctors if caretype is doctor
+  // Fetch doctors when caretype is doctor
   useEffect(() => {
     if (formData.caretype === 'doctor') {
-      setLoadingDoctors(true);
+      setFieldLoading(prev => ({ ...prev, refrencedoctorname: true }));
       axios.get('http://192.168.0.106:5000/doctorops/getalldoctor')
         .then(response => {
           const doctorOptions = response.data.data.map(doctor => ({
@@ -81,7 +87,7 @@ const navigate = useNavigate();
           console.error('Error fetching doctors:', error);
         })
         .finally(() => {
-          setLoadingDoctors(false);
+          setFieldLoading(prev => ({ ...prev, refrencedoctorname: false }));
         });
     }
   }, [formData.caretype]);
@@ -95,7 +101,7 @@ const navigate = useNavigate();
     setFormData(prev => ({ ...prev, refrencedoctorname: selectedOption?.value || '' }));
   };
 
-  // ✅ Format datetime-local value to "YYYY-MM-DD HH:MM:SS"
+  // Format datetime-local value to "YYYY-MM-DD HH:MM:SS"
   const formatDateTime = (value) => {
     const date = new Date(value);
     const yyyy = date.getFullYear();
@@ -142,7 +148,7 @@ const navigate = useNavigate();
         caretype: '',
         assignedstaffid: ''
       });
-       navigate('/home-care-service');
+      navigate('/home-care-service');
     } catch (error) {
       console.error('Error submitting form:', error);
       alert('❌ Failed to submit the request.');
@@ -150,86 +156,165 @@ const navigate = useNavigate();
   };
 
   return (
-     <div className="dashboard-container">
-      {/* Navbar at the top */}
+    <div className="dashboard-container">
+      {/* Navbar */}
       <PatientNavbar />
-      
+
       <div className="dashboard-contenter">
-        {/* Sidebar for navigation */}
+        {/* Sidebar */}
         <PatientSidebar />
-    <div className="homecare-container">
-      <div className="homecare-box">
-        <h2>🏠 Request Home Care Service</h2>
 
-        {submitted && <div className="success-message">Request submitted successfully!</div>}
+        {/* Overlay container */}
+        <div className="homecare-overlay">
+          <div className="homecare-container">
+            <div className="homecare-box">
+              <h2>🏠 Book Home Care Service</h2>
 
-        <form className="homecare-form" onSubmit={handleSubmit}>
-          <label>Care Type:
-            <select name="caretype" value={formData.caretype} onChange={handleChange} required>
-              <option value="">-- Select Care Type --</option>
-              <option value="doctor">Doctor Visit</option>
-              <option value="nurse">Nursing</option>
-              <option value="physiotherapy">Physiotherapy</option>
-              <option value="equipment">Medical Equipment Rental</option>
-            </select>
-          </label>
+              {submitted && <div className="success-message">Request submitted successfully!</div>}
 
-          {formData.caretype === 'doctor' && (
-            <label>Reference Doctor Name:
-              <Select
-                options={doctors}
-                value={doctors.find(doc => doc.value === formData.refrencedoctorname)}
-                onChange={handleSelectChange}
-                isLoading={loadingDoctors}
-                placeholder="Select a doctor"
-              />
-            </label>
-          )}
+              <form className="homecare-form" onSubmit={handleSubmit}>
 
-          <label>Patient Name:
-            <input type="text" name="patientname" value={formData.patientname} onChange={handleChange} required />
-          </label>
+                <label>
+                  Care Type:
+                  <select
+                    name="caretype"
+                    value={formData.caretype}
+                    onChange={handleChange}
+                    required
+                  >
+                    <option value="">-- Select Care Type --</option>
+                    <option value="doctor">Doctor Visit</option>
+                    <option value="nurse">Nursing</option>
+                    <option value="physiotherapy">Physiotherapy</option>
+                    <option value="equipment">Medical Equipment Rental</option>
+                  </select>
+                </label>
 
-          <label>Patient Details:
-            <textarea name="patientdetails" value={formData.patientdetails} onChange={handleChange} required />
-          </label>
+                {formData.caretype === 'doctor' && (
+                  <label className="select-with-spinner">
+                    Reference Doctor Name:
+                    <Select
+                      options={doctors}
+                      value={doctors.find(doc => doc.value === formData.refrencedoctorname) || null}
+                      onChange={handleSelectChange}
+                      isLoading={loadingDoctors}
+                      placeholder="Select a doctor"
+                      classNamePrefix="react-select"
+                    />
+                    {fieldLoading.refrencedoctorname && <div className="small-spinner"></div>}
+                  </label>
+                )}
 
-          <label>Patient Phone Number:
-            <input type="tel" name="patientphonenum" value={formData.patientphonenum} onChange={handleChange} required />
-          </label>
+                <label>
+                  Patient Name:
+                  <input
+                    type="text"
+                    name="patientname"
+                    value={formData.patientname}
+                    onChange={handleChange}
+                    required
+                  />
+                </label>
 
-          <label>Patient Address:
-            <textarea name="patinetaddress" value={formData.patinetaddress} onChange={handleChange} required />
-          </label>
+                <label>
+                  Patient Details:
+                  <textarea
+                    name="patientdetails"
+                    value={formData.patientdetails}
+                    onChange={handleChange}
+                    required
+                  />
+                </label>
 
-          <label>Guardian Name:
-            <input type="text" name="patientientguardian" value={formData.patientientguardian} onChange={handleChange} />
-          </label>
+                <label>
+                  Patient Phone Number:
+                  <input
+                    type="tel"
+                    name="patientphonenum"
+                    value={formData.patientphonenum}
+                    onChange={handleChange}
+                    required
+                  />
+                </label>
 
-          <label>Guardian Phone Number:
-            <input type="tel" name="patientientguardianphno" value={formData.patientientguardianphno} onChange={handleChange} />
-          </label>
+                <label>
+                  Patient Address:
+                  <textarea
+                    name="patinetaddress"
+                    value={formData.patinetaddress}
+                    onChange={handleChange}
+                    required
+                  />
+                </label>
 
-          <label>Patient ID:
-            <input type="text" name="patientid" value={formData.patientid} readOnly />
-          </label>
+                <label>
+                  Guardian Name:
+                  <input
+                    type="text"
+                    name="patientientguardian"
+                    value={formData.patientientguardian}
+                    onChange={handleChange}
+                  />
+                </label>
 
-          <label>Time From:
-            <input type="datetime-local" name="timefrom" value={formData.timefrom} onChange={handleChange} required />
-          </label>
+                <label>
+                  Guardian Phone Number:
+                  <input
+                    type="tel"
+                    name="patientientguardianphno"
+                    value={formData.patientientguardianphno}
+                    onChange={handleChange}
+                  />
+                </label>
 
-          <label>Time To:
-            <input type="datetime-local" name="timeto" value={formData.timeto} onChange={handleChange} required />
-          </label>
+                <label>
+                  Patient ID:
+                  <input
+                    type="text"
+                    name="patientid"
+                    value={formData.patientid}
+                    readOnly
+                  />
+                </label>
 
-          <label>Reason:
-            <textarea name="reason" value={formData.reason} onChange={handleChange} required />
-          </label>
+                <label>
+                  Time From:
+                  <input
+                    type="datetime-local"
+                    name="timefrom"
+                    value={formData.timefrom}
+                    onChange={handleChange}
+                    required
+                  />
+                </label>
 
-          <button type="submit">Submit Request</button>
-        </form>
-      </div>
-    </div>
+                <label>
+                  Time To:
+                  <input
+                    type="datetime-local"
+                    name="timeto"
+                    value={formData.timeto}
+                    onChange={handleChange}
+                    required
+                  />
+                </label>
+
+                <label>
+                  Reason:
+                  <textarea
+                    name="reason"
+                    value={formData.reason}
+                    onChange={handleChange}
+                    required
+                  />
+                </label>
+
+                <button type="submit">Submit Request</button>
+              </form>
+            </div>
+          </div>
+        </div>
+
       </div>
     </div>
   );
