@@ -1,6 +1,6 @@
 
 import React, { useState, useEffect } from 'react';
-import { FaSpinner, FaFileDownload, FaPrint, FaTimesCircle, FaCheckCircle, FaTimes,FaEye } from 'react-icons/fa';
+import { FaSpinner, FaFileDownload, FaPrint, FaTimesCircle, FaCheckCircle, FaTimes,FaEye, FaLockOpen,FaLock } from 'react-icons/fa';
 import { Modal } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import {jwtDecode} from 'jwt-decode';
@@ -16,7 +16,7 @@ const PrescriptionPage = () => {
   const [showModal, setShowModal] = useState(false);
   const [selectedPrescription, setSelectedPrescription] = useState(null);
   const navigate = useNavigate();
-
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 600);
   const token = localStorage.getItem('accessToken');
   const patientId = token ? jwtDecode(token).userid : null;
 
@@ -172,56 +172,82 @@ const PrescriptionPage = () => {
           </div>
         )}
 
-        {!loading && prescriptions && prescriptions.length > 0 && (
+     
+ {!loading && prescriptions && prescriptions.length > 0 && (
           <div className="presc-main">
             <h2>Prescriptions</h2>
-            <div className="table-responsive">
-              <table className="presc-table" aria-label="Prescriptions table">
-                <thead>
-                  <tr>
-                    <th className="presc-th">ID</th>
-                    <th className="presc-th">Hospital</th>
-                    <th className="presc-th">Doctor</th>
-                    <th className="presc-th">Specialty</th>
-                    <th className="presc-th">Date/Time</th>
-                    <th className="presc-th">Guest Access</th>
-                    <th className="presc-th">Actions</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {prescriptions.map((p) => (
-                    <tr key={p.prescription_id}>
-                      <td>{p.prescription_id}</td>
-                      <td>{p.hospitalname}</td>
-                      <td>{p.doctor?.fullname || '...'}</td>
-                      <td>{p.doctor?.specialization || '...'}</td>
-                      <td>{p.dateandtime}</td>
-                      <td>{p.guestaccess === 'yes' ? 'Yes' : 'No'}</td>
-                      <td className="actions">
-                        <button
-                          onClick={() => toggleGuest(p)}
-                          className={p.guestaccess === 'yes' ? 'btn-revoke' : 'btn-grant'}
-                          aria-label={p.guestaccess === 'yes' ? 'Revoke Guest Access' : 'Grant Guest Access'}
-                        >
-                          {p.guestaccess === 'yes' ? <FaCheckCircle /> : <FaTimesCircle />}
-                        </button>
-                        <button
-                          onClick={() => openModal(p)}
-                          className="btn-view"
-                          aria-label="View Prescription"
-                        >
-                          {/* View */}
-                            <FaEye />
-                        </button>
-                      </td>
+
+            {isMobile ? (
+              // MOBILE CARD VIEW
+              <div className="mobile-presc-cards">
+                {prescriptions.map((p) => (
+                  <div className="presc-card" key={p.prescription_id}>
+                    <h4>Prescription ID: {p.prescription_id}</h4>
+                    <p><strong>Hospital:</strong> {p.hospitalname}</p>
+                    <p><strong>Doctor:</strong> {p.doctor?.fullname || '...'}</p>
+                    <p><strong>Specialty:</strong> {p.doctor?.specialization || '...'}</p>
+                    <p><strong>Date/Time:</strong> {p.dateandtime}</p>
+                    <p><strong>Guest Access:</strong> {p.guestaccess === 'yes' ? 'Yes' : 'No'}</p>
+
+                    <div className="actions">
+                      <button
+                        onClick={() => toggleGuest(p)}
+                        className={p.guestaccess === 'yes' ? 'btn-revoke' : 'btn-grant'}
+                        aria-label={p.guestaccess === 'yes' ? 'Revoke Guest Access' : 'Grant Guest Access'}
+                      >
+                        {p.guestaccess === 'yes' ? <FaLock /> : <FaLockOpen />}
+                      </button>
+                      <button onClick={() => openModal(p)} className="btn-view" aria-label="View Prescription">
+                        <FaEye />
+                      </button>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            ) : (
+              // DESKTOP TABLE VIEW
+              <div className="table-responsive">
+                <table className="presc-table" aria-label="Prescriptions table">
+                  <thead>
+                    <tr>
+                      <th className="presc-th">ID</th>
+                      <th className="presc-th">Hospital</th>
+                      <th className="presc-th">Doctor</th>
+                      <th className="presc-th">Specialty</th>
+                      <th className="presc-th">Date/Time</th>
+                      <th className="presc-th">Guest Access</th>
+                      <th className="presc-th">Actions</th>
                     </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
+                  </thead>
+                  <tbody>
+                    {prescriptions.map((p) => (
+                      <tr key={p.prescription_id}>
+                        <td>{p.prescription_id}</td>
+                        <td>{p.hospitalname}</td>
+                        <td>{p.doctor?.fullname || '...'}</td>
+                        <td>{p.doctor?.specialization || '...'}</td>
+                        <td>{p.dateandtime}</td>
+                        <td>{p.guestaccess === 'yes' ? 'Yes' : 'No'}</td>
+                        <td className="actions">
+                          <button
+                            onClick={() => toggleGuest(p)}
+                            className={p.guestaccess === 'yes' ? 'btn-revoke' : 'btn-grant'}
+                            aria-label={p.guestaccess === 'yes' ? 'Revoke Guest Access' : 'Grant Guest Access'}
+                          >
+                            {p.guestaccess === 'yes' ? <FaLock /> : <FaLockOpen />}
+                          </button>
+                          <button onClick={() => openModal(p)} className="btn-view" aria-label="View Prescription">
+                            <FaEye />
+                          </button>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            )}
           </div>
         )}
-
    
 {showModal && (
   <div className="custom-modal-overlay" onClick={closeModal}>

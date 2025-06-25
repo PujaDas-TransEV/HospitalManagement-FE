@@ -4,8 +4,8 @@ body, html, #root {
   height: 100%;
   margin: 0;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  /* no background here */
-  color: #1e293b; /* dark slate */
+ 
+  color: #1e293b; 
 }
 
 
@@ -19,7 +19,6 @@ body, html, #root {
   overflow: hidden;
 }
 
-/* Add overlay */
 .presc-dashboard::before {
   content: '';
   position: absolute;
@@ -27,27 +26,26 @@ body, html, #root {
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(255, 255, 255, 0.6); /* Change color and opacity as needed */
+  background-color: rgba(255, 255, 255, 0.6); 
   z-index: 1;
   pointer-events: none;
 }
 
-/* Ensure content is above overlay */
+
 .presc-dashboard > * {
   position: relative;
   z-index: 2;
 } */
 
 
-/* Content area containing sidebar and main content */
+
 .presc-content {
   display: flex;
-  /* flex-grow: 1;
-  overflow: hidden; */
+  
    z-index: 2;
 }
 
-/* Sidebar fixed width, scroll if needed */
+
 .PatientSidebar {
   width: 250px;
   background-color: rgba(20, 30, 50, 0.9);
@@ -55,18 +53,16 @@ body, html, #root {
   overflow-y: auto;
 }
 
-/* Main content area - prescription lists */
+
 .presc-main {
-  flex-grow: 1;
-  background: rgba(255, 255, 255, 0.95);
-  margin: 20px;
-  padding: 25px 30px;
-  border-radius: 12px;
-  box-shadow: 0 8px 20px rgba(0,0,0,0.1);
-  max-width: 1100px;
-  min-width: 320px;
-  overflow-x: auto;
-  margin-left: 400px;
+  
+  flex: 1;
+  padding: 30px 20px;
+   background: rgba(255, 255, 255, 0.95);
+  max-width: 1400px;
+  margin: 150px auto 0;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
 }
 
 .presc-main h2 {
@@ -76,7 +72,7 @@ body, html, #root {
   color: #1e293b;
 }
 
-/* ===== Table Styles ===== */
+
 
 .table-responsive {
   width: 100%;
@@ -92,7 +88,7 @@ body, html, #root {
 }
 
 .presc-table thead {
-  background-color: #4f46e5; /* Indigo-600 */
+  background-color: #4f46e5; 
   color: white;
   font-weight: 600;
 }
@@ -100,13 +96,13 @@ body, html, #root {
 .presc-table th,
 .presc-table td {
   padding: 10px 12px;
-  border: 1px solid #d9e6f0; /* light gray */
+  border: 1px solid #d9e6f0; 
   text-align: left;
   white-space: nowrap;
 }
 
 .presc-table tbody tr:hover {
-  background-color: #e0e7ff; /* Indigo-100 */
+  background-color: #e0e7ff; 
   cursor: pointer;
 }
 
@@ -130,7 +126,7 @@ body, html, #root {
 }
 
 .btn-grant {
-  background-color: #22c55e; /* green */
+  background-color: #22c55e; 
   color: white;
 }
 
@@ -139,7 +135,7 @@ body, html, #root {
 }
 
 .btn-revoke {
-  background-color: #ef4444; /* red */
+  background-color: #ef4444; 
   color: white;
 }
 
@@ -148,7 +144,7 @@ body, html, #root {
 }
 
 .btn-view {
-  background-color: #3b82f6; /* blue */
+  background-color: #3b82f6; 
   color: white;
   padding: 6px 14px;
   border-radius: 6px;
@@ -159,7 +155,7 @@ body, html, #root {
   background-color: #2563eb;
 }
 
-/* Guest Access Text */
+
 td:nth-child(6) {
   font-weight: 600;
   text-transform: capitalize;
@@ -167,13 +163,13 @@ td:nth-child(6) {
   color: #1e293b;
 }
 
-/* Icon inside buttons */
+
 .actions svg {
   vertical-align: middle;
   font-size: 1.1rem;
 }
 
-/* ===== Spinner Popup Overlay ===== */
+
 
 .loading-overlay {
   position: fixed;
@@ -181,7 +177,7 @@ td:nth-child(6) {
   left: 0;
   width: 100vw;
   height: 100vh;
-  background-color: rgba(10, 25, 47, 0.85); /* dark bluish transparent */
+  background-color: rgba(10, 25, 47, 0.85); 
   display: flex;
   justify-content: center;
   align-items: center;
@@ -191,12 +187,12 @@ td:nth-child(6) {
   background-color: #96d1db;
 }
 .loading-popup {
-  background-color: #12355b; /* darker blue */
+  background-color: #12355b; 
   padding: 30px 50px;
   border-radius: 12px;
   text-align: center;
   box-shadow: 0 0 15px rgba(0, 0, 0, 0.4);
-  color: #e0e7ff; /* light text */
+  color: #e0e7ff;
   font-size: 18px;
   font-weight: 600;
   display: flex;
@@ -206,7 +202,7 @@ td:nth-child(6) {
 
 .spinner-icon {
   font-size: 48px;
-  color: #4f46e5; /* Indigo-600 */
+  color: #4f46e5;
   animation: spin 1.5s linear infinite;
   margin-bottom: 15px;
 }
@@ -220,7 +216,7 @@ td:nth-child(6) {
   }
 }
 
-/* ===== Modal Overrides ===== */
+
 
 .modal-content {
   border-radius: 12px;
@@ -241,7 +237,7 @@ td:nth-child(6) {
   border: none;
 }
 
-/* Modal footer buttons */
+
 .modal-footer {
   display: flex;
   justify-content: flex-end;
@@ -275,7 +271,7 @@ td:nth-child(6) {
   background-color: #b91c1c;
 }
 
-/* ===== No prescriptions message ===== */
+
 
 .no-prescriptions {
   margin: 50px auto;
@@ -294,7 +290,7 @@ td:nth-child(6) {
   font-size: 3rem;
 }
 
-/* ===== Responsive ===== */
+
 
 @media (max-width: 992px) {
   .presc-main {
@@ -389,7 +385,7 @@ td:nth-child(6) {
   cursor: pointer;
 }
 
-/* Full iframe view */
+
 .custom-modal-iframe {
   flex: 1;
   width: 100%;
@@ -438,4 +434,179 @@ td:nth-child(6) {
 
 .btn-action.close {
   background-color: #ef4444;
+}
+@media (max-width: 600px) {
+  .table-responsive {
+    display: none;
+  }
+
+  .presc-card {
+    display: block;
+    background: white;
+    margin: 10px 0;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  .presc-card h4 {
+    font-size: 1rem;
+    margin-bottom: 6px;
+    color: #1e293b;
+  }
+
+  .presc-card .actions {
+    margin-top: 10px;
+  }
+}
+/* ========== Responsive Enhancements ========== */
+
+/* Adjust layout for tablets */
+@media (max-width: 992px) {
+  .presc-content {
+    flex-direction: column;
+  }
+
+  .PatientSidebar {
+    width: 100%;
+    height: auto;
+    position: relative;
+  }
+
+  .presc-main {
+    margin: 80px 10px 20px;
+    padding: 20px 15px;
+    max-width: 100%;
+  }
+
+  .presc-main h2 {
+    font-size: 1.6rem;
+    text-align: center;
+  }
+
+  .actions {
+    flex-wrap: wrap;
+  }
+}
+
+/* Adjust layout for mobile devices */
+@media (max-width: 768px) {
+  .presc-main {
+    padding: 15px;
+  }
+
+  .presc-table th,
+  .presc-table td {
+    font-size: 0.85rem;
+    padding: 6px 8px;
+  }
+
+  .actions {
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .btn-view,
+  .btn-grant,
+  .btn-revoke {
+    width: 100%;
+    justify-content: center;
+    padding: 6px 10px;
+    font-size: 0.8rem;
+  }
+
+  .custom-modal {
+    width: 95vw;
+    height: 92vh;
+  }
+
+  .custom-modal-header h2 {
+    font-size: 1rem;
+  }
+
+  .btn-action {
+    font-size: 0.8rem;
+    padding: 6px 12px;
+  }
+
+  .modal-footer {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}
+@media (max-width: 600px) {
+  .table-responsive {
+    display: none;
+  }
+
+  .presc-card {
+    display: block;
+    background: white;
+    margin: 10px 0;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  .presc-card h4 {
+    font-size: 1rem;
+    margin-bottom: 6px;
+    color: #1e293b;
+  }
+
+  .presc-card .actions {
+    margin-top: 10px;
+    display: flex;
+    gap: 8px;
+    justify-content: flex-start;
+  }
+}
+
+/* Adjust layout for small mobile devices */
+@media (max-width: 480px) {
+  .presc-main h2 {
+    font-size: 1.3rem;
+    text-align: center;
+  }
+
+  .presc-table,
+  .presc-table th,
+  .presc-table td {
+    font-size: 0.75rem;
+    padding: 5px;
+  }
+
+  .btn-view,
+  .btn-grant,
+  .btn-revoke {
+    font-size: 0.7rem;
+    padding: 4px 8px;
+  }
+
+  .actions {
+    gap: 4px;
+  }
+
+  .modal-footer button {
+    font-size: 0.8rem;
+    padding: 6px 12px;
+    width: 100%;
+  }
+
+  .custom-modal-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+  }
+
+  .custom-modal-footer {
+    flex-direction: column;
+    gap: 8px;
+    align-items: stretch;
+  }
+
+  .btn-action {
+    width: 100%;
+    justify-content: center;
+  }
 }
