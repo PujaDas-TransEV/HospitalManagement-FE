@@ -36,7 +36,7 @@ const LabReportPage = () => {
         if (isGuest) reports = reports.filter(r => r.guestaccess === 'yes');
         setLabReports(reports);
       } catch (err) {
-        setError('Failed to load lab reports.');
+        // setError('Failed to load lab reports.');
       } finally {
         setLoading(false);
       }

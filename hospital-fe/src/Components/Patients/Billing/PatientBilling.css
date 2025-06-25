@@ -1,340 +1,160 @@
-/* 
+.dashboard-container-billing {
+  position: relative;
+  background-image: url('../../Assests/background.jpg');
+  background-size: cover;
+  background-position: center;
+  min-height: 100vh;
+  z-index: 0;
+}
+
+.dashboard-container-billing::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-color: rgba(207, 233, 217, 0.6); 
+  z-index: 1;
+  pointer-events: none;
+}
 .invoice-page {
-  max-width: 1000px;
-  margin: auto;
-  padding: 2rem;
-  font-family: Arial, sans-serif;
-  background-color: #f9f9f9;
-  border-radius: 12px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  position: relative;  
+  z-index: 2;          
+  flex: 1;
+  padding: 30px;
+ 
+  background-color: rgba(209, 229, 236, 0.9);
+  min-height: 60vh;
 }
-
-.invoice-page h2 {
-  color: #0077cc;
-  margin-bottom: 20px;
-}
-
-.invoice-table {
+.loading-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
   width: 100%;
-  border-collapse: collapse;
-  margin-bottom: 20px;
-}
-
-.invoice-table th,
-.invoice-table td {
-  border: 1px solid #ddd;
-  padding: 10px;
-  text-align: center;
-}
-
-.invoice-table th {
-  background-color: #0077cc;
-  color: white;
-}
-
-.invoice-table tr:nth-child(even) {
-  background-color: #f2f2f2;
-}
-
-.download-btn {
-  background-color: #28a745;
-  color: white;
-  padding: 12px 20px;
-  border: none;
-  border-radius: 6px;
-  font-size: 16px;
-  cursor: pointer;
-}
-
-.download-btn:hover {
-  background-color: #218838;
-}
-
-.error {
-  color: red;
-  font-weight: bold;
-}
-.survey-form {
-  margin-top: 10px;
-  padding: 12px;
-  background-color: #f3f3f3;
-  border-radius: 8px;
-  width: 100%;
-  max-width: 350px;
-  box-sizing: border-box;
-}
-
-.star-rating {
-  display: flex;
-  justify-content: start;
-  gap: 4px;
-}
-
-.star-rating span {
-  font-size: 24px;
-  cursor: pointer;
-  color: #ccc;
-  padding: 2px;
-}
-
-.star-rating .filled {
-  color: gold;
-}
-
-.survey-btn {
-  margin-left: 8px;
-  padding: 6px 10px;
-  background-color: #007bff;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  font-size: 14px;
-}
-
-.submit-btn {
-  margin-top: 10px;
-  padding: 6px 12px;
-  background-color: #28a745;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  font-size: 14px;
-}
-
-
-.survey-form textarea {
-  width: 100%;
-  padding: 6px;
-  margin-top: 8px;
-  resize: vertical;
-  font-size: 14px;
-  border-radius: 4px;
-  border: 1px solid #ccc;
-}
-
-
-@media (max-width: 768px) {
-  .survey-form {
-    max-width: 100%;
-    padding: 10px;
-  }
-
-  .survey-btn,
-  .submit-btn {
-    width: 100%;
-    margin-left: 0;
-    margin-top: 6px;
-  }
-
-  .star-rating {
-    justify-content: center;
-  }
-}
-
-@media (max-width: 480px) {
-  .star-rating span {
-    font-size: 20px;
-  }
-
-  .survey-form {
-    padding: 8px;
-  }
-
-  .survey-form textarea {
-    font-size: 13px;
-  }
-} */
-/* Container Layout */
-/* .dashboard-container {
+  height: 100%;
+  
   display: flex;
   flex-direction: column;
-  min-height: 100vh;
-  background-color: #f9f9f9;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  font-size: 18px;
+  color: #0077b6;
 }
 
-.dashboard-content {
-  display: flex;
-  flex: 1;
-  padding: 20px;
-  flex-wrap: wrap;
-  gap: 20px;
-} */
-
-/* Invoice Section */
-.invoice-page {
-  flex: 1;
-  min-width: 300px;
+.spinner-icon {
+  animation: spin 1.5s linear infinite;
+  font-size: 48px;
+  margin-bottom: 10px;
+  color: #0077b6;
 }
 
-.invoice-page h2 {
-  margin-bottom: 20px;
-  font-size: 24px;
-  color: #333;
+@keyframes spin {
+  to { transform: rotate(360deg); }
 }
 
-/* Table Styling */
-.invoice-table {
+/* Table hidden on mobile */
+.desktop-table {
   width: 100%;
   border-collapse: collapse;
-  background-color: #fff;
-  border-radius: 8px;
-  overflow-x: auto;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
 }
 
-.invoice-table th,
-.invoice-table td {
+.desktop-table th,
+.desktop-table td {
   padding: 12px 15px;
+  border: 1px solid #ddd;
   text-align: left;
-  border-bottom: 1px solid #eee;
-  font-size: 14px;
 }
 
-.invoice-table th {
-  background-color: #44c4c9;
+.desktop-table th {
+  background-color: #0077b6;
   color: white;
-  position: sticky;
+}
+
+/* Hide table on small screens */
+@media (max-width: 768px) {
+  .desktop-table {
+    display: none;
+  }
+}
+
+/* Mobile card styles */
+.mobile-cards {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .mobile-cards {
+    display: block;
+  }
+
+  .invoice-card {
+    background-color: #fff;
+    border-radius: 8px;
+    margin-bottom: 16px;
+    padding: 15px;
+    box-shadow: 0 2px 8px rgb(0 0 0 / 0.1);
+  }
+
+  .invoice-card .card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+
+  .status-badge {
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #fff;
+  }
+
+  .status-badge.paid {
+    background-color: #28a745;
+  }
+
+  .status-badge.unpaid {
+    background-color: #dc3545;
+  }
+
+  .card-actions button {
+    margin-right: 8px;
+  }
+}
+
+/* Modal styles (overlay and content) */
+.modal-overlay {
+  position: fixed;
   top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0 0 0 / 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 10000;
 }
 
-.invoice-table td {
-  color: #444;
+.modal-content {
+  background: white;
+  max-width: 600px;
+  width: 90%;
+  max-height: 90vh;
+  overflow-y: auto;
+  padding: 20px;
+  border-radius: 10px;
+  position: relative;
 }
 
-/* Buttons */
-.view-btn,
-.survey-btn,
-.submit-btn {
-  padding: 6px 12px;
-  font-size: 14px;
-  border-radius: 4px;
+.modal-close-btn {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  font-size: 20px;
+  background: none;
   border: none;
   cursor: pointer;
-  margin: 4px 4px 0 0;
-}
-
-.view-btn {
-  background-color: #28a745;
-  color: white;
-}
-
-.survey-btn {
-  background-color: #007bff;
-  color: white;
-}
-
-.submit-btn {
-  background-color: #28a745;
-  color: white;
-  margin-top: 10px;
-}
-
-/* Survey Form */
-.survey-form {
-  margin-top: 10px;
-  padding: 12px;
-  background-color: #f3f3f3;
-  border-radius: 8px;
-  max-width: 100%;
-  width: 100%;
-  box-sizing: border-box;
-}
-
-.survey-form h4 {
-  margin-bottom: 10px;
-  font-size: 16px;
-  color: #333;
-}
-
-.star-rating {
-  display: flex;
-  justify-content: start;
-  gap: 4px;
-  margin-bottom: 10px;
-}
-
-.star-rating span {
-  font-size: 24px;
-  cursor: pointer;
-  color: #ccc;
-}
-
-.star-rating .filled {
-  color: gold;
-}
-
-.survey-form select,
-.survey-form textarea {
-  width: 100%;
-  margin-top: 6px;
-  padding: 6px;
-  font-size: 14px;
-  border-radius: 4px;
-  border: 1px solid #ccc;
-  resize: vertical;
-  box-sizing: border-box;
-}
-
-/* Error message */
-.error {
-  color: red;
-  font-weight: 500;
-  margin-top: 10px;
-}
-
-/* Responsive Design */
-@media (max-width: 1024px) {
-  .dashboard-content {
-    flex-direction: column;
-  }
-
-  .invoice-table th,
-  .invoice-table td {
-    font-size: 13px;
-  }
-
-  .view-btn,
-  .survey-btn,
-  .submit-btn {
-    font-size: 13px;
-    padding: 5px 10px;
-  }
-
-  .star-rating span {
-    font-size: 20px;
-  }
-}
-
-@media (max-width: 600px) {
-  .invoice-page h2 {
-    font-size: 20px;
-  }
-
-  .invoice-table {
-    display: block;
-    overflow-x: auto;
-  }
-
-  .invoice-table th,
-  .invoice-table td {
-    font-size: 12px;
-    padding: 8px;
-  }
-
-  .survey-btn,
-  .view-btn {
-    width: 100%;
-    margin: 4px 0;
-  }
-
-  .survey-form {
-    padding: 10px;
-  }
-
-  .survey-form select,
-  .survey-form textarea {
-    font-size: 13px;
-  }
+  color: #444;
+  user-select: none;
 }
