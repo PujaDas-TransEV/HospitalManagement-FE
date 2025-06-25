@@ -1,6 +1,6 @@
 
 import React, { useState, useEffect } from 'react';
-import { FaSpinner, FaFileDownload, FaPrint, FaTimesCircle, FaCheckCircle, FaTimes } from 'react-icons/fa';
+import { FaSpinner, FaFileDownload, FaPrint, FaTimesCircle, FaCheckCircle, FaTimes,FaEye } from 'react-icons/fa';
 import { Modal } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import {jwtDecode} from 'jwt-decode';
@@ -210,7 +210,8 @@ const PrescriptionPage = () => {
                           className="btn-view"
                           aria-label="View Prescription"
                         >
-                          View
+                          {/* View */}
+                            <FaEye />
                         </button>
                       </td>
                     </tr>
