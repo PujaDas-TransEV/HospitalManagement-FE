@@ -78,37 +78,38 @@ const PatientMedicalHistoryPage = () => {
 
           {!isFetching && patientDetails ? (
             <div className="patient-info-list">
-              <div className="patient-info-item patient-name">
-                <FaUser className="icon" /> <strong>Name:</strong> {patientDetails.patientfirstname}{patientDetails.patientlastname}
-              </div>
-              <div className="patient-info-item patient-age">
-                <FaCalendarAlt className="icon" /> <strong>Age:</strong> {patientDetails.patientage}
-              </div>
-              <div className="patient-info-item patient-email">
-                <FaEnvelope className="icon" /> <strong>Email:</strong> {patientDetails.patientemail}
-              </div>
-              <div className="patient-info-item patient-gender">
-                <FaVenusMars className="icon" /> <strong>Gender:</strong> {patientDetails.patientgender}
-              </div>
-              <div className="patient-info-item patient-phone">
-                <FaPhone className="icon" /> <strong>Phone:</strong> {patientDetails.patientphoneno}
-              </div>
-              <div className="patient-info-item patient-status">
-                <FaInfoCircle className="icon" /> <strong>Status:</strong> {patientDetails.admitstatus}
-              </div>
-              <div className="patient-info-item patient-ward">
-                <FaHospital className="icon" /> <strong>Ward:</strong> {patientDetails.wardname}
-              </div>
-              <div className="patient-info-item patient-wardmail">
-                <FaEnvelope className="icon" /> <strong>Ward Email:</strong> {patientDetails.wardemail}
-              </div>
-              <div className="patient-info-item patient-room">
-                <FaDoorClosed className="icon" /> <strong>Room No:</strong> {patientDetails.room_number}
-              </div>
-              <div className="patient-info-item patient-type">
-                <FaBed className="icon" /> <strong>Room Type:</strong> {patientDetails.room_type}
-              </div>
-            </div>
+            
+            <div className="patient-info-item patient-name">
+  <FaUser className="icon" style={{ color: "#00796b" }} /> <strong>Name:</strong> {patientDetails.patientfirstname} {patientDetails.patientlastname}
+</div>
+<div className="patient-info-item patient-age">
+  <FaCalendarAlt className="icon" style={{ color: "#3f51b5" }} /> <strong>Age:</strong> {patientDetails.patientage}
+</div>
+<div className="patient-info-item patient-email">
+  <FaEnvelope className="icon" style={{ color: "#d84315" }} /> <strong>Email:</strong> {patientDetails.patientemail}
+</div>
+<div className="patient-info-item patient-gender">
+  <FaVenusMars className="icon" style={{ color: "#8e24aa" }} /> <strong>Gender:</strong> {patientDetails.patientgender}
+</div>
+<div className="patient-info-item patient-phone">
+  <FaPhone className="icon" style={{ color: "#388e3c" }} /> <strong>Phone:</strong> {patientDetails.patientphoneno}
+</div>
+<div className="patient-info-item patient-status">
+  <FaInfoCircle className="icon" style={{ color: "#fbc02d" }} /> <strong>Status:</strong> {patientDetails.admitstatus}
+</div>
+<div className="patient-info-item patient-ward">
+  <FaHospital className="icon" style={{ color: "#0097a7" }} /> <strong>Ward:</strong> {patientDetails.wardname}
+</div>
+<div className="patient-info-item patient-wardmail">
+  <FaEnvelope className="icon" style={{ color: "#c2185b" }} /> <strong>Ward Email:</strong> {patientDetails.wardemail}
+</div>
+<div className="patient-info-item patient-room">
+  <FaDoorClosed className="icon" style={{ color: "#5d4037" }} /> <strong>Room No:</strong> {patientDetails.room_number}
+</div>
+<div className="patient-info-item patient-type">
+  <FaBed className="icon" style={{ color: "#303f9f" }} /> <strong>Room Type:</strong> {patientDetails.room_type}
+</div>
+</div>
           ) : (
             !isFetching && (
               <div className="no-details-message">

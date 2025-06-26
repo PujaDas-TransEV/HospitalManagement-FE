@@ -48,6 +48,12 @@ const PatientInvoicePage = () => {
         });
 
         const data = await response.json();
+        // Check for 404 or no bills
+      if (response.status === 404 || data.message === "No billing found") {
+        setBills([]); // Clear bills
+        setError("No billing records found.");
+        return;
+      }
         if (!response.ok) throw new Error(data.error || 'Failed to fetch bills');
 
         setBills(data.bills || []);
