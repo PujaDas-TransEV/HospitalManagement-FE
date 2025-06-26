@@ -1,306 +1,190 @@
 
-.dashboard-container {
+.appointment-bg {
+  position: relative; /* needed for ::before overlay */
+  background-image: url('../../Assests/background.jpg'); /* replace with your image path */
+  background-size: cover;
+  background-position: center;
+  min-height: 100vh;
+  padding-top: 70px; /* space for navbar if fixed */
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  z-index: 0;
+}
+
+.appointment-bg::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(207, 233, 217, 0.6); 
+  z-index: 1;
+  pointer-events: none;
+}
+
+.appointment-overlay {
+  position: relative; /* to be above the ::before overlay */
+  background-color: rgba(244, 248, 248, 0.95);
+  margin: 40px auto; /* more spacing top and bottom */
+  max-width: 1200px;
+  padding: 30px 40px;
+  border-radius: 10px;
+  box-shadow: 0 0 15px rgba(0,0,0,0.15);
+  /* Remove min-height to allow content to determine height */
+  /* min-height: calc(100vh - 140px); */
   display: flex;
   flex-direction: column;
-  height: 100vh;
+  z-index: 2; /* make sure it is above the overlay */
 }
 
-.dashboard-content {
-  display: flex;
-  flex-grow: 1;
-}
-
-.doctor-appointment-container {
-  padding: 30px;
-  background-color: #f9f9f9;
-  border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  width: 100%;
-  box-sizing: border-box;
-}
-
-.doctor-appointment-container h2 {
-  font-size: 32px;
-  font-weight: bold;
+/* Section title */
+.section-title {
+  font-size: 2rem;
+  margin-bottom: 30px;
+  font-weight: 700;
   color: #2c3e50;
-  margin-top: 40px;
+  text-align: center;
 }
 
-.appointment-list {
-  margin-top: 20px;
-  overflow-x: auto; /* allow horizontal scroll on small screens */
+/* Loading spinner container */
+.loading-spinner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 200px;
+  color: #007bff; /* bootstrap primary color */
 }
 
-.appointment-list table {
+/* Spinner rotation animation */
+.spin {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* Table styles */
+.appointment-table table {
   width: 100%;
   border-collapse: collapse;
-  margin-top: 15px;
-  min-width: 600px; /* allow horizontal scroll for smaller screens */
+  font-size: 1rem;
 }
 
-.appointment-list th,
-.appointment-list td {
-  padding: 16px;
-  text-align: center;
-  border: 1px solid #ecf0f1;
-  white-space: nowrap; /* prevent text wrap in cells */
+.appointment-table thead {
+  background-color: #007bff;
+  color: #fff;
+  text-transform: uppercase;
+  font-weight: 600;
 }
 
-.appointment-list th {
-  background-color: #34495e;
-  color: white;
-  font-weight: bold;
+.appointment-table th,
+.appointment-table td {
+  padding: 12px 15px;
+  border: 1px solid #ddd;
+  text-align: left;
+  vertical-align: middle;
 }
 
-.appointment-list td button {
-  padding: 8px 12px;
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: 14px;
+.appointment-table tbody tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+/* Button icon styles */
+.btn-icon {
   display: inline-flex;
   align-items: center;
-  gap: 5px;
+  justify-content: center;
+  padding: 6px 10px;
+  font-size: 1.1rem;
+  border-radius: 6px;
+  transition: background-color 0.3s ease;
+  cursor: pointer;
 }
 
-/* Button styles */
-button.primary {
-  background-color: #1abc9c;
-  color: white;
+.btn-icon svg {
+  pointer-events: none;
 }
 
-button.primary:hover {
-  background-color: #16a085;
+.btn-icon:hover {
+  filter: brightness(85%);
 }
 
-button.danger {
-  background-color: #e74c3c;
-  color: white;
+/* Cards for mobile */
+.appointment-cards {
+  display: none;
+  flex-direction: column;
+  gap: 20px;
 }
 
-button.danger:hover {
-  background-color: #c0392b;
-}
-
-.modal-body {
-  background-color: #fff;
+.appointment-card {
+  background-color: #ffffff;
   border-radius: 8px;
-  padding: 30px;
-}
-
-button.btn-warning {
-  background-color: #ffc107;
-  color: white;
-  border: none;
-}
-
-button.btn-warning:hover {
-  background-color: #e0a800;
-}
-
-button.btn-danger {
-  background-color: #dc3545;
-  color: white;
-  border: none;
-}
-
-button.btn-danger:hover {
-  background-color: #c82333;
-}
-
-/* Responsive Adjustments */
-
-/* Medium devices (tablets, 768px and up) */
-@media (max-width: 991.98px) {
-  h2 {
-    font-size: 28px;
-  }
-
-  .appointment-list table {
-    min-width: 500px;
-  }
-
-  .appointment-list th,
-  .appointment-list td {
-    padding: 12px;
-    font-size: 14px;
-  }
-
-  .appointment-list td button {
-    padding: 6px 10px;
-    font-size: 13px;
-  }
-}
-
-/* Small devices (phones, less than 768px) */
-@media (max-width: 767.98px) {
-  .dashboard-content {
-    flex-direction: column;
-  }
-
-  .doctor-appointment-container {
-    padding: 15px;
-    box-shadow: none;
-  }
-
-  h2 {
-    font-size: 24px;
-    text-align: center;
-  }
-
-  .appointment-list {
-    margin-top: 15px;
-  }
-
-  .appointment-list table {
-    min-width: 100%; /* remove min-width */
-  }
-
-  .appointment-list thead {
-    display: none; /* hide table header */
-  }
-
-  .appointment-list tbody tr {
-    display: block;
-    margin-bottom: 20px;
-    border: 1px solid #ecf0f1;
-    border-radius: 8px;
-    padding: 10px;
-    background-color: #fff;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
-  }
-
-  .appointment-list tbody td {
-    display: flex;
-    justify-content: space-between;
-    padding: 8px 10px;
-    text-align: left;
-    border: none;
-    white-space: normal;
-    font-size: 14px;
-  }
-
-  .appointment-list tbody td::before {
-    content: attr(data-label);
-    font-weight: 600;
-    color: #34495e;
-    flex-basis: 40%;
-  }
-
-  .appointment-list tbody td:last-child {
-    justify-content: flex-start;
-    gap: 10px;
-  }
-
-  .appointment-list td button {
-    padding: 6px 8px;
-    font-size: 12px;
-  }
-}
-
-/* Extra small devices (phones less than 480px) */
-@media (max-width: 479.98px) {
-  .doctor-appointment-container h2 {
-    font-size: 20px;
-  }
-
-  .appointment-list tbody td {
-    font-size: 13px;
-  }
-
-  .appointment-list td button {
-    padding: 5px 6px;
-    font-size: 11px;
-  }
-}
-/* ===== Modal Layout Styling ===== */
-.modal-content {
-  border-radius: 10px;
   padding: 20px;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
-  max-height: 90vh; /* Prevent overflow */
-  overflow-y: auto; /* Scroll if needed */
+  box-shadow: 0 4px 8px rgb(0 0 0 / 0.1);
+  border: 1px solid #ddd;
 }
 
-/* Modal header & title */
-.modal-header {
-  background-color: #f1f1f1;
-  border-bottom: none;
-  padding: 15px 20px;
-}
-
-.modal-title {
-  font-size: 22px;
-  font-weight: 600;
+.appointment-card .card-title {
+  font-weight: 700;
+  margin-bottom: 12px;
   color: #2c3e50;
 }
 
-/* Modal body & form fields */
-.modal-body {
-  background-color: #fff;
-  padding: 20px;
-}
-
-.modal-body .form-group {
-  margin-bottom: 15px;
-}
-
-.modal-body label {
-  font-weight: 600;
+.appointment-card p {
+  margin: 5px 0;
+  font-size: 1rem;
   color: #34495e;
-  margin-bottom: 5px;
-  display: block;
 }
 
-.modal-body input,
-.modal-body select {
-  border-radius: 6px;
-  border: 1px solid #ccc;
-  padding: 10px;
-  width: 100%;
-  font-size: 14px;
+.appointment-card button {
+  margin-top: 15px;
 }
 
-/* Modal footer */
-.modal-footer {
-  border-top: none;
-  padding: 15px 20px;
-  display: flex;
-  justify-content: space-between;
+/* Responsive Styles */
+@media (max-width: 992px) {
+  .appointment-overlay {
+    padding: 20px 30px;
+    margin: 30px auto; /* reduce margin for smaller screens */
+  }
+
+  .section-title {
+    font-size: 1.8rem;
+  }
+
+  .appointment-table {
+    font-size: 0.9rem;
+  }
 }
 
-/* ===== Mobile Adjustments ===== */
-@media (max-width: 767.98px) {
-  .modal-dialog {
-    margin: 60px 10px 10px 10px !important; /* Push modal lower */
-    max-width: 100%;
+@media (max-width: 768px) {
+  /* Hide table on small devices */
+  .appointment-table {
+    display: none;
   }
 
-  .modal-content {
-    max-height: 85vh;
-    overflow-y: auto;
+  /* Show cards on mobile */
+  .appointment-cards {
+    display: flex;
   }
 
-  .modal-title {
-    font-size: 18px;
+  .appointment-overlay {
+    padding: 15px 20px;
+    margin: 20px auto;
+    min-height: auto;
   }
+}
 
-  .modal-body {
+@media (max-width: 480px) {
+  .appointment-card {
     padding: 15px;
   }
 
-  .modal-body input,
-  .modal-body select {
-    padding: 8px;
-    font-size: 13px;
+  .appointment-card p {
+    font-size: 0.9rem;
   }
 
-  .modal-footer {
-    flex-direction: column;
-    gap: 10px;
-    align-items: stretch;
-  }
-
-  .modal-footer .btn {
-    width: 100%;
+  .btn-icon {
+    font-size: 1.2rem;
+    padding: 5px 8px;
   }
 }
