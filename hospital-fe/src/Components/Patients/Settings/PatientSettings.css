@@ -1,4 +1,4 @@
-
+/* 
    .settings-container-patient {
   max-width: 800px;
   margin: 20px auto;
@@ -255,5 +255,312 @@
 
   .settings-container-patient {
     margin: 10px;
+  }
+} */
+/* Container with sidebar and content */
+.dashboard-container-settings {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  background-color: rgba(0, 0, 0, 0.6); /* Fallback overlay */
+}
+.dashboard-container-settings::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+ background-color: rgba(207, 233, 217, 0.6);  
+  z-index: 0;
+}
+/* Layout split between sidebar and main content */
+/* .dashboard-content-settings {
+  display: flex;
+  flex: 1;
+  position: relative;
+  z-index: 1;
+  padding: 30px;
+  gap: 20px;
+  flex-wrap: wrap;
+}  */
+
+/* Main settings card */
+.settings-container-patient {
+  flex-grow: 1;
+  background-color: rgba(255, 255, 255, 0.96);
+  border-radius: 15px;
+  padding: 30px 40px;
+   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15); 
+  max-width: 800px;
+  margin: auto;
+  position: relative;  
+  z-index: 2;  
+  margin-top: 30px; 
+}
+
+/* Section titles */
+.settings-title {
+  font-size: 2.2rem;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 35px;
+  color: #00796b;
+}
+
+.section-title {
+  font-size: 1.6rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+  color: #004d40;
+}
+
+.icon {
+  font-size: 1.5rem;
+  color: #00796b;
+}
+
+.delete-icon {
+  color: #c62828;
+}
+
+/* Text under each section */
+.settings-section p {
+  font-size: 1.05rem;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+/* Buttons */
+.action-button,
+.delete-button {
+  padding: 12px 24px;
+  border: none;
+  border-radius: 8px;
+  font-size: 1.05rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-top: 10px;
+}
+
+.action-button {
+  background-color: #00796b;
+  color: #fff;
+}
+
+.action-button:hover {
+  background-color: #004d40;
+}
+
+.delete-button-settings {
+  background-color: #c62828;
+  color: #fff;
+}
+
+.delete-button:hover {
+  background-color: #8e0000;
+}
+
+/* Toggle confirmation checkbox */
+.toggle-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+.toggle-label {
+  font-weight: 600;
+  font-size: 1rem;
+}
+
+.toggle-checkbox {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+}
+
+/* Error and success messages */
+.error-message,
+.success-message {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 18px;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 1rem;
+  margin-top: 20px;
+}
+
+.error-message {
+  background-color: #ffebee;
+  color: #c62828;
+  border: 1.5px solid #f44336;
+}
+
+.success-message {
+  background-color: #e8f5e9;
+  color: #2e7d32;
+  border: 1.5px solid #4caf50;
+}
+
+.message-icon {
+  font-size: 1.4rem;
+}
+
+
+/* Modal entrance animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-15px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+
+/* Media Queries for responsiveness */
+@media (max-width: 768px) {
+  .dashboard-content-settings {
+    flex-direction: column;
+    padding: 20px;
+  }
+
+  .settings-container-patient {
+    padding: 25px 20px;
+  }
+
+  .settings-title {
+    font-size: 1.8rem;
+  }
+
+  .section-title {
+    font-size: 1.3rem;
+  }
+
+  .action-button,
+  .delete-button {
+    width: 100%;
+    text-align: center;
+  }
+
+  .modal-buttons {
+    flex-direction: column;
+  }
+
+  .modal-button {
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .settings-title {
+    font-size: 1.5rem;
+  }
+
+  .section-title {
+    font-size: 1.1rem;
+  }
+
+  .settings-section p {
+    font-size: 0.95rem;
+  }
+
+  .action-button,
+  .delete-button {
+    font-size: 1rem;
+    padding: 10px 16px;
+  }
+
+  .toggle-label {
+    font-size: 0.95rem;
+  }
+}
+.modal-overlay-settings {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6); /* Darkened background */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+.modal-settings {
+  background: #cce4eb;
+  padding: 30px;
+  border-radius: 10px;
+  width: 90%;
+  max-width: 400px;
+  text-align: center;
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+  animation: slideUp 0.3s ease-out;
+  z-index: 1100;
+}
+
+.modal h3 {
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.modal-buttons {
+  display: flex;
+  justify-content: space-around;
+}
+
+.modal-button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.modal-button.confirm {
+  background-color: #4caf50;
+  color: white;
+}
+
+.modal-button.cancel {
+  background-color: #f44336;
+  color: white;
+}
+
+.modal-button:hover {
+  transform: scale(1.05);
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0px);
+    opacity: 1;
   }
 }
