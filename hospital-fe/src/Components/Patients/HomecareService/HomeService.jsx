@@ -288,7 +288,7 @@ const HomeCareServicePage = () => {
                 )}
 
                 <div className="modal-actions">
-                  {canCancel(selectedRequest.homecare.timefrom) &&
+                  {/* {canCancel(selectedRequest.homecare.timefrom) &&
                     selectedRequest.homecare.status !== 'cancelled' && (
                       <button
                         className="icon-btn cancel-btn"
@@ -299,7 +299,18 @@ const HomeCareServicePage = () => {
                       >
                         <FaBan /> Cancel Request
                       </button>
-                    )}
+                    )} */}
+                    {canCancel(selectedRequest.homecare.timefrom) &&
+ !['cancelled', 'approved'].includes(selectedRequest.homecare.status) && (
+  <button
+    className="icon-btn cancel-btn"
+    onClick={() => handleCancel(selectedRequest.homecare.uid)}
+    title="Cancel Request"
+  >
+    <FaBan /> Cancel Request
+  </button>
+)}
+
                   <button
                     className="icon-btn primary-btn"
                     onClick={handleUpdate}

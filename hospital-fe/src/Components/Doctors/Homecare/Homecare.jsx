@@ -1,20 +1,21 @@
 
 import React, { useEffect, useState } from 'react';
-import {jwtDecode} from 'jwt-decode'; // don't forget to install jwt-decode package
+import {jwtDecode} from 'jwt-decode';
+import { FaSpinner } from 'react-icons/fa';
 import DoctorSidebar from '../DoctorSidebar/Doctorsidebar';
 import DoctorNavbar from '../DoctorNavbar/DoctorNAvbar';
 import './Homecare.css';
 
-const DoctorHomecareRequests = () => {
+const DoctorHomecareDashboard = () => {
   const [requests, setRequests] = useState([]);
   const [doctorId, setDoctorId] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const token = localStorage.getItem('accessToken');
     if (token) {
       try {
         const decoded = jwtDecode(token);
-        // Assuming your doctor ID is stored in decoded.doctorid
         setDoctorId(decoded.doctorid);
       } catch (error) {
         console.error('Failed to decode token:', error);
@@ -29,6 +30,7 @@ const DoctorHomecareRequests = () => {
   }, [doctorId]);
 
   const fetchHomecareRequests = async () => {
+    setLoading(true);
     try {
       const formData = new FormData();
       formData.append('doctorid', doctorId);
@@ -44,45 +46,66 @@ const DoctorHomecareRequests = () => {
     } catch (error) {
       console.error('Error fetching homecare requests:', error);
       setRequests([]);
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
-    <div className="dashboard-container">
+    <div className="docdash-container-homecare">
       <DoctorNavbar />
-      <div className="dashboard-content">
+      <div className="docdash-content-homecare">
         <DoctorSidebar />
 
-        <main className="homecare-main">
-          <h2 className="title">Homecare Requests</h2>
+        <main className="docdash-main">
+          <section className="docdash-card">
+            <h2 className="docdash-title">Homecare Requests</h2>
 
-          <div className="table-container">
-            <div className="table-header">Patient</div>
-            <div className="table-header">Care Type</div>
-            <div className="table-header">Status</div>
-            <div className="table-header">Time Frame</div>
-
-            {requests.length === 0 ? (
-              <div className="no-requests" style={{ gridColumn: '1 / -1' }}>
-                No homecare requests found.
+            {loading ? (
+              <div className="docdash-loading">
+                <FaSpinner className="docdash-spinner" />
+                <span>Loading requests, please wait...</span>
               </div>
+            ) : requests.length === 0 ? (
+              <div className="docdash-empty">No homecare requests found.</div>
             ) : (
-              requests.map((req) => (
-                <React.Fragment key={req.uid}>
-                  <div className="table-cell">{req.patientname || '-'}</div>
-                  <div className="table-cell">{req.caretype || '-'}</div>
-                  <div className="table-cell">{req.status || '-'}</div>
-                  <div className="table-cell">
-                    {req.timefrom && req.timeto ? `${req.timefrom} to ${req.timeto}` : '-'}
-                  </div>
-                </React.Fragment>
-              ))
+              <div className="docdash-table-wrapper">
+                <table className="docdash-table">
+                  <thead>
+                    <tr>
+                     <th className="table-header-patient">Patient</th>
+<th className="table-header-caretype">Care Type</th>
+<th className="table-header-status">Status</th>
+<th className="table-header-schedule">Schedule</th>
+
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {requests.map((req) => (
+                      <tr key={req.uid}>
+                        <td data-label="Patient">{req.patientname || '-'}</td>
+                        <td data-label="Care Type">{req.caretype || '-'}</td>
+                        <td data-label="Status">
+                          <span className={`docdash-status docdash-status-${req.status.toLowerCase()}`}>
+                            {req.status || '-'}
+                          </span>
+                        </td>
+                        <td data-label="Schedule">
+                          {req.timefrom && req.timeto
+                            ? `${new Date(req.timefrom).toLocaleString()} - ${new Date(req.timeto).toLocaleString()}`
+                            : '-'}
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
             )}
-          </div>
+          </section>
         </main>
       </div>
     </div>
   );
 };
 
-export default DoctorHomecareRequests;
+export default DoctorHomecareDashboard;
