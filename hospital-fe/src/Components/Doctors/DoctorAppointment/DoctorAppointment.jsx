@@ -165,15 +165,16 @@ const DoctorAppointmentManagement = () => {
                 {/* Table for desktop */}
                 <div className="appointment-table">
                   <table>
-                    <thead>
-                      <tr>
-                        <th>Appointment ID</th>
-                        <th>Patient Name</th>
-                        <th>Date and Time</th>
-                        <th>Status</th>
-                        <th>Actions</th>
-                      </tr>
-                    </thead>
+                  <thead>
+  <tr>
+    <th className="appointment-th">Appointment ID</th>
+    <th className="appointment-th">Patient Name</th>
+    <th className="appointment-th">Date and Time</th>
+    <th className="appointment-th">Status</th>
+    <th className="appointment-th">Actions</th>
+  </tr>
+</thead>
+
                     <tbody>
                       {appointments.map((appointment) =>
                         appointment?.uid ? (

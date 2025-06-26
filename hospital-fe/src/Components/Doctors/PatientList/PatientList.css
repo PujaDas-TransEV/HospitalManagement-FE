@@ -1,125 +1,152 @@
+.patientlist-bg {
+  background: url('../../Assests/background.jpg') no-repeat center/cover;
+  min-height: 100vh;
+  position: relative;
+}
+.patientlist-bg::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-color: rgba(255,255,255,0.7);
+  z-index: 0;
+}
+.dashboard-content-patientlist {
+  display: flex;
+  position: relative;
+  z-index: 1;
+}
+.patientlist-container {
+  flex: 1;
+  max-width: 1400px; /* adjust this as needed */
+  margin: 120px auto 40px; /* center horizontally */
+  padding: 20px;
+  background: #f0efeb;
+  border-radius: 8px;
+  box-shadow: 0 0 12px rgba(0,0,0,0.1);
+  min-height: 60vh;
+}
 
-.dashboard-container {
+.patientlist-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 1.8rem;
+  margin-bottom: 1rem;
+  color: #2c3e50;
+}
+.patient-list-spinner {
   display: flex;
   flex-direction: column;
-  min-height: 100vh;
-}
-
-
-.dashboard-content {
-  display: flex;
-  flex: 1;
-  justify-content: space-between;
-  /* background-color: #f4f6f9; */
-  padding: 20px;
-}
-
-
-.doctor-patient-list-page-container {
-  flex: 1;
-  background-color: #f4f6f9;
-  padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  margin-left: 5px;
-}
-
-
-h2 {
-  font-size: 24px;
-  font-weight: 600;
-  margin-bottom: 20px;
+  align-items: center;
+  padding: 80px 0;
   color: #333;
 }
-
-
-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-bottom: 20px;
+.loading-icon {
+  font-size: 3rem;
+  color: #007bff;
+  animation: rotate 1s linear infinite;
 }
-
-th, td {
-  padding: 12px 15px;
-  text-align: left;
-  border-bottom: 1px solid #ddd;
+.spinner-text {
+  margin-top: 8px;
+}
+@keyframes rotate {
+  to { transform: rotate(360deg); }
+}
+.no-patients-found {
+  padding: 80px 0;
+  text-align: center;
   color: #555;
 }
-
-th {
-  background-color: #f7f7f7;
-  font-weight: 600;
+.patientlist-table {
+  width: 100%;
 }
-
-tr:nth-child(even) {
-  background-color: #f9f9f9;
+.patientlist-cards {
+  padding: 0 5px;
 }
-
-tr:hover {
-  background-color: #f1f1f1;
-}
-
-
-.modal-content {
+.patientlist-cards .card {
+  border: none;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.08);
   border-radius: 8px;
-  padding: 20px;
 }
-
-.modal-header {
-  background-color: #007bff;
-  color: #fff;
-  border-radius: 8px 8px 0 0;
-  padding: 15px;
-}
-
-.modal-title {
-  font-size: 20px;
+.patientlist-cards .card-title {
+  font-size: 1.2rem;
   font-weight: 600;
 }
-
-.modal-body {
-  padding: 20px;
+.patientlist-cards .btn {
+  margin-top: 10px;
+}
+@media (max-width: 576px) {
+  .patientlist-container { margin: 80px 10px 20px; padding: 15px; }
 }
 
-.modal-footer {
+.custom-popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1050;
   display: flex;
-  justify-content: flex-end;
-  padding: 15px;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
 }
 
-button:focus {
-  outline: none;
+.custom-popup {
+  background: #ecf2f3;
+  border-radius: 8px;
+  padding: 25px;
+  width: 100%;
+  max-width: 500px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+  position: relative;
+  max-height: 90vh;
+  overflow-y: auto;
 }
 
-
-@media (max-width: 768px) {
-  .dashboard-content {
-    flex-direction: column;
-    padding: 10px;
-  }
-
-  .doctor-patient-list-page-container {
-    margin-left: 0;
-    margin-top: 20px;
-  }
-
-  table {
-    font-size: 14px;
-  }
-
-  .modal-content {
-    width: 100%;
-  }
+.custom-popup.large {
+  max-width: 900px;
 }
 
-
-.alert {
-  margin-bottom: 20px;
+.custom-popup-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
 }
 
-.alert-danger {
-  background-color: #f8d7da;
-  border-color: #f5c6cb;
-  color: #721c24;
+.popup-close-btn {
+  background: transparent;
+  border: none;
+  font-size: 1.5rem;
+  color: #444;
+  cursor: pointer;
+  transition: color 0.2s ease-in-out;
+}
+
+.popup-close-btn:hover {
+  color: #000;
+}
+.patientlist-cards .card {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+}
+
+.patientlist-cards .card-title {
+  font-size: 1.2rem;
+  color: #2c3e50;
+}
+
+.patientlist-cards .btn {
+  min-width: 36px;
+}
+.patient-th {
+  background-color: #007bff;  /* Bootstrap primary blue */
+  color: white;
   font-weight: 600;
+  text-align: center;
+  padding: 10px;
+  border-bottom: 2px solid #0056b3;
+  user-select: none; /* Optional: prevent text selection */
 }

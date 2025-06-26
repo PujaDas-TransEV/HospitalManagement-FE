@@ -1,359 +1,391 @@
+
 import React, { useState, useEffect } from 'react';
-import { Table, Spinner, Alert, Row, Col, Button, Modal, Form, ListGroup } from 'react-bootstrap';
-import {jwtDecode} from 'jwt-decode'; // fixed import
-import { FaStethoscope } from 'react-icons/fa';
-import DoctorNavbar from '../DoctorNavbar/DoctorNAvbar'; // fixed typo in import
+import {
+  Table, Alert,
+  Button, Form, Card, ListGroup, Row, Col
+} from 'react-bootstrap';
+import {jwtDecode} from 'jwt-decode';
+import { FaStethoscope, FaPrescription, FaEye, FaSpinner,FaPlus } from 'react-icons/fa';
+import DoctorNavbar from '../DoctorNavbar/DoctorNAvbar';
 import Doctorsidebar from '../DoctorSidebar/Doctorsidebar';
-import { useNavigate } from 'react-router-dom';
 import './PatientList.css';
 
 const DoctorPatientListPage = () => {
-  const navigate = useNavigate();
   const [patients, setPatients] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [doctorid, setDoctorId] = useState(null);
+  const [doctorId, setDoctorId] = useState(null);
 
-  const [showPrescriptionModal, setShowPrescriptionModal] = useState(false);
-  const [showViewPrescriptionModal, setShowViewPrescriptionModal] = useState(false);
+  const [showCreateModal, setShowCreateModal] = useState(false);
+  const [showViewModal, setShowViewModal] = useState(false);
 
   const [selectedPatient, setSelectedPatient] = useState(null);
-
-  const [hospitalname, setHospitalName] = useState('');
-  const [diagonistics, setDiagonistics] = useState('');
-  const [dateandtime, setDateandTime] = useState('');
-
-  // NEW: To hold multiple prescriptions fetched for a patient
   const [prescriptions, setPrescriptions] = useState([]);
-  const [selectedPrescription, setSelectedPrescription] = useState(null); // to view a single prescription details
+  const [selectedPrescription, setSelectedPrescription] = useState(null);
 
+  const [hospitalName, setHospitalName] = useState('');
+  const [diagnosis, setDiagnosis] = useState('');
+  const [dateTime, setDateTime] = useState('');
+
+  // New loading state for prescriptions
+  const [prescriptionLoading, setPrescriptionLoading] = useState(false);
+
+  // Decode token
   useEffect(() => {
-    const fetchDoctorProfile = async () => {
-      const accessToken = localStorage.getItem('accessToken');
-      if (!accessToken) {
-        navigate('/login');
-        return;
-      }
-
+    const token = localStorage.getItem('accessToken');
+    if (token) {
       try {
-        const decodedToken = jwtDecode(accessToken);
-        const doctorId = decodedToken.doctorid;
-        setDoctorId(doctorId);
-      } catch (error) {
-        console.error('Error decoding token:', error);
-        navigate('/login');
+        setDoctorId(jwtDecode(token).doctorid);
+      } catch {
+        setError('Invalid token');
       }
-    };
+    } else {
+      setError('Please login');
+    }
+  }, []);
 
-    fetchDoctorProfile();
-  }, [navigate]);
-
+  // Load patients
   useEffect(() => {
-    if (doctorid) {
-      const formData = new FormData();
-      formData.append('doctorid', doctorid);
-
-      fetch('http://192.168.0.106:5000/patientview', {
-        method: 'POST',
-        body: formData,
-      })
-        .then((response) => response.json())
-        .then((data) => {
-          if (data.patients) {
-            setPatients(data.patients);
-            setLoading(false);
-          } else {
-            setError('No patients found for this doctor.');
-            setLoading(false);
-          }
-        })
-        .catch((error) => {
-          console.error('Error fetching patients:', error);
-          setError('An error occurred while fetching patients.');
-          setLoading(false);
-        });
-    }
-  }, [doctorid]);
-
-  const handleCreatePrescriptionClick = (patient) => {
-    setSelectedPatient(patient);
-    setShowPrescriptionModal(true);
-    // Convert appointment_time string to local datetime-local input format
-    const dt = new Date(patient.appointment_time);
-    setDateandTime(dt.toISOString().slice(0, 16));
-  };
-
-  // UPDATED: fetch all prescriptions by patient uid and show modal with list
-  const handleViewPrescriptionClick = async (patient) => {
-    setSelectedPatient(patient);
-    setLoading(true);
-    setError(null);
-    setPrescriptions([]);
-    setSelectedPrescription(null);
-
-    const formData = new FormData();
-    formData.append('patientid', patient.uid);
-
-    try {
-      const response = await fetch('http://192.168.0.106:5000/doctors/getprescribebypatientid', {
-        method: 'POST',
-        body: formData,
-      });
-
-      const data = await response.json();
-      console.log('Prescriptions API response:', data);
-
-      if (data && data.length > 0) {
-        setPrescriptions(data);
-        setSelectedPrescription(data[0]); // Show first prescription by default
-        setShowViewPrescriptionModal(true);
-      } else {
-        alert('No prescriptions found for this patient.');
+    if (!doctorId) return;
+    (async () => {
+      setLoading(true);
+      try {
+        const fm = new FormData();
+        fm.append('doctorid', doctorId);
+        const resp = await fetch('http://192.168.0.106:5000/patientview', { method: 'POST', body: fm });
+        const json = await resp.json();
+        setPatients(json.patients || []);
+      } catch {
+        setError('Failed loading patients');
       }
-    } catch (error) {
-      console.error('Error fetching prescriptions:', error);
-      alert('Error occurred while fetching prescriptions.');
-    } finally {
       setLoading(false);
-    }
+    })();
+  }, [doctorId]);
+
+  // Create Prescription
+  const openCreate = (pt) => {
+    setSelectedPatient(pt);
+    setDateTime(new Date(pt.appointment_time).toISOString().slice(0, 16));
+    setShowCreateModal(true);
   };
 
-  const handlePrescriptionSubmit = async (e) => {
+  const submitPrescription = async (e) => {
     e.preventDefault();
-
-    const formData = new FormData();
-    formData.append('hospitalname', hospitalname);
-    formData.append('doctorid', doctorid);
-    formData.append('patientid', selectedPatient.uid);
-    formData.append('dateandtime', dateandtime);
-    formData.append('diagonistics', diagonistics);
-
     try {
-      const response = await fetch('http://192.168.0.106:5000/createprescription', {
-        method: 'POST',
-        body: formData,
-      });
+      const fm = new FormData();
+      fm.append('hospitalname', hospitalName);
+      fm.append('doctorid', doctorId);
+      fm.append('patientid', selectedPatient.uid);
+      fm.append('dateandtime', dateTime);
+      fm.append('diagonistics', diagnosis);
 
-      const result = await response.json();
-      if (result.message) {
-        alert('Prescription created successfully!');
-        setShowPrescriptionModal(false);
-      } else {
-        alert('Error creating prescription: ' + result.message);
-      }
-    } catch (error) {
-      console.error('Error creating prescription:', error);
-      alert('Error occurred while creating prescription.');
+      const resp = await fetch('http://192.168.0.106:5000/createprescription', { method: 'POST', body: fm });
+      const j = await resp.json();
+      alert(j.message ? 'Prescription created!' : `Error: ${j.message}`);
+      setShowCreateModal(false);
+      setHospitalName('');
+      setDiagnosis('');
+    } catch {
+      alert('Submission failed');
     }
   };
 
-  const decodeBase64 = (base64String) => {
-    const binaryString = window.atob(base64String);
-    const binaryData = new Uint8Array(binaryString.length);
-
-    for (let i = 0; i < binaryString.length; i++) {
-      binaryData[i] = binaryString.charCodeAt(i);
+  // View Prescription
+  const openView = async (pt) => {
+    setSelectedPatient(pt);
+    setPrescriptionLoading(true);
+    try {
+      const fm = new FormData();
+      fm.append('patientid', pt.uid);
+      const resp = await fetch('http://192.168.0.106:5000/doctors/getprescribebypatientid', { method: 'POST', body: fm });
+      const json = await resp.json();
+      if (json?.length) {
+        setPrescriptions(json);
+        setSelectedPrescription(json[0]);
+        setShowViewModal(true);
+      } else alert('No prescriptions found');
+    } catch {
+      alert('Error loading prescriptions');
     }
-    const blob = new Blob([binaryData], { type: 'application/pdf' });
-    return URL.createObjectURL(blob);
+    setPrescriptionLoading(false);
   };
 
-  // Helper to render multiple emails (unchanged)
-  const renderEmails = (email) => {
-    if (!email) return 'N/A';
-    if (Array.isArray(email)) {
-      return (
-        <ul className="email-list" style={{ paddingLeft: '15px', marginBottom: 0 }}>
-          {email.map((mail, idx) => (
-            <li key={idx} style={{ listStyleType: 'disc' }}>
-              {mail}
-            </li>
-          ))}
-        </ul>
-      );
-    }
-    return email; // string email
+  const decodeBase64 = (b64) => {
+    const bin = window.atob(b64);
+    const arr = new Uint8Array(bin.length);
+    for (let i = 0; i < bin.length; i++) arr[i] = bin.charCodeAt(i);
+    return URL.createObjectURL(new Blob([arr], { type: 'application/pdf' }));
   };
 
   return (
-    <div className="dashboard-container">
+    <div className="patientlist-bg">
       <DoctorNavbar />
-      <div className="dashboard-content">
+      <div className="dashboard-content-patientlist">
         <Doctorsidebar />
-        <div className="doctor-patient-list-page-container" style={{ padding: '1rem' }}>
-          <h2>
-            <FaStethoscope /> Patients List
-          </h2>
-
+        <div className="patientlist-container">
+          <h2 className="patientlist-title"><FaStethoscope /> Patients</h2>
           {error && <Alert variant="danger">{error}</Alert>}
 
           {loading ? (
-            <Spinner animation="border" variant="primary" />
+            <div className="patient-list-spinner">
+              <FaSpinner className="loading-icon" />
+              <div className="spinner-text">Loading patients...</div>
+            </div>
+          ) : patients.length === 0 ? (
+            <div className="no-patients-found"><h4>No Patients Found</h4></div>
           ) : (
             <>
-              <Row className="mb-3">
-                <Col>
-                  <h3>Patients List</h3>
-                </Col>
-              </Row>
+              {/* Table - desktop only */}
+              <div className="patientlist-table d-none d-md-block">
+                <Table bordered hover responsive>
+                 <thead>
+  <tr>
+    <th className="patient-th">Name</th>
+    <th className="patient-th">Age</th>
+    <th className="patient-th">Gender</th>
+    <th className="patient-th">Blood</th>
+    <th className="patient-th">Phone</th>
+    <th className="patient-th">Email</th>
+    <th className="patient-th">Appt Time</th>
+    <th className="patient-th">Specialty</th>
+    <th className="patient-th">Actions</th>
+  </tr>
+</thead>
 
-              <div className="table-responsive">
-                <Table striped bordered hover style={{ minWidth: '700px' }}>
-                  <thead>
-                    <tr>
-                      <th>Full Name</th>
-                      <th>Age</th>
-                      <th>Gender</th>
-                      <th>Blood Group</th>
-                      <th>Phone</th>
-                      <th>Email</th>
-                      <th>Appointment Time</th>
-                      <th>Specialization</th>
-                      <th>Actions</th>
-                    </tr>
-                  </thead>
                   <tbody>
-                    {patients.length > 0 ? (
-                      patients.map((patient) => (
-                        <tr key={patient.uid}>
-                          <td>{patient.firstname} {patient.lastname}</td>
-                          <td>{patient.age}</td>
-                          <td>{patient.gender}</td>
-                          <td>{patient.bloodgroup}</td>
-                          <td>{patient.phonenumber}</td>
-                          <td>{renderEmails(patient.email)}</td>
-                          <td>{new Date(patient.appointment_time).toLocaleString()}</td>
-                          <td>{patient.doctorspecialization}</td>
-                          <td>
-                            <Button
-                              variant="primary"
-                              onClick={() => handleCreatePrescriptionClick(patient)}
-                            >
-                              Create Prescription
-                            </Button>
-                            <Button
-                              variant="secondary"
-                              onClick={() => handleViewPrescriptionClick(patient)}
-                              style={{ marginLeft: '10px' }}
-                            >
-                              View Prescription
-                            </Button>
-                          </td>
-                        </tr>
-                      ))
-                    ) : (
-                      <tr>
-                        <td colSpan="9">No patients available for this doctor.</td>
+                    {patients.map(pt => (
+                      <tr key={pt.uid}>
+                        <td>{pt.firstname} {pt.lastname}</td>
+                        <td>{pt.age}</td><td>{pt.gender}</td><td>{pt.bloodgroup}</td>
+                        <td>{pt.phonenumber}</td>
+                        <td>{Array.isArray(pt.email) ? pt.email.join(', ') : pt.email}</td>
+                        <td>{new Date(pt.appointment_time).toLocaleString()}</td>
+                        <td>{pt.doctorspecialization}</td>
+                       <td>
+  <Button
+    size="sm"
+    onClick={() => openCreate(pt)}
+    style={{
+      color: '#007bff',          // text color
+      borderColor: '#007bff',    // border color
+      backgroundColor: 'transparent',
+      marginRight: '8px',
+    }}
+    onMouseEnter={e => {
+      e.currentTarget.style.backgroundColor = '#007bff';
+      e.currentTarget.style.color = 'white';
+    }}
+    onMouseLeave={e => {
+      e.currentTarget.style.backgroundColor = 'transparent';
+      e.currentTarget.style.color = '#007bff';
+    }}
+  >
+    <FaPlus /> Create
+  </Button>{' '}
+  <Button
+    size="sm"
+    onClick={() => openView(pt)}
+    style={{
+      color: '#6c757d',         // gray text color
+      borderColor: '#6c757d',   // gray border color
+      backgroundColor: 'transparent',
+    }}
+    onMouseEnter={e => {
+      e.currentTarget.style.backgroundColor = '#6c757d';
+      e.currentTarget.style.color = 'white';
+    }}
+    onMouseLeave={e => {
+      e.currentTarget.style.backgroundColor = 'transparent';
+      e.currentTarget.style.color = '#6c757d';
+    }}
+  >
+    <FaEye /> View
+  </Button>
+</td>
+
                       </tr>
-                    )}
+                    ))}
                   </tbody>
                 </Table>
+              </div>
+
+              {/* Cards - mobile only */}
+             <div className="patientlist-cards d-block d-md-none" >
+
+                {patients.map(pt => (
+                  <Card key={pt.uid} className="mb-3">
+                    <Card.Body>
+                      <Card.Title>{pt.firstname} {pt.lastname}</Card.Title>
+                     <Card.Text style={{ lineHeight: '1.5', fontSize: '14px', color: '#444', marginBottom: '0' }}>
+  <div style={{ marginBottom: '6px' }}><strong>Age:</strong> {pt.age} | <strong>Gender:</strong> {pt.gender}</div>
+  <div style={{ marginBottom: '6px' }}><strong>Blood Group:</strong> {pt.bloodgroup}</div>
+  <div style={{ marginBottom: '6px' }}><strong>Phone:</strong> {pt.phonenumber}</div>
+  <div style={{ marginBottom: '6px' }}><strong>Email:</strong> {Array.isArray(pt.email) ? pt.email.join(', ') : pt.email}</div>
+  <div style={{ marginBottom: '6px' }}><strong>Appointment:</strong> {new Date(pt.appointment_time).toLocaleString()}</div>
+  <div><strong>Specialty:</strong> {pt.doctorspecialization}</div>
+</Card.Text>
+
+                      <div className="text-end">
+                        <td>
+  <Button
+    size="sm"
+    onClick={() => openCreate(pt)}
+    style={{
+      color: '#007bff',          // text color
+      borderColor: '#007bff',    // border color
+      backgroundColor: 'transparent',
+      marginRight: '8px',
+    }}
+    onMouseEnter={e => {
+      e.currentTarget.style.backgroundColor = '#007bff';
+      e.currentTarget.style.color = 'white';
+    }}
+    onMouseLeave={e => {
+      e.currentTarget.style.backgroundColor = 'transparent';
+      e.currentTarget.style.color = '#007bff';
+    }}
+  >
+    <FaPlus /> 
+  </Button>{' '}
+  <Button
+    size="sm"
+    onClick={() => openView(pt)}
+    style={{
+      color: '#6c757d',         // gray text color
+      borderColor: '#6c757d',   // gray border color
+      backgroundColor: 'transparent',
+    }}
+    onMouseEnter={e => {
+      e.currentTarget.style.backgroundColor = '#6c757d';
+      e.currentTarget.style.color = 'white';
+    }}
+    onMouseLeave={e => {
+      e.currentTarget.style.backgroundColor = 'transparent';
+      e.currentTarget.style.color = '#6c757d';
+    }}
+  >
+    <FaEye />
+  </Button>
+</td>
+
+                      </div>
+                    </Card.Body>
+                  </Card>
+                ))}
               </div>
             </>
           )}
         </div>
       </div>
 
-      {/* Modal for creating prescription (unchanged) */}
-      <Modal
-        show={showPrescriptionModal}
-        onHide={() => setShowPrescriptionModal(false)}
-      >
-        <Modal.Header closeButton>
-          <Modal.Title>Create Prescription</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <Form onSubmit={handlePrescriptionSubmit}>
-            <Form.Group controlId="hospitalName" className="mb-3">
-              <Form.Label>Hospital Name</Form.Label>
-              <Form.Control
-                type="text"
-                value={hospitalname}
-                onChange={(e) => setHospitalName(e.target.value)}
-                required
-              />
-            </Form.Group>
-            <Form.Group controlId="diagonistics" className="mb-3">
-              <Form.Label>Diagnosis</Form.Label>
-              <Form.Control
-                type="text"
-                value={diagonistics}
-                onChange={(e) => setDiagonistics(e.target.value)}
-                required
-              />
-            </Form.Group>
-            <Form.Group controlId="dateandtime" className="mb-3">
-              <Form.Label>Date And Time</Form.Label>
-              <Form.Control
-                type="datetime-local"
-                value={dateandtime}
-                onChange={(e) => setDateandTime(e.target.value)}
-                required
-              />
-            </Form.Group>
+      {/* Create Prescription Modal */}
+      {showCreateModal && (
+        <div className="custom-popup-overlay">
+          <div className="custom-popup">
+            <div className="custom-popup-header">
+              <h5>Create Prescription for {selectedPatient?.firstname}</h5>
+              <button className="popup-close-btn" onClick={() => setShowCreateModal(false)}>&times;</button>
+            </div>
+            <Form onSubmit={submitPrescription} style={{    backgroundColor: '#e0f7fa'}}>
+              <Form.Group className="mb-3">
+                <Form.Label>Hospital Name</Form.Label>
+                <Form.Control
+                  required
+                  value={hospitalName}
+                  onChange={e => setHospitalName(e.target.value)}
+                />
+              </Form.Group>
+              <Form.Group className="mb-3">
+                <Form.Label>Diagnosis</Form.Label>
+                <Form.Control
+                  required
+                  value={diagnosis}
+                  onChange={e => setDiagnosis(e.target.value)}
+                />
+              </Form.Group>
+              <Form.Group className="mb-3">
+                <Form.Label>Date & Time</Form.Label>
+                <Form.Control
+                  type="datetime-local"
+                  required
+                  value={dateTime}
+                  onChange={e => setDateTime(e.target.value)}
+                />
+              </Form.Group>
+              <Button type="submit" className="w-100">Submit</Button>
+            </Form>
+          </div>
+        </div>
+      )}
 
-            <Button variant="primary" type="submit" className="w-100">
-              Create Prescription
-            </Button>
-          </Form>
-        </Modal.Body>
-      </Modal>
+      {/* View Prescription Modal */}
+      {showViewModal && (
+        <div className="custom-popup-overlay">
+          <div className="custom-popup large">
+            <div className="custom-popup-header">
+              <h5>Prescriptions: {selectedPatient?.firstname} {selectedPatient?.lastname}</h5>
+              <button className="popup-close-btn" onClick={() => setShowViewModal(false)}>&times;</button>
+            </div>
 
-      {/* Modal for viewing multiple prescriptions */}
-      <Modal
-        show={showViewPrescriptionModal}
-        onHide={() => setShowViewPrescriptionModal(false)}
-        size="lg"
-        centered
-      >
-        <Modal.Header closeButton>
-          <Modal.Title>View Prescriptions for {selectedPatient ? `${selectedPatient.firstname} ${selectedPatient.lastname}` : ''}</Modal.Title>
-        </Modal.Header>
-  <Modal.Body>
-  {loading && <Spinner animation="border" />}
-  {error && <Alert variant="danger">{error}</Alert>}
-
-  {!loading && prescriptions.length > 0 && (
-    <Row>
-      <Col md={4}>
-        {/* List of prescriptions to select */}
-      
-      </Col>
-      <Col md={8}>
-        {/* Show selected prescription details */}
-        {selectedPrescription ? (
-          <div>
-           
-
-            {selectedPrescription.file_data ? (
-              <embed
-                src={decodeBase64(selectedPrescription.file_data)}
-                width="100%"
-                height="600px"
-                type="application/pdf"
-              />
+            {prescriptionLoading ? (
+              <div className="patient-list-spinner">
+                <FaSpinner className="loading-icon" />
+                Loading prescriptions...
+              </div>
             ) : (
-              <Alert variant="warning">No prescription file available.</Alert>
+              <Row>
+                <Col md={4}>
+                  <ListGroup variant="flush">
+                    {prescriptions.map(pr => (
+                   
+                      <ListGroup.Item
+  key={pr.uid}
+  active={selectedPrescription?.uid === pr.uid}
+  action
+  onClick={() => setSelectedPrescription(pr)}
+  style={{
+    cursor: 'pointer',
+    padding: '12px 16px',
+    marginBottom: '8px',
+    borderRadius: '6px',
+    border: selectedPrescription?.uid === pr.uid ? '2px solid #007bff' : '1px solid #ddd',
+    backgroundColor: selectedPrescription?.uid === pr.uid ? '#e9f5ff' : '#fff',
+    fontWeight: selectedPrescription?.uid === pr.uid ? '600' : '400',
+    color: selectedPrescription?.uid === pr.uid ? '#0056b3' : '#333',
+    transition: 'all 0.3s ease',
+  }}
+  onMouseEnter={e => {
+    if (selectedPrescription?.uid !== pr.uid) {
+      e.currentTarget.style.backgroundColor = '#f7f9fc';
+    }
+  }}
+  onMouseLeave={e => {
+    if (selectedPrescription?.uid !== pr.uid) {
+      e.currentTarget.style.backgroundColor = '#fff';
+    }
+  }}
+>
+  {new Date(pr.dateandtime).toLocaleDateString()}
+</ListGroup.Item>
+
+                    ))}
+                  </ListGroup>
+                </Col>
+                <Col md={8}>
+                  {selectedPrescription?.file_data ? (
+                    <embed
+                      src={decodeBase64(selectedPrescription.file_data)}
+                      width="100%"
+                      height="400px"
+                      type="application/pdf"
+                    />
+                  ) : <Alert>No prescription file available.</Alert>}
+                </Col>
+              </Row>
             )}
           </div>
-        ) : (
-          <p>Select a prescription from the list to view details.</p>
-        )}
-      </Col>
-    </Row>
-  )}
-
-  {!loading && prescriptions.length === 0 && (
-    <p>No prescriptions found for this patient.</p>
-  )}
-</Modal.Body>
-
-        <Modal.Footer>
-          <Button variant="secondary" onClick={() => setShowViewPrescriptionModal(false)}>
-            Close
-          </Button>
-        </Modal.Footer>
-      </Modal>
+        </div>
+      )}
     </div>
   );
 };
