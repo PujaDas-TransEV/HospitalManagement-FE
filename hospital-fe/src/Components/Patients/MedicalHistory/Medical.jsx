@@ -68,8 +68,8 @@ const PatientMedicalHistoryPage = () => {
           <h2 className="page-title">Patient Admission History</h2>
 
           {isFetching && (
-            <div className="modal-overlay">
-                         <div className="modal-content"  style={{ backgroundColor: '#e0f7fa'}}>
+            <div className="modal-overlay-admission">
+                         <div className="modal-content-admission"  style={{ backgroundColor: '#e0f7fa'}}>
                            <FaSpinner className="spin large" />
                            <p>Loading admission...</p>
                          </div>

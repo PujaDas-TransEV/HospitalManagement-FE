@@ -155,8 +155,8 @@ const Appointment = () => {
           </section>
 
           {loading && (
-            <div className="modal-overlay">
-              <div className="modal-content"  style={{ backgroundColor: '#e0f7fa'}}>
+            <div className="modal-overlay-appointment">
+              <div className="modal-content-appointment"  style={{ backgroundColor: '#e0f7fa'}}>
                 <FaSpinner className="spin large" />
                 <p>Loading appointments...</p>
               </div>
