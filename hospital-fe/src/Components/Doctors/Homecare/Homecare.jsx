@@ -59,7 +59,7 @@ const DoctorHomecareDashboard = () => {
 
         <main className="docdash-main">
           <section className="docdash-card">
-            <h2 className="docdash-title">Homecare Requests</h2>
+            <h2 className="docdash-title">Homecare Requests  🏠</h2>
 
             {loading ? (
               <div className="docdash-loading">

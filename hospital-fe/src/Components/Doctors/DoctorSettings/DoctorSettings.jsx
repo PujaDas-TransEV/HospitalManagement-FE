@@ -1,109 +1,115 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { jwtDecode } from "jwt-decode"; // Import jwt-decode to decode the token
+import { jwtDecode } from "jwt-decode";
+import {
+  FiLock,
+  FiTrash2,
+  FiCheckCircle,
+  FiXCircle,
+} from "react-icons/fi";
+
 import "./DoctorSettings.css";
-import DoctorNavbar from '../DoctorNavbar/DoctorNAvbar';
-import DoctorSidebar from '../DoctorSidebar/Doctorsidebar';
+import DoctorNavbar from "../DoctorNavbar/DoctorNAvbar";
+import DoctorSidebar from "../DoctorSidebar/Doctorsidebar";
+import backgroundImage from "../../Assests/background.jpg";
 
 const DoctorSettings = () => {
   const navigate = useNavigate();
-  const [isDeleteConfirmed, setIsDeleteConfirmed] = useState(false);
-  const [isPasswordChanged, setIsPasswordChanged] = useState(false);
-  const [errorMessage, setErrorMessage] = useState(null); // Error state
-  const [successMessage, setSuccessMessage] = useState(null); // Success state
 
-  // State for managing the modal visibility
+  const [isDeleteConfirmed, setIsDeleteConfirmed] = useState(false);
   const [isPasswordModalOpen, setIsPasswordModalOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+  const [errorMessage, setErrorMessage] = useState(null);
+  const [successMessage, setSuccessMessage] = useState(null);
 
-  // Handle Change Password
   const handleChangePassword = () => {
-    setIsPasswordModalOpen(true); // Open the confirmation modal
+    setIsPasswordModalOpen(true);
   };
 
-  // Handle Delete Account
   const handleDeleteAccount = () => {
-    setIsDeleteModalOpen(true); // Open the confirmation modal
+    setIsDeleteModalOpen(true);
   };
 
-  // Function to confirm password change
   const confirmPasswordChange = () => {
-    setIsPasswordModalOpen(false); // Close the modal
-    navigate("/doctor-password"); // Redirect to the password change page
+    setIsPasswordModalOpen(false);
+    navigate("/doctor-password");
   };
 
-  // Function to confirm account deletion
   const confirmAccountDeletion = async () => {
-    setIsDeleteModalOpen(false); // Close the modal
-    if (isDeleteConfirmed) {
-      try {
-        // Get the access token from localStorage
-        const accessToken = localStorage.getItem("accessToken");
+    setIsDeleteModalOpen(false);
 
-        if (!accessToken) {
-          setErrorMessage("No access token found. Please log in again.");
-          return;
-        }
+    if (!isDeleteConfirmed) return;
 
-        // Decode the token to get the doctorId
-        const decodedToken = jwtDecode(accessToken);
-        const doctorId = decodedToken.doctorid; // Assuming doctorId is stored as 'doctorid'
-
-        // Create FormData to send the doctorId in the request
-        const formData = new FormData();
-        formData.append("doctorid", doctorId);
-
-        // Make the API call to delete the account
-        const response = await fetch("http://192.168.0.106:5000/doctorsops/deletedoctor", {
-          method: "POST",
-          headers: {
-            "Authorization": `Bearer ${accessToken}`, // Include token in the headers
-          },
-          body: formData, // Send the doctorId as form data
-        });
-
-        const data = await response.json();
-
-        if (response.ok) {
-          setSuccessMessage("Your account has been deleted successfully.");
-          setErrorMessage(null); // Clear any error messages
-          // Optionally, redirect the user to login page after deletion
-          // navigate("/login");
-        } else {
-          setErrorMessage(data.message || "Failed to delete account.");
-          setSuccessMessage(null); // Clear success messages
-        }
-      } catch (error) {
-        console.error("Error deleting account:", error);
-        setErrorMessage("An error occurred while deleting your account.");
-        setSuccessMessage(null); // Clear success messages
+    try {
+      const accessToken = localStorage.getItem("accessToken");
+      if (!accessToken) {
+        setErrorMessage("No access token found. Please log in again.");
+        return;
       }
+
+      const decodedToken = jwtDecode(accessToken);
+      const doctorId = decodedToken.doctorid;
+      const formData = new FormData();
+      formData.append("doctorid", doctorId);
+
+      const response = await fetch("http://192.168.0.106:5000/doctorsops/deletedoctor", {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+        body: formData,
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        setSuccessMessage("Your account has been deleted successfully.");
+        setErrorMessage(null);
+        localStorage.removeItem("accessToken");
+        setTimeout(() => navigate("/"), 3000);
+      } else {
+        setErrorMessage(data.message || "Failed to delete account.");
+        setSuccessMessage(null);
+      }
+    } catch (error) {
+      console.error("Error deleting account:", error);
+      setErrorMessage("An error occurred while deleting your account.");
+      setSuccessMessage(null);
     }
   };
 
-  // Function to close the modal without action
   const closeModal = () => {
     setIsPasswordModalOpen(false);
     setIsDeleteModalOpen(false);
   };
 
   return (
-    <div className="dashboard-container">
-      {/* Navbar at the top */}
+    <div
+      className="dashboard-container-settings"
+      style={{
+        backgroundImage: `url(${backgroundImage})`,
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        minHeight: "100vh",
+      }}
+    >
       <DoctorNavbar />
-
-      <div className="dashboard-content">
-        {/* Sidebar for navigation */}
+      <div className="dashboard-content-settings">
         <DoctorSidebar />
         <div className="settings-container-doctor">
           <h1 className="settings-title">Doctor Settings</h1>
 
           {/* Change Password Section */}
-          <div className="settings-section">
-            <h2 className="section-title">Change Password</h2>
+          <div
+            className="settings-section password-section"
+            style={{ backgroundColor: "rgba(215, 216, 136, 0.9)" }}
+          >
+            <h2 className="section-title">
+              <FiLock className="icon" /> Change Password
+            </h2>
             <p>
               To change your password, click the button below. You will be redirected to the
-              "Forgot Password" page where you can reset your password.
+              "Forgot Password" page where you can reset it.
             </p>
             <button className="action-button" onClick={handleChangePassword}>
               Change Password
@@ -111,13 +117,20 @@ const DoctorSettings = () => {
           </div>
 
           {/* Delete Account Section */}
-          <div className="settings-section">
-            <h2 className="section-title">Delete Account</h2>
+          <div
+            className="settings-section delete-section"
+            style={{ backgroundColor: "rgba(126, 172, 180, 0.9)" }}
+          >
+            <h2 className="section-title">
+              <FiTrash2 className="icon delete-icon" /> Delete Account
+            </h2>
             <p>
-              If you wish to delete your account, please toggle the button below to confirm.
+              If you wish to delete your account, please toggle the option below to confirm.
             </p>
             <div className="toggle-container">
-              <label htmlFor="delete-toggle" className="toggle-label">Confirm Account Deletion:</label>
+              <label htmlFor="delete-toggle" className="toggle-label">
+                Confirm Account Deletion:
+              </label>
               <input
                 type="checkbox"
                 id="delete-toggle"
@@ -127,37 +140,53 @@ const DoctorSettings = () => {
               />
             </div>
             {isDeleteConfirmed && (
-              <button className="delete-button" onClick={handleDeleteAccount}>
+              <button className="delete-button-settings" onClick={handleDeleteAccount}>
                 Confirm Delete Account
               </button>
             )}
           </div>
 
-          {/* Error and Success Messages */}
-          {errorMessage && <div className="error-message">{errorMessage}</div>}
-          {successMessage && <div className="success-message">{successMessage}</div>}
+          {/* Success & Error Messages */}
+          {errorMessage && (
+            <div className="error-message">
+              <FiXCircle className="message-icon" /> {errorMessage}
+            </div>
+          )}
+          {successMessage && (
+            <div className="success-message">
+              <FiCheckCircle className="message-icon" /> {successMessage}
+            </div>
+          )}
 
-          {/* Password Change Modal */}
+          {/* Password Modal */}
           {isPasswordModalOpen && (
-            <div className="modal-overlay">
-              <div className="modal">
+            <div className="modal-overlay-settings">
+              <div className="modal-settings">
                 <h3>Are you sure you want to change your password?</h3>
                 <div className="modal-buttons">
-                  <button className="modal-button" onClick={confirmPasswordChange}>Yes</button>
-                  <button className="modal-button" onClick={closeModal}>No</button>
+                  <button className="modal-button confirm" onClick={confirmPasswordChange}>
+                    Yes
+                  </button>
+                  <button className="modal-button cancel" onClick={closeModal}>
+                    No
+                  </button>
                 </div>
               </div>
             </div>
           )}
 
-          {/* Delete Account Modal */}
+          {/* Delete Modal */}
           {isDeleteModalOpen && (
-            <div className="modal-overlay">
-              <div className="modal">
+            <div className="modal-overlay-settings">
+              <div className="modal-settings">
                 <h3>Are you sure you want to delete your account?</h3>
                 <div className="modal-buttons">
-                  <button className="modal-button" onClick={confirmAccountDeletion}>Yes</button>
-                  <button className="modal-button" onClick={closeModal}>No</button>
+                  <button className="modal-button confirm" onClick={confirmAccountDeletion}>
+                    Yes
+                  </button>
+                  <button className="modal-button cancel" onClick={closeModal}>
+                    No
+                  </button>
                 </div>
               </div>
             </div>
