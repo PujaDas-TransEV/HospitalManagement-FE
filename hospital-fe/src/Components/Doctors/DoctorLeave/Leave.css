@@ -1,285 +1,220 @@
-
-* {
-  box-sizing: border-box;
-}
-
-html, body {
-  height: 100%;
-  width: 100%;
-  overflow-x: auto;
-  overflow-y: auto;
-  -webkit-overflow-scrolling: touch; /* Smooth scrolling for iOS */
-}
-
-.min-h-screen {
-  min-height: 100vh;
+.content {
+  max-width: 1200px;
+  margin: 60px auto 40px; /* Added more top margin to push it down */
+  background: rgba(255 255 255 / 0.9);
+  border-radius: 12px;
+  padding: 20px 40px;     /* Reduced vertical padding from 30px to 20px */
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  color: #222;
   display: flex;
   flex-direction: column;
-
+  gap: 24px;
+  position: relative;  /* Create a stacking context */
+  z-index: 10;         /* Higher than background/sidebar */
+  cursor: default; 
+  margin-top: 100px;
 }
 
-main, .content-wrapper, .page-content {
-  flex: 1 0 auto;
-  width: 100%;
-  overflow-x: auto;
-  padding: 1rem;
+  
 
-}
-/* CSS */
-@media (max-width: 640px) {
-  .apply-leave-btn {
-    margin-top: 1rem; /* 16px নিচে নামাবে */
-  }
+/* Heading */
+.content h1 {
+  font-size: 2.25rem;
+  font-weight: 700;
+  color: #003366;
+  margin-bottom: 0;
+  text-align: center;
+  letter-spacing: 0.03em;
+  user-select: none;
 }
 
-.flex {
+/* Wrapper for the Apply button - center aligned */
+.apply-leave-btn-wrapper {
   display: flex;
-  margin-top: 50PX;
-}
-.flex-col { flex-direction: column; }
-.flex-row { flex-direction: row; }
-.flex-1 { flex: 1 1 0%; }
-
-.items-center { align-items: center; }
-.justify-between { justify-content: space-between; }
-.justify-end { justify-content: flex-end; }
-
-.p-4 { padding: 1rem; }
-.p-6 { padding: 1.5rem; }
-.px-3 { padding-left: 0.75rem; padding-right: 0.75rem; }
-.px-4 { padding-left: 1rem; padding-right: 1rem; }
-.py-2 { padding-top: 0.5rem; padding-bottom: 0.5rem; }
-.py-3 { padding-top: 0.75rem; padding-bottom: 0.75rem; }
-
-.mb-4 { margin-bottom: 1rem; }
-.mb-6 { margin-bottom: 1.5rem; }
-.mb-8 { margin-bottom: 2rem; }
-
-.mx-auto { margin-left: auto; margin-right: auto; }
-
-.max-w-7xl { max-width: 80rem; }
-.max-w-lg { max-width: 32rem; }
-
-.rounded, .rounded-md { border-radius: 0.375rem; }
-.shadow { box-shadow: 0 1px 3px rgba(0,0,0,0.1), 0 1px 2px rgba(0,0,0,0.06); }
-
-.bg-white { background-color: #fff; }
-.bg-gray-50 { background-color: #f9fafb; }
-.bg-green-600 { background-color: #16a34a; color: #fff; }
-.bg-green-700 { background-color: #15803d; color: #fff; }
-.bg-green-100 { background-color: #d1fae5; color: #065f46; }
-.bg-red-100 { background-color: #fee2e2; color: #991b1b; }
-.bg-green-50 { background-color: #ecfdf5; }
-
-.text-white { color: #fff; }
-.text-gray-800 { color: #1f2937; }
-.text-gray-700 { color: #374151; }
-.text-green-700 { color: #047857; }
-.text-green-900 { color: #064e3b; }
-.text-red-600 { color: #dc2626; }
-.text-red-800 { color: #991b1b; }
-
-.text-sm { font-size: 0.875rem; }
-.text-xl { font-size: 1.25rem; }
-.text-3xl { font-size: 1.875rem; }
-.font-semibold { font-weight: 600; }
-.font-bold { font-weight: 700; }
-
-.hover\:bg-green-700:hover { background-color: #15803d; }
-.hover\:bg-gray-100:hover { background-color: #f3f4f6; }
-.hover\:text-green-900:hover { color: #064e3b; }
-.hover\:text-red-800:hover { color: #991b1b; }
-
-.border { border: 1px solid #d1d5db; }
-.border-gray-300 { border-color: #d1d5db; }
-
-.focus\:outline-none:focus { outline: none; }
-.focus\:ring-2:focus { box-shadow: 0 0 0 2px #16a34a; }
-
-input[type="date"],
-textarea {
-  width: 100%;
-  padding: 0.5rem 0.75rem;
-  border: 1px solid #d1d5db;
-  border-radius: 0.375rem;
-  font-size: 1rem;
-  font-family: inherit;
-  color: #374151;
-  transition: box-shadow 0.2s ease;
+  justify-content: center;
+  margin-bottom: 10px;
 }
 
-input[type="date"]:focus,
-textarea:focus {
+/* Apply Leave Button */
+.apply-leave-btn {
+  background-color: #0077cc;
+  color: white;
+  font-size: 1.1rem;
+  font-weight: 600;
+  padding: 12px 24px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  box-shadow: 0 4px 12px rgba(0, 119, 204, 0.35);
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.apply-leave-btn:hover,
+.apply-leave-btn:focus {
+  background-color: #005fa3;
+  box-shadow: 0 6px 16px rgba(0, 95, 163, 0.45);
   outline: none;
-  box-shadow: 0 0 0 2px #16a34a;
 }
 
-textarea.resize-none {
-  resize: none;
-}
-
-/* Table styling */
-table {
+/* Table styles */
+.leave-table {
   width: 100%;
   border-collapse: collapse;
-}
-thead {
-  background-color: #16a34a;
-  color: #fff;
-}
-th, td {
-  padding: 0.75rem 1rem;
-  text-align: left;
-  vertical-align: middle;
-}
-th.text-center, td.text-center {
-  text-align: center;
-}
-tbody tr {
-  border-bottom: 1px solid #f3f4f6;
-  transition: background-color 0.2s ease;
-}
-tbody tr:hover {
-  background-color: #ecfdf5;
-}
-td:nth-child(4) {
-  font-weight: 600;
-  text-transform: capitalize;
+  font-size: 1rem;
+  box-shadow: 0 0 0 1px #ddd;
+  border-radius: 8px;
+  overflow: hidden;
 }
 
-/* Button styling */
-button {
-  cursor: pointer;
-  transition: background-color 0.2s ease, color 0.2s ease;
-  font-family: inherit;
-  background: none;
-  border: none;
-}
-
-button.text-green-700 {
-  color: #047857;
-  font-weight: 600;
-}
-button.text-green-700:hover {
-  color: #064e3b;
-  text-decoration: underline;
-}
-button.text-red-600 {
-  color: #dc2626;
-  font-weight: 600;
-}
-button.text-red-600:hover {
-  color: #991b1b;
-  text-decoration: underline;
-}
-
-button[type="button"].border {
-  border: 1px solid #d1d5db;
-  background-color: white;
-  color: #374151;
-}
-button[type="button"].border:hover {
-  background-color: #f3f4f6;
-}
-button[type="submit"] {
-  background-color: #16a34a;
+.leave-table thead {
+  background-color: #0077cc;
   color: white;
-  border-radius: 0.375rem;
-  padding: 0.5rem 1.5rem;
-  border: none;
-}
-button[type="submit"]:hover {
-  background-color: #15803d;
+  user-select: none;
 }
 
-/* Responsive Table Styling */
-@media (max-width: 640px) {
-  .responsive-table,
-  .responsive-table thead,
-  .responsive-table tbody,
-  .responsive-table th,
-  .responsive-table td,
-  .responsive-table tr {
-    display: block;
-    width: 100%;
-    padding-top: 100px;
-  }
+.leave-table th,
+.leave-table td {
+  padding: 14px 18px;
+  text-align: left;
+  border-bottom: 1px solid #eee;
+}
 
-  .responsive-table thead {
+.leave-table tbody tr:hover {
+  background-color: #f0f7ff;
+  cursor: default;
+}
+
+/* Action icons */
+.action-icon {
+  color: #0077cc;
+  cursor: pointer;
+  margin-right: 12px;
+  transition: color 0.25s ease;
+}
+
+.action-icon:last-child {
+  margin-right: 0;
+}
+
+.action-icon:hover {
+  color: #004f80;
+}
+
+/* Responsive Cards for smaller screens */
+.leave-cards {
+  display: none;
+}
+
+@media (max-width: 700px) {
+  .leave-table {
     display: none;
   }
-
-  .responsive-table tr {
-    margin-bottom: 1.5rem;
-    border: 1px solid #d1d5db;
-    border-radius: 0.5rem;
-    background-color: #ffffff;
-    padding: 1rem;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-  }
-
-  .responsive-table td {
-    display: flex;
-    justify-content: space-between;
-    padding: 0.75rem 1rem;
-    font-size: 0.875rem;
-    border: none;
-    position: relative;
-  }
-
-  .responsive-table td::before {
-    content: attr(data-label);
-    font-weight: 600;
-    color: #374151;
-    margin-right: 1rem;
-    flex-shrink: 0;
-    width: 45%;
-  }
-
-  .responsive-table td:last-child {
-    flex-direction: row;
-    flex-wrap: wrap;
-    gap: 0.5rem;
-  }
-
-  .responsive-table td button {
-    padding: 0.5rem 1rem;
-    font-size: 0.875rem;
-    border-radius: 0.375rem;
-  }
-
-  .no-records-message {
-    text-align: center;
-    color: #6b7280;
-    font-size: 1rem;
-    padding: 1.5rem;
-  }
-}
-/* Assume button has class .apply-leave-btn */
-/* On mobile (max-width 640px), make button full width and margin bottom */
-
-@media (max-width: 640px) {
-  .apply-leave-btn {
-    display: block;          /* ensure visible */
-    width: 100%;             /* full width */
-    margin: 0 0 1rem 0;      /* bottom margin to separate from table */
-    order: -1;               /* if inside flex container, show it first */
-  }
-  
-  /* If the button and table are siblings inside a flex container */
-  .leave-container {
+  .leave-cards {
     display: flex;
     flex-direction: column;
+    gap: 18px;
+  }
+  .leave-card {
+    background: #f7faff;
+    border: 1px solid #cce0ff;
+    border-radius: 10px;
+    padding: 18px 22px;
+    box-shadow: 0 3px 10px rgba(0, 102, 204, 0.1);
+  }
+  .leave-card strong {
+    color: #004f80;
+  }
+  .card-actions {
+    margin-top: 10px;
+    display: flex;
+    gap: 18px;
   }
 }
-@media (max-width: 640px) {
-  .flex {
-    flex-direction: column; 
-    margin-top: 200px; 
+
+/* Alerts */
+.alert {
+  padding: 14px 18px;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 1rem;
+  user-select: none;
+  text-align: center;
+}
+
+.alert.error {
+  background-color: #fdecea;
+  color: #b03020;
+  border: 1px solid #f5c2c0;
+}
+
+.alert.success {
+  background-color: #e6f4ea;
+  color: #246b27;
+  border: 1px solid #a2d18e;
+}
+.th-from {
+  background-color: #005f73; /* Teal-ish */
+  color: white;
+}
+
+.th-to {
+  background-color: #0a9396; /* Slightly lighter teal */
+  color: white;
+}
+
+.th-reason {
+  background-color: #94d2bd; /* Pale green */
+  color: #003333;
+}
+
+.th-actions {
+  background-color: #ee9b00; /* Warm orange */
+  color: white;
+}
+.loading-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.7);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+.spinner {
+  animation: spin 1s linear infinite;
+  font-size: 3rem;
+  color: #0077cc;
+  margin-bottom: 10px;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
   }
 }
-@media (max-width: 640px) {
-  .space-y-4 > * + * {
-    margin-top: 5px; 
-  }
+/* Submit / Update button base style */
+button[type="submit"] {
+  background-color: #0077cc; /* your primary button color */
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+}
+
+/* Hover effect */
+button[type="submit"]:hover {
+  background-color: #005fa3; /* darker shade on hover */
 }

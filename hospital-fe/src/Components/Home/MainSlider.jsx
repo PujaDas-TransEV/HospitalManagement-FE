@@ -48,7 +48,7 @@ const MainSlider = () => {
   return (
     <div className="main-slider">
       <div className={`mainText ${animating ? 'text-out' : 'text-in'}`}>
-        <h1>
+        <h1 className="dea">
           {slides[currentIndex].titleLine1}
           <br />
           {slides[currentIndex].titleLine2}
