@@ -1,24 +1,24 @@
 .content {
   max-width: 1200px;
-  margin: 60px auto 40px; /* Added more top margin to push it down */
+  margin: 60px auto 40px; 
   background: rgba(255 255 255 / 0.9);
   border-radius: 12px;
-  padding: 20px 40px;     /* Reduced vertical padding from 30px to 20px */
+  padding: 20px 40px;     
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   color: #222;
   display: flex;
   flex-direction: column;
   gap: 24px;
-  position: relative;  /* Create a stacking context */
-  z-index: 10;         /* Higher than background/sidebar */
+  position: relative;  
+  z-index: 10;         
   cursor: default; 
   margin-top: 100px;
 }
 
   
 
-/* Heading */
+
 .content h1 {
   font-size: 2.25rem;
   font-weight: 700;
@@ -29,14 +29,14 @@
   user-select: none;
 }
 
-/* Wrapper for the Apply button - center aligned */
+
 .apply-leave-btn-wrapper {
   display: flex;
   justify-content: center;
   margin-bottom: 10px;
 }
 
-/* Apply Leave Button */
+
 .apply-leave-btn {
   background-color: #0077cc;
   color: white;
@@ -60,7 +60,7 @@
   outline: none;
 }
 
-/* Table styles */
+
 .leave-table {
   width: 100%;
   border-collapse: collapse;
@@ -88,7 +88,7 @@
   cursor: default;
 }
 
-/* Action icons */
+
 .action-icon {
   color: #0077cc;
   cursor: pointer;
@@ -104,7 +104,7 @@
   color: #004f80;
 }
 
-/* Responsive Cards for smaller screens */
+
 .leave-cards {
   display: none;
 }
@@ -135,7 +135,7 @@
   }
 }
 
-/* Alerts */
+
 .alert {
   padding: 14px 18px;
   border-radius: 8px;
@@ -157,22 +157,22 @@
   border: 1px solid #a2d18e;
 }
 .th-from {
-  background-color: #005f73; /* Teal-ish */
+  background-color: #005f73; 
   color: white;
 }
 
 .th-to {
-  background-color: #0a9396; /* Slightly lighter teal */
+  background-color: #0a9396; 
   color: white;
 }
 
 .th-reason {
-  background-color: #94d2bd; /* Pale green */
+  background-color: #94d2bd; 
   color: #003333;
 }
 
 .th-actions {
-  background-color: #ee9b00; /* Warm orange */
+  background-color: #ee9b00;
   color: white;
 }
 .loading-overlay {
@@ -201,9 +201,9 @@
     transform: rotate(360deg);
   }
 }
-/* Submit / Update button base style */
-button[type="submit"] {
-  background-color: #0077cc; /* your primary button color */
+
+/* button[type="submit"] {
+  background-color: #0077cc; 
   color: white;
   border: none;
   padding: 10px 20px;
@@ -214,7 +214,7 @@ button[type="submit"] {
   align-items: center;
 }
 
-/* Hover effect */
+
 button[type="submit"]:hover {
-  background-color: #005fa3; /* darker shade on hover */
-}
+  background-color: #005fa3;
+} */
