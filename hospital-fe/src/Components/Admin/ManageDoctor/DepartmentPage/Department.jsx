@@ -1,20 +1,20 @@
 
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { Table, Spinner, Alert, Row, Col, Button, Dropdown } from 'react-bootstrap';
-import { FaHeart, FaBrain, FaUserMd, FaSyringe, FaStethoscope } from 'react-icons/fa'; // Example icons
+import { Table, Alert, Row, Col, Button, Dropdown } from 'react-bootstrap';
+import { FaHeart, FaBrain, FaUserMd, FaSyringe, FaStethoscope, FaSpinner,FaUserPlus } from 'react-icons/fa';
 import './Department.css';
 import AdminNavbar from '../../Adminnavbar/AdminNavbar';
 import AdminSidebar from '../../Adminsidebar/AdminSidebar';
 
 const DepartmentPage = () => {
-  const { specialization } = useParams(); // Get the specialization from the URL
-  const navigate = useNavigate(); // Hook for navigation
+  const { specialization } = useParams();
+  const navigate = useNavigate();
   const [doctors, setDoctors] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [successMessage, setSuccessMessage] = useState('');
 
-  // Define a mapping for specialization icons
   const specializationIcons = {
     cardiology: <FaHeart />,
     neurology: <FaBrain />,
@@ -23,48 +23,33 @@ const DepartmentPage = () => {
     general: <FaStethoscope />,
   };
 
-  // Fetch doctors based on the specialization
   const fetchDoctors = () => {
-    setLoading(true); // Start loading when the component mounts or specialization changes
-    setError(null); // Clear previous errors
+    setLoading(true);
+    setError(null);
 
-    if (!specialization) {
-      setError('Specialization is required.');
-      setLoading(false);
-      return;
-    }
-
-    // Create FormData object to send doctorspecialization as multipart/form-data
     const formData = new FormData();
     formData.append('doctorspecialization', specialization);
 
-    // Fetch the doctors data for the specific specialization
     fetch('http://192.168.0.106:5000/doctors/getdoctorbyspc', {
       method: 'POST',
-      body: formData, // Send FormData as the request body
+      body: formData,
     })
-      .then((response) => response.json())
+      .then((res) => res.json())
       .then((data) => {
-        if (data.error) {
-          setError(data.error); // Show API error if returned
-        } else if (Array.isArray(data.data) && data.data.length === 0) {
-          setError('No doctors available for this specialization.');
-        } else {
-          setDoctors(data.data); // Set the fetched doctors data to the state
-        }
+        if (data.error) setError(data.error);
+        else setDoctors(data.data || []);
         setLoading(false);
       })
-      .catch((error) => {
-        setError('An error occurred while fetching doctors. Please try again.');
+      .catch(() => {
+        setError('An error occurred while fetching doctors.');
         setLoading(false);
       });
   };
 
   useEffect(() => {
-    fetchDoctors(); // Fetch doctors when component mounts or specialization changes
+    fetchDoctors();
   }, [specialization]);
 
-  // Function to handle updating leave status (approved or rejected)
   const handleLeaveStatusChange = (leaveId, newStatus) => {
     const formData = new FormData();
     formData.append('leaveid', leaveId);
@@ -74,24 +59,16 @@ const DepartmentPage = () => {
       method: 'POST',
       body: formData,
     })
-      .then((response) => response.json())
-      .then((data) => {
-        if (data.error) {
-          setError(data.error);
-        } else {
-          alert('Leave status updated successfully');
-          fetchDoctors(); // Refresh the data after status update
-        }
+      .then((res) => res.json())
+      .then(() => {
+        setSuccessMessage('✅ Leave status updated successfully!');
+        setTimeout(() => setSuccessMessage(''), 3000);
+        fetchDoctors();
       })
-      .catch((error) => {
-        setError('Failed to update leave status.');
-      });
+      .catch(() => setError('Failed to update leave status.'));
   };
 
-  // Function to handle the registration of a new doctor
-  const handleRegisterDoctor = () => {
-    navigate('/doctor-signup'); // Redirect to the doctor signup page
-  };
+  const handleRegisterDoctor = () => navigate('/doctor-signup');
 
   return (
     <div className="manage-doctors-container">
@@ -99,52 +76,56 @@ const DepartmentPage = () => {
       <div className="manage-doctors-content">
         <AdminSidebar />
         <div className="department-page-container">
-          <h2>
-            {specialization ? specialization.charAt(0).toUpperCase() + specialization.slice(1) : 'Doctors'} Doctors
+          <h2 className="page-title">
+            {specializationIcons[specialization]}{' '}
+            {specialization.charAt(0).toUpperCase() + specialization.slice(1)} Doctors
           </h2>
 
+          {successMessage && <div className="success-popup">{successMessage}</div>}
           {error && <Alert variant="danger">{error}</Alert>}
 
           {loading ? (
-            <Spinner animation="border" variant="primary" />
+            <div className="modal-overlay-doctor">
+              <div className="modal-content-doctor">
+                <FaSpinner className="spin large" />
+              </div>
+            </div>
           ) : (
             <>
               <Row className="mb-3">
                 <Col>
-                  <h3>
-                    {specializationIcons[specialization] || <FaStethoscope />} {specialization.charAt(0).toUpperCase() + specialization.slice(1)}
-                  </h3>
+                  {/* <Button variant="light" onClick={handleRegisterDoctor}>
+                    Register New Doctor <FaUserPlus/>
+                  </Button> */}
+                  <button
+                                className="register-btn"
+                                onClick={() => navigate('/doctor-signup')}
+                                aria-label="Register new doctor"
+                              >
+                                Register Doctor  <FaUserPlus/>
+                              </button>
                 </Col>
               </Row>
 
-              {/* Button to register a new doctor */}
-              <Row className="mb-3">
-                <Col>
-                  <Button variant="primary" onClick={handleRegisterDoctor}>
-                    Register New Doctor
-                  </Button>
-                </Col>
-              </Row>
-
-              <Table striped bordered hover>
-                <thead>
-                  <tr>
-                    <th>Full Name</th>
-                    <th>Specialization</th>
-                    <th>Qualification</th>
-                    <th>Experience (Years)</th>
-                    <th>Address</th>
-                    <th>DOB</th>
-                    <th>Email</th>
-                    <th>Phone</th>
-                    <th>Gender</th>
-                    <th>License Number</th>
-                    <th>Leave Status</th> {/* New Column for Leave Status */}
-                  </tr>
-                </thead>
-                <tbody>
-                  {doctors.length > 0 ? (
-                    doctors.map((doctor) => (
+              <div className="table-responsive">
+                <Table striped bordered hover className="doctor-table">
+                  <thead>
+                    <tr>
+                      <th>Full Name</th>
+                      <th>Specialization</th>
+                      <th>Qualification</th>
+                      <th>Experience (Years)</th>
+                      <th>Address</th>
+                      <th>DOB</th>
+                      <th>Email</th>
+                      <th>Phone</th>
+                      <th>Gender</th>
+                      <th>License Number</th>
+                      <th>Leave Status</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {doctors.map((doctor) => (
                       <tr key={doctor.uid}>
                         <td>{doctor.fullname}</td>
                         <td>{doctor.specialization}</td>
@@ -156,38 +137,19 @@ const DepartmentPage = () => {
                         <td>{doctor.phonenumber}</td>
                         <td>{doctor.gender}</td>
                         <td>{doctor.license_number}</td>
-
-                        {/* Display leave status for each doctor */}
                         <td>
-                          {doctor.leaves && doctor.leaves.length > 0 ? (
-                            doctor.leaves.map((leave, index) => (
-                              <div key={index} className="leave-details">
-                                <span>{`From: ${leave.leavefrom} To: ${leave.leaveto}`}</span>
-                                <br />
-                                <span>{`Reason: ${leave.reason}`}</span>
-                                <br />
-                                <span className={`leave-status ${leave.status}`}>
-                                  {`Status: ${leave.status}`}
-                                </span>
-                                <br />
-                                {/* Admin can change the leave status */}
+                          {doctor.leaves?.length ? (
+                            doctor.leaves.map((leave, i) => (
+                              <div key={i} className="leave-details">
+                                <div>{`From: ${leave.leavefrom} To: ${leave.leaveto}`}</div>
+                                <div>{`Reason: ${leave.reason}`}</div>
+                                <div className={`leave-status ${leave.status}`}>{`Status: ${leave.status}`}</div>
                                 {leave.status === 'pending' && (
                                   <Dropdown>
-                                    <Dropdown.Toggle variant="success" id="dropdown-basic">
-                                      Change Status
-                                    </Dropdown.Toggle>
-
+                                    <Dropdown.Toggle size="sm" variant="success">Change Status</Dropdown.Toggle>
                                     <Dropdown.Menu>
-                                      <Dropdown.Item
-                                        onClick={() => handleLeaveStatusChange(leave.leaveid, 'approved')}
-                                      >
-                                        Approve
-                                      </Dropdown.Item>
-                                      <Dropdown.Item
-                                        onClick={() => handleLeaveStatusChange(leave.leaveid, 'rejected')}
-                                      >
-                                        Reject
-                                      </Dropdown.Item>
+                                      <Dropdown.Item onClick={() => handleLeaveStatusChange(leave.leaveid, 'approved')}>Approve</Dropdown.Item>
+                                      <Dropdown.Item onClick={() => handleLeaveStatusChange(leave.leaveid, 'rejected')}>Reject</Dropdown.Item>
                                     </Dropdown.Menu>
                                   </Dropdown>
                                 )}
@@ -198,14 +160,10 @@ const DepartmentPage = () => {
                           )}
                         </td>
                       </tr>
-                    ))
-                  ) : (
-                    <tr>
-                      <td colSpan="11">No doctors available for this specialization.</td>
-                    </tr>
-                  )}
-                </tbody>
-              </Table>
+                    ))}
+                  </tbody>
+                </Table>
+              </div>
             </>
           )}
         </div>
@@ -215,4 +173,3 @@ const DepartmentPage = () => {
 };
 
 export default DepartmentPage;
-

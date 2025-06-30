@@ -1,323 +1,386 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { FaHeartbeat, FaBrain, FaStethoscope, FaSyringe, FaUserMd } from 'react-icons/fa';
-import { Table, Spinner, Button, Modal, Form } from 'react-bootstrap';
-import './ManageDoctor.css';
+import {
+  FaUserMd,
+  FaUserEdit,
+  FaTrashAlt,
+  FaUserPlus,
+  FaSpinner,
+  FaSave,
+  FaTimes,
+} from 'react-icons/fa';
+import { Table } from 'react-bootstrap';
 import AdminNavbar from '../Adminnavbar/AdminNavbar';
 import AdminSidebar from '../Adminsidebar/AdminSidebar';
+import './ManageDoctor.css';
 
-// Department data
-const departments = [
-  { name: 'Cardiology', icon: <FaHeartbeat size={40} />, color: '#FF5733' },
-  { name: 'Neurology', icon: <FaBrain size={40} />, color: '#33FF57' },
-  { name: 'Pediatrics', icon: <FaStethoscope size={40} />, color: '#3380FF' },
-  { name: 'Infectious Diseases', icon: <FaSyringe size={40} />, color: '#FFD700' },
-  { name: 'Orthopedics', icon: <FaUserMd size={40} />, color: '#6A5ACD' },
-];
+const iconMap = {
+  Cardiology: '❤️',
+  Neurology: '🧠',
+  Orthopedics: '💪',
+  Dermatology: '🧴',
+  Pediatrics: '👶',
+  Surgery: '🔪',
+};
+
+const colorMap = {
+  Cardiology: '#FFEBE8',
+  Neurology: '#E8FFEB',
+  Pediatrics: '#E8F0FF',
+  'Infectious Diseases': '#FFF9E8',
+  Orthopedics: '#F0E8FF',
+  default: '#f0f4f8',
+};
 
 const ManageDoctors = () => {
   const navigate = useNavigate();
   const [doctors, setDoctors] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [showEditModal, setShowEditModal] = useState(false);
-  const [editDoctorData, setEditDoctorData] = useState({
-    doctorId: '',
-    fullname: '',
-    specialization: '',
-    phonenumber: '',
-    yoe: '',
-    qualification: '',
-  });
+  const [departments, setDepartments] = useState([]);
+  const [filteredDoctors, setFilteredDoctors] = useState([]);
+  const [selectedDepartment, setSelectedDepartment] = useState(null);
+  const [showEditPopup, setShowEditPopup] = useState(false);
+  const [editDoctorData, setEditDoctorData] = useState(null);
 
-  // Fetch all doctors
   useEffect(() => {
-    fetch('http://192.168.0.106:5000/doctorops/getalldoctor')
-      .then((response) => response.json())
-      .then((data) => {
-        if (data && Array.isArray(data.data)) {
-          setDoctors(data.data);
+    setLoading(true);
+
+    fetch('http://192.168.0.106:5000/facilityops/getallfacility')
+      .then((res) => res.json())
+      .then((deptData) => {
+        if (deptData && deptData.data) {
+          setDepartments(deptData.data);
+          return fetch('http://192.168.0.106:5000/doctorops/getalldoctor');
         } else {
-          console.error("API response is not in the expected format:", data);
-          setDoctors([]);
+          throw new Error('Invalid department data');
         }
-        setLoading(false);
+      })
+      .then((res) => res.json())
+      .then((docData) => {
+        if (docData && Array.isArray(docData.data)) {
+          setDoctors(docData.data);
+          setFilteredDoctors(docData.data);
+        } else {
+          setDoctors([]);
+          setFilteredDoctors([]);
+        }
       })
       .catch((error) => {
-        console.error('Error fetching doctor data:', error);
+        console.error('Fetch error:', error);
         setDoctors([]);
-        setLoading(false);
-      });
+        setFilteredDoctors([]);
+      })
+      .finally(() => setLoading(false));
   }, []);
 
-  const handleDepartmentClick = (department) => {
-    navigate(`/doctors/${department.name}`);
+  const filterByDepartment = (deptName) => {
+    setSelectedDepartment(deptName);
+    if (!deptName) {
+      setFilteredDoctors(doctors);
+    } else {
+      const filtered = doctors.filter(
+        (doc) => doc.specialization.toLowerCase() === deptName.toLowerCase()
+      );
+      setFilteredDoctors(filtered);
+    }
   };
+
+  // const handleDepartmentClick = (department) => {
+  //   filterByDepartment(department.department_name);
+  // };
+const handleDepartmentClick = (department) => {
+  navigate(`/doctors/${department.department_name}`);
+};
 
   const handleEditClick = (doctor) => {
-    setEditDoctorData({
-      doctorId: doctor.uid,
-      fullname: doctor.fullname,
-      specialization: doctor.specialization,
-      phonenumber: doctor.phonenumber,
-      yoe: doctor.yoe,
-      qualification: doctor.qualification,
-    });
-    setShowEditModal(true);
+    setEditDoctorData(doctor);
+    setShowEditPopup(true);
   };
 
-  const handleDeleteClick = (doctorId) => {
-    const formData = new FormData();
-    formData.append('doctorid', doctorId);
+ 
 
-    fetch('http://192.168.0.106:5000/doctorsops/deletedoctor', {
-      method: 'POST',
-      body: formData,
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        if (data.message === 'Doctor deleted successfully') {
-          setDoctors(doctors.filter((doctor) => doctor.uid !== doctorId));
-        } else {
-          console.error("Error deleting doctor:", data);
-        }
-      })
-      .catch((error) => console.error('Error:', error));
-  };
+const [deleteSuccessMessage, setDeleteSuccessMessage] = useState('');
+const handleDeleteClick = (doctorId) => {
+  if (!window.confirm('Are you sure you want to delete this doctor?')) return;
 
-  const handleEditSubmit = (e) => {
-    e.preventDefault();
+  const formData = new FormData();
+  formData.append('doctorid', doctorId);
 
-    const formData = new FormData();
-    formData.append('doctorid', editDoctorData.doctorId);
-    formData.append('fullname', editDoctorData.fullname);
-    formData.append('specialization', editDoctorData.specialization);
-    formData.append('phonenumber', editDoctorData.phonenumber);
-    formData.append('yoe', editDoctorData.yoe);
-    formData.append('qualification', editDoctorData.qualification);
-
-    fetch('http://192.168.0.106:5000/doctors/updatedata', {
-      method: 'POST',
-      body: formData,
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        if (data.message === 'Doctor updated successfully') {
-          const updatedDoctors = doctors.map((doctor) =>
-            doctor.uid === editDoctorData.doctorId ? { ...doctor, ...editDoctorData } : doctor
-          );
-          setDoctors(updatedDoctors);
-          setShowEditModal(false);  // Close the modal after updating
-        } else {
-          console.error("Error updating doctor:", data);
-        }
-      })
-      .catch((error) => console.error('Error:', error));
-  };
-const [departments, setDepartments] = useState([]);
-
-useEffect(() => {
-  fetch('http://192.168.0.106:5000/facilityops/getallfacility')
+  fetch('http://192.168.0.106:5000/doctorsops/deletedoctor', {
+    method: 'POST',
+    body: formData,
+  })
     .then((res) => res.json())
     .then((data) => {
-      if (data && data.data) {
-        const departmentsWithIcons = data.data.map((dept, index) => ({
-          ...dept,
-          id: dept.department_name.toLowerCase(),     // lowercase id
-          name: dept.department_name,                 // display name
-          icon: assignDepartmentIcon(dept.department_name, index), // icon
-        }));
-        setDepartments(departmentsWithIcons);
+      if (data.message === 'Doctor profile deleted successfully') {
+        const updated = doctors.filter((doc) => doc.uid !== doctorId);
+        setDoctors(updated);
+        setFilteredDoctors(updated);
+
+        setDeleteSuccessMessage('✅ Doctor deleted successfully!');
+        setTimeout(() => setDeleteSuccessMessage(''), 3000); // Hide after 3s
+      } else {
+        alert('Failed to delete doctor');
       }
     })
-    .catch((err) => {
-      console.error('Error fetching departments:', err);
-    });
-}, []);
+    .catch(() => alert('Error deleting doctor'));
+};
 
-const assignDepartmentIcon = (name, index) => {
-  const iconMap = {
-    Cardiology: '❤️',
-    Neurology: '🧠',
-    Orthopedics: '💪',
-    Dermatology: '🧴',
-    Pediatrics: '👶',
-    Surgery: '🔪',
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setEditDoctorData((prev) => ({ ...prev, [name]: value }));
   };
-  // Fallback icons if not in map
-  const fallbackIcons = ['🏥', '🩺', '🔬', '💊', '📋', '🧬'];
-  return iconMap[name] || fallbackIcons[index % fallbackIcons.length];
+
+  
+const [successMessage, setSuccessMessage] = useState('');
+
+const handleEditSubmit = (e) => {
+  e.preventDefault();
+
+  const formData = new FormData();
+  formData.append('doctorid', editDoctorData.uid);
+  formData.append('fullname', editDoctorData.fullname);
+  formData.append('specialization', editDoctorData.specialization);
+  formData.append('phonenumber', editDoctorData.phonenumber);
+  formData.append('yoe', editDoctorData.yoe);
+  formData.append('qualification', editDoctorData.qualification);
+
+  fetch('http://192.168.0.106:5000/doctors/updatedata', {
+    method: 'POST',
+    body: formData,
+  })
+    .then((res) => res.json())
+    .then((data) => {
+      if (data.message === 'Doctor details updated successfully') {
+        const updated = doctors.map((doc) =>
+          doc.uid === editDoctorData.uid ? data.data : doc
+        );
+        setDoctors(updated);
+        setFilteredDoctors(updated);
+        setSuccessMessage('Doctor data updated successfully.');
+
+        setTimeout(() => {
+          setShowEditPopup(false);
+          setSuccessMessage('');
+        }, 2000); // Closes the popup after 2 seconds
+      } else {
+        alert('Failed to update doctor');
+      }
+    })
+    .catch(() => alert('Error updating doctor'));
 };
 
   return (
-    <div className="manage-doctors-container">
+    <div className="manage-doctors-wrapper">
       <AdminNavbar />
       <div className="manage-doctors-content">
         <AdminSidebar />
-        <div className="manage-doctors-container">
-          <h2>Manage Doctors</h2>
+        <main className="main-section">
+          <div className="background-overlay" />
+
+          <div className="header-section">
+            <div className="header-icon-text">
+              {/* <FaUserPlus size={40} color="#4e79a7" /> */}
+              <h1>Manage Doctor </h1>
+            </div>
+            <button
+              className="register-btn"
+              onClick={() => navigate('/doctor-signup')}
+              aria-label="Register new doctor"
+            >
+              Register Doctor  <FaUserPlus/>
+            </button>
+          </div>
+
+          <div className="departments-container">
+            {loading ? (
+              <div className="modal-overlay-doctor">
+                <div className="modal-content-doctor">
+                  <FaSpinner className="spin large" />
+                </div>
+              </div>
+            ) : departments.length === 0 ? (
+              <p>No departments available</p>
+            ) : (
+              departments.map((dept) => (
+                <div
+                  key={dept.department_name}
+                  className={`department-card ${
+                    selectedDepartment === dept.department_name ? 'selected' : ''
+                  }`}
+                  onClick={() => handleDepartmentClick(dept)}
+                  role="button"
+                  tabIndex={0}
+                  onKeyDown={(e) => e.key === 'Enter' && handleDepartmentClick(dept)}
+                  style={{
+                    backgroundColor:
+                      selectedDepartment === dept.department_name
+                        ? '#4e79a7'
+                        : colorMap[dept.department_name] || colorMap.default,
+                    color: selectedDepartment === dept.department_name ? '#fff' : '#333',
+                  }}
+                >
+                  <div className="dept-icon">
+                    {iconMap[dept.department_name] || (
+                      <FaUserMd
+                        size={30}
+                        color={selectedDepartment === dept.department_name ? '#fff' : '#888'}
+                      />
+                    )}
+                  </div>
+                  <span>{dept.department_name}</span>
+                </div>
+              ))
+            )}
+          </div>
+
+          <section className="doctors-section">
+            <h2>All Doctors</h2>
+
+            {loading ? (
+              <div className="modal-overlay-doctor">
+                <div className="modal-content-doctor">
+                  <FaSpinner className="spin large" />
+                </div>
+              </div>
+            ) : filteredDoctors.length === 0 ? (
+              <p>No doctors found.</p>
+            ) : (
+              <div className="table-responsive">
+                <Table striped bordered hover responsive className="custom-doctors-table">
+                  <thead className="table-header">
+                    <tr>
+                      <th>Name</th>
+                      <th>Specialization</th>
+                      <th>Contact</th>
+                      <th>Experience</th>
+                      <th>Qualification</th>
+                      <th>Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {filteredDoctors.map((doctor) => (
+                      <tr key={doctor.uid}>
+                        <td>{doctor.fullname}</td>
+                        <td>{doctor.specialization}</td>
+                        <td>{doctor.phonenumber}</td>
+                        <td>{doctor.yoe} years</td>
+                        <td>{doctor.qualification}</td>
+                        <td className="actions-column">
+                          <FaUserEdit
+                            className="action-icon edit-icon"
+                            title="Edit"
+                            onClick={() => handleEditClick(doctor)}
+                          />
+                          <FaTrashAlt
+                            className="action-icon delete-icon"
+                            title="Delete"
+                            onClick={() => handleDeleteClick(doctor.uid)}
+                          />
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                  
+                </Table>
+              </div>
+            )}
+          </section>
+        </main>
 
         
- <div className="department-icons-section">
-      {loading ? (
-        <p>Loading departments...</p> // 👈 You can replace this with a spinner
-      ) : departments.length === 0 ? (
-        <p>No departments available</p>
-      ) : (
-        departments.map((department) => (
-          <div
-            key={department.id}
-            className="department-icon-item"
-            onClick={() => handleDepartmentClick(department)}
-            style={{ borderColor: '#ccc' }}
-          >
-            <div className="department-icon-wrapper" style={{ fontSize: '2rem' }}>
-              {department.icon}
-            </div>
-            <h4>{department.name}</h4>
-          </div>
-        ))
-      )}
-      </div>
+        {showEditPopup && (
+  <div className="popup-overlay" onClick={() => setShowEditPopup(false)}>
+    <div
+      className="popup-content"
+      onClick={(e) => e.stopPropagation()}
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="editDoctorTitle"
+    >
+      <h3 id="editDoctorTitle">Edit Doctor</h3>
 
-          {/* Doctors Table */}
-          <h3>All Doctors</h3>
-          {loading ? (
-            <Spinner animation="border" variant="primary" />
-          ) : (
-            <div className="table-responsive-wrapper">
-            <Table striped bordered hover className="doctors-table">
-              <thead>
-                <tr>
-                  <th>Name</th>
-                  <th>Specialization</th>
-                  <th>Contact</th>
-                  <th>Experience</th>
-                  <th>Qualification</th>
-                  <th>Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                {doctors.length > 0 ? (
-                  doctors.map((doctor) => (
-                    <tr key={doctor.uid}>
-                      <td>{doctor.fullname}</td>
-                      <td>{doctor.specialization}</td>
-                      <td>{doctor.phonenumber}</td>
-                      <td>{doctor.yoe} years</td>
-                      <td>{doctor.qualification}</td>
-                      <td>
-                        <Button
-                          variant="warning"
-                          onClick={() => handleEditClick(doctor)}
-                          style={{ marginRight: '10px' }}
-                        >
-                          Edit
-                        </Button>
-                        <Button variant="danger" onClick={() => handleDeleteClick(doctor.uid)}>
-                          Delete
-                        </Button>
-                      </td>
-                    </tr>
-                  ))
-                ) : (
-                  <tr>
-                    <td colSpan="6">No doctors available.</td>
-                  </tr>
-                )}
-              </tbody>
-            
-
-            </Table>
-            </div>
-          )}
+      {successMessage && (
+        <div className="success-message">
+          ✅ {successMessage}
         </div>
-      </div>
-      
+      )}
 
-      {/* Edit Doctor Modal */}
-      <Modal show={showEditModal} onHide={() => setShowEditModal(false)}>
-        {/* Custom Header with Close Button */}
-        <Modal.Header
-          style={{
-            backgroundColor: '#5cb85c',
-            color: 'white',
-            borderBottom: '2px solid #5cb85c',
-          }}
-        >
-          <Modal.Title>Edit Doctor</Modal.Title>
-          {/* Custom Close Button */}
-          <button
-            type="button"
-            className="close"
-            onClick={() => setShowEditModal(false)} // Close the modal when clicked
-            style={{
-              color: 'white',
-              fontSize: '1.5rem',
-              padding: '0.5rem',
-              margin: '0.5rem',
-            }}
-            aria-label="Close"
-          >
-            <span aria-hidden="true">&times;</span> {/* This creates the '×' symbol */}
-          </button>
-        </Modal.Header>
+      <form onSubmit={handleEditSubmit} className="edit-form">
+        <label htmlFor="fullname">Full Name</label>
+                <input
+                  type="text"
+                  name="fullname"
+                  id="fullname"
+                  value={editDoctorData.fullname}
+                  onChange={handleInputChange}
+                  required
+                />
 
-        <Modal.Body>
-          <Form onSubmit={handleEditSubmit}>
-            <Form.Group controlId="fullname">
-              <Form.Label>Full Name</Form.Label>
-              <Form.Control
-                type="text"
-                value={editDoctorData.fullname}
-                onChange={(e) => setEditDoctorData({ ...editDoctorData, fullname: e.target.value })}
-                required
-              />
-            </Form.Group>
-            <Form.Group controlId="specialization">
-              <Form.Label>Specialization</Form.Label>
-              <Form.Control
-                type="text"
-                value={editDoctorData.specialization}
-                onChange={(e) => setEditDoctorData({ ...editDoctorData, specialization: e.target.value })}
-                required
-              />
-            </Form.Group>
-            <Form.Group controlId="phonenumber">
-              <Form.Label>Contact</Form.Label>
-              <Form.Control
-                type="text"
-                value={editDoctorData.phonenumber}
-                onChange={(e) => setEditDoctorData({ ...editDoctorData, phonenumber: e.target.value })}
-                required
-              />
-            </Form.Group>
-            <Form.Group controlId="yoe">
-              <Form.Label>Experience (Years)</Form.Label>
-              <Form.Control
-                type="number"
-                value={editDoctorData.yoe}
-                onChange={(e) => setEditDoctorData({ ...editDoctorData, yoe: e.target.value })}
-                required
-              />
-            </Form.Group>
-            <Form.Group controlId="qualification">
-              <Form.Label>Qualification</Form.Label>
-              <Form.Control
-                type="text"
-                value={editDoctorData.qualification}
-                onChange={(e) => setEditDoctorData({ ...editDoctorData, qualification: e.target.value })}
-                required
-              />
-            </Form.Group>
-            <Button variant="primary" type="submit">
-              Save Changes
-            </Button>
-          </Form>
-        </Modal.Body>
-      </Modal>
+                <label htmlFor="specialization">Specialization</label>
+                <input
+                  type="text"
+                  name="specialization"
+                  id="specialization"
+                  value={editDoctorData.specialization}
+                  onChange={handleInputChange}
+                  required
+                />
+
+                <label htmlFor="phonenumber">Contact</label>
+                <input
+                  type="text"
+                  name="phonenumber"
+                  id="phonenumber"
+                  value={editDoctorData.phonenumber}
+                  onChange={handleInputChange}
+                  required
+                />
+
+                <label htmlFor="yoe">Experience (Years)</label>
+                <input
+                  type="number"
+                  name="yoe"
+                  id="yoe"
+                  min="0"
+                  value={editDoctorData.yoe}
+                  onChange={handleInputChange}
+                  required
+                />
+
+                <label htmlFor="qualification">Qualification</label>
+                <input
+                  type="text"
+                  name="qualification"
+                  id="qualification"
+                  value={editDoctorData.qualification}
+                  onChange={handleInputChange}
+                  required
+                />
+
+                <div className="popup-buttons">
+                  <button type="submit" className="btn btn-primary">
+                    <FaSave />
+                  </button>
+                  <button
+                    type="button"
+                    className="btn btn-secondary"
+                    onClick={() => setShowEditPopup(false)}
+                  >
+                    <FaTimes />
+                  </button>
+                </div>
+      </form>
+     
+
     </div>
-    
+  </div>
+)}
+
+      </div>
+    </div>
   );
 };
 
 export default ManageDoctors;
+
