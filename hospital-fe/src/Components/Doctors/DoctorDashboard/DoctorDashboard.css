@@ -1,216 +1,206 @@
-
-.dashboard-container {
-  display: flex;
-  flex-direction: column;
-  height: 100vh;
-  background-color: #f0f2f5;
+/* Container and Layout */
+.dashboard-container-doctor {
+  position: relative;
+  background-image: url('../../Assests/background.jpg');
+  background-size: cover;
+  background-position: center;
+  min-height: 100vh;
+  z-index: 0;
 }
-
-
 .dashboard-content {
   display: flex;
-  flex-grow: 1;
+  /* width: 100%; */
   padding: 20px;
-  margin-left: 250px; 
-  
+  margin-left: 250px;
   transition: margin-left 0.3s ease;
 }
-
-
 .doctor-dashboard {
   width: 100%;
+  max-width: 1200px;
+  margin: 60px auto 30px;
   padding: 30px;
-  background-color: #ffffff;
-  border-radius: 10px;
-  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.12);
-}
-
-h2 {
-  font-size: 26px;
-  color: #333333;
-  margin-bottom: 20px;
-  font-weight: 600;
-}
-
-
-.mb-4 {
-  margin-bottom: 25px;
-}
-
-
-.card {
+  background: #ffffffee;
   border-radius: 12px;
-  box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.08);
-  background-color: #f8f9fa;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.12);
 }
+.doctor-dashboard h2 {
+  font-size: 26px;
+  color: #333;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+.specialization {
+  font-size: 18px;
+  color: #555;
+  margin-bottom: 20px;
+}
+
+/* Card Styling */
+.card {
+  border-radius: 14px;
+  background: #fff;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.06);
+  overflow: hidden;
+  transition: transform 0.2s ease;
+}
+.card:hover {
+  transform: translateY(-4px);
+}
+
+/* Colored Headers */
+.appointment-card .card-header { background: linear-gradient(90deg,#6a11cb,#2575fc); }
+.patient-card .card-header { background: linear-gradient(90deg,#11998e,#38ef7d); }
+.medical-record-card .card-header { background: linear-gradient(90deg,#ff6a00,#ee0979); }
+.leave-card .card-header { background: linear-gradient(90deg,#007991,#78ffd6); }
 
 .card-header {
-  background-color: #297771;
-  color: white;
+  color: #fff;
   font-weight: 600;
   font-size: 18px;
   display: flex;
   align-items: center;
-  padding: 10px 20px;
+  padding: 12px 24px;
 }
+.card-header svg { margin-right: 12px; }
+.card-body { padding: 20px; }
 
-.card-header svg {
-  margin-right: 15px;
-}
-
-.card-body {
-  padding: 15px;
-}
-
+/* List items */
 .appointment-card .list-group-item,
 .patient-card .list-group-item,
-.medical-record-card .list-group-item {
-  background-color: #ffffff;
-  border: 1px solid #e5e5e5;
-  padding: 12px;
-  font-size: 16px;
-  color: #555555;
+.medical-record-card .list-group-item,
+.leave-card .list-group-item {
+  background: #fdfdfd;
+  border: 1px solid #e0e0e0;
+  padding: 14px 20px;
+  border-radius: 8px;
+  margin-bottom: 10px;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  font-size: 16px;
+  color: #333;
+  transition: background-color .2s;
 }
-
 .appointment-card .list-group-item:hover,
 .patient-card .list-group-item:hover,
-.medical-record-card .list-group-item:hover {
-  background-color: #f1f1f1;
+.medical-record-card .list-group-item:hover,
+.leave-card .list-group-item:hover {
+  background: #f4f7fa;
 }
 
+/* Button Actions */
 .appointment-card .float-right,
 .patient-card .float-right {
-  background-color: #28a745;
-  color: white;
+  background: #17a2b8;
+  color: #fff;
   border: none;
-  padding: 6px 15px;
+  padding: 6px 14px;
   border-radius: 5px;
+  font-size: 14px;
+  transition: background .2s;
 }
-
 .appointment-card .float-right:hover,
 .patient-card .float-right:hover {
-  background-color: #218838;
+  background: #138496;
 }
 
+/* Leave Card */
+.leave-card {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05);
+}
+.leave-card .list-group-item:last-child { border-bottom: none; }
 
-.container {
-  max-width: 100%;
-  margin-left: 30px;
-  margin-right: 30px;
+/* Notification Icon & Summary */
+.notification-icon {
+  cursor: pointer;
+  color: #4a6a8a;
+  transition: color .3s;
+}
+.notification-icon:hover,
+.notification-icon:focus-visible { color: #007bff; }
+
+.summary-panel {
+  position: absolute;
+  top: 60px;
+  right: 20px;
+  width: 320px;
+  max-height: 350px;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.15);
+  overflow-y: auto;
 }
 
+/* Icon Row (Action Buttons) */
+.icon-card-row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 30px;
+  padding: 20px 0;
+  overflow: hidden;
+}
+.icon-card {
+  width: 100px;
+  height: 100px;
+  background: #007bff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  margin-bottom: 10px;
+  cursor: pointer;
+  transition: transform .2s, box-shadow .2s;
+}
+.icon-card:hover {
+  transform: scale(1.1);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+}
+.icon-card svg { font-size: 1.8rem; color: #fff; }
+.icon-card p {
+  margin-top: 0px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: #333;
+  position: absolute;
+  top: 110%;
+  white-space: nowrap;
+}
 
+/* Hide scrollbar */
+.icon-card-row::-webkit-scrollbar { display: none; }
+.icon-card-row { -ms-overflow-style: none; scrollbar-width: none; }
+
+/* Responsive Breakpoints */
 @media (max-width: 991px) {
-  .dashboard-content {
-    margin-left: 200px; 
-  }
+  .dashboard-content { margin-left: 200px; }
+  .icon-card-row { gap: 20px; }
 }
 
 @media (max-width: 767px) {
-  .dashboard-content {
-    margin-left: 0;
-    padding: 10px;
-  }
-
-  .doctor-dashboard {
-    padding: 15px;
-  }
-
+  .dashboard-content { margin-left: 0; padding: 15px; }
+  .doctor-dashboard { padding: 20px; margin-top: 40px; }
   .appointment-card .list-group-item,
-  .patient-card .list-group-item,
-  .medical-record-card .list-group-item {
+  .patient-card .list-group-item {
     flex-direction: column;
     align-items: flex-start;
   }
-
   .appointment-card .float-right,
   .patient-card .float-right {
-    margin-top: 10px;
     width: 100%;
+    margin-top: 10px;
     text-align: center;
   }
 }
 
 @media (max-width: 480px) {
-  h2 {
-    font-size: 22px;
-  }
-
-  .card-header {
-    font-size: 16px;
-    padding: 8px 15px;
-  }
-
-  .appointment-card .list-group-item,
-  .patient-card .list-group-item,
-  .medical-record-card .list-group-item {
-    font-size: 14px;
-  }
-} 
-/* Leave Status Card Styling */
-.leave-card {
-  background-color: #ffffff;
-  border: none;
-  border-radius: 10px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
-  margin-bottom: 20px;
-}
-
-.leave-card .card-header {
-  background-color: #297771;
-  color: #ffffff;
-  font-weight: 600;
-  font-size: 16px;
-  padding: 12px 20px;
-  border-bottom: none;
-  border-radius: 10px 10px 0 0;
-}
-
-.leave-card .list-group-item {
-  font-size: 15px;
-  padding: 12px 20px;
-  border: none;
-  border-bottom: 1px solid #f1f1f1;
-}
-
-.leave-card .list-group-item:last-child {
-  border-bottom: none;
-}
-
-/* Responsive Styling */
-@media (max-width: 768px) {
-  .leave-card .card-header {
-    font-size: 15px;
-    padding: 10px 16px;
-  }
-
-  .leave-card .list-group-item {
-    font-size: 14px;
-    padding: 10px 16px;
-  }
-}
-
-@media (max-width: 576px) {
-  .leave-card {
-    margin-left: 10px;
-    margin-right: 10px;
-  }
-
-  .leave-card .card-header {
-    font-size: 14px;
-    text-align: center;
-  }
-
-  .leave-card .list-group-item {
-    font-size: 13px;
-    text-align: center;
-  }
-}
-.leave-from-item {
-  background-color: #000;
-  color: black;
-  font-weight: 500;
+  h2 { font-size: 22px; text-align: center; }
+  .specialization { font-size: 16px; text-align: center; }
+  .card-header { font-size: 16px; padding: 10px 16px; }
+  .icon-card { width: 80px; height: 80px; }
+  .icon-card svg { font-size: 1.6rem; }
+  .icon-card p { top: 105%; font-size: 0.85rem; }
 }
