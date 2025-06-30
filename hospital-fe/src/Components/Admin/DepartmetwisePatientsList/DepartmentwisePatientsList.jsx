@@ -1,22 +1,29 @@
+
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { Table, Spinner, Alert, Row, Col } from 'react-bootstrap';
-import { FaHeart, FaBrain, FaUserMd, FaSyringe, FaStethoscope } from 'react-icons/fa';
+import { Table, Alert, Row, Col } from 'react-bootstrap';
+import { FaHeart, FaBrain, FaUserMd, FaSyringe, FaStethoscope, FaHospitalUser, FaSpinner } from 'react-icons/fa';
 import AdminNavbar from '../Adminnavbar/AdminNavbar';
 import AdminSidebar from '../Adminsidebar/AdminSidebar';
-import './DepartmentwisePatientList.css'
-
+import './DepartmentwisePatientList.css';
 
 const PatientListPage = () => {
-  const { specialization } = useParams(); // Get the specialization from the URL
-  const navigate = useNavigate(); // Hook for navigation
+  const { specialization } = useParams();
+  const navigate = useNavigate();
   const [patients, setPatients] = useState([]);
-  const [doctorDetails, setDoctorDetails] = useState([]); // Holds doctor details (name and appointment time)
-  const [admissionDetails, setAdmissionDetails] = useState({}); // Holds admission details (admit status, room number, etc.)
+  const [doctorDetails, setDoctorDetails] = useState([]);
+  const [admissionDetails, setAdmissionDetails] = useState({});
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
 
-  // Define a mapping for specialization icons
+  // Update isMobile on resize
+  useEffect(() => {
+    const handleResize = () => setIsMobile(window.innerWidth <= 768);
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
   const specializationIcons = {
     cardiology: <FaHeart />,
     neurology: <FaBrain />,
@@ -25,120 +32,108 @@ const PatientListPage = () => {
     general: <FaStethoscope />,
   };
 
-  // Fetch patients based on the specialization
+  // Fetch patients
   const fetchPatients = () => {
-    setLoading(true); // Start loading when the component mounts or specialization changes
-    setError(null); // Clear previous errors
-
+    setLoading(true);
+    setError(null);
     if (!specialization) {
       setError('Specialization is required.');
       setLoading(false);
       return;
     }
-
-    // Create FormData object to send doctorspecialization as multipart/form-data
     const formData = new FormData();
     formData.append('doctorspecialization', specialization);
-
-    // Fetch the patients data for the specific specialization
     fetch('http://192.168.0.106:5000/patientview', {
       method: 'POST',
-      body: formData, // Send FormData as the request body
+      body: formData,
     })
-      .then((response) => response.json())
+      .then((res) => res.json())
       .then((data) => {
         if (data.error) {
-          setError(data.error); // Show API error if returned
+          setError(data.error);
+          setPatients([]);
         } else if (Array.isArray(data.patients) && data.patients.length === 0) {
           setError('No patients available for this specialization.');
+          setPatients([]);
         } else {
-          setPatients(data.patients); // Set the fetched patients data to the state
+          setPatients(data.patients);
+          setError(null);
         }
         setLoading(false);
       })
-      .catch((error) => {
+      .catch(() => {
         setError('An error occurred while fetching patients. Please try again.');
         setLoading(false);
       });
   };
 
-  // Fetch doctor details (fullname and appointment_time) based on doctor ID
+  // Fetch doctor details
   const fetchDoctorDetails = (doctorIds) => {
     if (doctorIds.length === 0) return;
-
     Promise.all(
       doctorIds.map((doctorId) => {
         const formData = new FormData();
-        formData.append('doctorid', doctorId); // Send doctorid
-
+        formData.append('doctorid', doctorId);
         return fetch('http://192.168.0.106:5000/doctors/getbyid', {
           method: 'POST',
           body: formData,
         })
-          .then((response) => response.json())
+          .then((res) => res.json())
           .then((data) => ({
-            fullname: data.data?.fullname || 'Unknown', // Doctor's full name
-            appointment_time: data.data?.appointment_time || 'Not available', // Doctor's appointment time
+            fullname: data.data?.fullname || 'Unknown',
+            appointment_time: data.data?.appointment_time || 'Not available',
           }));
       })
     )
-      .then((doctorData) => setDoctorDetails(doctorData))
-      .catch((error) => console.error('Error fetching doctor details:', error));
+      .then(setDoctorDetails)
+      .catch((err) => console.error('Error fetching doctor details:', err));
   };
 
-  // Fetch admission details based on patient UID (used as patientid)
+  // Fetch admission details
   const fetchAdmissionDetails = (patientUids) => {
     Promise.all(
-      patientUids.map((patientUid) => {
+      patientUids.map((uid) => {
         const formData = new FormData();
-        formData.append('patientid', patientUid); // Send the UID (which is used as patientid)
-
+        formData.append('patientid', uid);
         return fetch('http://192.168.0.106:5000/ops/patientadmitstatus', {
           method: 'POST',
           body: formData,
         })
-          .then((response) => response.json())
+          .then((res) => res.json())
           .then((data) => ({
-            patientUid,
+            patientUid: uid,
             admitstatus: data.data?.admitstatus || 'Not admitted',
             room_number: data.data?.room_number || 'Not available',
             room_type: data.data?.room_type || 'Not available',
             wardname: data.data?.wardname || 'Not available',
             wardemail: data.data?.wardemail || 'Not available',
           }))
-          .catch((error) => {
-            console.error('Error fetching admission details for patient UID:', patientUid);
-            return { patientUid, error: 'Error fetching admission details' };
-          });
+          .catch(() => ({ patientUid: uid, error: 'Error fetching admission details' }));
       })
     )
-      .then((admissionData) => {
-        const admissionDetailsObj = admissionData.reduce((acc, detail) => {
-          acc[detail.patientUid] = detail;
-          return acc;
-        }, {});
-        setAdmissionDetails(admissionDetailsObj);
+      .then((details) => {
+        const obj = {};
+        details.forEach((detail) => {
+          obj[detail.patientUid] = detail;
+        });
+        setAdmissionDetails(obj);
       })
-      .catch((error) => {
-        console.error('Error fetching admission details:', error);
-      });
+      .catch((err) => console.error('Error fetching admission details:', err));
   };
 
   useEffect(() => {
-    fetchPatients(); // Fetch patients when component mounts or specialization changes
+    fetchPatients();
   }, [specialization]);
 
   useEffect(() => {
     if (patients.length > 0) {
-      const patientUids = patients.map((patient) => patient.uid); // Use 'uid' as the patient ID from patientview API
-      fetchAdmissionDetails(patientUids); // Fetch admission details for each patient using 'uid'
-    }
-  }, [patients]);
-
-  useEffect(() => {
-    if (patients.length > 0) {
-      const doctorIds = [...new Set(patients.map((patient) => patient.doctorid))];
-      fetchDoctorDetails(doctorIds); // Fetch doctor details based on doctorIds
+      const patientUids = patients.map((p) => p.uid);
+      fetchAdmissionDetails(patientUids);
+      const doctorIds = [...new Set(patients.map((p) => p.doctorid))];
+      fetchDoctorDetails(doctorIds);
+    } else {
+      setDoctorDetails([]);
+      setAdmissionDetails({});
     }
   }, [patients]);
 
@@ -147,26 +142,102 @@ const PatientListPage = () => {
       <AdminNavbar />
       <div className="manage-patients-content">
         <AdminSidebar />
+
+        {/* Patient Admission Button */}
+        <button
+          className="patient-admission-btn"
+          onClick={() => navigate('/patient-admission')}
+          aria-label="Go to Patient Admission Page"
+          type="button"
+        >
+          <FaHospitalUser size={20} />
+          Patient Admission
+        </button>
+
         <div className="patient-list-page-container">
           <h2>
-            {specialization ? specialization.charAt(0).toUpperCase() + specialization.slice(1) : 'Patients'} List
+            {specialization
+              ? specialization.charAt(0).toUpperCase() + specialization.slice(1)
+              : 'Patients'}{' '}
+            List
           </h2>
 
           {error && <Alert variant="danger">{error}</Alert>}
 
           {loading ? (
-            <Spinner animation="border" variant="primary" />
+            <div className="modal-overlay-doctor">
+              <div className="modal-content-doctor">
+                <FaSpinner className="spin large" />
+              </div>
+            </div>
+          ) : isMobile ? (
+            // Mobile card view
+            <div className="patient-cards-container">
+              {patients.length === 0 ? (
+                <p>No patients available for this specialization.</p>
+              ) : (
+                patients.map((patient, i) => {
+                  const admissionData = admissionDetails[patient.uid] || {};
+                  return (
+                    <div className="patient-card" key={i}>
+                      <h4>
+                        {patient.firstname} {patient.lastname}
+                      </h4>
+                      <p>
+                        <strong>Age:</strong> {patient.age}
+                      </p>
+                      <p>
+                        <strong>Gender:</strong> {patient.gender}
+                      </p>
+                      <p>
+                        <strong>Blood Group:</strong> {patient.bloodgroup}
+                      </p>
+                      <p>
+                        <strong>Phone:</strong> {patient.phonenumber}
+                      </p>
+                      <p>
+                        <strong>Email:</strong> {patient.email}
+                      </p>
+                      <p>
+                        <strong>Doctor Name:</strong>{' '}
+                        {doctorDetails[i]?.fullname || 'Unknown'}
+                      </p>
+                      <p>
+                        <strong>Appointment Time:</strong> {patient.appointment_time}
+                      </p>
+                      <p>
+                        <strong>Admission Status:</strong>{' '}
+                        {admissionData.admitstatus || 'Not available'}
+                      </p>
+                      <p>
+                        <strong>Room Number:</strong> {admissionData.room_number || 'N/A'}
+                      </p>
+                      <p>
+                        <strong>Room Type:</strong> {admissionData.room_type || 'N/A'}
+                      </p>
+                      <p>
+                        <strong>Ward Name:</strong> {admissionData.wardname || 'N/A'}
+                      </p>
+                      <p>
+                        <strong>Ward Email:</strong> {admissionData.wardemail || 'N/A'}
+                      </p>
+                    </div>
+                  );
+                })
+              )}
+            </div>
           ) : (
+            // Desktop/table view
             <>
               <Row className="mb-3">
                 <Col>
                   <h3 style={{ marginLeft: '150px' }}>
-                    {specializationIcons[specialization] || <FaStethoscope />} {specialization.charAt(0).toUpperCase() + specialization.slice(1)}
+                    {specializationIcons[specialization] || <FaStethoscope />}{' '}
+                    {specialization.charAt(0).toUpperCase() + specialization.slice(1)}
                   </h3>
                 </Col>
               </Row>
-
-              <Table striped bordered hover>
+              <Table striped bordered hover responsive>
                 <thead>
                   <tr>
                     <th>Patient Full Name</th>
@@ -185,18 +256,24 @@ const PatientListPage = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {patients.length > 0 ? (
-                    patients.map((patient, index) => {
-                      const admissionData = admissionDetails[patient.uid] || {}; // Use 'uid' as the patient ID
+                  {patients.length === 0 ? (
+                    <tr>
+                      <td colSpan="13">No patients available for this specialization.</td>
+                    </tr>
+                  ) : (
+                    patients.map((patient, i) => {
+                      const admissionData = admissionDetails[patient.uid] || {};
                       return (
-                        <tr key={index}>
-                          <td>{patient.firstname} {patient.lastname}</td>
+                        <tr key={i}>
+                          <td>
+                            {patient.firstname} {patient.lastname}
+                          </td>
                           <td>{patient.age}</td>
                           <td>{patient.gender}</td>
                           <td>{patient.bloodgroup}</td>
                           <td>{patient.phonenumber}</td>
                           <td>{patient.email}</td>
-                          <td>{doctorDetails[index]?.fullname || 'Unknown'}</td>
+                          <td>{doctorDetails[i]?.fullname || 'Unknown'}</td>
                           <td>{patient.appointment_time}</td>
                           <td>{admissionData.admitstatus || 'Not available'}</td>
                           <td>{admissionData.room_number || 'Not available'}</td>
@@ -206,10 +283,6 @@ const PatientListPage = () => {
                         </tr>
                       );
                     })
-                  ) : (
-                    <tr>
-                      <td colSpan="13">No patients available for this specialization.</td>
-                    </tr>
                   )}
                 </tbody>
               </Table>

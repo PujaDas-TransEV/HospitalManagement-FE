@@ -1,474 +1,371 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom'; // Import useNavigate for navigation
-import './ManagePatient.css';
+import { useNavigate } from 'react-router-dom';
+import {
+  FaUserEdit,
+  FaTrashAlt,
+  FaUserPlus,
+  FaSpinner,
+  FaTimes,
+  FaSave,
+} from 'react-icons/fa';
+import { Table } from 'react-bootstrap';
 import AdminNavbar from '../Adminnavbar/AdminNavbar';
 import AdminSidebar from '../Adminsidebar/AdminSidebar';
-import { Table, Button } from 'react-bootstrap';
+import './ManagePatient.css';
 
-// Sample Data (will be replaced with data from the API)
-const departments = [
-  { name: 'Cardiology', icon: '❤️' },
-  { name: 'Neurology', icon: '🧠' },
-  { name: 'Orthopedics', icon: '🦴' },
-  { name: 'Dermatology', icon: '🌟' },
-  { name: 'Pediatrics', icon: '🌟' },
-];
+const iconMap = {
+  Cardiology: '❤️',
+  Neurology: '🧠',
+  Orthopedics: '🦴',
+  Dermatology: '🧴',
+  Pediatrics: '👶',
+  Surgery: '🔪',
+};
 
+const colorMap = {
+  Cardiology: '#FFEBE8',
+  Neurology: '#E8FFEB',
+  Orthopedics: '#F0E8FF',
+  Dermatology: '#FFF0F0',
+  Pediatrics: '#E8F0FF',
+  default: '#f0f4f8',
+};
 
-
-function PatientManagement() {
+const ManagePatient = () => {
+  const navigate = useNavigate();
   const [patients, setPatients] = useState([]);
-  const [newPatient, setNewPatient] = useState({
-    firstname: '',
-    lastname: '',
-    gender: '',
-    dob: '',
-    phone: '',
-    email: '',
-    department: '',
-    doctor: '',
-    address: '',
-    age: '',
-    bloodgroup: '',
-    height: '',
-    weight: '',
-    appointments: [],
-  });
+  const [departments, setDepartments] = useState([]);
+  const [selectedDept, setSelectedDept] = useState(null);
+  const [loading, setLoading] = useState(true);
   const [editPatient, setEditPatient] = useState(null);
-  const [selectedDepartment, setSelectedDepartment] = useState(null);
-  const [showAddPatientForm, setShowAddPatientForm] = useState(false);
-
-  const navigate = useNavigate(); // Set up the navigate hook
+  const [formData, setFormData] = useState({});
 
   useEffect(() => {
-    // Fetch all patients on component mount
+    setLoading(true);
+    fetch('http://192.168.0.106:5000/facilityops/getallfacility')
+      .then(r => r.json())
+      .then(r => setDepartments(r.data || []))
+      .catch(() => setDepartments([]));
+
     fetch('http://192.168.0.106:5000/patientops/getallpatient')
-      .then((response) => response.json())
-      .then((data) => {
-        setPatients(data); // assuming the response is an array of patient objects
-      })
-      .catch((error) => console.error('Error fetching patients:', error));
+      .then(r => r.json())
+      .then(r => setPatients(r || []))
+      .catch(() => setPatients([]))
+      .finally(() => setLoading(false));
   }, []);
 
-  const handleInputChange = (e, field) => {
-    if (editPatient) {
-      setEditPatient((prev) => ({
-        ...prev,
-        [field]: e.target.value,
-      }));
-    } else {
-      setNewPatient((prev) => ({
-        ...prev,
-        [field]: e.target.value,
-      }));
-    }
-  };
-
-  // const handleDepartmentChange = (e) => {
-  //   const selectedDepartment = e.target.value;
-  //   if (editPatient) {
-  //     setEditPatient((prev) => ({
-  //       ...prev,
-  //       department: selectedDepartment,
-  //       doctor: doctors[selectedDepartment][0],
-  //     }));
-  //   } else {
-  //     setNewPatient((prev) => ({
-  //       ...prev,
-  //       department: selectedDepartment,
-  //       doctor: doctors[selectedDepartment][0],
-  //     }));
-  //   }
-  // };
-
-  const addPatient = () => {
-    fetch('http://192.168.0.106:5000/patientops/addpatient', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(newPatient),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        setPatients([...patients, data]);
-        setNewPatient({
-          firstname: '',
-          lastname: '',
-          gender: '',
-          dob: '',
-          phone: '',
-          email: '',
-          department: '',
-          doctor: '',
-          address: '',
-          age: '',
-          bloodgroup: '',
-          height: '',
-          weight: '',
-          appointments: [],
-        });
-        setShowAddPatientForm(false);
-      })
-      .catch((error) => console.error('Error adding patient:', error));
-  };
-
-  const editPatientDetails = (patient) => {
-    setEditPatient(patient);
-  };
-
-  const savePatient = () => {
-    if (!editPatient || !editPatient.uid) {
-      console.error('Patient details or UID are missing!');
-      alert('Patient details or UID are missing!');
-      return;
-    }
-
-    const formData = new FormData();
-    formData.append('patientid', editPatient.uid);
-    formData.append('firstname', editPatient.firstname);
-    formData.append('lastname', editPatient.lastname);
-    formData.append('bloodgroup', editPatient.bloodgroup);
-    formData.append('age', editPatient.age);
-    formData.append('weight', editPatient.weight);
-    formData.append('height', editPatient.height);
-    formData.append('gender', editPatient.gender);
-    formData.append('dob', editPatient.dob);
-    formData.append('phonenumber', editPatient.phone);
-    formData.append('address', editPatient.address);
-    formData.append('email', editPatient.email);
-
-    fetch('http://192.168.0.106:5000/patients/profile/update', {
-      method: 'POST',
-      body: formData,
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        if (data) {
-          setPatients(
-            patients.map((patient) =>
-              patient.id === editPatient.id ? { ...patient, ...data } : patient
-            )
-          );
-          setEditPatient(null);
-          alert('Patient profile updated successfully');
-        } else {
-          alert('Error updating patient profile');
-        }
-      })
-      .catch((error) => {
-        console.error('Error updating patient:', error);
-        alert('An error occurred while updating the patient');
-      });
-  };
-
-  const deletePatient = (uid) => {
-    if (!uid) {
-      console.error('Patient UID is missing!');
-      alert('Patient UID is missing!');
-      return;
-    }
-
-    const formData = new FormData();
-    formData.append('patientid', uid);
-
-    fetch('http://192.168.0.106:5000/patientops/deleteprofile', {
-      method: 'POST',
-      body: formData,
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        if (data) {
-          setPatients((prevPatients) =>
-            prevPatients.filter((patient) => patient.uid !== uid)
-          );
-          alert('Patient profile deleted successfully');
-        } else {
-          alert('Error deleting patient profile');
-        }
-      })
-      .catch((error) => {
-        console.error('Error deleting patient:', error);
-        alert('An error occurred while deleting the patient');
-      });
-  };
-
-  const filteredPatients = selectedDepartment
-    ? patients.filter((patient) => patient.department === selectedDepartment)
+  const filteredPatients = selectedDept
+    ? patients.filter(p => p.department === selectedDept)
     : patients;
 
-  // Department click handler for navigation
   const handleDepartmentClick = (department) => {
-    navigate(`/patients/${department}`); // Navigate to doctors page for the clicked department
+    navigate(`/patients/${department}`);
   };
-const [departments, setDepartments] = useState([]);
 
-useEffect(() => {
-  fetch('http://192.168.0.106:5000/facilityops/getallfacility')
-    .then((res) => res.json())
-    .then((data) => {
-      if (data && data.data) {
-        const departmentsWithIcons = data.data.map((dept, index) => ({
-          ...dept,
-          id: dept.department_name.toLowerCase(),     // lowercase id
-          name: dept.department_name,                 // display name
-          icon: assignDepartmentIcon(dept.department_name, index), // icon
-        }));
-        setDepartments(departmentsWithIcons);
+  const handleEdit = p => {
+    setEditPatient(p);
+    setFormData(p);
+  };
+
+  const handleDelete = uid => {
+    if (!window.confirm('Are you sure you want to delete this patient?')) return;
+    const fd = new FormData();
+    fd.append('patientid', uid);
+    fetch('http://192.168.0.106:5000/patientops/deleteprofile', {
+      method: 'POST',
+      body: fd,
+    })
+      .then(r => r.json())
+      .then(() => {
+        setPatients(ps => ps.filter(p => p.uid !== uid));
+      })
+      .catch(console.error);
+  };
+
+  
+  const savePatient = () => {
+  if (!editPatient || !editPatient.uid) {
+    console.error('Patient details or UID are missing!');
+    alert('Patient details or UID are missing!');
+    return;
+  }
+
+  const fd = new FormData();
+  fd.append('patientid', editPatient.uid);           // Use uid as patientid
+  fd.append('firstname', formData.firstname || '');
+  fd.append('lastname', formData.lastname || '');
+  fd.append('bloodgroup', formData.bloodgroup || '');
+  fd.append('age', formData.age || '');
+  fd.append('weight', formData.weight || '');
+  fd.append('height', formData.height || '');
+  fd.append('gender', formData.gender || '');
+  fd.append('dob', formData.dob || '');
+  fd.append('phonenumber', formData.phonenumber || '');
+  fd.append('address', formData.address || '');
+  fd.append('email', formData.email || '');
+
+  fetch('http://192.168.0.106:5000/patients/profile/update', {
+    method: 'POST',
+    body: fd,
+  })
+    .then(response => response.json())
+    .then(data => {
+      if (data) {
+        // Update patient list locally with the updated data
+        setPatients(patients.map(patient =>
+          patient.uid === editPatient.uid ? { ...patient, ...data } : patient
+        ));
+        setEditPatient(null);
+        alert('Patient profile updated successfully');
+      } else {
+        alert('Error updating patient profile');
       }
     })
-    .catch((err) => {
-      console.error('Error fetching departments:', err);
+    .catch(error => {
+      console.error('Error updating patient:', error);
+      alert('An error occurred while updating the patient');
     });
-}, []);
-
-const assignDepartmentIcon = (name, index) => {
-  const iconMap = {
-    Cardiology: '❤️',
-    Neurology: '🧠',
-    Orthopedics: '💪',
-    Dermatology: '🧴',
-    Pediatrics: '👶',
-    Surgery: '🔪',
-  };
-  // Fallback icons if not in map
-  const fallbackIcons = ['🏥', '🩺', '🔬', '💊', '📋', '🧬'];
-  return iconMap[name] || fallbackIcons[index % fallbackIcons.length];
 };
+
+
   return (
-    <div className="manage-patients-container">
+    <div className="manage-patients-wrapper">
       <AdminNavbar />
       <div className="manage-patients-content">
         <AdminSidebar />
-        <div className="patient-management">
-          <h2>Admin - Manage Patients</h2>
-
-          <div className="departments">
-            {departments.map((dept) => (
-              <div
-                key={dept.name}
-                className="department-item"
-                onClick={() => handleDepartmentClick(dept.name)} // Handle department click
-              >
-                <div className="icon">{dept.icon}</div>
-                <div className="name">{dept.name}</div>
-              </div>
-            ))}
+        <main className="main-section-patient">
+          <div className="background-overlay" />
+          <div className="header-section">
+            <h1>Manage Patients</h1>
+            <button
+              className="register-btn"
+              onClick={() => navigate('/signup')}
+            >
+              Register Patient <FaUserPlus />
+            </button>
           </div>
 
-       <h3 className="responsive-heading">{selectedDepartment ? `${selectedDepartment} Patients` : 'Manage All Patients'}</h3> 
-          <div className="patient-list">
-            <Table striped bordered hover>
-              <thead>
-                <tr>
-                  <th>First Name</th>
-                  <th>Last Name</th>
-                  <th>Age</th>
-                    <th>Gender</th>
-                  <th>Blood Group</th>
-                  <th>Address</th>
-                  <th>Phone</th>
-                  <th>Email</th>
-                  <th>Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                {filteredPatients.length === 0 ? (
-                  <tr>
-                    <td colSpan="8">No patients found.</td>
-                  </tr>
-                ) : (
-                  filteredPatients.map((patient) => (
-                    <tr key={patient.uid}>
-                      <td>{patient.firstname}</td>
-                      <td>{patient.lastname}</td>
-                      <td>{patient.age}</td>
-                         <td>{patient.gender}</td>
-                      <td>{patient.bloodgroup}</td>
-                      <td>{patient.address}</td>
-                      <td>{patient.phonenumber}</td>
-                      <td>{patient.email}</td>
-                      <td>
-                        <Button variant="warning" onClick={() => editPatientDetails(patient)}>
-                          Edit
-                        </Button>
-                        {editPatient && (
-  <div className="edit-patient-modal">
-    <h4>Edit Patient Details</h4>
-    <form
-      onSubmit={(e) => {
-        e.preventDefault();
-        savePatient();
-      }}
-    >
-      <label>
-        First Name:
-        <input
-          type="text"
-          value={editPatient.firstname}
-          onChange={(e) => handleInputChange(e, 'firstname')}
-          required
-        />
-      </label>
-      <label>
-        Last Name:
-        <input
-          type="text"
-          value={editPatient.lastname}
-          onChange={(e) => handleInputChange(e, 'lastname')}
-          required
-        />
-      </label>
-      <label>
-        Gender:
-        <select
-          value={editPatient.gender}
-          onChange={(e) => handleInputChange(e, 'gender')}
-          required
-        >
-          <option value="">Select Gender</option>
-          <option value="Male">Male</option>
-          <option value="Female">Female</option>
-          <option value="Other">Other</option>
-        </select>
-      </label>
-      <label>
-        DOB:
-        <input
-          type="date"
-          value={editPatient.dob}
-          onChange={(e) => handleInputChange(e, 'dob')}
-          required
-        />
-      </label>
-      <label>
-        Phone:
-        <input
-          type="tel"
-          value={editPatient.phonenumber}
-          onChange={(e) => handleInputChange(e, 'phone')}
-          required
-        />
-      </label>
-      <label>
-        Email:
-        <input
-          type="email"
-          value={editPatient.email}
-          onChange={(e) => handleInputChange(e, 'email')}
-          required
-        />
-      </label>
-      {/* <label>
-        Department:
-        <select
-          value={editPatient.department}
-          onChange={handleDepartmentChange}
-          required
-        >
-          <option value="">Select Department</option>
-          {departments.map((dept) => (
-            <option key={dept.name} value={dept.name}>
-              {dept.name}
-            </option>
-          ))}
-        </select>
-      </label>
-       <label>
-        Doctor:
-        <select
-          value={editPatient.doctor}
-          onChange={(e) => handleInputChange(e, 'doctor')}
-          required
-        >
-          {editPatient.department &&
-            doctors[editPatient.department].map((doc) => (
-              <option key={doc} value={doc}>
-                {doc}
-              </option>
-            ))}
-        </select>
-      </label>  */}
-      <label>
-        Address:
-        <input
-          type="text"
-          value={editPatient.address}
-          onChange={(e) => handleInputChange(e, 'address')}
-          required
-        />
-      </label>
-      <label>
-        Age:
-        <input
-          type="number"
-          value={editPatient.age}
-          onChange={(e) => handleInputChange(e, 'age')}
-          required
-        />
-      </label>
-      <label>
-        Blood Group:
-        <input
-          type="text"
-          value={editPatient.bloodgroup}
-          onChange={(e) => handleInputChange(e, 'bloodgroup')}
-          required
-        />
-      </label>
-      <label>
-        Height:
-        <input
-          type="number"
-          value={editPatient.height}
-          onChange={(e) => handleInputChange(e, 'height')}
-          required
-        />
-      </label>
-      <label>
-        Weight:
-        <input
-          type="number"
-          value={editPatient.weight}
-          onChange={(e) => handleInputChange(e, 'weight')}
-          required
-        />
-      </label>
-
-      <div className="edit-form-buttons">
-        <button type="submit" className="btn btn-primary">
-          Save
-        </button>
-        <button
-          type="button"
-          className="btn btn-secondary"
-          onClick={() => setEditPatient(null)}
-        >
-          Cancel
-        </button>
-      </div>
-    </form>
+         {loading && (
+  <div className="modal-overlay">
+    <FaSpinner className="spin large" />
   </div>
 )}
 
-                        <Button variant="danger" onClick={() => deletePatient(patient.uid)}>
-                          Delete
-                        </Button>
-                      </td>
-                    </tr>
-                  ))
-                )}
-              </tbody>
-            </Table>
+<div className="departments-container">
+  {departments.map((dept) => (
+    <div
+      key={dept.department_name}
+      className={`department-card ${
+        selectedDept === dept.department_name ? 'selected' : ''
+      }`}
+      onClick={() => handleDepartmentClick(dept.department_name)}
+      style={{
+        backgroundColor:
+          selectedDept === dept.department_name
+            ? '#4e79a7'
+            : colorMap[dept.department_name] || colorMap.default,
+        color: selectedDept === dept.department_name ? '#fff' : '#333',
+      }}
+    >
+      <div className="dept-icon">
+        {iconMap[dept.department_name] || '👤'}
+      </div>
+      <span>{dept.department_name}</span>
+    </div>
+  ))}
+</div>
+
+<section className="patients-section">
+  <h2>All Patients</h2>
+
+  {!loading && filteredPatients.length === 0 && <p>No patients found.</p>}
+
+  {filteredPatients.length > 0 && (
+    <>
+      {/* Mobile Cards */}
+      <div className="patients-card-list">
+        {filteredPatients.map((p) => (
+          <div key={p.uid} className="patient-card">
+            <div className="card-row">
+              <strong>Name:</strong> {p.firstname} {p.lastname}
+            </div>
+            <div className="card-row">
+              <strong>Gender:</strong> {p.gender}
+            </div>
+            <div className="card-row">
+              <strong>Age:</strong> {p.age}
+            </div>
+            <div className="card-row">
+              <strong>Blood Group:</strong> {p.bloodgroup}
+            </div>
+            <div className="card-row">
+              <strong>Phone:</strong> {p.phonenumber}
+            </div>
+            <div className="card-row">
+              <strong>Email:</strong> {p.email}
+            </div>
+            <div className="card-actions">
+              <FaUserEdit onClick={() => handleEdit(p)} title="Edit" />
+              <FaTrashAlt onClick={() => handleDelete(p.uid)} title="Delete" />
+            </div>
           </div>
+        ))}
+      </div>
 
-        
-
-        
+      {/* Desktop/Table */}
+      <div className="table-responsive">
+        <Table striped bordered hover responsive className="custom-table">
+          <thead>
+            <tr>
+              <th>First</th>
+              <th>Last</th>
+              <th>Gender</th>
+              <th>Age</th>
+              <th>Blood</th>
+              <th>Phone</th>
+              <th>Email</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {filteredPatients.map((p) => (
+              <tr key={p.uid}>
+                <td>{p.firstname}</td>
+                <td>{p.lastname}</td>
+                <td>{p.gender}</td>
+                <td>{p.age}</td>
+                <td>{p.bloodgroup}</td>
+                <td>{p.phonenumber}</td>
+                <td>{p.email}</td>
+                <td className="actions-column">
+                  <FaUserEdit onClick={() => handleEdit(p)} />
+                  <FaTrashAlt onClick={() => handleDelete(p.uid)} />
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </Table>
+      </div>
+    </>
+  )}
+</section>
+</main>
+     
+        {editPatient && (
+  <div className="popup-overlay" onClick={() => setEditPatient(null)}>
+    <div className="popup-content wide" onClick={e => e.stopPropagation()}>
+      <h3>Edit Patient</h3>
+      <form
+        onSubmit={e => {
+          e.preventDefault();
+          savePatient();
+        }}
+        style={{
+          backgroundColor: "#e0f7fa",
+          padding: "20px",
+          borderRadius: "8px",
+        }}
+      >
+        <div className="form-grid">
+          {[
+            'firstname',
+            'lastname',
+            'gender',
+            'dob',
+            'age',
+            'bloodgroup',
+            'phonenumber',
+            'email',
+            'address',
+            'height',
+            'weight'
+          ].map(f => {
+            if (f === 'gender') {
+              return (
+                <div key={f} className="form-field">
+                  <label>
+                    Gender:
+                    <select
+                      name="gender"
+                      value={formData.gender || ''}
+                      onChange={e =>
+                        setFormData(prev => ({
+                          ...prev,
+                          gender: e.target.value,
+                        }))
+                      }
+                      required
+                    >
+                      <option value="">Select Gender</option>
+                      <option value="Male">Male</option>
+                      <option value="Female">Female</option>
+                      <option value="Other">Other</option>
+                    </select>
+                  </label>
+                </div>
+              );
+            } else if (f === 'dob') {
+              return (
+                <div key={f} className="form-field">
+                  <label>
+                    Date of Birth:
+                    <input
+                      type="date"
+                      name="dob"
+                      value={formData.dob ? formData.dob.split('T')[0] : ''}
+                      onChange={e =>
+                        setFormData(prev => ({
+                          ...prev,
+                          dob: e.target.value,
+                        }))
+                      }
+                      required
+                    />
+                  </label>
+                </div>
+              );
+            } else {
+              return (
+                <div key={f} className="form-field">
+                  <label>
+                    {f.charAt(0).toUpperCase() + f.slice(1)}:
+                    <input
+                      name={f}
+                      value={formData[f] || ''}
+                      onChange={e =>
+                        setFormData(prev => ({
+                          ...prev,
+                          [f]: e.target.value,
+                        }))
+                      }
+                      required
+                    />
+                  </label>
+                </div>
+              );
+            }
+          })}
         </div>
+        <div className="popup-buttons">
+          <button type="submit" className="btn btn-primary">
+            <FaSave /> Save
+          </button>
+          <button
+            type="button"
+            className="btn btn-secondary"
+            onClick={() => setEditPatient(null)}
+          >
+            <FaTimes /> Cancel
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+)}
+
       </div>
     </div>
   );
-}
+};
 
-export default PatientManagement;
+export default ManagePatient;

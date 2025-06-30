@@ -17,7 +17,7 @@ import './ManageDoctor.css';
 const iconMap = {
   Cardiology: '❤️',
   Neurology: '🧠',
-  Orthopedics: '💪',
+  Orthopedics: '🦴',
   Dermatology: '🧴',
   Pediatrics: '👶',
   Surgery: '🔪',
@@ -234,60 +234,103 @@ const handleEditSubmit = (e) => {
             )}
           </div>
 
-          <section className="doctors-section">
-            <h2>All Doctors</h2>
+       
+<section className="doctors-section">
+  <h2>All Doctors</h2>
 
-            {loading ? (
-              <div className="modal-overlay-doctor">
-                <div className="modal-content-doctor">
-                  <FaSpinner className="spin large" />
-                </div>
-              </div>
-            ) : filteredDoctors.length === 0 ? (
-              <p>No doctors found.</p>
-            ) : (
-              <div className="table-responsive">
-                <Table striped bordered hover responsive className="custom-doctors-table">
-                  <thead className="table-header">
-                    <tr>
-                      <th>Name</th>
-                      <th>Specialization</th>
-                      <th>Contact</th>
-                      <th>Experience</th>
-                      <th>Qualification</th>
-                      <th>Actions</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {filteredDoctors.map((doctor) => (
-                      <tr key={doctor.uid}>
-                        <td>{doctor.fullname}</td>
-                        <td>{doctor.specialization}</td>
-                        <td>{doctor.phonenumber}</td>
-                        <td>{doctor.yoe} years</td>
-                        <td>{doctor.qualification}</td>
-                        <td className="actions-column">
-                          <FaUserEdit
-                            className="action-icon edit-icon"
-                            title="Edit"
-                            onClick={() => handleEditClick(doctor)}
-                          />
-                          <FaTrashAlt
-                            className="action-icon delete-icon"
-                            title="Delete"
-                            onClick={() => handleDeleteClick(doctor.uid)}
-                          />
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                  
-                </Table>
-              </div>
-            )}
-          </section>
-        </main>
+  {loading ? (
+    <div className="modal-overlay-doctor">
+      <div className="modal-content-doctor">
+        <FaSpinner className="spin large" />
+      </div>
+    </div>
+  ) : filteredDoctors.length === 0 ? (
+    <p>No doctors found.</p>
+  ) : (
+    <>
+      {/* Mobile Cards */}
+      <div className="doctors-card-list">
+        {filteredDoctors.map((doctor) => (
+          <div key={doctor.uid} className="doctor-card">
+            <div className="card-row">
+              <strong>Name:</strong> {doctor.fullname}
+            </div>
+            <div className="card-row">
+              <strong>Specialization:</strong> {doctor.specialization}
+            </div>
+            <div className="card-row">
+              <strong>Contact:</strong> {doctor.phonenumber}
+            </div>
+            <div className="card-row">
+              <strong>Experience:</strong> {doctor.yoe} years
+            </div>
+            <div className="card-row">
+              <strong>Qualification:</strong> {doctor.qualification}
+            </div>
+            <div className="card-actions">
+              <FaUserEdit
+                onClick={() => handleEditClick(doctor)}
+                title="Edit"
+                className="action-icon"
+              />
+              <FaTrashAlt
+                onClick={() => handleDeleteClick(doctor.uid)}
+                title="Delete"
+                className="action-icon"
+              />
+            </div>
+          </div>
+        ))}
+      </div>
 
+      {/* Desktop Table */}
+      <div className="table-responsive">
+        <Table
+          striped
+          bordered
+          hover
+          responsive
+          className="custom-doctors-table"
+        >
+          <thead className="table-header">
+            <tr>
+              <th>Name</th>
+              <th>Specialization</th>
+              <th>Contact</th>
+              <th>Experience</th>
+              <th>Qualification</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {filteredDoctors.map((doctor) => (
+              <tr key={doctor.uid}>
+                <td>{doctor.fullname}</td>
+                <td>{doctor.specialization}</td>
+                <td>{doctor.phonenumber}</td>
+                <td>{doctor.yoe} years</td>
+                <td>{doctor.qualification}</td>
+                <td className="actions-column">
+                  <FaUserEdit
+                    className="action-icon edit-icon"
+                    title="Edit"
+                    onClick={() => handleEditClick(doctor)}
+                  />
+                  <FaTrashAlt
+                    className="action-icon delete-icon"
+                    title="Delete"
+                    onClick={() => handleDeleteClick(doctor.uid)}
+                  />
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </Table>
+      </div>
+    </>
+  )}
+</section>
+</main>
         
         {showEditPopup && (
   <div className="popup-overlay" onClick={() => setShowEditPopup(false)}>
@@ -306,7 +349,11 @@ const handleEditSubmit = (e) => {
         </div>
       )}
 
-      <form onSubmit={handleEditSubmit} className="edit-form">
+      <form onSubmit={handleEditSubmit} className="edit-form" style={{
+          backgroundColor: "#e0f7fa",
+          padding: "20px",
+          borderRadius: "8px",
+        }}>
         <label htmlFor="fullname">Full Name</label>
                 <input
                   type="text"

@@ -14,7 +14,7 @@ const DepartmentPage = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [successMessage, setSuccessMessage] = useState('');
-
+ const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
   const specializationIcons = {
     cardiology: <FaHeart />,
     neurology: <FaBrain />,
@@ -107,49 +107,72 @@ const DepartmentPage = () => {
                 </Col>
               </Row>
 
-              <div className="table-responsive">
-                <Table striped bordered hover className="doctor-table">
-                  <thead>
-                    <tr>
-                      <th>Full Name</th>
-                      <th>Specialization</th>
-                      <th>Qualification</th>
-                      <th>Experience (Years)</th>
-                      <th>Address</th>
-                      <th>DOB</th>
-                      <th>Email</th>
-                      <th>Phone</th>
-                      <th>Gender</th>
-                      <th>License Number</th>
-                      <th>Leave Status</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {doctors.map((doctor) => (
-                      <tr key={doctor.uid}>
-                        <td>{doctor.fullname}</td>
-                        <td>{doctor.specialization}</td>
-                        <td>{doctor.qualification}</td>
-                        <td>{doctor.yoe}</td>
-                        <td>{doctor.address}</td>
-                        <td>{doctor.dob}</td>
-                        <td>{doctor.email}</td>
-                        <td>{doctor.phonenumber}</td>
-                        <td>{doctor.gender}</td>
-                        <td>{doctor.license_number}</td>
-                        <td>
+              
+                        {isMobile ? (
+                <div className="doctor-cards-container">
+                  {doctors.length === 0 ? (
+                    <p>No doctors available for this specialization.</p>
+                  ) : (
+                    doctors.map((doctor) => (
+                      <div className="doctor-card" key={doctor.uid}>
+                        <h4>{doctor.fullname}</h4>
+                        <p>
+                          <strong>Specialization:</strong> {doctor.specialization}
+                        </p>
+                        <p>
+                          <strong>Qualification:</strong> {doctor.qualification}
+                        </p>
+                        <p>
+                          <strong>Experience:</strong> {doctor.yoe} years
+                        </p>
+                        <p>
+                          <strong>Address:</strong> {doctor.address}
+                        </p>
+                        <p>
+                          <strong>DOB:</strong> {doctor.dob}
+                        </p>
+                        <p>
+                          <strong>Email:</strong> {doctor.email}
+                        </p>
+                        <p>
+                          <strong>Phone:</strong> {doctor.phonenumber}
+                        </p>
+                        <p>
+                          <strong>Gender:</strong> {doctor.gender}
+                        </p>
+                        <p>
+                          <strong>License Number:</strong> {doctor.license_number}
+                        </p>
+                        <div>
+                          <strong>Leaves:</strong>{' '}
                           {doctor.leaves?.length ? (
                             doctor.leaves.map((leave, i) => (
                               <div key={i} className="leave-details">
                                 <div>{`From: ${leave.leavefrom} To: ${leave.leaveto}`}</div>
                                 <div>{`Reason: ${leave.reason}`}</div>
-                                <div className={`leave-status ${leave.status}`}>{`Status: ${leave.status}`}</div>
+                                <div className={`leave-status ${leave.status}`}>
+                                  {`Status: ${leave.status}`}
+                                </div>
                                 {leave.status === 'pending' && (
                                   <Dropdown>
-                                    <Dropdown.Toggle size="sm" variant="success">Change Status</Dropdown.Toggle>
+                                    <Dropdown.Toggle size="sm" variant="success">
+                                      Change Status
+                                    </Dropdown.Toggle>
                                     <Dropdown.Menu>
-                                      <Dropdown.Item onClick={() => handleLeaveStatusChange(leave.leaveid, 'approved')}>Approve</Dropdown.Item>
-                                      <Dropdown.Item onClick={() => handleLeaveStatusChange(leave.leaveid, 'rejected')}>Reject</Dropdown.Item>
+                                      <Dropdown.Item
+                                        onClick={() =>
+                                          handleLeaveStatusChange(leave.leaveid, 'approved')
+                                        }
+                                      >
+                                        Approve
+                                      </Dropdown.Item>
+                                      <Dropdown.Item
+                                        onClick={() =>
+                                          handleLeaveStatusChange(leave.leaveid, 'rejected')
+                                        }
+                                      >
+                                        Reject
+                                      </Dropdown.Item>
                                     </Dropdown.Menu>
                                   </Dropdown>
                                 )}
@@ -158,14 +181,89 @@ const DepartmentPage = () => {
                           ) : (
                             <span>No leave records</span>
                           )}
-                        </td>
+                        </div>
+                      </div>
+                    ))
+                  )}
+                </div>
+              ) : (
+                <div className="table-responsive">
+                  <Table striped bordered hover className="doctor-table">
+                    <thead>
+                      <tr>
+                        <th>Full Name</th>
+                        <th>Specialization</th>
+                        <th>Qualification</th>
+                        <th>Experience (Years)</th>
+                        <th>Address</th>
+                        <th>DOB</th>
+                        <th>Email</th>
+                        <th>Phone</th>
+                        <th>Gender</th>
+                        <th>License Number</th>
+                        <th>Leave Status</th>
                       </tr>
-                    ))}
-                  </tbody>
-                </Table>
-              </div>
+                    </thead>
+                    <tbody>
+                      {doctors.map((doctor) => (
+                        <tr key={doctor.uid}>
+                          <td>{doctor.fullname}</td>
+                          <td>{doctor.specialization}</td>
+                          <td>{doctor.qualification}</td>
+                          <td>{doctor.yoe}</td>
+                          <td>{doctor.address}</td>
+                          <td>{doctor.dob}</td>
+                          <td>{doctor.email}</td>
+                          <td>{doctor.phonenumber}</td>
+                          <td>{doctor.gender}</td>
+                          <td>{doctor.license_number}</td>
+                          <td>
+                            {doctor.leaves?.length ? (
+                              doctor.leaves.map((leave, i) => (
+                                <div key={i} className="leave-details">
+                                  <div>{`From: ${leave.leavefrom} To: ${leave.leaveto}`}</div>
+                                  <div>{`Reason: ${leave.reason}`}</div>
+                                  <div className={`leave-status ${leave.status}`}>
+                                    {`Status: ${leave.status}`}
+                                  </div>
+                                  {leave.status === 'pending' && (
+                                    <Dropdown>
+                                      <Dropdown.Toggle size="sm" variant="success">
+                                        Change Status
+                                      </Dropdown.Toggle>
+                                      <Dropdown.Menu>
+                                        <Dropdown.Item
+                                          onClick={() =>
+                                            handleLeaveStatusChange(leave.leaveid, 'approved')
+                                          }
+                                        >
+                                          Approve
+                                        </Dropdown.Item>
+                                        <Dropdown.Item
+                                          onClick={() =>
+                                            handleLeaveStatusChange(leave.leaveid, 'rejected')
+                                          }
+                                        >
+                                          Reject
+                                        </Dropdown.Item>
+                                      </Dropdown.Menu>
+                                    </Dropdown>
+                                  )}
+                                </div>
+                              ))
+                            ) : (
+                              <span>No leave records</span>
+                            )}
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </Table>
+                </div>
+              )}
             </>
           )}
+
         </div>
       </div>
     </div>
