@@ -6,6 +6,14 @@ import {jwtDecode} from 'jwt-decode'; // fixed import
 import './Departmentwisebook.css';
 import PatientNavbar from '../Navbar/PatientNavbar';
 import PatientSidebar from '../Sidebar/PatientSidebar';
+import { FaSpinner } from 'react-icons/fa';
+
+// ...
+
+<div className="popup-overlay" style={{ backgroundColor: '#e0f7fa', padding: '20px', borderRadius: '10px', textAlign: 'center' }}>
+  <FaSpinner className="spin" />
+  <p>Booking appointment...</p>
+</div>
 
 const departmentTimes = {
   cardiology: ["09:00:00", "10:00:00", "11:00:00"],
@@ -237,12 +245,14 @@ const AppointmentBookingPage = () => {
 
           {/* Spinner Popup during booking */}
           {isBooking && (
-            <div className="popup-overlay">
-              <div className="spinner-popup"style={{ backgroundColor: '#e0f7fa'}}>
-                <div className="spinner"></div>
+            // <div className="popup-overlay">
+            //   <div className="spinner-popup"style={{ backgroundColor: '#e0f7fa'}}>
+            //     <div className="spinner"></div>
+            <div className="popup-overlay" style={{ backgroundColor: '#e0f7fa', padding: '20px', borderRadius: '10px', textAlign: 'center' }}>
+  <FaSpinner className="spin" />
                 <p>Booking appointment...</p>
               </div>
-            </div>
+        
           )}
 
           {/* Success Popup */}
