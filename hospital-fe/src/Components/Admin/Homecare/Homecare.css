@@ -1,155 +1,266 @@
-/* General page layout */
+
+.spinner {
+  border: 6px solid #f3f3f3;
+  border-top: 6px solid #3498db; /* Blue */
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  animation: spin 1s linear infinite;
+  /* margin: 100px auto; */
+  margin-right: 700px;
+  margin-top: 200px;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Background image on the whole page */
 .facility-management-page {
+   position: relative;
+  background-image: url('../../Assests/background.jpg');
+  background-size: cover;
+  background-position: center;
+  min-height: 100vh;
+}
+
+/* Add a translucent overlay for better readability */
+.facility-management-content::before {
+    content: '';
+  position: absolute;
+  inset: 0;
+  background-color: rgba(255, 255, 255, 0.719);
+  z-index: 1;
+}
+
+/* Make content on top of overlay */
+
+.admin-panel{
+   flex: 1;
+  position: relative;
+  z-index: 2;
+  padding: 20px 30px;
+  overflow-y: auto;
   display: flex;
   flex-direction: column;
-  min-height: 100vh;
-  font-family: Arial, sans-serif;
-  background-color: #f9f9f9;
+}
+/* Table styling */
+.responsive-table-table {
+  /* No overflow properties here to prevent scrollbars */
+  max-width: 1000px;
+  margin-left: 0;
+  margin-right: 100px;
+  margin-top: 60px;
 }
 
-.facility-management-content {
-  display: flex;
-  flex: 1;
-  background-color: #fff;
-}
-
-/* Admin panel container */
-.admin-panel {
-  flex: 1;
-  padding: 20px;
-  background: #fff;
-  box-shadow: 0 0 10px rgba(0,0,0,0.1);
-  border-radius: 8px;
-  overflow-x: auto;
- 
-}
-
-/* Table styles */
-.responsive-table {
+.responsive-table-table table {
   width: 100%;
-  overflow-x: auto;
-  margin-top: 15px;
-}
-
-.responsive-table table {
   border-collapse: collapse;
-  width: 100%;
-  min-width: 700px; /* minimum width to allow scrolling on smaller screens */
+  background-color: rgba(227, 238, 241, 0.9);
+  color: #333;
+  border-radius: 8px;
+  overflow: visible;  /* important: avoid overflow hidden/scroll */
+  box-shadow: 0 0 15px rgba(0,0,0,0.3);
+  table-layout: fixed; /* to prevent content forcing scroll */
+  word-wrap: break-word; /* allow text wrapping */
 }
 
-.responsive-table1 {
+
+.responsive-table-table th, 
+.responsive-table-table td {
   padding: 10px 15px;
-  background-color: #004080;
-  color: #fff;
   text-align: left;
-  font-weight: 600;
-  border: 1px solid #ddd;
-  white-space: nowrap;
+  border-bottom: 1px solid #ddd;
 }
 
-.responsive-table table th,
-.responsive-table table td {
-  padding: 12px 15px;
-  border: 1px solid #ddd;
-  vertical-align: middle;
-  white-space: nowrap;
+.responsive-table-table th {
+  background-color: #78c4b3;
+  color: #fff;
 }
 
-.responsive-table table tr:nth-child(even) {
-  background-color: #f2f2f2;
-}
-
-.responsive-table table tr:hover {
-  background-color: #e6f2ff;
-}
-
-/* Buttons */
-button {
-  background-color: #004080;
-  border: none;
-  color: white;
-  padding: 7px 14px;
-  font-size: 14px;
+.responsive-table-table tr:hover {
+  background-color: #f1f1f1;
   cursor: pointer;
-  border-radius: 4px;
-  transition: background-color 0.3s ease;
-}
-
-button:hover {
-  background-color: #003366;
 }
 
 /* Form container */
 .form-container {
-  margin-top: 20px;
+  background-color: rgba(255, 255, 255, 0.95);
   padding: 20px;
-  border: 1px solid #ddd;
+  margin-top: 20px;
   border-radius: 8px;
-  background-color: #f5faff;
-  max-width: 600px;
+  color: #333;
+  box-shadow: 0 0 15px rgba(0,0,0,0.3);
 }
 
-.form-container h2 {
-  margin-bottom: 15px;
-  color: #004080;
-}
-
-/* Form label */
 .form-container label {
   display: block;
-  margin-bottom: 12px;
+  margin: 10px 0 5px;
   font-weight: 600;
-  color: #333;
 }
 
 .form-container select {
   width: 100%;
-  padding: 8px 10px;
-  margin-top: 6px;
+  padding: 8px;
+  margin-bottom: 15px;
   border-radius: 4px;
   border: 1px solid #ccc;
-  font-size: 15px;
-  color: #000;
-  background-color: #fff;
+}
+
+.form-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.form-actions button {
+  padding: 10px 15px;
+  border: none;
+  background-color: #3498db;
+  color: white;
+  font-weight: 600;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.form-actions button:hover {
+  background-color: #2980b9;
+}
+/* Table styles */
+.responsive-table {
+  width: 100%;
+  overflow-x: visible; /* remove scrollbar */
+}
+
+table {
+  width: 100%;
+  min-width: 900px; /* adjust as needed */
+  border-collapse: collapse;
+}
+
+.responsive-table1 {
+  padding: 8px;
+  border-bottom: 1px solid #ddd;
+  text-align: left;
+}
+
+td, th {
+  padding: 8px;
+  border-bottom: 1px solid #ddd;
+}
+
+/* Card layout for mobile */
+.cards-container {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 10px;
+}
+
+.card {
+  background: #fff;
+  border: 1px solid #ddd;
+  padding: 12px 16px;
+  border-radius: 6px;
+  box-shadow: 0 1px 4px rgb(0 0 0 / 0.1);
+}
+
+/* Edit button style */
+.edit-btn {
+  background-color: transparent;
+  border: none;
+  color: #3498db;
+  cursor: pointer;
+  font-size: 1.2em;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 8px;
+}
+
+.edit-btn:hover {
+  color: #217dbb;
+}
+
+/* Hide table on small screens */
+@media (max-width: 768px) {
+  .responsive-table {
+    display: none;
+  }
+}
+
+/* Modal overlay */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0,0,0,0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  padding: 20px;
   box-sizing: border-box;
 }
 
-/* Form buttons container */
+/* Modal content box */
+.modal-content {
+  background: white;
+  border-radius: 8px;
+  max-width: 400px;
+  width: 100%;
+  padding: 24px 30px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+/* Form labels and selects */
+.modal-content label {
+  display: block;
+  margin-bottom: 12px;
+  font-weight: 600;
+}
+
+.modal-content select {
+  width: 100%;
+  padding: 8px;
+  margin-top: 4px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  font-size: 1em;
+}
+
+/* Form actions */
 .form-actions {
   margin-top: 20px;
   display: flex;
-  gap: 15px;
+  gap: 12px;
+  justify-content: flex-end;
 }
 
-/* Responsive adjustments */
-@media (max-width: 900px) {
-  .admin-panel {
-    padding: 15px;
-  }
-
-  .responsive-table table {
-    min-width: 600px;
-  }
+.form-actions button {
+  padding: 8px 16px;
+  font-size: 1em;
+  cursor: pointer;
+  border-radius: 4px;
+  border: none;
+  background-color: #3498db;
+  color: white;
+  transition: background-color 0.3s ease;
 }
 
-@media (max-width: 700px) {
-  .responsive-table table {
-    min-width: 500px;
-  }
+.form-actions button:hover {
+  background-color: #217dbb;
 }
 
-@media (max-width: 500px) {
-  .responsive-table table {
-    min-width: 400px;
-  }
+.form-actions button:last-child {
+  background-color: #999;
+}
 
-  button {
-    padding: 6px 10px;
-    font-size: 13px;
-  }
-
-  .form-container {
-    max-width: 100%;
-    padding: 15px;
-  }
+.form-actions button:last-child:hover {
+  background-color: #777;
 }

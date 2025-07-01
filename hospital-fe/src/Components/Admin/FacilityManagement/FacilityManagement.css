@@ -4,39 +4,44 @@
   min-height: 100vh;
 }
 
-/* Main content with sidebar */
+
 .facility-management-content {
   display: flex;
-  flex-grow: 1;
+
   margin-left: 500px;
 }
 
-/* Sidebar and main container should be flexible */
+
 .facility-management-content > div:first-child {
-  /* Assuming AdminSidebar is first child */
-  flex: 0 0 220px; /* fixed width sidebar */
+
+  flex: 0 0 220px;
 }
 
-.container {
-  flex-grow: 1;
-  padding: 30px;
-  overflow-x: auto; /* Allow horizontal scroll on small screens */
+.container-facility {
+ flex: 1;
+  position: relative;
+  z-index: 2;
+  padding: 20px 30px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  margin-right: 300px;
 }
 
-/* Headings */
+
 h2 {
   font-size: 2rem;
   margin-bottom: 20px;
   font-weight: bold;
 }
 
-/* Alerts */
+
 .alert {
   margin-top: 20px;
   margin-bottom: 20px;
 }
 
-/* Table styling */
+
 .table {
   margin-top: 20px;
   border-collapse: collapse;
@@ -44,28 +49,28 @@ h2 {
   table-layout: auto;
 }
 
-/* Table cells */
+
 .table th,
 .table td {
   padding: 10px;
   text-align: left;
   vertical-align: middle;
-  white-space: nowrap; /* Prevent line breaks in cells */
+  white-space: nowrap; 
 }
 
-/* Header style */
+
 .table th {
   background-color: #22a2a7;
   font-weight: bold;
   color: #fff;
 }
 
-/* Row striping */
+
 .table-striped tbody tr:nth-of-type(odd) {
   background-color: #f2f2f2;
 }
 
-/* Buttons inside table cells */
+
 .table td button {
   margin-right: 8px;
   margin-bottom: 4px;
@@ -74,9 +79,9 @@ h2 {
   padding: 6px 10px;
 }
 
-/* Modal styling */
+
 .modal-dialog {
-  max-width: 90vw; /* make modals more flexible */
+  max-width: 90vw; 
   margin: 30px auto;
 }
 
@@ -99,7 +104,7 @@ h2 {
   padding-right: 15px;
 }
 
-/* Form styling */
+
 form {
   display: flex;
   flex-direction: column;
@@ -128,7 +133,7 @@ form .form-label {
   box-shadow: 0 0 0 0.2rem rgba(38, 143, 255, 0.25);
 }
 
-/* Buttons */
+
 button {
   margin: 0.5rem 0;
   font-size: 1rem;
@@ -159,31 +164,31 @@ button.danger:hover {
   background-color: #c82333;
 }
 
-/* Spinner center */
+
 .spinner-border {
   display: block;
   margin: 30px auto;
 }
 
-/* Responsive Adjustments */
+
 @media (max-width: 992px) {
   .facility-management-content > div:first-child {
-    flex: 0 0 180px; /* slightly smaller sidebar */
+    flex: 0 0 180px; 
   }
 }
 
-/* Responsive adjustments for mobile screens */
+
 @media (max-width: 768px) {
   .facility-management-content {
-    margin-left: 0; /* remove left margin on smaller screens */
-    flex-direction: column; /* stack content vertically if needed */
+    margin-left: 0;
+    flex-direction: column; 
   }
 }
 
   .facility-management-content > div:first-child {
     flex: none;
     width: 100%;
-    order: 2; /* sidebar below content */
+    order: 2; 
   }
 
   .container {
@@ -203,12 +208,12 @@ button.danger:hover {
 
   .table th,
   .table td {
-    white-space: normal; /* allow wrapping on smaller screens */
+    white-space: normal; 
     font-size: 0.9rem;
   }
 
   .table td button {
-    width: 100%; /* full width buttons on small screens */
+    width: 100%; 
     margin-bottom: 8px;
   }
 
@@ -233,4 +238,117 @@ button.danger:hover {
     max-width: 95vw;
     margin: 10px auto;
   }
+} 
+.facility-table {
+  display: table;
+}
+
+@media (max-width: 767px) {
+  .facility-table {
+    display: none !important;
+  }
+}
+
+.facility-cards {
+  display: none;
+}
+
+@media (max-width: 767px) {
+  .facility-cards {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-top: 10px;
+  }
+}
+
+.facility-card {
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+  padding: 15px 20px;
+  border-left: 5px solid #007bff;
+  transition: box-shadow 0.3s ease;
+}
+
+.facility-card:hover {
+  box-shadow: 0 0 25px rgba(0, 0, 0, 0.15);
+}
+.popup-card,
+.popup-form {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1050;
+  background-color: white;
+  padding: 25px;
+  border-radius: 10px;
+  width: 90%;
+  max-width: 500px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+  overflow-y: auto;
+  max-height: 90vh;
+}
+
+.popup-card.view-card {
+  background-color: #f9f9f9;
+}
+
+.popup-card h4,
+.popup-form h4 {
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.popup-card button,
+.popup-form button {
+  margin-top: 10px;
+  margin-right: 10px;
+}
+
+@media (max-width: 576px) {
+  .popup-card,
+  .popup-form {
+    padding: 15px;
+    width: 95%;
+  }
+}
+.btn-editt {
+  width: 30px;
+  height: 30px;
+  padding: 4px 6px;
+  background-color: #17a2b8 !important; 
+  border-color: #17a2b8 !important;
+  color: white !important;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 4px;
+}
+
+.btn-vieww {
+  width: 30px;
+  height: 30px;
+  padding: 4px 6px;
+  background-color: #ffc107 !important; 
+  border-color: #ffc107 !important;
+  color: black !important;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 4px;
+}
+
+.btn-deletee {
+  width: 30px;
+  height: 30px;
+  padding: 4px 6px;
+  background-color: #dc3545 !important; 
+  border-color: #dc3545 !important;
+  color: white !important;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 4px;
 }

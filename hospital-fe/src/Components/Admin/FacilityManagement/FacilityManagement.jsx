@@ -1,15 +1,19 @@
+
 import React, { useEffect, useState } from 'react';
-import { Button, Spinner, Table, Modal, Form } from 'react-bootstrap';
+import { Button, Spinner, Table, Form } from 'react-bootstrap';
+import { FaEdit, FaEye, FaTrashAlt, FaPlus, FaSpinner, FaSave, FaTimes,FaPlusCircle, FaTimesCircle} from 'react-icons/fa';
 import AdminNavbar from '../Adminnavbar/AdminNavbar';
 import AdminSidebar from '../Adminsidebar/AdminSidebar';
-import './FacilityManagement.css'; // Import your CSS file here
+import './FacilityManagement.css';
 
 const FacilityManagementPage = () => {
   const [facilities, setFacilities] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-  const [showModal, setShowModal] = useState(false);
-  const [showEditModal, setShowEditModal] = useState(false);
+  const [showAddForm, setShowAddForm] = useState(false);
+  const [editingFacility, setEditingFacility] = useState(null);
+  const [viewingFacility, setViewingFacility] = useState(null);
+
   const [formData, setFormData] = useState({
     department_name: '',
     department_details: '',
@@ -21,186 +25,119 @@ const FacilityManagementPage = () => {
     department_opentime: '',
     department_closetime: '',
   });
-  const [currentFacilityId, setCurrentFacilityId] = useState(null);
- const [showDetailsModal, setShowDetailsModal] = useState(false);
-  const [facilityDetails, setFacilityDetails] = useState(null);
-  // Fetch all facilities
+
   const fetchFacilities = () => {
     setLoading(true);
     setError(null);
-
     fetch('http://192.168.0.106:5000/facilityops/getallfacility')
-      .then((response) => response.json())
+      .then((res) => res.json())
       .then((data) => {
-        if (data.error) {
-          setError(data.error);
-        } else {
-          setFacilities(data.data || []); 
-        }
-        setLoading(false);
+        setFacilities(data.data || []);
       })
-      .catch((error) => {
-        setError('Error fetching facilities.');
-        setLoading(false);
-      });
+      .catch(() => setError('Error fetching facilities'))
+      .finally(() => setLoading(false));
   };
 
-  // Fetch facilities on page load
   useEffect(() => {
     fetchFacilities();
   }, []);
 
-  // Handle field changes in the form
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setFormData((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
+    setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  // Handle Edit Facility
-  const handleEditFacility = (e) => {
+  const handleAddFacility = (e) => {
     e.preventDefault();
     setLoading(true);
-    setError(null);
+    const fd = new FormData();
+    Object.entries(formData).forEach(([key, val]) => {
+      const apiKey = key === 'department_status' ? 'departmentstatus' : key;
+      fd.append(apiKey, val);
+    });
 
-    const formDataObj = new FormData();
-
-    // Appending all form fields to the FormData object
-    for (const key in formData) {
-      formDataObj.append(key, formData[key]);
-    }
-
-    formDataObj.append('facilityid', currentFacilityId);
-
-    fetch('http://192.168.0.106:5000/facilityops/updatefacilitydata', {
+    fetch('http://192.168.0.106:5000/facilityopscreate', {
       method: 'POST',
-      body: formDataObj,
+      body: fd,
     })
-      .then((response) => response.json())
-      .then((data) => {
-        if (data.error) {
-          setError(data.error);
+      .then((res) => {
+        if (res.status === 201) {
+          return res.json().then(() => {
+            alert('Facility Created Successfully!');
+            setShowAddForm(false);
+            setFormData({
+              department_name: '',
+              department_details: '',
+              department_hos_id: '',
+              department_head_name: '',
+              department_officialemail: '',
+              department_official_phoneno: '',
+              department_status: '',
+              department_opentime: '',
+              department_closetime: '',
+            });
+            fetchFacilities();
+          });
         } else {
-          alert('Facility Updated Successfully!');
-          setShowEditModal(false); // Close modal after update
-          fetchFacilities(); // Refresh the list of facilities
+          throw new Error('Failed to create facility');
         }
-        setLoading(false);
       })
-      .catch((error) => {
-        setError('Error updating facility.');
-        setLoading(false);
-      });
+      .catch(() => setError('Error creating facility'))
+      .finally(() => setLoading(false));
   };
 
-  // Open modal to edit a facility
-  const openEditModal = (facility) => {
-    setCurrentFacilityId(facility.uid); // Save the facility id
+  const handleDelete = (id) => {
+    const fd = new FormData();
+    fd.append('facilityid', id);
+    setLoading(true);
+
+    fetch('http://192.168.0.106:5000/facilityops/deletefacility', {
+      method: 'POST',
+      body: fd,
+    })
+      .then((res) => res.json())
+      .then(() => {
+        alert('Deleted Successfully');
+        fetchFacilities();
+      })
+      .catch(() => setError('Error deleting facility'))
+      .finally(() => setLoading(false));
+  };
+
+  const handleEdit = (facility) => {
+    setEditingFacility(facility);
     setFormData({
-      department_name: facility.departmentname,
+      department_name: facility.department_name,
       department_details: facility.department_details,
       department_hos_id: facility.department_hos_id,
       department_head_name: facility.department_head_name,
       department_officialemail: facility.department_officialemail,
       department_official_phoneno: facility.department_official_phoneno,
-      departmentstatus: facility.departmentstatus,
+      department_status: facility.departmentstatus || '',
       department_opentime: facility.department_opentime,
       department_closetime: facility.department_closetime,
     });
-    setShowEditModal(true);
   };
 
-  // Handle Delete Facility
-  const handleDeleteFacility = (facilityId) => {
-    setLoading(true);
-    setError(null);
-
-    const formDataObj = new FormData();
-    formDataObj.append('facilityid', facilityId);
-
-    fetch('http://192.168.0.106:5000/facilityops/deletefacility', {
-      method: 'POST',
-      body: formDataObj,
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        if (data.error) {
-          setError(data.error);
-        } else {
-          alert('Facility Deleted Successfully!');
-          fetchFacilities(); // Refresh the list after delete
-        }
-        setLoading(false);
-      })
-      .catch((error) => {
-        setError('Error deleting facility.');
-        setLoading(false);
-      });
-  };
-
-
-
-const handleViewDetails = (facilityId) => {
-  setLoading(true);
-  setError(null);
-
-  const formDataObj = new FormData();
-  formDataObj.append('facilityid', facilityId);
-
-  fetch('http://192.168.0.106:5000/facilityops/getfacilitydetailsbyid', {
-    method: 'POST',
-    body: formDataObj,
-  })
-    .then((response) => response.json())
-    .then((data) => {
-      if (data.error) {
-        setError(data.error);
-        setFacilityDetails(null);
-        setShowDetailsModal(false);
-      } else if (data.payload && data.payload.length > 0) {
-        setFacilityDetails(data.payload[0]); // show first object in payload
-        setShowDetailsModal(true);          // open modal to display details
-      } else {
-        setFacilityDetails(null);
-        setError('No details found.');
-        setShowDetailsModal(false);
-      }
-      setLoading(false);
-    })
-    .catch((error) => {
-      setError('Error fetching facility details.');
-      setLoading(false);
-      setShowDetailsModal(false);
-    });
-};
-
-
-  // Handle Add Facility (New facility creation)
-  const handleAddFacility = (e) => {
+  const handleUpdateFacility = (e) => {
     e.preventDefault();
+    const fd = new FormData();
+    Object.entries(formData).forEach(([key, val]) => {
+      const apiKey = key === 'department_status' ? 'departmentstatus' : key;
+      fd.append(apiKey, val);
+    });
+    fd.append('facilityid', editingFacility.uid);
+
     setLoading(true);
-    setError(null);
-
-    const formDataObj = new FormData();
-
-    // Appending all form fields to the FormData object
-    for (const key in formData) {
-      formDataObj.append(key, formData[key]);
-    }
-
-    fetch('http://192.168.0.106:5000/facilityopscreate', {
+    fetch('http://192.168.0.106:5000/facilityops/updatefacilitydata', {
       method: 'POST',
-      body: formDataObj,
+      body: fd,
     })
-      .then((response) => response.json())
+      .then((res) => res.json())
       .then((data) => {
-        if (data.error) {
-          setError(data.error);
-        } else {
-          alert('Facility Created Successfully!');
-          setShowModal(false); // Close the modal after creation
+        if (data.message?.includes('successfully')) {
+          alert('Facility Updated Successfully!');
+          setEditingFacility(null);
           setFormData({
             department_name: '',
             department_details: '',
@@ -212,14 +149,47 @@ const handleViewDetails = (facilityId) => {
             department_opentime: '',
             department_closetime: '',
           });
-          fetchFacilities(); // Refresh the list of facilities
+          fetchFacilities();
+        } else {
+          alert('Update failed. Please check input values.');
         }
-        setLoading(false);
       })
-      .catch((error) => {
-        setError('Error creating facility.');
-        setLoading(false);
-      });
+      .catch(() => setError('Error updating facility'))
+      .finally(() => setLoading(false));
+  };
+
+  const handleViewDetails = (id) => {
+    const fd = new FormData();
+    fd.append('facilityid', id);
+    setLoading(true);
+
+    fetch('http://192.168.0.106:5000/facilityops/getfacilitydetailsbyid', {
+      method: 'POST',
+      body: fd,
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.payload && data.payload.length > 0) {
+          const raw = data.payload[0];
+          const normalized = {
+            department_name: raw.Department_Name,
+            department_details: raw.Department_details,
+            department_hos_id: raw.hospital_assignedid,
+            department_head_name: raw.Department_head_name,
+            department_officialemail: raw.Department_email,
+            department_official_phoneno: raw.Department_phoneno,
+            department_status: raw["Department status"],
+            department_opentime: raw["Department Opentime"],
+            department_closetime: raw["Department Closetime"],
+            facilityid: raw.departmentid,
+          };
+          setViewingFacility(normalized);
+        } else {
+          alert('No details found.');
+        }
+      })
+      .catch(() => setError('Error viewing details'))
+      .finally(() => setLoading(false));
   };
 
   return (
@@ -227,301 +197,199 @@ const handleViewDetails = (facilityId) => {
       <AdminNavbar />
       <div className="facility-management-content">
         <AdminSidebar />
-        <div className="container">
+        <div className="container-facility">
           <h2>Facility Management</h2>
 
+          {loading && <div className="loading-overlay"><FaSpinner className="spin large" /></div>}
           {error && <div className="alert alert-danger">{error}</div>}
 
-          <Button variant="primary" onClick={() => setShowModal(true)} style={{marginLeft:'100px'}}>
-            Add Facility
+          <Button
+            onClick={() => {
+              if (!showAddForm) {
+                setFormData({
+                  department_name: '',
+                  department_details: '',
+                  department_hos_id: '',
+                  department_head_name: '',
+                  department_officialemail: '',
+                  department_official_phoneno: '',
+                  department_status: '',
+                  department_opentime: '',
+                  department_closetime: '',
+                });
+              }
+              setShowAddForm(!showAddForm);
+            }}
+            style={{
+              backgroundColor: '#28a745',
+              color: '#fff',
+              padding: '6px 12px',
+              borderRadius: '4px',
+              fontWeight: '600',
+              width: '120px',
+              justifyContent: 'center',
+              fontSize: '14px',
+              display: 'flex',
+              alignItems: 'center',
+              border: 'none',
+              marginBottom: '15px'
+            }}
+          >
+            <FaPlus style={{ marginRight: '6px' }} />
+            {showAddForm ? 'Hide Form' : 'Add Facility'}
           </Button>
 
-          {loading ? (
-            <Spinner animation="border" variant="primary" />
-          ) : (
-            <Table striped bordered hover className="mt-3">
-              <thead style={{ backgroundColor: 'lightblue' }}>
-                <tr>
-                  <th>Department Name</th>
-                  <th>Open Time</th>
-                  <th>Close Time</th>
-                  <th>Status</th>
-                  <th>Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                {facilities.length > 0 ? (
-                  facilities.map((facility) => (
-                    <tr key={facility.uid}>
-                      <td>{facility.department_name}</td>
-                      <td>{facility.department_opentime || 'N/A'}</td>
-                      <td>{facility.department_closetime || 'N/A'}</td>
-                      <td>{facility.departmentstatus || 'N/A'}</td>
-                      <td>
-                        <Button variant="info" onClick={() => openEditModal(facility)}>
-                          Edit
-                        </Button>
-                       <Button
-  variant="info"
-  style={{ backgroundColor: 'orange' }}
-  onClick={() => handleViewDetails(facility.uid)}
+          {showAddForm && (
+            <Form onSubmit={handleAddFacility} className="popup-form" style={{ backgroundColor: "#e0f7fa", padding: "20px", borderRadius: "8px" }}>
+              {Object.entries(formData).map(([key, val]) => (
+                <Form.Group key={key} controlId={key}>
+                  <Form.Label>{key.replace(/_/g, ' ')}</Form.Label>
+                  <Form.Control
+                    type="text"
+                    name={key}
+                    value={val}
+                    onChange={handleInputChange}
+                  />
+                </Form.Group>
+              ))}
+              {/* <Button type="submit">Create</Button>{' '}
+              <Button type="button" variant="secondary" onClick={() => setShowAddForm(false)}>
+                Close
+              </Button> */}
+              <Button
+  type="submit"
+  style={{
+    backgroundColor: '#007bff',       // blue
+    color: '#fff',
+    border: 'none',
+    padding: '6px 12px',
+    borderRadius: '4px',
+    marginRight: '10px',
+    display: 'flex',
+    alignItems: 'center',
+    gap: '6px',
+    width: '100px',                   // narrower width
+    justifyContent: 'center',         // center icon+text
+    fontSize: '14px',
+  }}
 >
-  View Details
+  <FaPlusCircle />
+  Create
 </Button>
 
-                    <Modal show={showDetailsModal} onHide={() => setShowDetailsModal(false)}>
-  <Modal.Header closeButton>
-    <Modal.Title>Facility Details</Modal.Title>
-  </Modal.Header>
-  <Modal.Body>
-    {facilityDetails ? (
-      <div>
-        <p><strong>Department Name:</strong> {facilityDetails["Department_Name"] || 'N/A'}</p>
-        <p><strong>Details:</strong> {facilityDetails["Department_details"] || 'N/A'}</p>
-        <p><strong>Hospital ID:</strong> {facilityDetails["hospital_assignedid"] || 'N/A'}</p>
-        <p><strong>Department Head:</strong> {facilityDetails["Department_head_name"] || 'N/A'}</p>
-        <p><strong>Official Email:</strong> {facilityDetails["Department_email"] || 'N/A'}</p>
-        <p><strong>Official Phone No:</strong> {facilityDetails["Department_phoneno"] || 'N/A'}</p>
-        <p><strong>Status:</strong> {facilityDetails["Department status"] || 'N/A'}</p>
-        <p><strong>Open Time:</strong> {facilityDetails["Department Opentime"] || 'N/A'}</p>
-        <p><strong>Close Time:</strong> {facilityDetails["Department Closetime"] || 'N/A'}</p>
-        <p><strong>Created At:</strong> {new Date(facilityDetails["Created At"]).toLocaleString() || 'N/A'}</p>
-      </div>
-    ) : (
-      <p>No details available.</p>
-    )}
-  </Modal.Body>
-  <Modal.Footer>
-    <Button variant="secondary" onClick={() => setShowDetailsModal(false)}>
-      Close
-    </Button>
-  </Modal.Footer>
-</Modal>
+<Button
+  type="button"
+  onClick={() => setShowAddForm(false)}
+  style={{
+    backgroundColor: '#dc3545',       // red
+    color: '#fff',
+    border: 'none',
+    padding: '6px 12px',
+    borderRadius: '4px',
+    display: 'flex',
+    alignItems: 'center',
+    gap: '6px',
+    width: '100px',                   // same width
+    justifyContent: 'center',
+    fontSize: '14px',
+  }}
+>
+  <FaTimesCircle />
+  Close
+</Button>
 
-                        <Button variant="danger" onClick={() => handleDeleteFacility(facility.uid)}>
-                          Delete
-                        </Button>
-                      </td>
-                    </tr>
-                  ))
-                ) : (
-                  <tr>
-                    <td colSpan="5">No facilities found.</td>
-                  </tr>
-                )}
-              </tbody>
-            </Table>
+            </Form>
           )}
+
+          {editingFacility && (
+            <div className="popup-card">
+              <h4>Edit Facility</h4>
+              <Form onSubmit={handleUpdateFacility} style={{ backgroundColor: "#e0f7fa", padding: "20px", borderRadius: "8px" }}>
+                {Object.entries(formData).map(([key, val]) => (
+                  <Form.Group key={key} controlId={key}>
+                    <Form.Label>{key.replace(/_/g, ' ')}</Form.Label>
+                    <Form.Control
+                      type="text"
+                      name={key}
+                      value={val}
+                      onChange={handleInputChange}
+                    />
+                  </Form.Group>
+                ))}
+                <div style={{ marginTop: '10px' }}>
+                  <Button type="submit" variant="primary">
+                    <FaSave /> Save
+                  </Button>{' '}
+                  <Button variant="secondary" onClick={() => setEditingFacility(null)}>
+                    <FaTimes /> Cancel
+                  </Button>
+                </div>
+              </Form>
+            </div>
+          )}
+
+          {viewingFacility && (
+            <div className="popup-card view-card" style={{ backgroundColor: "#e0f7fa", padding: "20px", borderRadius: "8px" }}>
+              <h4>Facility Details</h4>
+              {Object.entries(viewingFacility).map(([key, val]) => (
+                <p key={key}>
+                  <strong>{key.replace(/_/g, ' ')}:</strong> {String(val)}
+                </p>
+              ))}
+              <Button variant="secondary" onClick={() => setViewingFacility(null)}>
+                <FaTimes />
+              </Button>
+            </div>
+          )}
+
+          <Table striped bordered hover responsive className="mt-4">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Open Time</th>
+                <th>Close Time</th>
+                <th>Status</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {facilities.map((fac) => (
+                <tr key={fac.uid}>
+                  <td>{fac.department_name}</td>
+                  <td>{fac.department_opentime}</td>
+                  <td>{fac.department_closetime}</td>
+                  <td>{fac.departmentstatus}</td>
+                  <td>
+                    <Button size="sm" className="btn-editt" onClick={() => handleEdit(fac)}><FaEdit /></Button>{' '}
+                    <Button size="sm" className="btn-vieww" onClick={() => handleViewDetails(fac.uid)}><FaEye /></Button>{' '}
+                    <Button size="sm" className="btn-deletee" onClick={() => handleDelete(fac.uid)}><FaTrashAlt /></Button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </Table>
+
+          {/* Mobile Card View */}
+          <div className="facility-cards d-md-none">
+            {facilities.map((fac) => (
+              <div key={fac.uid} className="facility-card">
+                <h5>{fac.department_name}</h5>
+                <p><strong>Open Time:</strong> {fac.department_opentime}</p>
+                <p><strong>Close Time:</strong> {fac.department_closetime}</p>
+                <p><strong>Status:</strong> {fac.departmentstatus}</p>
+                <div className="card-actions">
+                  <Button size="sm" className="btn-editt" onClick={() => handleEdit(fac)}><FaEdit /></Button>{' '}
+                  <Button size="sm" className="btn-vieww" onClick={() => handleViewDetails(fac.uid)}><FaEye /></Button>{' '}
+                  <Button size="sm" className="btn-deletee" onClick={() => handleDelete(fac.uid)}><FaTrashAlt /></Button>
+                </div>
+              </div>
+            ))}
+          </div>
+
         </div>
       </div>
-
-    
-      <Modal show={showModal} onHide={() => setShowModal(false)}>
-        <Modal.Header closeButton>
-          <Modal.Title > Add Facility</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <Form onSubmit={handleAddFacility}>
-            <Form.Group controlId="department_name">
-              <Form.Label>Department Name</Form.Label>
-              <Form.Control
-                type="text"
-                name="department_name"
-                value={formData.department_name}
-                onChange={handleInputChange}
-                required
-              />
-            </Form.Group>
-            <Form.Group controlId="department_details">
-              <Form.Label>Department Details</Form.Label>
-              <Form.Control
-                type="text"
-                name="department_details"
-                value={formData.department_details}
-                onChange={handleInputChange}
-                required
-              />
-            </Form.Group>
-            <Form.Group controlId="department_hos_id">
-              <Form.Label>Hospital ID</Form.Label>
-              <Form.Control
-                type="text"
-                name="department_hos_id"
-                value={formData.department_hos_id}
-                onChange={handleInputChange}
-              />
-            </Form.Group>
-            <Form.Group controlId="department_head_name">
-              <Form.Label>Department Head</Form.Label>
-              <Form.Control
-                type="text"
-                name="department_head_name"
-                value={formData.department_head_name}
-                onChange={handleInputChange}
-              />
-            </Form.Group>
-            <Form.Group controlId="department_officialemail">
-              <Form.Label>Official Email</Form.Label>
-              <Form.Control
-                type="email"
-                name="department_officialemail"
-                value={formData.department_officialemail}
-                onChange={handleInputChange}
-              />
-            </Form.Group>
-            <Form.Group controlId="department_official_phoneno">
-              <Form.Label>Official Phone No.</Form.Label>
-              <Form.Control
-                type="text"
-                name="department_official_phoneno"
-                value={formData.department_official_phoneno}
-                onChange={handleInputChange}
-              />
-            </Form.Group>
-            <Form.Group controlId="department_status">
-              <Form.Label>Status</Form.Label>
-              <Form.Control
-                type="text"
-                name="department_status"
-                value={formData.department_status}
-                onChange={handleInputChange}
-              />
-            </Form.Group>
-            <Form.Group controlId="department_opentime">
-              <Form.Label>Open Time</Form.Label>
-              <Form.Control
-                type="text"
-                name="department_opentime"
-                value={formData.department_opentime}
-                onChange={handleInputChange}
-              />
-            </Form.Group>
-            <Form.Group controlId="department_closetime">
-              <Form.Label>Close Time</Form.Label>
-              <Form.Control
-                type="text"
-                name="department_closetime"
-                value={formData.department_closetime}
-                onChange={handleInputChange}
-              />
-            </Form.Group>
-            <Button variant="primary" type="submit" disabled={loading}>
-              {loading ? 'Creating Facility...' : 'Create Facility'}
-            </Button>
-          </Form>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={() => setShowModal(false)}>
-            Close
-          </Button>
-        </Modal.Footer>
-      </Modal>
-
-      {/* Facility Modal for Edit */}
-      <Modal show={showEditModal} onHide={() => setShowEditModal(false)}>
-        <Modal.Header closeButton>
-          <Modal.Title>Edit Facility</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <Form onSubmit={handleEditFacility}>
-            <Form.Group controlId="department_name">
-              <Form.Label>Department Name</Form.Label>
-              <Form.Control
-                type="text"
-                name="departmentname"
-                value={formData.department_name}
-                onChange={handleInputChange}
-                required
-              />
-            </Form.Group>
-            <Form.Group controlId="department_details">
-              <Form.Label>Department Details</Form.Label>
-              <Form.Control
-                type="text"
-                name="department_details"
-                value={formData.department_details}
-                onChange={handleInputChange}
-                required
-              />
-            </Form.Group>
-            <Form.Group controlId="department_hos_id">
-              <Form.Label>Hospital ID</Form.Label>
-              <Form.Control
-                type="text"
-                name="department_hos_id"
-                value={formData.department_hos_id}
-                onChange={handleInputChange}
-              />
-            </Form.Group>
-            <Form.Group controlId="department_head_name">
-              <Form.Label>Department Head</Form.Label>
-              <Form.Control
-                type="text"
-                name="department_head_name"
-                value={formData.department_head_name}
-                onChange={handleInputChange}
-              />
-            </Form.Group>
-            <Form.Group controlId="department_officialemail">
-              <Form.Label>Official Email</Form.Label>
-              <Form.Control
-                type="email"
-                name="department_officialemail"
-                value={formData.department_officialemail}
-                onChange={handleInputChange}
-              />
-            </Form.Group>
-            <Form.Group controlId="department_official_phoneno">
-              <Form.Label>Official Phone No.</Form.Label>
-              <Form.Control
-                type="text"
-                name="department_official_phoneno"
-                value={formData.department_official_phoneno}
-                onChange={handleInputChange}
-              />
-            </Form.Group>
-            <Form.Group controlId="departmentstatus">
-              <Form.Label>Status</Form.Label>
-              <Form.Control
-                type="text"
-                name="departmentstatus"
-                value={formData.department_status}
-                onChange={handleInputChange}
-              />
-            </Form.Group>
-            <Form.Group controlId="department_opentime">
-              <Form.Label>Open Time</Form.Label>
-              <Form.Control
-                type="text"
-                name="department_opentime"
-                value={formData.department_opentime}
-                onChange={handleInputChange}
-              />
-            </Form.Group>
-            <Form.Group controlId="department_closetime">
-              <Form.Label>Close Time</Form.Label>
-              <Form.Control
-                type="text"
-                name="department_closetime"
-                value={formData.department_closetime}
-                onChange={handleInputChange}
-              />
-            </Form.Group>
-            <Button variant="primary" type="submit" disabled={loading}>
-              {loading ? 'Updating Facility...' : 'Update Facility'}
-            </Button>
-          </Form>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={() => setShowEditModal(false)}>
-            Close
-          </Button>
-        </Modal.Footer>
-      </Modal>
     </div>
   );
 };
 
 export default FacilityManagementPage;
-
-
