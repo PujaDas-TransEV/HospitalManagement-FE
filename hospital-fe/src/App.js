@@ -238,6 +238,7 @@ import Footer from './Components/Footer/Footer';
 import GuestDashboardWrapper from './Components/Guest/GuestDashboard';
 import Guestlabreport from './Components/Guest/Guestlabreport.jsx/labreport';
 import GuestPrescription from './Components/Guest/GuestPrescription/Prescription';
+
 // ✅ Conditional Navbar using path matching
 const ConditionalNavbar = () => {
   const location = useLocation();

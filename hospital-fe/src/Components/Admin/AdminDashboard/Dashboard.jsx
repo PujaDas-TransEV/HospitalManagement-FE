@@ -110,9 +110,9 @@ const AdminDashboard = () => {
           <Col md={4} xs={12}>
             <Card className="card-doctors">
               <Card.Body>
-                <FaUserMd className="card-icon" />
-                <h5>Doctors</h5>
-                <p>{loading ? <Spinner animation="border" size="sm" /> : doctors.length}</p>
+                <FaUserMd className="card-icon" color="yellow"/>
+                <h5  >Doctors</h5>
+                <p >{loading ? <Spinner animation="border" size="sm" /> : doctors.length}</p>
               </Card.Body>
             </Card>
           </Col>
@@ -120,23 +120,28 @@ const AdminDashboard = () => {
             <Card className="card-patients">
               <Card.Body>
                 <FaUserInjured className="card-icon" />
-                <h5>Patients</h5>
-                <p>{loading ? <Spinner animation="border" size="sm" /> : patients.length}</p>
+                {/* <h5>Patients</h5>
+                <p>{loading ? <Spinner animation="border" size="sm" /> : patients.length}</p> */}
+                <h5 >Patients</h5>
+<p >
+  {loading ? <Spinner animation="border" size="sm" /> : patients.length}
+</p>
+
               </Card.Body>
             </Card>
           </Col>
           <Col md={4} xs={12}>
             <Card className="card-appointments">
               <Card.Body>
-                <FaCalendarAlt className="card-icon" />
-                <h5>Upcoming Appointments</h5>
-                <p>{loading ? <Spinner animation="border" size="sm" /> : upcomingCount}</p>
+                <FaCalendarAlt className="card-icon" color="pink"/>
+                <h5  >Upcoming Appointments</h5>
+                <p >{loading ? <Spinner animation="border" size="sm" /> : upcomingCount}</p>
               </Card.Body>
             </Card>
           </Col>
         </Row>
 
-        <Card className="mt-4 recent-activity-card">
+        {/* <Card className="mt-4 recent-activity-card">
           <Card.Header>Recent Activity</Card.Header>
           <Card.Body>
             {loading ? <Spinner /> : (
@@ -149,7 +154,27 @@ const AdminDashboard = () => {
                 : <p>No recent activity.</p>
             )}
           </Card.Body>
-        </Card>
+        </Card> */}
+        <Card className="mt-4 recent-activity-card">
+  <Card.Header>Recent Activity</Card.Header>
+  <Card.Body>
+    {loading ? (
+      <div className="activity-loading">
+        <Spinner animation="border" variant="primary" />
+        <span className="ms-2">Loading activity...</span>
+      </div>
+    ) : recentActivity.length ? (
+      recentActivity.map((a, i) => (
+        <div key={i} className="activity-entry">
+          <strong>Dr. {a.doctor_fullname}</strong> with <strong>{a.patient_firstname} {a.patient_lastname}</strong> — {a.appoinmentstatus}
+        </div>
+      ))
+    ) : (
+      <p>No recent activity.</p>
+    )}
+  </Card.Body>
+</Card>
+
       </Container>
     </div>
   );

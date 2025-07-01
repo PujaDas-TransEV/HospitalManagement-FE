@@ -157,3 +157,13 @@
   border-radius: 6px;
   margin-bottom: 10px;
 }
+.activity-loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 1rem 0;
+  color: #007bff;
+  font-weight: 500;
+  margin-right: 600px;
+}
