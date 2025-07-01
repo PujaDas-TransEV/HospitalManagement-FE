@@ -1,152 +1,170 @@
-
-.dashboard-container {
+/* Main container */
+.dashboard-container-admin {
   display: flex;
   flex-direction: column;
-  min-height: 100vh;
-  /* background-color: #f8fafc; */
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-image: url('../../Assests/background.jpg'); /* Make sure path is correct */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  min-height:150vh;
+}
+.dashboard-container-admin::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 150vh; /* make overlay 1.5 times viewport height */
+  background-color: rgba(255,255,255,0.8);
+  z-index: 2;
 }
 
-/* Content area with sidebar and main content */
-.dashboard-content {
+
+
+/* Content layout */
+.dashboard-content-admin {
   display: flex;
-  flex: 1;
+  /* flex-grow: 1; */
   padding: 20px;
-  gap: 20px;
-  /* background-color: #fff; */
+  justify-content: center;
 }
 
-/* Admin settings page main wrapper */
-.admin-settings-page {
-  flex-grow: 1;
-  padding: 20px;
-  background-color: #ffffff;
-  border-radius: 8px;
-  box-shadow: 0 2px 8px rgb(0 0 0 / 0.1);
-  max-width: 100%;
-  box-sizing: border-box;
+/* Settings container */
+.settings-container-admin {
+  background-color: rgba(255, 255, 255, 0.97);
+  border-radius: 15px;
+  padding: 30px 40px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  max-width: 850px;
+  width: 100%;
+  margin-top: 60px;
+  z-index: 2;
 }
 
-/* Header */
-.settings-header h2 {
-  margin-bottom: 25px;
-  font-size: 28px;
-  font-weight: 600;
-  color: #222;
+/* Title */
+.settings-title-admin {
+  font-size: 2.3rem;
+  margin-bottom: 30px;
   text-align: center;
+  color: #2c3e50;
+  font-weight: 700;
 }
 
-/* Grid layout for settings cards */
-.settings-container {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 25px;
+/* Each settings section */
+.settings-section-admin {
+  padding: 25px;
+  border-radius: 12px;
+  margin-bottom: 30px;
+  background-color: rgba(220, 230, 242, 0.9);
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.07);
 }
 
-/* Individual settings card */
-.settings-card {
-  background: #fefefe;
-  padding: 20px 25px;
-  border-radius: 8px;
-  box-shadow: 0 1px 6px rgb(0 0 0 / 0.1);
+/* Hospital Info specific */
+.hospital-info {
+  background-color: rgba(230, 245, 242, 0.95);
 }
 
-.settings-card h3 {
+/* Section titles */
+.section-title-admin {
+  font-size: 1.6rem;
+  margin-bottom: 20px;
+  color: #1b3a57;
   font-weight: 600;
-  font-size: 20px;
+}
+
+/* Settings fields */
+.settings-field-admin {
+  display: flex;
+  flex-direction: column;
   margin-bottom: 15px;
+}
+
+.settings-field-admin label {
+  font-weight: 600;
+  margin-bottom: 6px;
   color: #333;
 }
 
-/* Label and input container */
-.settings-field {
-  margin-bottom: 15px;
-}
-
-.settings-field label {
-  display: block;
-  margin-bottom: 6px;
-  font-weight: 500;
-  color: #555;
-  font-size: 14px;
-}
-
-/* Input fields */
-.settings-field input {
-  width: 100%;
+.settings-field-admin input {
   padding: 10px 12px;
-  font-size: 14px;
-  border: 1.5px solid #ccc;
+  border: 1.8px solid #c4d0db;
   border-radius: 6px;
-  transition: border-color 0.2s ease;
-  outline-offset: 2px;
+  font-size: 1rem;
+  transition: border-color 0.3s;
 }
 
-.settings-field input:focus {
-  border-color: #007bff;
+.settings-field-admin input:focus {
+  border-color: #1e88e5;
   outline: none;
-  box-shadow: 0 0 4px #007bffaa;
 }
 
 /* Buttons */
-.btn {
-  padding: 10px 22px;
-  font-size: 15px;
+.action-button-admin,
+.delete-button-admin {
+  padding: 12px 25px;
+  font-size: 1.1rem;
   font-weight: 600;
-  border-radius: 6px;
   border: none;
+  border-radius: 8px;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  transition: background-color 0.25s ease;
+  margin-top: 10px;
   display: inline-block;
-  color: #fff;
-  background-color: #007bff;
-  box-shadow: 0 2px 6px rgb(0 123 255 / 0.5);
 }
 
-.btn:hover {
-  background-color: #0056b3;
-  box-shadow: 0 3px 9px rgb(0 86 179 / 0.7);
+.action-button-admin {
+  background-color: #1e88e5;
+  color: white;
 }
 
-/* Danger button for delete */
-.btn-danger {
-  background-color: #dc3545;
-  box-shadow: 0 2px 6px rgb(220 53 69 / 0.5);
+.action-button-admin:hover {
+  background-color: #1565c0;
 }
 
-.btn-danger:hover {
-  background-color: #b02a37;
-  box-shadow: 0 3px 9px rgb(176 42 55 / 0.7);
+.delete-button-admin {
+  background-color: #e53935;
+  color: white;
+}
+
+.delete-button-admin:hover {
+  background-color: #ab2a26;
 }
 
 /* Deletion status messages */
-.deletion-status {
-  margin-top: 14px;
+.deletion-status-admin {
+  margin-top: 15px;
   font-weight: 600;
-  font-size: 14px;
-  text-align: center;
+  font-size: 1rem;
 }
 
-.deletion-status.success {
-  color: #198754; /* green */
+.deletion-status-admin.success {
+  color: #2e7d32;
+  background-color: #d0f0d8;
+  padding: 10px 15px;
+  border-radius: 8px;
 }
 
-.deletion-status.error {
-  color: #dc3545; /* red */
+.deletion-status-admin.error {
+  color: #c62828;
+  background-color: #f9d6d5;
+  padding: 10px 15px;
+  border-radius: 8px;
 }
 
-/* Responsive adjustments */
+/* Responsive */
 @media (max-width: 768px) {
-  .dashboard-content {
-    flex-direction: column;
-    padding: 15px;
+  .settings-container-admin {
+    padding: 20px;
+    margin: 10px;
   }
 
-  .settings-container {
-    grid-template-columns: 1fr;
+  .settings-section-admin {
+    padding: 20px;
   }
 
-  .admin-settings-page {
-    padding: 15px;
+  .action-button-admin,
+  .delete-button-admin {
+    width: 100%;
   }
 }
