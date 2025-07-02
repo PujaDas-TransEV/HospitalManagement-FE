@@ -1,299 +1,326 @@
+
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import {
+  FaPlusCircle,
+  FaSearch,
+  FaTrashAlt,
+  FaTimes,
+  FaSpinner
+} from 'react-icons/fa';
 import './RoomManagement.css';
 import AdminNavbar from '../Adminnavbar/AdminNavbar';
 import AdminSidebar from '../Adminsidebar/AdminSidebar';
-import { useNavigate } from 'react-router-dom'; // Import useNavigate
 
 const RoomManagementPage = () => {
-  const [wardId, setWardId] = useState(''); // to store selected ward ID
-  const [wardName, setWardName] = useState(''); // to store the selected ward name
+  const [wardId, setWardId] = useState('');
+  const [wards, setWards] = useState([]);
   const [roomNumber, setRoomNumber] = useState('');
-  const [roomType, setRoomType] = useState(''); // room type dropdown
+  const [roomType, setRoomType] = useState('');
   const [capacity, setCapacity] = useState('');
   const [roomIdSearch, setRoomIdSearch] = useState('');
   const [roomDetails, setRoomDetails] = useState(null);
+  const [allRooms, setAllRooms] = useState([]);
+  const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
   const [successMessage, setSuccessMessage] = useState('');
-  const [createdRoomId, setCreatedRoomId] = useState(''); // store created room_id
-  const [allRooms, setAllRooms] = useState([]);
-  const [wards, setWards] = useState([]); // to store list of wards
+  const [showCreateModal, setShowCreateModal] = useState(false);
 
-  const navigate = useNavigate(); // Initialize the navigate hook
-
-  // Fetch all wards on component load
   useEffect(() => {
     fetchWards();
     fetchAllRooms();
   }, []);
 
-  // Function to fetch all wards
   const fetchWards = async () => {
     try {
-      const response = await axios.get('http://192.168.0.106:5000/ops/getallward');
-      if (response.data && Array.isArray(response.data.data)) {
-        setWards(response.data.data); // save wards in state
-      }
-    } catch (error) {
+      const res = await axios.get('http://192.168.0.106:5000/ops/getallward');
+      setWards(Array.isArray(res.data.data) ? res.data.data : []);
+    } catch {
       setErrorMessage('Failed to fetch wards.');
     }
   };
 
-  // Function to fetch all rooms
   const fetchAllRooms = async () => {
+    setLoading(true);
     try {
-      const response = await axios.get('http://192.168.0.106:5000/ops/getallrooms');
-      const data = Array.isArray(response.data.data) ? response.data.data : [];
-      setAllRooms(data); // Save all rooms in state
-    } catch (error) {
+      const res = await axios.get('http://192.168.0.106:5000/ops/getallrooms');
+      setAllRooms(Array.isArray(res.data.data) ? res.data.data : []);
+    } catch {
       setErrorMessage('Failed to fetch rooms.');
+    } finally {
+      setLoading(false);
     }
   };
 
-  // Handle Room creation
-  const handleRoomCreate = async (e) => {
+  const handleRoomCreate = async e => {
     e.preventDefault();
-
     if (!wardId || !roomNumber || !roomType || !capacity) {
       setErrorMessage('All fields are required.');
       return;
     }
-
-    const formData = new FormData();
-    formData.append('ward_id', wardId);
-    formData.append('room_number', roomNumber);
-    formData.append('room_type', roomType);
-    formData.append('capacity', capacity);
-
     try {
-      const response = await axios.post('http://192.168.0.106:5000/ops/roomfacilitycreate', formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data'
-        }
-      });
+      const fd = new FormData();
+      fd.append('ward_id', wardId);
+      fd.append('room_number', roomNumber);
+      fd.append('room_type', roomType);
+      fd.append('capacity', capacity);
 
-      if (response.status === 201) {
-        setSuccessMessage(`Room created successfully! Room ID: ${response.data.uid}`);
-        setCreatedRoomId(response.data.uid); // store the created room ID
-        setWardId('');
+      const res = await axios.post(
+        'http://192.168.0.106:5000/ops/roomfacilitycreate',
+        fd
+      );
+      if (res.status === 201) {
+        setSuccessMessage(`Room created Successfully`);
         setRoomNumber('');
         setRoomType('');
         setCapacity('');
-        fetchAllRooms();  // Refresh the room list after creation
+        setWardId('');
+        fetchAllRooms();
+        setShowCreateModal(false);
       }
-    } catch (error) {
-      setErrorMessage('Failed to create room. Please try again.');
+    } catch {
+      setErrorMessage('Failed to create room.');
     }
   };
 
-  // Handle search for room by ID
   const handleSearchByRoomId = async () => {
-    if (!roomIdSearch) {
-      setErrorMessage('Please enter a Room ID.');
+    if (!roomIdSearch.trim()) {
+      setErrorMessage('Please enter Room ID.');
       return;
     }
-
-    const formData = new FormData();
-    formData.append('roomid', roomIdSearch);
-
+    setLoading(true);
     try {
-      const response = await axios.post('http://192.168.0.106:5000/ops/getroombyid', formData);
-      
-      if (response.data && response.data.data && response.data.data.length > 0) {
-        setRoomDetails(response.data.data[0]);
+      const fd = new FormData();
+      fd.append('roomid', roomIdSearch.trim());
+      const res = await axios.post(
+        'http://192.168.0.106:5000/ops/getroombyid',
+        fd
+      );
+      if (res.data.data?.length > 0) {
+        setRoomDetails(res.data.data[0]);
         setErrorMessage('');
       } else {
+        setRoomDetails(null);
         setErrorMessage('Room not found.');
-        setRoomDetails(null); // Reset room details if not found
       }
-    } catch (error) {
-      setErrorMessage('Failed to fetch room details. Please try again.');
-      setRoomDetails(null); // Reset room details on error
+    } catch {
+      setRoomDetails(null);
+      setErrorMessage('Search failed.');
+    } finally {
+      setLoading(false);
     }
   };
 
-  // Handle Ward selection
-  const handleWardSelect = (event) => {
-    const selectedWard = wards.find(ward => ward.wardname === event.target.value);
-    setWardId(selectedWard ? selectedWard.uid : '');
-    setWardName(event.target.value);
-  };
-
-  // Handle Room Type selection
-  const handleRoomTypeSelect = (event) => {
-    setRoomType(event.target.value);
-  };
-
-  // Handle delete room
-  const handleDeleteRoom = async (roomId) => {
-    const formData = new FormData();
-    formData.append('roomid', roomId);
-
+  const handleDeleteRoom = async id => {
+    if (!window.confirm('Are you sure you want to delete this room?')) return;
     try {
-      const response = await axios.post('http://192.168.0.106:5000/ops/deleteroom', formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data'
-        }
-      });
-
-      if (response.status === 200) {
+      const fd = new FormData();
+      fd.append('roomid', id);
+      const res = await axios.post(
+        'http://192.168.0.106:5000/ops/deleteroom',
+        fd
+      );
+      if (res.status === 200) {
         setSuccessMessage('Room deleted successfully!');
-        fetchAllRooms();  // Refresh the room list after deletion
+        setRoomDetails(prev => (prev?.uid === id ? null : prev));
+        fetchAllRooms();
       }
-    } catch (error) {
-      setErrorMessage('Failed to delete room. Please try again.');
+    } catch {
+      setErrorMessage('Failed to delete room.');
     }
-  };
-
-  // Navigate to the Patient Admission Page when button is clicked
-  const handlePatientAdmissionRedirect = () => {
-    navigate('/patient-admission'); // Redirect to Patient Admission page
   };
 
   return (
-    <div className="room-management-page">
+    <div className="room-management-wrapper">
       <AdminNavbar />
       <div className="room-management-content">
         <AdminSidebar />
 
-        <div className="container">
-          <h2 className="page-title">Room Management</h2>
+        <div className="room-container">
+          <h2>🏨 Room Management</h2>
+          {errorMessage && <div className="error-message">{errorMessage}</div>}
+          {successMessage && (
+            <div className="success-message">{successMessage}</div>
+          )}
 
-          {/* Error Message */}
-          {errorMessage && <div className="error">{errorMessage}</div>}
-
-          {/* Success Message */}
-          {successMessage && <div className="success">{successMessage}</div>}
-
-          {/* Patient Admission Button */}
-          <div className="patient-admission-btn">
-            <button onClick={handlePatientAdmissionRedirect} className="btn">
-              Go to Patient Admission
+          <div className="controls-row">
+            <button
+              className="btn create-btn"
+              onClick={() => setShowCreateModal(true)}
+            >
+              <FaPlusCircle /> Create Room
             </button>
+
+            <div className="search-wrapper">
+              <input
+                type="text"
+                style={{
+          backgroundColor: "#e0f7fa",
+         
+        }}
+                placeholder="Search Room by ID"
+                value={roomIdSearch}
+                onChange={e => setRoomIdSearch(e.target.value)}
+                onKeyDown={e => e.key === 'Enter' && handleSearchByRoomId()}
+              />
+              <button
+                className="btn search-btn"
+                onClick={handleSearchByRoomId}
+              >
+                <FaSearch />
+              </button>
+            </div>
           </div>
 
-          {/* Search Section */}
-          <div className="search-section">
-            <h3>Search Room by ID</h3>
-            <input
-              type="text"
-              placeholder="Enter Room ID"
-              value={roomIdSearch}
-              onChange={(e) => setRoomIdSearch(e.target.value)}
-            />
-            <button onClick={handleSearchByRoomId} className="btn">Search</button>
+          {roomDetails && (
+            <div className="room-details-card">
+              <button className="close-btn" onClick={() => setRoomDetails(null)}>
+                &times;
+              </button>
+              <h3>Room Details</h3>
+              <p><strong>ID:</strong> {roomDetails.uid}</p>
+              <p><strong>Number:</strong> {roomDetails.room_number}</p>
+              <p><strong>Type:</strong> {roomDetails.room_type}</p>
+              <p><strong>Capacity:</strong> {roomDetails.capacity}</p>
+              <p><strong>Ward ID:</strong> {roomDetails.room_ward_id}</p>
+              <button
+                className="btn btn-delete"
+                onClick={() => handleDeleteRoom(roomDetails.uid)}
+              >
+                <FaTrashAlt /> 
+              </button>
+            </div>
+          )}
 
-            {/* Display Room Details */}
-            {roomDetails && (
-              <div className="room-details">
-                <h4>Room Details</h4>
-                <p><strong>Room ID:</strong> {roomDetails.uid}</p>
-                <p><strong>Room Number:</strong> {roomDetails.room_number}</p>
-                <p><strong>Room Type:</strong> {roomDetails.room_type}</p>
-                <p><strong>Capacity:</strong> {roomDetails.capacity}</p>
-                <p><strong>Ward ID:</strong> {roomDetails.room_ward_id}</p>
-              </div>
-            )}
-          </div>
+          {loading && (
+            <div className="spinner-wrapper">
+              <FaSpinner className="loading-spinner" />
+            </div>
+          )}
 
-          {/* Room Creation Form */}
-          <div className="card form-container">
-            <h3>Create a New Room</h3>
-            <form onSubmit={handleRoomCreate}>
-              <div className="form-group">
-                <label htmlFor="wardId">Ward Name</label>
-                <select
-                  id="wardId"
-                  value={wardName}
-                  onChange={handleWardSelect}
-                >
-                  <option value="">Select Ward</option>
-                  {wards.map((ward) => (
-                    <option key={ward.uid} value={ward.wardname}>
-                      {ward.wardname} - {ward.wardlocation} ({ward.capacity} beds)
-                    </option>
-                  ))}
-                </select>
-              </div>
-
-              <div className="form-group">
-                <label htmlFor="roomType">Room Type</label>
-                <select
-                  id="roomType"
-                  value={roomType}
-                  onChange={handleRoomTypeSelect}
-                >
-                  <option value="">Select Room Type</option>
-                  <option value="General">General</option>
-                  <option value="ICU">ICU</option>
-                  <option value="Emergency">Emergency</option>
-                  <option value="Private">Private</option>
-                  <option value="Shared">Shared</option>
-                  <option value="Surgical">Surgical</option>
-                </select>
-              </div>
-
-              <div className="form-group">
-                <label htmlFor="roomNumber">Room Number</label>
-                <input
-                  type="text"
-                  id="roomNumber"
-                  value={roomNumber}
-                  onChange={(e) => setRoomNumber(e.target.value)}
-                  placeholder="Enter Room Number"
-                />
-              </div>
-
-              <div className="form-group">
-                <label htmlFor="capacity">Capacity</label>
-                <input
-                  type="number"
-                  id="capacity"
-                  value={capacity}
-                  onChange={(e) => setCapacity(e.target.value)}
-                  placeholder="Enter Room Capacity"
-                />
-              </div>
-
-              <button type="submit" className="btn">Create Room</button>
-            </form>
-          </div>
-
-          {/* All Rooms Table */}
-          <div className="card all-rooms-container">
-            <h3>All Rooms</h3>
-            <table>
-              <thead>
-                <tr>
-                  <th>Room ID</th>
-                  <th>Room Number</th>
-                  <th>Room Type</th>
-                  <th>Capacity</th>
-                  <th>Actions</th> {/* Add Actions column */}
-                </tr>
-              </thead>
-              <tbody>
-                {allRooms.map((room) => (
-                  <tr key={room.uid}>
-                    <td>{room.uid}</td>
-                    <td>{room.room_number}</td>
-                    <td>{room.room_type}</td>
-                    <td>{room.capacity}</td>
-                    <td>
-                      {/* Delete button */}
-                      <button
-                        className="btn delete-btn"
-                        onClick={() => handleDeleteRoom(room.uid)} // Pass room id for deletion
-                      >
-                        Delete
-                      </button>
-                    </td>
+          {!loading && (
+            <div className="rooms-list">
+              <table className="rooms-table">
+                <thead>
+                  <tr>
+                    <th>ID</th>
+                    <th>Number</th>
+                    <th>Type</th>
+                    <th>Capacity</th>
+                    <th>Action</th>
                   </tr>
+                </thead>
+                <tbody>
+                  {allRooms.map(room => (
+                    <tr key={room.uid}>
+                      <td>{room.uid}</td>
+                      <td>{room.room_number}</td>
+                      <td>{room.room_type}</td>
+                      <td>{room.capacity}</td>
+                      <td>
+                        <button
+                          className="btn btn-delete"
+                          onClick={() => handleDeleteRoom(room.uid)}
+                        >
+                          <FaTrashAlt />
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+
+              <div className="rooms-cards">
+                {allRooms.map(room => (
+                  <div key={room.uid} className="room-card">
+                    <p><strong>ID:</strong> {room.uid}</p>
+                    <p><strong>Number:</strong> {room.room_number}</p>
+                    <p><strong>Type:</strong> {room.room_type}</p>
+                    <p><strong>Capacity:</strong> {room.capacity}</p>
+                    <button
+                      className="btn btn-delete"
+                      onClick={() => handleDeleteRoom(room.uid)}
+                    >
+                      <FaTrashAlt /> Delete
+                    </button>
+                  </div>
                 ))}
-              </tbody>
-            </table>
-          </div>
+              </div>
+            </div>
+          )}
         </div>
+
+        {showCreateModal && (
+          <div
+            className="modal-overlay"
+            onClick={() => setShowCreateModal(false)}
+          >
+            <div
+              className="modal-content"
+              onClick={e => e.stopPropagation()}
+            >
+              <button
+                className="modal-close-btn"
+                onClick={() => setShowCreateModal(false)}
+              >
+                <FaTimes />
+              </button>
+              <h3>Create Room</h3>
+              <form onSubmit={handleRoomCreate} className="create-room-form"style={{
+          backgroundColor: "#e0f7fa",
+          padding: "20px",
+          borderRadius: "8px",
+        }}>
+                <label>
+                  Ward:
+                  <select
+                    value={wardId}
+                    onChange={e => setWardId(e.target.value)}
+                  >
+                    <option value="">Select Ward</option>
+                    {wards.map(w => (
+                      <option key={w.uid} value={w.uid}>
+                        {w.wardname}
+                      </option>
+                    ))}
+                  </select>
+                </label>
+                <label>
+                  Room Number:
+                  <input
+                    type="text"
+                    value={roomNumber}
+                    onChange={e => setRoomNumber(e.target.value)}
+                  />
+                </label>
+                <label>
+                  Room Type:
+                  <select
+                    value={roomType}
+                    onChange={e => setRoomType(e.target.value)}
+                  >
+                    <option value="">Select Type</option>
+                    {['General', 'ICU', 'Private', 'Shared', 'Emergency'].map(t => (
+                      <option key={t} value={t}>{t}</option>
+                    ))}
+                  </select>
+                </label>
+                <label>
+                  Capacity:
+                  <input
+                    type="number"
+                    min="1"
+                    value={capacity}
+                    onChange={e => setCapacity(e.target.value)}
+                  />
+                </label>
+                <button type="submit" className="btn submit-btn">
+                  Create Room
+                </button>
+              </form>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );

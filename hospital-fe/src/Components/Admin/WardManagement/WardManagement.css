@@ -1,88 +1,449 @@
-/* General Styling */
-.container {
-    width: 80%;
-    margin: 0 auto;
-    padding: 20px;
-   
-  }
-  
-  .page-title {
-    text-align: center;
-    color: #333;
-    margin-bottom: 40px;
-  }
-  
-  /* Card Styling */
-  .card {
-   
-    border-radius: 8px;
-    padding: 20px;
-    margin-bottom: 30px;
-  }
-  
-  .form-container, .search-container, .all-wards-container {
-    max-width: 800px;
-    margin: 0 auto;
-  }
-  
-  /* Error and Success Message Styling */
-  .error, .success {
-    text-align: center;
-    font-weight: bold;
-    margin-bottom: 20px;
-  }
-  
-  .error {
-    color: red;
-  }
-  
-  .success {
-    color: green;
-  }
-  
-  /* Form Group */
-  .form-group {
-    margin-bottom: 15px;
-  }
-  
-  input[type="text"],
-  input[type="email"],
-  input[type="number"] {
-    width: 100%;
+
+* {
+  box-sizing: border-box;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+/* Wrapper & Layout */
+.ward-management-wrapper {
+  display: flex;
+  flex-direction: column;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-image: url('../../Assests/background.jpg'); /* Make sure path is correct */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  min-height:100vh;
+}
+
+/* Overlay */
+.ward-management-wrapper::before {
+ content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 100vh; /* make overlay 1.5 times viewport height */
+  background-color: rgba(255, 255, 255, 0.404);
+  z-index: 2;
+}
+
+/* Content Layout */
+.ward-management-content {
+   display: flex;
+  /* flex-grow: 1; */
+  padding: 20px;
+  justify-content: center;
+}
+
+/* Container for ward content */
+.ward-container {
+  background-color: rgba(255, 255, 255, 0.97);
+  border-radius: 15px;
+  padding: 30px 40px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  max-width: 1000px;
+  width: 100%;
+  margin-top: 60px;
+  z-index: 2;
+}
+
+.ward-container h2 {
+  color: #004e92;
+  font-weight: 700;
+  font-size: 2.2rem;
+  margin-bottom: 12px;
+}
+
+/* Messages */
+.error-message, .success-message {
+  padding: 12px 20px;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 1rem;
+  width: 100%;
+  max-width: 500px;
+  text-align: center;
+  margin: 0 auto 20px auto;
+}
+
+.error-message {
+  background-color: #f8d7da;
+  color: #842029;
+  border: 1px solid #f5c2c7;
+}
+
+.success-message {
+  background-color: #d1e7dd;
+  color: #0f5132;
+  border: 1px solid #badbcc;
+}
+
+/* Controls Row */
+.controls-row {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.btn {
+  cursor: pointer;
+  font-weight: 600;
+  padding: 10px 18px;
+  border-radius: 8px;
+  border: none;
+  transition: background-color 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 1rem;
+}
+
+.btn:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.create-btn {
+  background-color: #004e92;
+  color: white;
+}
+
+.create-btn:hover {
+  background-color: #00356b;
+}
+
+
+.search-wrapper {
+  display: flex;
+  align-items: center;
+  max-width: 400px;
+  margin-top: 1rem;
+  border: 1.5px solid #ccc;
+  border-radius: 6px;
+  overflow: hidden;
+  background-color: #fff;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+.search-wrapper input {
+  flex-grow: 1;
+  border: none;
+  padding: 0.6rem 1rem;
+  font-size: 1rem;
+  outline: none;
+  color: #333;
+}
+
+.search-wrapper input::placeholder {
+  color: #999;
+  font-style: italic;
+}
+
+.search-btn {
+  background-color: #0d6efd; /* Bootstrap primary blue */
+  border: none;
+  padding: 0.6rem 1rem;
+  cursor: pointer;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.3s ease;
+  font-size: 1.2rem;
+}
+
+.search-btn:hover {
+  background-color: #084cd4; /* Darker blue on hover */
+}
+
+/* Ward Details Card */
+.ward-details-card {
+  background-color: #e9f1fa;
+  border-radius: 10px;
+  padding: 20px;
+  max-width: 600px;
+  margin-top: 8px;
+  box-shadow: 0 4px 12px rgba(0,78,146,0.2);
+}
+
+.ward-details-card h3 {
+  margin-bottom: 14px;
+  color: #004e92;
+}
+
+.ward-details-card p {
+  font-size: 1rem;
+  margin-bottom: 8px;
+  color: #222;
+}
+
+.ward-details-card .btn-delete {
+  background-color: #c82333;
+  color: white;
+  border-radius: 8px;
+  font-weight: 600;
+  padding: 8px 14px;
+  margin-top: 12px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.25s ease;
+}
+
+.ward-details-card .btn-delete:hover {
+  background-color: #991c29;
+}
+
+/* Table Styling */
+.wards-table {
+  width: 100%;
+  border-collapse: collapse;
+  box-shadow: 0 6px 20px rgb(0 0 0 / 0.05);
+  margin-top: 60px;
+}
+
+.wards-table th,
+.wards-table td {
+  padding: 14px 18px;
+  border-bottom: 1px solid #ddd;
+  text-align: left;
+  font-size: 1rem;
+}
+
+.wards-table th {
+  background-color: #004e92;
+  color: white;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.wards-table tbody tr:hover {
+  background-color: #f1faff;
+}
+
+.wards-table tbody td button.btn-delete {
+  background-color: #c82333;
+  color: white;
+  border-radius: 6px;
+  padding: 6px 10px;
+  border: none;
+  font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.wards-table tbody td button.btn-delete:hover {
+  background-color: #991c29;
+}
+
+/* Mobile Card Layout for wards */
+.wards-cards {
+  display: none;
+  flex-direction: column;
+  gap: 16px;
+  margin-top: 20px;
+}
+
+.ward-card {
+  background: #f8faff;
+  border-radius: 12px;
+  padding: 18px 22px;
+  box-shadow: 0 4px 14px rgb(0 78 146 / 0.1);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  font-size: 1rem;
+}
+
+.ward-card p {
+  color: #333;
+}
+
+.ward-card button.btn-delete {
+  background-color: #c82333;
+  color: white;
+  border-radius: 8px;
+  border: none;
+  padding: 8px 14px;
+  font-weight: 600;
+  cursor: pointer;
+  width: fit-content;
+  margin-top: 12px;
+  align-self: flex-start;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.ward-card button.btn-delete:hover {
+  background-color: #991c29;
+}
+
+/* Loading spinner */
+.loading-spinner {
+  text-align: center;
+  padding: 20px 0;
+  color: #004e92;
+  font-weight: 600;
+}
+
+/* Modal Overlay */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0,0,0,0.55);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  padding: 15px;
+}
+
+/* Modal Content */
+.modal-content {
+  background-color: #fff;
+  border-radius: 12px;
+  max-width: 500px;
+  width: 100%;
+  padding: 24px 32px 32px;
+  position: relative;
+  box-shadow: 0 8px 32px rgba(0, 78, 146, 0.25);
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+/* Close button */
+.modal-close-btn {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  background: transparent;
+  border: none;
+  color: #004e92;
+  font-size: 1.4rem;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.modal-close-btn:hover {
+  color: #001f3f;
+}
+
+/* Form inside modal */
+.create-ward-form {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.create-ward-form label {
+  display: flex;
+  flex-direction: column;
+  font-weight: 600;
+  color: #004e92;
+  font-size: 1rem;
+}
+
+.create-ward-form input {
+  margin-top: 6px;
+  padding: 10px 14px;
+  font-size: 1rem;
+  border-radius: 8px;
+  border: 1.5px solid #004e92;
+  outline-color: #002a5c;
+  transition: box-shadow 0.3s ease;
+}
+
+.create-ward-form input:focus {
+  box-shadow: 0 0 8px #004e92cc;
+  border-color: #002a5c;
+}
+
+/* Submit button */
+.submit-btn {
+  background-color: #004e92;
+  color: white;
+  font-weight: 700;
+  padding: 12px 0;
+  border-radius: 10px;
+  margin-top: 12px;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.submit-btn:hover {
+  background-color: #00356b;
+}
+
+/* Responsive */
+
+/* Tablet and below */
+@media (max-width: 900px) {
+  .ward-management-content {
+    flex-direction: column;
     padding: 10px;
-    margin-top: 5px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
+    margin-top: 50px;
   }
-  
-  
-  
-  
-  table {
-    width: 100%;
-    border-collapse: collapse;
+
+  .ward-container {
+    max-width: 100%;
+    padding: 20px;
   }
-  
-  table th, table td {
-    padding: 12px;
-    border: 1px solid #ddd;
+
+  .controls-row {
+    flex-direction: column;
+    align-items: stretch;
   }
-  
-  table th {
-    background-color: #f2f2f2;
+
+  .search-wrapper {
+    max-width: 100%;
   }
-  
-  table tr:nth-child(even) {
-    background-color: #f9f9f9;
+}
+
+/* Mobile (under 600px) */
+/* Hide table, show cards */
+@media (max-width: 600px) {
+  .wards-table {
+    display: none;
   }
-  
-  .ward-details p {
-    margin: 10px 0;
+  .wards-cards {
+    display: flex;
   }
-  
-  .ward-details {
-    background-color: #f2f2f2;
-    padding: 15px;
-    border-radius: 8px;
-  }
-  
+}
+.close-btn {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background: transparent;
+  border: none;
+  font-size: 1.5rem;
+  color: #555;
+  cursor: pointer;
+  line-height: 1;
+  font-weight: bold;
+  padding: 0;
+  width: 32px;
+  height: 32px;
+  text-align: center;
+  border-radius: 50%;
+  transition: background-color 0.2s ease;                                                                                                                                                                                                                                                                                                                                                                                                                                  
+}
+
+.close-btn:hover {
+  background-color: #eee;
+  color: #000;
+}

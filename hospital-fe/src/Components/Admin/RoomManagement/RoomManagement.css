@@ -1,404 +1,228 @@
-/* RoomManagement.css */
-
-/* Reset some default styling */
 * {
   box-sizing: border-box;
-}
-
-body {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background-color: #f9fafd;
   margin: 0;
   padding: 0;
-  color: #333;
+  font-family: 'Segoe UI', sans-serif;
 }
 
-.room-management-page {
+.room-management-wrapper {
   display: flex;
   flex-direction: column;
-  min-height: 100vh;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-image: url('../../Assests/background.jpg'); /* Make sure path is correct */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  min-height:100vh;
 }
 
-/* Layout for Navbar + Content */
+.room-management-wrapper::before {
+ content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 100vh; /* make overlay 1.5 times viewport height */
+  background-color: rgba(255, 255, 255, 0.452);
+  z-index: 2;
+}
+
 .room-management-content {
   display: flex;
-  flex: 1;
-  background-color: #fff;
-  padding: 1rem;
-  gap: 1rem;
-  margin-left: 400px;
+  /* flex-grow: 1; */
+  padding: 20px;
+  justify-content: center;
 }
 
-/* Sidebar */
-.room-management-content > .admin-sidebar {
-  width: 240px; /* Adjust as per AdminSidebar */
-}
-
-/* Container for main content */
-.container {
-  flex: 1;
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 1rem;
-  background: #ffffff;
-  border-radius: 8px;
-  box-shadow: 0 3px 8px rgb(0 0 0 / 0.1);
-}
-
-/* Page Title */
-.page-title {
-  font-size: 2rem;
-  font-weight: 700;
-  margin-bottom: 1rem;
-  color: #2c3e50;
-  text-align: center;
-}
-
-/* Messages */
-.error {
-  background-color: #ffe6e6;
-  color: #cc0000;
-  padding: 10px 15px;
-  margin-bottom: 1rem;
-  border-radius: 5px;
-  font-weight: 600;
-}
-
-.success {
-  background-color: #e6ffea;
-  color: #2d662d;
-  padding: 10px 15px;
-  margin-bottom: 1rem;
-  border-radius: 5px;
-  font-weight: 600;
-}
-
-/* Patient Admission Button */
-.patient-admission-btn {
-  text-align: center;
-  margin-bottom: 2rem;
-}
-
-.patient-admission-btn .btn {
-  background-color: #2980b9;
-  color: #fff;
-  border: none;
-  padding: 12px 25px;
-  font-size: 1.1rem;
-  border-radius: 6px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-.patient-admission-btn .btn:hover {
-  background-color: #1c5980;
-}
-
-/* Search Section */
-.search-section {
-  margin-bottom: 2rem;
-}
-
-.search-section h3 {
-  font-weight: 600;
-  margin-bottom: 0.5rem;
-  color: #34495e;
-}
-
-.search-section input[type="text"] {
-  padding: 10px 12px;
-  width: calc(100% - 120px);
-  max-width: 300px;
-  font-size: 1rem;
-  margin-right: 10px;
-  border: 1px solid #ccc;
-  border-radius: 6px;
-  outline: none;
-  transition: border-color 0.3s ease;
-}
-
-.search-section input[type="text"]:focus {
-  border-color: #2980b9;
-}
-
-.search-section .btn {
-  padding: 10px 20px;
-  background-color: #2980b9;
-  color: #fff;
-  border: none;
-  font-weight: 600;
-  cursor: pointer;
-  border-radius: 6px;
-  transition: background-color 0.3s ease;
-}
-
-.search-section .btn:hover {
-  background-color: #1c5980;
-}
-
-/* Room Details */
-.room-details {
-  background-color: #f4f9ff;
-  border-left: 5px solid #2980b9;
-  padding: 15px 20px;
-  margin-top: 15px;
-  border-radius: 6px;
-}
-
-.room-details h4 {
-  margin-top: 0;
-  color: #2c3e50;
-}
-
-.room-details p {
-  margin: 6px 0;
-  font-size: 1rem;
-  color: #34495e;
-}
-
-/* Form Container */
-.card.form-container {
-  background: #ffffff;
-  padding: 20px 25px;
-  border-radius: 10px;
-  box-shadow: 0 6px 12px rgb(0 0 0 / 0.1);
-  margin-bottom: 2rem;
-  max-width: 600px;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-.card.form-container h3 {
-  margin-bottom: 20px;
-  font-weight: 700;
-  color: #2c3e50;
-  text-align: center;
-}
-
-/* Form groups */
-.form-group {
-  display: flex;
-  flex-direction: column;
-  margin-bottom: 15px;
-}
-
-.form-group label {
-  margin-bottom: 6px;
-  font-weight: 600;
-  color: #34495e;
-}
-
-.form-group input[type="text"],
-.form-group input[type="number"],
-.form-group select {
-  padding: 10px 12px;
-  font-size: 1rem;
-  border-radius: 6px;
-  border: 1px solid #ccc;
-  outline: none;
-  transition: border-color 0.3s ease;
-}
-
-.form-group input[type="text"]:focus,
-.form-group input[type="number"]:focus,
-.form-group select:focus {
-  border-color: #2980b9;
-}
-
-/* Submit button */
-.form-container button[type="submit"] {
-  background-color: #27ae60;
-  color: #fff;
-  border: none;
-  padding: 12px 25px;
-  font-size: 1.1rem;
-  border-radius: 6px;
-  cursor: pointer;
-  font-weight: 700;
-  transition: background-color 0.3s ease;
+.room-container {
+  background-color: rgba(255, 255, 255, 0.97);
+  border-radius: 15px;
+  padding: 30px 40px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  max-width: 1000px;
   width: 100%;
+  margin-top: 60px;
+  z-index: 2;
 }
 
-.form-container button[type="submit"]:hover {
-  background-color: #1e8449;
+.controls-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
 }
 
-/* All Rooms Table Container */
-.card.all-rooms-container {
-  background: #ffffff;
-  padding: 20px 25px;
+.btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 18px;
+  border: none;
+  border-radius: 8px;
+  background: #004e92;
+  color: #fff;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background 0.3s ease;
+}
+
+.btn:hover {
+  background: #00356b;
+}
+
+.btn-delete {
+  background: #c82333;
+}
+
+.btn-delete:hover {
+  background: #991c29;
+}
+
+.create-btn {
+  background: #004e92;
+}
+
+.search-wrapper {
+  display: flex;
+  border: 1.5px solid #ccc;
+  border-radius: 6px;
+  overflow: hidden;
+  background: #fff;
+}
+
+.search-wrapper input {
+  flex: 1;
+  padding: 0.6rem 1rem;
+  border: none;
+  outline: none;
+}
+
+.search-btn {
+  background: #0d6efd;
+  padding: 0 12px;
+}
+
+.room-details-card {
+  position: relative;
+  background: #e9f1fa;
+  padding: 20px;
   border-radius: 10px;
-  box-shadow: 0 6px 12px rgb(0 0 0 / 0.1);
-  max-width: 100%;
-  overflow-x: auto;
+  margin: 20px 0;
 }
 
-/* Table styles */
-.all-rooms-container h3 {
-  margin-bottom: 20px;
-  font-weight: 700;
-  color: #2c3e50;
-  text-align: center;
+.room-details-card .close-btn {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  border: none;
+  background: transparent;
+  font-size: 1.4rem;
+  cursor: pointer;
 }
 
-table {
+.rooms-table {
   width: 100%;
   border-collapse: collapse;
-  font-size: 1rem;
+  margin-top: 20px;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.05);
 }
 
-thead {
-  background-color: #2980b9;
+.rooms-table th {
+  background: #004e92;
   color: #fff;
+  padding: 14px;
 }
 
-thead th {
-  padding: 12px 15px;
-  text-align: left;
-  font-weight: 700;
-}
-
-tbody tr {
+.rooms-table td {
+  padding: 12px;
   border-bottom: 1px solid #ddd;
-  transition: background-color 0.3s ease;
 }
 
-tbody tr:hover {
-  background-color: #f4f9ff;
+.rooms-table tr:hover {
+  background: #f1faff;
 }
 
-tbody td {
-  padding: 12px 15px;
-  color: #34495e;
+.spinner-wrapper {
+  text-align: center;
+  padding: 20px 0;
 }
 
-/* Delete button */
-.delete-btn {
-  background-color: #c0392b;
-  color: #fff;
+.rooms-cards {
+  display: none;
+  flex-direction: column;
+  gap: 16px;
+  margin-top: 20px;
+}
+
+.room-card {
+  background: #f8faff;
+  padding: 18px;
+  border-radius: 12px;
+  box-shadow: 0 4px 14px rgba(0,78,146,0.1);
+}
+
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.55);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 15px;
+  z-index: 999;
+}
+
+.modal-content {
+  position: relative;
+  background: #fff;
+  padding: 24px;
+  border-radius: 12px;
+  max-width: 500px;
+  width: 100%;
+}
+
+.modal-close-btn {
+  position: absolute;
+  top: 16px;
+  right: 16px;
   border: none;
-  padding: 8px 14px;
+  background: transparent;
+  font-size: 1.4rem;
+}
+
+.create-room-form {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.create-room-form label {
+  display: flex;
+  flex-direction: column;
   font-weight: 600;
-  border-radius: 6px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
+  color: #004e92;
 }
 
-.delete-btn:hover {
-  background-color: #922b21;
+.create-room-form input,
+.create-room-form select {
+  margin-top: 6px;
+  padding: 10px;
+  border: 1.5px solid #004e92;
+  border-radius: 8px;
 }
 
-/* Responsive styles */
-@media screen and (max-width: 1024px) {
-  .room-management-content {
-    margin-left: 250px; /* Adjust sidebar width or reduce margin */
-  }
+.submit-btn {
+  background: #004e92;
+  color: #fff;
+  padding: 12px;
+  font-weight: 600;
 }
 
-/* Small screens (mobiles) */
-@media screen and (max-width: 768px) {
-  .room-management-content {
-    flex-direction: column;
-    margin-left: 0; /* Remove margin so content uses full width */
-    padding: 1rem 0.5rem;
+@media (max-width: 600px) {
+  .rooms-table {
+    display: none;
   }
-}
-  .container {
-    max-width: 100%;
-    padding: 1rem 0.5rem;
-  }
-
-  .card.form-container,
-  .card.all-rooms-container {
-    padding: 15px 15px;
-  }
-
-
-@media screen and (max-width: 768px) {
-  .patient-admission-btn .btn,
-  .search-section .btn,
-  .form-container button[type="submit"],
-  .delete-btn {
-    width: 100%;
-    padding: 12px 0;
-  }
-
-  .search-section input[type="text"] {
-    width: 100%;
-    margin-bottom: 10px;
-  }
-
-  .search-section {
-    text-align: center;
-  }
-
-  .form-group {
-    margin-bottom: 20px;
-  }
-}
-
-@media screen and (max-width: 480px) {
-  .page-title {
-    font-size: 1.5rem;
-  }
-
-  table,
-  thead,
-  tbody,
-  th,
-  td,
-  tr {
-    display: block;
-  }
-
-  thead tr {
-    position: absolute;
-    top: -9999px;
-    left: -9999px;
-  }
-
-  tbody tr {
-    margin-bottom: 15px;
-    border: 1px solid #ddd;
-    border-radius: 10px;
-    padding: 10px;
-    background: #fff;
-  }
-
-  tbody td {
-    padding-left: 50%;
-    position: relative;
-    text-align: left;
-  }
-
-  tbody td::before {
-    position: absolute;
-    top: 12px;
-    left: 15px;
-    width: 45%;
-    padding-right: 10px;
-    white-space: nowrap;
-    font-weight: 700;
-    color: #2980b9;
-  }
-
-  tbody td:nth-of-type(1)::before {
-    content: "Room ID";
-  }
-
-  tbody td:nth-of-type(2)::before {
-    content: "Room Number";
-  }
-
-  tbody td:nth-of-type(3)::before {
-    content: "Room Type";
-  }
-
-  tbody td:nth-of-type(4)::before {
-    content: "Capacity";
-  }
-
-  tbody td:nth-of-type(5)::before {
-    content: "Actions";
+  .rooms-cards {
+    display: flex;
   }
 }
