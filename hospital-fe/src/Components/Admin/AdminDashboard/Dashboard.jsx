@@ -6,7 +6,7 @@ import {
   FaUserMd, FaUserInjured, FaCalendarAlt, FaHome, FaHospital,
   FaClipboardList, FaToolbox, FaWallet, FaCog, FaFileMedical,
   FaUserShield, FaBed, FaUsers, FaPrescriptionBottleAlt, FaPlusCircle,
-  FaProcedures
+  FaProcedures,FaUserPlus,FaComments,FaLifeRing
 } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
 import AdminNavbar from '../Adminnavbar/AdminNavbar';
@@ -77,7 +77,14 @@ const AdminDashboard = () => {
       { icon: <FaFileMedical />, label: 'Medical Survey', to: '/admin-survey', bg: '#b07aa1' },
       { icon: <FaUserShield />, label: 'Admin Profile', to: '/admin-profile', bg: '#b801dd' },
       { icon: <FaPlusCircle />, label: 'Add Doctor', to: '/doctor-signup', bg: '#d62728' },
-    ]
+    ],
+    [
+     
+  { icon: <FaUserPlus />, label: 'Patient Admission', to: '/patient-admission', bg: '#6aaed6' }, // light blue
+  { icon: <FaComments />, label: 'Patient Feedbacks', to: '/patient-feedbacks', bg: '#8cd790' }, // soft green
+  { icon: <FaLifeRing />, label: 'Support Ticket', to: '/support-ticket', bg: '#f6c26b' }  // orange yellow
+
+ ]
   ];
 
   return (

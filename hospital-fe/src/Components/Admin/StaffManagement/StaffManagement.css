@@ -1,195 +1,360 @@
+/* StaffManagement.css */
 
-  .staff-table {
-    margin-top: 20px;
-    width: 60%; 
-    margin-left: auto;
-    margin-right: auto;
-  }
+/* Base styling for the page */
+.staff-management-page {
+  display: flex;
+  flex-direction: column;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-image: url('../../Assests/background.jpg'); /* Update path as needed */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  min-height: 100vh;
+  position: relative;
+  padding-bottom: 40px; /* some padding for bottom */
+}
 
-  .staff-table th,
-  .staff-table td {
-    text-align: center;
-    vertical-align: middle;
-    padding: 12px 15px;
-  }
-  
-  .staff-table th {
-    background-color: #343a40;
-    color: #fff;
-  }
-  
-  .staff-table td {
-    background-color: #fff;
-  }
-  
-  .staff-table tbody tr:hover {
-    background-color: #f1f1f1;
-  }
-  
-  .staff-management-container button {
-    margin-bottom: 20px;
-    margin-top: 10px;
-  }
-  
-  .form-group label {
-    font-size: 1.1rem;
-  }
-  
-  .form-group input {
-    font-size: 1rem;
-    padding: 10px;
-  }
-  
-  .form-group select {
-    font-size: 1rem;
-    padding: 10px;
-  }
-  
-  .staff-form-button {
-    width: 100%;
-    font-size: 1.1rem;
-    padding: 10px;
-  }
-  
-  .staff-management-container .alert {
-    margin-top: 20px;
-  }
-  
+.staff-management-page::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 100vh;
+  background-color: rgba(255, 255, 255, 0.4);
+  z-index: 1;
+}
 
-  @media (max-width: 768px) {
-    .staff-management-container {
-      margin-left: 0;
-    }
-  
-    .search-section .form-control {
-      width: 100%;
-    }
-
-  
-    .staff-table {
-      width: 95%; 
-    }
-
-    .staff-management-container button {
-      width: 100%;
-    }
-  }
-/* Responsive form layout */
-form {
-  width: 100%;
-  max-width: 800px;
-  margin: 0 auto;
-  background-color: #ffffff;
+.staff-management-content {
+  display: flex;
   padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  justify-content: center;
+  position: relative;
+  /* z-index: 2; */
+  flex-wrap: wrap;
+  gap: 20px;
+  box-sizing: border-box;
 }
 
-/* Label and input alignment */
-form .form-group {
-  margin-bottom: 15px;
+.staff-management-container {
+  background-color: rgba(255, 255, 255, 0.97);
+  border-radius: 15px;
+  padding: 30px 40px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  max-width: 1100px;
+  width: 100%;
+  position: relative;
+  z-index: 2;
+  box-sizing: border-box;
+  overflow-x: auto; /* allow horizontal scroll if needed */
 }
 
-form .form-label {
+/* Search form */
+.search-wrapper {
+  width: 100%;
+  max-width: 400px;
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+
+.search-wrapper input[type="text"] {
+  flex: 1;
+  padding: 8px 12px;
+  background-color: #e0f7fa;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+  transition: border-color 0.3s ease;
+}
+
+.search-wrapper input[type="text"]:focus {
+  outline: none;
+  border-color: #007bff;
+}
+
+.search-btn {
+  background-color: #007bff !important;
+  color: white !important;
+  border: none !important;
+  border-radius: 4px !important;
+  padding: 8px 12px !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 1.1rem;
+  transition: background-color 0.3s ease;
+}
+
+.search-btn:hover {
+  background-color: #0056b3 !important;
+}
+
+/* Spinner */
+.spinner-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 200px;
+}
+
+.loading-spinner {
+  font-size: 3rem;
+  color: #007bff;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Staff Table */
+.staff-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+  box-sizing: border-box;
+}
+
+.staff-table th,
+.staff-table td {
+  padding: 12px 15px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+  vertical-align: middle;
+}
+
+.staff-table th {
+  background-color: #f8f9fa;
   font-weight: 600;
 }
 
-/* Inputs */
-form .form-control {
-  border-radius: 5px;
-  font-size: 1rem;
+/* Buttons in table */
+.staff-table td button {
+  margin-right: 5px;
+  min-width: 35px;
 }
 
-/* Submit button */
-form button[type="submit"] {
-  margin-top: 10px;
-  font-weight: bold;
-  font-size: 1rem;
+/* Popup Form Styling */
+.form-popup {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.25);
+  padding: 25px 30px;
+  z-index: 1050;
+  width: 90vw;
+  max-width: 700px;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-sizing: border-box;
+}
+
+/* Close button */
+.form-popup .close-btn {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: transparent;
+  border: none;
+  font-size: 1.5rem;
+  color: #555;
+  cursor: pointer;
+  transition: color 0.2s ease-in-out;
+  z-index: 1060;
+}
+
+.form-popup .close-btn:hover {
+  color: #d60e40;
+}
+
+/* Staff Form */
+.staff-form {
+  width: 100%;
+  background-color: #e0f7fa;
+  padding: 20px;
+  border-radius: 8px;
+  box-sizing: border-box;
+}
+
+.form-row {
+  display: flex;
+  gap: 20px;
+  margin-bottom: 15px;
+  flex-wrap: wrap;
+}
+
+.form-col {
+  flex: 1 1 45%;
+  min-width: 250px;
+}
+
+.staff-form label {
+  font-weight: 600;
+}
+
+.form-submit-btn,
+.btn.submit-btn {
+  width: 100%;
+  font-size: 1.1rem;
   padding: 10px;
+  cursor: pointer;
 }
 
-/* For smaller screens */
-@media (max-width: 768px) {
-  form {
+.btn.submit-btn:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+/* Responsive Styles */
+
+/* Tablets (medium screens) */
+@media (max-width: 992px) {
+  .staff-management-content {
     padding: 15px;
   }
 
-  form .form-control {
-    font-size: 0.95rem;
+  .staff-management-container {
+    padding: 25px 30px;
+    max-width: 100%;
   }
 
-  form button[type="submit"] {
-    font-size: 0.95rem;
-    padding: 8px;
-  }
-}
-
-@media (max-width: 576px) {
-  form {
-    padding: 10px;
+  .search-wrapper {
+    max-width: 100%;
+    margin-left: 0;
   }
 
-  .staff-management-container h2,
-  .staff-management-container h3 {
-    font-size: 1.3rem;
-    text-align: center;
-  }
-
-  form .form-control {
-    font-size: 0.9rem;
-  }
-
-  form button[type="submit"] {
-    font-size: 0.9rem;
+  .form-col {
+    min-width: 45%;
   }
 }
-/* Submit button styling */
-.submit-btn {
-  width: 100%;
-  padding: 12px;
-  font-size: 1rem;
-  font-weight: 600;
-  border-radius: 5px;
-}
 
-/* Medium screens */
+/* Mobile (small screens) */
 @media (max-width: 768px) {
-  .submit-btn {
-    font-size: 0.95rem;
+  .staff-management-content {
+    flex-direction: column;
     padding: 10px;
-    width: 20%;
+  }
+
+  .staff-management-container {
+    padding: 20px 20px;
+    margin-top: 20px;
+  }
+
+  .search-wrapper {
+    justify-content: center;
+    margin-bottom: 15px;
+    max-width: 100%;
+    width: 100%;
+  }
+
+  .search-wrapper input[type="text"] {
+    max-width: 70%;
+    margin-right: 8px;
+  }
+
+  .form-row {
+    flex-direction: column;
+  }
+
+  .form-col {
+    flex: 1 1 100%;
+    min-width: 100%;
+  }
+
+  .staff-table,
+  .staff-table thead,
+  .staff-table tbody,
+  .staff-table th,
+  .staff-table td,
+  .staff-table tr {
+    display: block;
+  }
+
+  .staff-table thead tr {
+    display: none; /* Hide table headers */
+  }
+
+  .staff-table tbody tr {
+    margin-bottom: 1rem;
+    background: #fff;
+    padding: 15px 10px;
+    border-radius: 10px;
+    box-shadow: 0 1px 3px rgb(0 0 0 / 0.1);
+  }
+
+  .staff-table tbody td {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 12px;
+    border: none;
+    border-bottom: 1px solid #ccc;
+    font-size: 0.95rem;
+  }
+
+  .staff-table tbody td::before {
+    content: attr(data-label);
+    font-weight: 600;
+    flex-basis: 45%;
+    text-align: left;
+    color: #555;
+  }
+
+  .staff-table tbody td:last-child {
+    border-bottom: 0;
+  }
+
+  /* Buttons in table: align nicely */
+  .staff-table tbody td[data-label="Actions"] {
+    justify-content: flex-start;
+    gap: 10px;
   }
 }
 
-/* Small screens */
-@media (max-width: 576px) {
-  .submit-btn {
-    font-size: 0.9rem;
+/* Extra small screens */
+@media (max-width: 480px) {
+  .search-wrapper input[type="text"] {
+    max-width: 60%;
+  }
+
+  .form-popup {
+    width: 95vw;
+    padding: 15px 20px;
+  }
+
+  .form-submit-btn,
+  .btn.submit-btnn {
+    font-size: 1rem;
     padding: 8px;
   }
 }
-.toggle-form-btn {
-  margin: 10px 0;
-  padding: 10px 20px;
-  font-weight: 600;
-  width: fit-content;
+.staff-table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: auto; /* default, adjust column width */
+  overflow-x: visible; /* no horizontal scrollbar on desktop */
 }
 
-/* Optional: Add some space from sidebar on medium and larger screens */
-@media (min-width: 768px) {
-  .toggle-form-btn {
-    margin-left: 150px; /* Adjust depending on sidebar width */
+.staff-management-container {
+  overflow-x: hidden; /* hide any overflow from container */
+}
+
+/* On smaller screens: allow horizontal scrolling */
+@media (max-width: 768px) {
+  .staff-management-container {
+    overflow-x: auto;
+  }
+
+  .staff-table {
+    display: block;
+    width: 100%;
+    overflow-x: auto;
+    white-space: nowrap; /* keep columns inline */
   }
 }
-
-/* For small screens (mobile), ensure it's left-aligned and readable */
-@media (max-width: 576px) {
-  .toggle-form-btn {
-    width: 0%;
-    margin-left: 300;
-    padding: 10px;
-    font-size: 16px;
-    text-align: center;
-  }
-}
-
