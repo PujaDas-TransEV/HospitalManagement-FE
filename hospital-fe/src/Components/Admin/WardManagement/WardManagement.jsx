@@ -328,7 +328,7 @@ const WardManagementPage = () => {
                   />
                 </label>
 
-                <button type="submit" className="btn submit-btn">
+                <button type="submit" className="btn submit-btnn">
                   Create Ward
                 </button>
               </form>

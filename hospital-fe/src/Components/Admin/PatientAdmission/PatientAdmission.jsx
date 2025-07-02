@@ -1,85 +1,109 @@
 
-
-
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import {
+  FaPlusCircle,
+  FaSearch,
+  FaTimes,
+  FaSpinner
+} from 'react-icons/fa';
 import './PatientAdmission.css';
 import AdminNavbar from '../Adminnavbar/AdminNavbar';
 import AdminSidebar from '../Adminsidebar/AdminSidebar';
-import { FiSearch } from 'react-icons/fi';
 
 const PatientAdmissionPage = () => {
-  const [wardId, setWardId] = useState(''); // Store selected ward ID
-  const [roomId, setRoomId] = useState(''); // Store selected room ID
-  const [patientId, setPatientId] = useState(''); // Store selected patient ID
-  const [wards, setWards] = useState([]); // Store list of wards
-  const [rooms, setRooms] = useState([]); // Store list of rooms
-  const [patients, setPatients] = useState([]); // Store list of patients
+  const [wardId, setWardId] = useState('');
+  const [roomId, setRoomId] = useState('');
+  const [patientId, setPatientId] = useState('');
+  const [wards, setWards] = useState([]);
+  const [rooms, setRooms] = useState([]);
+  const [patients, setPatients] = useState([]);
+  const [searchedDetail, setSearchedDetail] = useState(null);
+  const [searchId, setSearchId] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
+  const [success, setSuccess] = useState('');
+  const [showModal, setShowModal] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
   const [successMessage, setSuccessMessage] = useState('');
-  const [bedDetails, setBedDetails] = useState([]); // Store all bed details
-  const [admissionIdSearch, setAdmissionIdSearch] = useState(''); // Store the admission ID for search
-  const [searchedBedDetails, setSearchedBedDetails] = useState(null); // Store searched bed details
+  const [bedDetails, setBedDetails] = useState([]);
+  const [admissionIdSearch, setAdmissionIdSearch] = useState('');
+  const [searchedBedDetails, setSearchedBedDetails] = useState(null);
+const [loadingBedDetails, setLoadingBedDetails] = useState(false);
 
-  // Fetch all wards, rooms, patients, and bed details when the page loads
+  // Loading states for dropdowns
+  const [loadingWards, setLoadingWards] = useState(false);
+  const [loadingRooms, setLoadingRooms] = useState(false);
+  const [loadingPatients, setLoadingPatients] = useState(false);
+
   useEffect(() => {
     fetchWards();
     fetchRooms();
     fetchPatients();
-    fetchBedDetails(); // Fetch all bed details
+    fetchBedDetails();
   }, []);
 
-  // Fetch all wards from the API
   const fetchWards = async () => {
+    setLoadingWards(true);
     try {
       const response = await axios.get('http://192.168.0.106:5000/ops/getallward');
       if (response.data && Array.isArray(response.data.data)) {
         setWards(response.data.data);
       }
-    } catch (error) {
+    } catch {
       setErrorMessage('Failed to fetch wards.');
+    } finally {
+      setLoadingWards(false);
     }
   };
 
-  // Fetch all rooms from the API
   const fetchRooms = async () => {
+    setLoadingRooms(true);
     try {
       const response = await axios.get('http://192.168.0.106:5000/ops/getallrooms');
       if (response.data && Array.isArray(response.data.data)) {
         setRooms(response.data.data);
       }
-    } catch (error) {
+    } catch {
       setErrorMessage('Failed to fetch rooms.');
+    } finally {
+      setLoadingRooms(false);
     }
   };
 
-  // Fetch all patients from the API
   const fetchPatients = async () => {
+    setLoadingPatients(true);
     try {
       const response = await axios.get('http://192.168.0.106:5000/patientops/getallpatient');
       if (response.data && Array.isArray(response.data)) {
         setPatients(response.data);
       }
-    } catch (error) {
+    } catch {
       setErrorMessage('Failed to fetch patients.');
+    } finally {
+      setLoadingPatients(false);
     }
   };
 
-  // Fetch all bed details from the API
-  const fetchBedDetails = async () => {
-    try {
-      const response = await axios.get('http://192.168.0.106:5000/ops/getbeddetails');
-      if (response.data && Array.isArray(response.data.data)) {
-        setBedDetails(response.data.data);
-      }
-    } catch (error) {
-      setErrorMessage('Failed to fetch bed details.');
+const fetchBedDetails = async () => {
+  setLoadingBedDetails(true);  // Start spinner
+  try {
+    const response = await axios.get('http://192.168.0.106:5000/ops/getbeddetails');
+    if (response.data && Array.isArray(response.data.data)) {
+      setBedDetails(response.data.data);
     }
-  };
+  } catch {
+    setErrorMessage('Failed to fetch bed details.');
+  } finally {
+    setLoadingBedDetails(false); // Stop spinner
+  }
+};
 
-  // Handle patient admission
+
   const handlePatientAdmission = async (e) => {
     e.preventDefault();
+    setErrorMessage('');
+    setSuccessMessage('');
 
     if (!wardId || !roomId || !patientId) {
       setErrorMessage('All fields are required.');
@@ -93,9 +117,7 @@ const PatientAdmissionPage = () => {
 
     try {
       const response = await axios.post('http://192.168.0.106:5000/ops/patientadmit', formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
+        headers: { 'Content-Type': 'multipart/form-data' },
       });
 
       if (response.status === 200) {
@@ -103,14 +125,18 @@ const PatientAdmissionPage = () => {
         setWardId('');
         setRoomId('');
         setPatientId('');
+        setShowModal(false);
+        fetchBedDetails(); // refresh table
       }
-    } catch (error) {
+    } catch {
       setErrorMessage('Failed to admit patient. Please try again.');
     }
   };
 
-  // Handle search by admission ID
   const handleSearchByAdmissionId = async () => {
+    setErrorMessage('');
+    setSearchedBedDetails(null);
+
     if (!admissionIdSearch) {
       setErrorMessage('Please enter an Admission ID.');
       return;
@@ -122,111 +148,59 @@ const PatientAdmissionPage = () => {
     try {
       const response = await axios.post('http://192.168.0.106:5000/ops/getbeddetails', formData);
       if (response.data && response.data.data) {
-        // Set the fetched data for the searched admission ID
         setSearchedBedDetails(response.data.data);
-        setErrorMessage(''); // Clear any previous errors
       } else {
         setErrorMessage('No bed details found for the provided Admission ID.');
-        setSearchedBedDetails(null);
       }
-    } catch (error) {
+    } catch {
       setErrorMessage('Failed to fetch bed details. Please try again.');
-      setSearchedBedDetails(null);
     }
   };
 
   return (
-    <div className="patient-admission-page">
+    <div
+  className="ptadm-wrapper"
+  
+>
       <AdminNavbar />
-      <div className="patient-admission-content">
+      <div className="ptadm-content">
         <AdminSidebar />
-        
-        <div className="container">
-          <h2 className="page-title">Patient Admission</h2>
+        <div className="ptadm-container">
+          <h2>🩺 Patient Admission</h2>
 
-          {/* Error Message */}
-          {errorMessage && <div className="error">{errorMessage}</div>}
+          {(error || errorMessage) && <div className="error">{error || errorMessage}</div>}
+          {(success || successMessage) && <div className="success">{success || successMessage}</div>}
 
-          {/* Success Message */}
-          {successMessage && <div className="success">{successMessage}</div>}
+          <div className="controls">
+            <button className="btn create-btn" onClick={() => setShowModal(true)}>
+              <FaPlusCircle /> Admit Patient
+            </button>
 
-          {/* Patient Admission Form */}
-          <div className="card form-container">
-            <h3>Admit a Patient</h3>
-            <form onSubmit={handlePatientAdmission}>
-              {/* Ward Selection */}
-              <div className="form-group">
-                <label htmlFor="wardId">Ward</label>
-                <select
-                  id="wardId"
-                  value={wardId}
-                  onChange={(e) => setWardId(e.target.value)}
-                >
-                  <option value="">Select Ward</option>
-                  {wards.map((ward) => (
-                    <option key={ward.uid} value={ward.uid}>
-                      {ward.wardname} - {ward.wardlocation} ({ward.capacity} beds)
-                    </option>
-                  ))}
-                </select>
-              </div>
-
-              {/* Room Selection */}
-              <div className="form-group">
-                <label htmlFor="roomId">Room</label>
-                <select
-                  id="roomId"
-                  value={roomId}
-                  onChange={(e) => setRoomId(e.target.value)}
-                >
-                  <option value="">Select Room</option>
-                  {rooms.map((room) => (
-                    <option key={room.uid} value={room.uid}>
-                      {room.room_type} - {room.room_number} (ID: {room.uid})
-                    </option>
-                  ))}
-                </select>
-              </div>
-
-              {/* Patient Selection */}
-              <div className="form-group">
-                <label htmlFor="patientId">Patient</label>
-                <select
-                  id="patientId"
-                  value={patientId}
-                  onChange={(e) => setPatientId(e.target.value)}
-                >
-                  <option value="">Select Patient</option>
-                  {patients.map((patient) => (
-                    <option key={patient.uid} value={patient.uid}>
-                      {patient.firstname} {patient.lastname} ({patient.uid})
-                    </option>
-                  ))}
-                </select>
-              </div>
-
-              <button type="submit" className="btn">Admit Patient</button>
-            </form>
+            <div className="search-input">
+              <input
+                placeholder="Search Admission ID"
+                style={{
+          backgroundColor: "#e0f7fa"
+          }}
+                value={searchId}
+                onChange={e => {
+                  setSearchId(e.target.value);
+                  setAdmissionIdSearch(e.target.value);
+                }}
+                onKeyDown={e => e.key === 'Enter' && handleSearchByAdmissionId()}
+              />
+              <button className="btn search-btn" onClick={handleSearchByAdmissionId}>
+                <FaSearch />
+              </button>
+            </div>
           </div>
 
-          {/* Search for Bed Details by Admission ID */}
-          <div className="search-section">
-            <h3>Search Bed Details by Admission ID</h3>
-            <input
-              type="text"
-              value={admissionIdSearch}
-              onChange={(e) => setAdmissionIdSearch(e.target.value)}
-              placeholder="Enter Admission ID"
-            />
-          <button onClick={handleSearchByAdmissionId} className="btn">
-  <FiSearch style={{ marginRight: '1px' }} />
-</button>
-          </div>
+          {loading && <div className="spinner"><FaSpinner className="spin" /></div>}
 
-          {/* Display Search Results */}
           {searchedBedDetails && (
-            <div className="searched-bed-details">
-              <h4>Bed Details</h4>
+            <div className="detail-card">
+              <button className="close-btn" onClick={() => setSearchedBedDetails(null)}><FaTimes /></button>
+              <h3>Bed Details</h3>
               <p><strong>Admission UID:</strong> {searchedBedDetails.admission_uid}</p>
               <p><strong>Assigned At:</strong> {searchedBedDetails.assigned_at}</p>
               <p><strong>Patient Name:</strong> {searchedBedDetails.patient_name}</p>
@@ -235,36 +209,108 @@ const PatientAdmissionPage = () => {
               <p><strong>Status:</strong> {searchedBedDetails.patient_status}</p>
             </div>
           )}
+{loading && (
+            <div className="spinner-wrapper">
+              <FaSpinner className="loading-spinner" />
+            </div>
+          )}
+   <div className="bed-table">
+  <h3>All Admissions</h3>
 
-          {/* All Bed Details Table */}
-          <div className="card bed-details-table">
-            <h3>All Bed Details</h3>
-            <table>
-              <thead>
-                <tr>
-                  <th>Admission UID</th>
-                  <th>Assigned At</th>
-                  <th>Patient Name</th>
-                  <th>Patient Age</th>
-                  <th>Patient Gender</th>
-                  <th>Status</th>
-                </tr>
-              </thead>
-              <tbody>
-                {bedDetails.map((bed) => (
-                  <tr key={bed.admission_uid}>
-                    <td>{bed.admission_uid}</td>
-                    <td>{bed.assigned_at}</td>
-                    <td>{bed.patient_name}</td>
-                    <td>{bed.patient_age}</td>
-                    <td>{bed.patient_gender}</td>
-                    <td>{bed.patient_status}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+  {loadingBedDetails ? (
+    <div className="spinner-wrapper">
+              <FaSpinner className="loading-spinner" />
+            </div>
+  ) : (
+    <table>
+      <thead>
+        <tr>
+          <th>Admit ID</th>
+          <th>Patient Name</th>
+           <th>Patient Age</th>
+            <th>Patient Gender</th>
+          <th>Ward No</th>
+          <th>Room No</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        {bedDetails.map(b => (
+          <tr key={b.admission_uid}>
+            <td>{b.admission_uid}</td>
+            <td>{b.patient_name}</td>
+              <td>{b.patient_age}</td>
+               <td>{b.patient_gender}</td>
+            <td>{b.ward_id}</td>
+            <td>{b.room_id}</td>
+            <td>{b.patient_status}</td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  )}
+</div>
+</div>
+
+        {showModal && (
+          <div className="modal-overlay" onClick={() => setShowModal(false)}>
+            <div className="modal-content" onClick={e => e.stopPropagation()}>
+              <button className="close-btn" onClick={() => setShowModal(false)}><FaTimes /></button>
+              <h3>Admit Patient</h3>
+              <form onSubmit={handlePatientAdmission} className="adm-form"style={{
+          backgroundColor: "#e0f7fa",
+          padding: "20px",
+          borderRadius: "8px"}}>
+                <label>
+                  Ward:
+                  <select value={wardId} onChange={e => setWardId(e.target.value)} disabled={loadingWards}>
+                    <option value="" disabled>
+                      {loadingWards ? 'Loading wards...' : 'Select Ward'}
+                    </option>
+                    {wards.map(w => (
+                      <option key={w.uid} value={w.uid}>
+                        {w.wardname} - {w.wardlocation} ({w.capacity} beds)
+                      </option>
+                    ))}
+                  </select>
+                  {loadingWards && <FaSpinner className="spin small-spinner" />}
+                </label>
+
+                <label>
+                  Room:
+                  <select value={roomId} onChange={e => setRoomId(e.target.value)} disabled={loadingRooms}>
+                    <option value="" disabled>
+                      {loadingRooms ? 'Loading rooms...' : 'Select Room'}
+                    </option>
+                    {rooms.map(r => (
+                      <option key={r.uid} value={r.uid}>
+                        {r.room_number} - {r.room_type}
+                      </option>
+                    ))}
+                  </select>
+                  {loadingRooms && <FaSpinner className="spin small-spinner" />}
+                </label>
+
+                <label>
+                  Patient:
+                  <select value={patientId} onChange={e => setPatientId(e.target.value)} disabled={loadingPatients}>
+                    <option value="" disabled>
+                      {loadingPatients ? 'Loading patients...' : 'Select Patient'}
+                    </option>
+                    {patients.map(p => (
+                      <option key={p.uid} value={p.uid}>
+                        {p.firstname} {p.lastname} ({p.age} yrs)
+                      </option>
+                    ))}
+                  </select>
+                  {loadingPatients && <FaSpinner className="spin small-spinner" />}
+                </label>
+
+                <button type="submit" className="btn submit-btnn">Submit</button>
+              </form>
+            </div>
           </div>
-        </div>
+        )}
       </div>
     </div>
   );

@@ -6,11 +6,14 @@ import {
   FaSearch,
   FaTrashAlt,
   FaTimes,
-  FaSpinner
+  FaSpinner,
+  FaUserPlus
 } from 'react-icons/fa';
 import './RoomManagement.css';
 import AdminNavbar from '../Adminnavbar/AdminNavbar';
 import AdminSidebar from '../Adminsidebar/AdminSidebar';
+import { useNavigate } from 'react-router-dom';
+
 
 const RoomManagementPage = () => {
   const [wardId, setWardId] = useState('');
@@ -25,6 +28,7 @@ const RoomManagementPage = () => {
   const [errorMessage, setErrorMessage] = useState('');
   const [successMessage, setSuccessMessage] = useState('');
   const [showCreateModal, setShowCreateModal] = useState(false);
+const navigate = useNavigate();
 
   useEffect(() => {
     fetchWards();
@@ -150,6 +154,12 @@ const RoomManagementPage = () => {
             >
               <FaPlusCircle /> Create Room
             </button>
+<button
+  className="btn"
+  onClick={() => navigate('/patient-admission')}
+>
+  <FaUserPlus /> Patient Admission
+</button>
 
             <div className="search-wrapper">
               <input
@@ -314,7 +324,7 @@ const RoomManagementPage = () => {
                     onChange={e => setCapacity(e.target.value)}
                   />
                 </label>
-                <button type="submit" className="btn submit-btn">
+                <button type="submit" className="btn submit-btnn">
                   Create Room
                 </button>
               </form>

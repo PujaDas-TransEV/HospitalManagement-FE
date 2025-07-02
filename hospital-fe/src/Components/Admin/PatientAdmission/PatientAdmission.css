@@ -1,380 +1,310 @@
-/* 
-body {
-    font-family: Arial, sans-serif;
-    background-color: #f4f7fa;
-    margin: 0;
-    padding: 0;
-  }
-  
-  .patient-admission-page {
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
-  }
-  
-  .patient-admission-content {
-    display: flex;
-    flex: 1;
-    padding: 20px;
-  }
-  
-  .container {
-  max-width: 1000px;
-  margin: 0 auto;
-  padding: 20px;
-  width: 100%;
+
+* {
   box-sizing: border-box;
-}
-
-.bed-details-table table {
-  width: 100%;
-  border-collapse: collapse;
-}
-@media (max-width: 768px) {
-  .patient-admission-content {
-    flex-direction: column;
-    padding: 10px;
-  }
-
-  .container {
-    padding: 10px;
-  }
-
-  .bed-details-table table {
-    font-size: 14px;
-    overflow-x: auto;
-  }
-}
-
-
-  .page-title {
-    font-size: 2rem;
-    font-weight: bold;
-    margin-bottom: 20px;
-  }
-  
-
-  .card {
-    
-    border-radius: 8px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    margin-bottom: 20px;
-    padding: 20px;
-  }
-  
-  .form-container h3,
-  .search-section h3,
-  .bed-details-table h3 {
-    font-size: 1.5rem;
-    margin-bottom: 15px;
-  }
-  
-  .form-group {
-    margin-bottom: 15px;
-  }
-  
-  label {
-    font-size: 1rem;
-    display: block;
-    margin-bottom: 5px;
-  }
-  
-  
-  
-  
-  .error {
-    background-color: #f8d7da;
-    color: #721c24;
-    padding: 10px;
-    border-radius: 5px;
-    margin-bottom: 20px;
-  }
-  
-  .success {
-    background-color: #d4edda;
-    color: #155724;
-    padding: 10px;
-    border-radius: 5px;
-    margin-bottom: 20px;
-  }
-  
-
-  
-  
- 
-  
-
-  .searched-bed-details {
-    margin-top: 20px;
-  }
-  
-  .searched-bed-details p {
-    font-size: 1rem;
-    margin: 5px 0;
-  }
-  
-  .searched-bed-details h4 {
-    font-size: 1.2rem;
-    margin-bottom: 10px;
-  }
-  
- 
-  .bed-details-table table {
-    width: 80%;
-    border-collapse: collapse;
-    margin-left: 100px;
-  }
-  
-  .bed-details-table th,
-  .bed-details-table td {
-    padding: 12px;
-    text-align: left;
-    border-bottom: 1px solid #ddd;
-  }
-  
-  .bed-details-table th {
-    background-color: #007bff;
-    color: white;
-  }
-  
-  .bed-details-table tr:hover {
-    background-color: #f1f1f1;
-  }
-  
-
-  @media (max-width: 768px) {
-    .patient-admission-content {
-      flex-direction: column;
-    }
-  
-    
-  
-    .form-group select {
-      width: 100%;
-    }
-  
-    .bed-details-table table {
-      font-size: 14px;
-    }
-  }
-  
-  .search-section button {
-    background-color: #007bff;
-    color: white;
-    padding: 10px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1rem;
-    margin-left:40px;
- }
-  
-  .search-section button:hover {
-    background-color: #0056b3;
-  }
-  
-  .search-section button i {
-    margin-right: 5px; 
-  }
-  
- 
-  @media (max-width: 768px) {
-    .search-input-container {
-      flex-direction: column;
-    }
-  
-    .search-section input[type="text"] {
-      width: 100%;
-    }
-  
-    .search-section button {
-      width: 100%;
-      margin-top: 10px;
-    }
-  } */
-
-  body {
-  font-family: Arial, sans-serif;
-  background-color: #f4f7fa;
   margin: 0;
   padding: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-.patient-admission-page {
+/* Wrapper with background image */
+.ptadm-wrapper {
   display: flex;
   flex-direction: column;
-  min-height: 100vh;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-image: url('../../Assests/background.jpg'); /* Make sure path is correct */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  min-height:100vh;
 }
 
-.patient-admission-content {
+/* Optional overlay for better readability */
+.ptadm-wrapper::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 100vh; /* make overlay 1.5 times viewport height */
+  background-color: rgba(255, 255, 255, 0.452);
+  z-index: 2;
+}
+
+/* Content area */
+.ptadm-content {
   display: flex;
-  flex: 1;
+  /* flex-grow: 1; */
   padding: 20px;
   justify-content: center;
-  margin-left: 220px; /* center content horizontally */
 }
 
-.container {
+/* Main container */
+.ptadm-container {
+ background-color: rgba(255, 255, 255, 0.97);
+  border-radius: 15px;
+  padding: 30px 40px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
   max-width: 1000px;
   width: 100%;
-  margin: 0 auto;
-  padding: 20px;
-  box-sizing: border-box;
+  margin-top: 60px;
+  z-index: 2;
 }
 
-.page-title {
-  font-size: 2rem;
-  font-weight: bold;
+/* Heading */
+.ptadm-container h2 {
   margin-bottom: 20px;
+  color: #004e92;
+  font-weight: 700;
+  text-align: center;
 }
 
-.card {
+/* Controls: admit button + search */
+.controls {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+/* Buttons */
+.btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 18px;
+  border: none;
   border-radius: 8px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  margin-bottom: 20px;
-  padding: 20px;
+  background: #004e92;
+  color: #fff;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background 0.3s ease;
 }
 
-.form-container h3,
-.search-section h3,
-.bed-details-table h3 {
+.btn:hover {
+  background: #00356b;
+}
+
+.create-btn {
+  background: #004e92;
+}
+
+.search-btn {
+  background: #0d6efd;
+  padding: 0 12px;
+}
+
+/* Search input and wrapper */
+.search-input {
+  display: flex;
+  border: 1.5px solid #ccc;
+  border-radius: 6px;
+  overflow: hidden;
+  background: #fff;
+  max-width: 250px;
+  width: 100%;
+}
+
+.search-input input {
+  flex: 1;
+  padding: 0.6rem 1rem;
+  border: none;
+  outline: none;
+}
+
+/* Spinner */
+.spinner {
+  text-align: center;
   font-size: 1.5rem;
-  margin-bottom: 15px;
+  color: #004e92;
+  margin: 20px 0;
+  animation: spin 1s linear infinite;
 }
 
-.form-group {
-  margin-bottom: 15px;
+@keyframes spin {
+  0% { transform: rotate(0deg);}
+  100% { transform: rotate(360deg);}
 }
 
-label {
-  font-size: 1rem;
-  display: block;
-  margin-bottom: 5px;
+/* Error and success messages */
+.error, .success {
+  text-align: center;
+  margin-bottom: 15px;
+  font-weight: 600;
+  padding: 10px 15px;
+  border-radius: 8px;
 }
 
 .error {
   background-color: #f8d7da;
-  color: #721c24;
-  padding: 10px;
-  border-radius: 5px;
-  margin-bottom: 20px;
+  color: #842029;
+  border: 1px solid #f5c2c7;
 }
 
 .success {
-  background-color: #d4edda;
-  color: #155724;
-  padding: 10px;
-  border-radius: 5px;
-  margin-bottom: 20px;
+  background-color: #d1e7dd;
+  color: #0f5132;
+  border: 1px solid #badbcc;
 }
 
-.searched-bed-details {
-  margin-top: 20px;
+/* Admission detail card */
+.detail-card {
+  position: relative;
+  background: #e9f1fa;
+  padding: 20px;
+  border-radius: 10px;
+  margin: 20px 0;
+  box-shadow: 0 4px 14px rgba(0,78,146,0.1);
 }
 
-.searched-bed-details p {
-  font-size: 1rem;
-  margin: 5px 0;
+.detail-card h3 {
+  margin-bottom: 15px;
+  color: #004e92;
 }
 
-.searched-bed-details h4 {
-  font-size: 1.2rem;
+.detail-card p {
+  margin-bottom: 8px;
+  font-weight: 600;
+  color: #333;
+}
+
+/* Close button */
+.close-btn {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  border: none;
+  background: transparent;
+  font-size: 1.4rem;
+  cursor: pointer;
+  color: #333;
+}
+
+/* Table for all admissions */
+.bed-table {
+  margin-top: 40px;
+  overflow-x: auto;
+}
+
+.bed-table h3 {
   margin-bottom: 10px;
+  color: #004e92;
+  font-weight: 700;
+  text-align: left;
 }
 
-.bed-details-table table {
+.bed-table table {
   width: 100%;
   border-collapse: collapse;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.05);
 }
 
-.bed-details-table th,
-.bed-details-table td {
-  padding: 12px;
+.bed-table th {
+  background: #004e92;
+  color: #fff;
+  padding: 14px;
   text-align: left;
+}
+
+.bed-table td {
+  padding: 12px;
   border-bottom: 1px solid #ddd;
+  color: #333;
 }
 
-.bed-details-table th {
-  background-color: #007bff;
-  color: white;
+.bed-table tr:hover {
+  background: #f1faff;
 }
 
-.bed-details-table tr:hover {
-  background-color: #f1f1f1;
-}
-
-.search-section {
+/* Modal Overlay */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.55);
   display: flex;
-  align-items: center;
-  margin-top: 20px;
-}
-
-.search-section input[type="text"] {
-  flex: 1;
-  padding: 10px;
-  font-size: 1rem;
-  border: 1px solid #ccc;
-  border-radius: 5px 0 0 5px;
-  outline: none;
-}
-
-.search-section button {
-  background-color: #007bff;
-  color: white;
-  padding: 10px 20px;
-  border: none;
-  border-radius: 0 5px 5px 0;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
   justify-content: center;
+  align-items: center;
+  padding: 15px;
+  z-index: 999;
+}
+
+/* Modal Content */
+.modal-content {
+  position: relative;
+  background: #fff;
+  padding: 24px 30px;
+  border-radius: 12px;
+  max-width: 500px;
+  width: 100%;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+}
+
+/* Modal close button */
+.modal-content .close-btn {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  border: none;
+  background: transparent;
+  font-size: 1.6rem;
+  cursor: pointer;
+  color: #004e92;
+}
+
+/* Admission form */
+.adm-form {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.adm-form label {
+  font-weight: 600;
+  color: #004e92;
+  display: flex;
+  flex-direction: column;
+}
+
+.adm-form select {
+  margin-top: 8px;
+  padding: 10px 12px;
+  border-radius: 8px;
+  border: 1.5px solid #004e92;
+  background-color: #fff;
   font-size: 1rem;
+  cursor: pointer;
 }
 
-.search-section button:hover {
-  background-color: #0056b3;
+.adm-form select:focus {
+  outline: none;
+  border-color: #00356b;
 }
 
-.search-section button svg {
-  margin-right: 5px;
+/* Submit button */
+.submit-btnn {
+  background: #004e92;
+  color: #fff;
+  padding: 10px 20px;
+  font-weight: 600;
+  border: none;
+  border-radius: 6px;
+  width: fit-content;
+  margin: 20px auto 0 auto; /* centers the button horizontally */
+  display: block;
 }
 
-@media (max-width: 768px) {
-  .patient-admission-content {
+
+/* Responsive */
+@media (max-width: 600px) {
+  .controls {
     flex-direction: column;
-    padding: 10px;
   }
-
-  .container {
-    padding: 10px;
+  .search-input {
+    max-width: 100%;
   }
-
-  .bed-details-table table {
-    font-size: 14px;
-    overflow-x: auto;
-    display: block;
-    white-space: nowrap;
-  }
-
-  .search-section {
-    flex-direction: column;
-    align-items: stretch;
-  }
-
-  .search-section input[type="text"] {
-    border-radius: 5px;
-    margin-bottom: 10px;
-  }
-
-  .search-section button {
-    border-radius: 5px;
-    width: 100%;
-  }
-
-  .form-group select {
-    width: 100%;
+  .ptadm-container {
+    padding: 20px;
+    margin-top: 30px;
   }
 }
