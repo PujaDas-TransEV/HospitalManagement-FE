@@ -261,10 +261,12 @@ const ManagePatient = () => {
           savePatient();
         }}
         style={{
-          backgroundColor: "#e0f7fa",
-          padding: "20px",
-          borderRadius: "8px",
-        }}
+    backgroundColor: "#e0f7fa",
+    padding: "20px",
+    borderRadius: "8px",
+    maxHeight: "70vh",     // Set a max height for the form
+    overflowY: "auto"      // Make it scrollable if it exceeds max height
+  }}
       >
         <div className="form-grid">
           {[

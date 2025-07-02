@@ -1,143 +1,65 @@
-/* Background image on whole page */
-.facility-managementt-page {
-  position: relative;
-  background-image: url('../../Assests/background.jpg');
-  background-size: cover;
-  background-position: center;
-  min-height: 100vh;
-  overflow-x: hidden; /* prevent horizontal scroll */
+
+.support-heading {
+  font-size: 2rem;
+  font-weight: 600;
+  color: #1a237e;
+  margin-bottom: 1.5rem;
 }
 
-/* Translucent overlay over the whole page */
-.facility-managementt-page::before {
-  content: '';
-  position: fixed; /* fixed to viewport */
-  inset: 0;
-  background-color: rgba(255, 255, 255, 0.8);
-  z-index: 1;
-  pointer-events: none; /* so clicks go through */
-}
-
-/* Content wrapper above the overlay */
-.facility-managementt-content {
-  position: relative;
-  z-index: 10; /* above overlay */
-  padding: 20px;
-  margin-left: 250px; /* space for sidebar */
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-}
-
-/* White translucent overlay container (the "white layout") */
-.admin-support-container {
-  background-color: rgba(255, 255, 255, 0.95); /* nearly opaque white */
-  max-width: 1100px;
-  margin: 30px auto;
-  padding: 25px 30px;
-  border-radius: 12px;
-  box-shadow: 0 6px 15px rgba(0,0,0,0.2);
-  min-height: 70vh;
-  position: relative;
-  z-index: 20; /* ensure on top */
-}
-
-/* Title */
-.admin-support-container h2 {
-  margin-bottom: 20px;
-  text-align: center;
-  color: #222;
-}
-
-/* Spinner styles */
-.spinner-container {
+.spinner-wrapper {
   display: flex;
   justify-content: center;
-  padding: 50px 0;
+  align-items: center;
+  height: 200px;
 }
 
-.spinner {
-  font-size: 48px;
-  color: #1e88e5;
-  animation: spin 1.2s linear infinite;
+.loading-spinner {
+  font-size: 2.5rem;
+  animation: spin 1s linear infinite;
+  color: #0d6efd;
 }
 
 @keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+  to {
+    transform: rotate(360deg);
+  }
 }
 
-/* Table styles */
-.support-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-bottom: 30px;
-}
-
-.support-table th,
-.support-table td {
-  border: 1px solid #ccc;
-  padding: 12px 15px;
-  text-align: left;
-}
-
-.support-table th {
-  background-color: #1e88e5;
-  color: white;
-  font-weight: 600;
-}
-
-/* Delete button */
-.delete-btn {
-  background-color: #f44336;
-  border: none;
-  color: white;
-  padding: 7px 14px;
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: 0.9rem;
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  transition: background-color 0.3s ease;
-}
-
-.delete-btn:hover {
-  background-color: #c0392b;
-}
-
-/* Card styles for mobile */
-.support-cards {
-  display: none; /* hide on desktop */
+.support-card-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1.5rem;
 }
 
 .support-card {
-  border: 1px solid #ddd;
-  border-radius: 12px;
-  padding: 18px 20px;
-  margin-bottom: 18px;
-  background-color: #fff;
-  box-shadow: 0 3px 8px rgba(0,0,0,0.1);
-  color: #222;
+  background-color: #ffffff;
+  border-radius: 8px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease;
+  width: 300px; /* Reduce width */
+  max-width: 100%;
+}
+
+.support-card:hover {
+  transform: translateY(-5px);
 }
 
 .support-card p {
-  margin: 6px 0;
-  font-size: 0.95rem;
+  margin: 0.4rem 0;
 }
 
-/* Responsive design */
-@media (max-width: 768px) {
-  /* Hide table, show cards on mobile */
-  .support-table {
-    display: none;
-  }
-  .support-cards {
-    display: block;
-  }
-  /* Remove left margin on smaller screens */
-  .facility-managementt-content {
-    margin-left: 0;
-    padding: 10px 15px;
-  }
+.delete-btn {
+  background-color: #e53935;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  margin-top: 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.delete-btn:hover {
+  background-color: #c62828;
 }

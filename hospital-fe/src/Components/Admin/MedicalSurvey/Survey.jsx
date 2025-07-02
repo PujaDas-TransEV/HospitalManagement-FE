@@ -1,7 +1,12 @@
+
 import React, { useEffect, useState } from 'react';
-import './Survey.css'; // Your CSS file
+import { FaSpinner, FaTrashAlt } from 'react-icons/fa';
 import AdminNavbar from '../Adminnavbar/AdminNavbar';
 import AdminSidebar from '../Adminsidebar/AdminSidebar';
+import surveyBg from '../../Assests/background.jpg'; // Put your image here
+import './Survey.css';
+
+const API_URL = 'http://192.168.0.106:5000';
 
 const AdminMedicalSurveyList = () => {
   const [surveys, setSurveys] = useState([]);
@@ -12,16 +17,11 @@ const AdminMedicalSurveyList = () => {
     fetchSurveys();
   }, []);
 
-  // Fetch all medical surveys
   const fetchSurveys = async () => {
     try {
-      const res = await fetch('http://192.168.0.106:5000/ops/getallms');
+      const res = await fetch(`${API_URL}/ops/getallms`);
       const data = await res.json();
-
-      if (!res.ok) {
-        throw new Error(data.message || 'Failed to fetch data');
-      }
-
+      if (!res.ok) throw new Error(data.message || 'Failed to fetch');
       setSurveys(data.data || []);
     } catch (err) {
       setError(err.message);
@@ -30,101 +30,90 @@ const AdminMedicalSurveyList = () => {
     }
   };
 
-  // Delete a specific survey by uid
   const handleDelete = async (uid) => {
-    const confirmDelete = window.confirm('Are you sure you want to delete this survey?');
-    if (!confirmDelete) return;
-
+    if (!window.confirm('Are you sure you want to delete this survey?')) return;
     const formData = new FormData();
     formData.append('uid', uid);
-
     try {
-      const res = await fetch('http://192.168.0.106:5000/ops/deletemedicalsurvey', {
+      const res = await fetch(`${API_URL}/ops/deletemedicalsurvey`, {
         method: 'POST',
         body: formData,
       });
-
-      const result = await res.json();
-
+      const data = await res.json();
       if (res.ok) {
         alert('✅ Survey deleted successfully');
-        setSurveys((prev) => prev.filter((s) => s.uid !== uid));
+        setSurveys(prev => prev.filter(s => s.uid !== uid));
       } else {
-        alert('❌ Error: ' + result.error);
+        alert('❌ Error: ' + (data.error || data.message));
       }
-    } catch (err) {
-      console.error(err);
+    } catch {
       alert('❌ Network error or server not responding.');
     }
   };
 
   return (
-    <div className="prescription-wrapper">
+    <div className="survey-page">
       <AdminNavbar />
-      <div className="main-content">
+      <div className="survey-layout">
         <AdminSidebar />
-        <div className="admin-survey-container">
-          <div className="survey-content">
-            <h2>Medical Survey Submissions</h2>
-
-            {loading && <p className="info-text">Loading surveys...</p>}
+        <div
+          className="survey-bg"
+          style={{ backgroundImage: `url(${surveyBg})` }}
+        >
+          <div className="survey-overlay">
+            <h2 className="survey-heading">Medical Survey Submissions</h2>
+            {loading && (
+            <div className="spinner-wrapper">
+                            <FaSpinner className="loading-spinner" />
+                          </div>
+            )}
             {error && <p className="error-text">{error}</p>}
-
             {!loading && !error && surveys.length === 0 && (
               <p className="info-text">No survey data found.</p>
             )}
-
             {!loading && !error && surveys.length > 0 && (
-              <div className="table-wrapper">
-                <table className="survey-table">
-                  <thead>
-                    <tr>
-                      <th>Surveyor Name</th>
-                      <th>Contact</th>
-                      <th>House Number</th>
-                      <th>Ward Number</th>
-                      <th>Member Count</th>
-                      <th>Guardian of House</th>
-                      <th>Sick Persons Count</th>
-                      <th>Name of Sick Persons</th>
-                      <th>Reason of Sickness</th>
-                      <th>Medical Remedy</th>
-                      <th>District</th>
-                      <th>Local Address</th>
-                      <th>PS Name</th>
-                      <th>Pincode</th>
-                      <th>Actions</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {surveys.map((survey) => (
-                      <tr key={survey.uid}>
-                        <td>{survey.surveyor_name}</td>
-                        <td>{survey.surveyor_contact}</td>
-                        <td>{survey.housenumber}</td>
-                        <td>{survey.wardnumber}</td>
-                        <td>{survey.membercount}</td>
-                        <td>{survey.gurdian_of_the_house}</td>
-                        <td>{survey.number_of_sick_persons}</td>
-                        <td>{survey.name_of_the_sick_persons}</td>
-                        <td>{survey.reason_of_sickness}</td>
-                        <td>{survey.medical_remedy}</td>
-                        <td>{survey.district}</td>
-                        <td>{survey.localaddress}</td>
-                        <td>{survey.ps_name}</td>
-                        <td>{survey.pincode}</td>
-                        <td>
-                          <button
-                            className="delete-btn"
-                            onClick={() => handleDelete(survey.uid)}
-                          >
-                            🗑️ Delete
-                          </button>
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
+              <div className="survey-card-grid">
+                {surveys.map((s, i) => (
+                  <div
+                    key={s.uid}
+                    className="survey-card"
+                    style={{ backgroundColor: i % 2 === 0 ? '#f1f8e9' : '#e3f2fd' }}
+                  >
+                    <p><strong>Name:</strong> {s.surveyor_name}</p>
+                    <p><strong>Contact:</strong> {s.surveyor_contact}</p>
+                    <p><strong>House No:</strong> {s.housenumber}</p>
+                    <p><strong>Ward No:</strong> {s.wardnumber}</p>
+                    <p><strong>Members:</strong> {s.membercount}</p>
+                    <p><strong>Guardian:</strong> {s.gurdian_of_the_house}</p>
+                    <p><strong>Sick Count:</strong> {s.number_of_sick_persons}</p>
+                    <p><strong>Sick Names:</strong> {s.name_of_the_sick_persons}</p>
+                    <p><strong>Reason:</strong> {s.reason_of_sickness}</p>
+                    <p><strong>Remedy:</strong> {s.medical_remedy}</p>
+                    <p><strong>District:</strong> {s.district}</p>
+                    <p><strong>Address:</strong> {s.localaddress}</p>
+                    <p><strong>PS Name:</strong> {s.ps_name}</p>
+                    <p><strong>Pincode:</strong> {s.pincode}</p>
+                   <button
+  onClick={() => handleDelete(s.uid)}
+  style={{
+    backgroundColor: '#e53935',
+    color: 'white',
+    border: 'none',
+    padding: '0.5rem 1rem',
+    marginTop: '1rem',
+    borderRadius: '4px',
+    cursor: 'pointer',
+    fontSize: '0.9rem',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+  }}
+>
+  <FaTrashAlt />
+</button>
+
+                  </div>
+                ))}
               </div>
             )}
           </div>

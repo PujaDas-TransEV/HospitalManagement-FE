@@ -1,112 +1,10 @@
-// import React, { useState, useEffect } from 'react';
-// import { FaTrashAlt } from 'react-icons/fa'; // Import the icons
-// import AdminNavbar from '../Adminnavbar/AdminNavbar';
-// import AdminSidebar from '../Adminsidebar/AdminSidebar';
 
-// const API_URL = 'http://192.168.0.106:5000'; // Base URL
-
-// const AdminSupport = () => {
-//   const [supportTickets, setSupportTickets] = useState([]);
-//   const [error, setError] = useState(null);
-
-//   // Fetch all support tickets
-//   useEffect(() => {
-//     const fetchSupportTickets = async () => {
-//       try {
-//         const response = await fetch(`${API_URL}/ops/getallsupport`);
-//         const data = await response.json();
-//         setSupportTickets(data.data || []);
-//       } catch (error) {
-//         setError('Error fetching support tickets.');
-//       }
-//     };
-
-//     fetchSupportTickets();
-//   }, []);
-
-//   // Handle deleting a support ticket
-//   const handleDelete = async (supportId) => {
-//     if (window.confirm('Are you sure you want to delete this support ticket?')) {
-//       const formData = new FormData();
-//       formData.append('supportid', supportId);
-
-//       try {
-//         const response = await fetch(`${API_URL}/ops/deletesupport`, {
-//           method: 'POST',
-//           body: formData,
-//         });
-//         const data = await response.json();
-
-//         if (data.message) {
-//           setSupportTickets((prevTickets) =>
-//             prevTickets.filter((ticket) => ticket.uid !== supportId)
-//           );
-//         } else {
-//           alert('Error deleting support ticket.');
-//         }
-//       } catch (error) {
-//         console.error('Error deleting support ticket:', error);
-//         alert('Error deleting support ticket.');
-//       }
-//     }
-//   };
-
-//   return (
-//     <div className="facility-management-page">
-//     <AdminNavbar />
-//     <div className="facility-management-content">
-//       <AdminSidebar />
-//     <div className="admin-support-container">
-//       <h2>All Support Tickets</h2>
-
-//       {error && <div className="error-message">{error}</div>}
-
-//       <table>
-//         <thead>
-//           <tr>
-//             <th>Support ID</th>
-//             <th>Name</th>
-//             <th>Email</th>
-//             <th>Phone</th>
-//             <th>Issue Type</th>
-//             <th>Message</th>
-//             <th>Actions</th>
-//           </tr>
-//         </thead>
-//         <tbody>
-//           {supportTickets.length === 0 ? (
-//             <tr>
-//               <td colSpan="7">No support tickets available.</td>
-//             </tr>
-//           ) : (
-//             supportTickets.map((ticket) => (
-//               <tr key={ticket.uid}>
-//                 <td>{ticket.uid}</td>
-//                 <td>{ticket.name}</td>
-//                 <td>{ticket.email}</td>
-//                 <td>{ticket.phone}</td>
-//                 <td>{ticket.issuetype}</td>
-//                 <td>{ticket.message}</td>
-//                 <td>
-//                   <button onClick={() => handleDelete(ticket.uid)}><FaTrashAlt /> Delete</button>
-                
-//                 </td>
-//               </tr>
-//             ))
-//           )}
-//         </tbody>
-//       </table>
-//     </div>
-//     </div>
-//     </div>
-//   );
-// };
-
-// export default AdminSupport;
 import React, { useState, useEffect } from 'react';
 import { FaTrashAlt, FaSpinner } from 'react-icons/fa';
 import AdminNavbar from '../Adminnavbar/AdminNavbar';
 import AdminSidebar from '../Adminsidebar/AdminSidebar';
+import supportBg from '../../Assests/background.jpg'; // Adjust path as needed
+import './AdminSupport.css';
 
 const API_URL = 'http://192.168.0.106:5000';
 
@@ -121,7 +19,6 @@ const AdminSupport = () => {
         const response = await fetch(`${API_URL}/ops/getallsupport`);
         const data = await response.json();
         setSupportTickets(data.data || []);
-        setError(null);
       } catch (error) {
         setError('Error fetching support tickets.');
       } finally {
@@ -145,8 +42,8 @@ const AdminSupport = () => {
         const data = await response.json();
 
         if (data.message) {
-          setSupportTickets((prevTickets) =>
-            prevTickets.filter((ticket) => ticket.uid !== supportId)
+          setSupportTickets((prev) =>
+            prev.filter((ticket) => ticket.uid !== supportId)
           );
         } else {
           alert('Error deleting support ticket.');
@@ -159,63 +56,52 @@ const AdminSupport = () => {
   };
 
   return (
-    <div className="facility-managementt-page">
+    <div className="admin-support-page">
       <AdminNavbar />
-      <div className="facility-managementt-content">
+      <div className="admin-support-layout">
         <AdminSidebar />
-        <div className="admin-support-container">
-          <h2>All Support Tickets</h2>
 
-          {loading ? (
-            <div className="spinner-container">
-              <FaSpinner className="spinner" />
-            </div>
-          ) : error ? (
-            <div className="error-message">{error}</div>
-          ) : supportTickets.length === 0 ? (
-            <p>No support tickets available.</p>
-          ) : (
-            <>
-              {/* Table for desktop */}
-              <table className="support-table">
-                <thead>
-                  <tr>
-                    <th>Support ID</th>
-                    <th>Name</th>
-                    <th>Email</th>
-                    <th>Phone</th>
-                    <th>Issue Type</th>
-                    <th>Message</th>
-                    <th>Actions</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {supportTickets.map((ticket) => (
-                    <tr key={ticket.uid}>
-                      <td>{ticket.uid}</td>
-                      <td>{ticket.name}</td>
-                      <td>{ticket.email}</td>
-                      <td>{ticket.phone}</td>
-                      <td>{ticket.issuetype}</td>
-                      <td>{ticket.message}</td>
-                      <td>
-                        <button
-                          className="delete-btn"
-                          onClick={() => handleDelete(ticket.uid)}
-                        >
-                          <FaTrashAlt /> Delete
-                        </button>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
+        {/* Background image wrapper */}
+        <div
+          style={{
+            backgroundImage: `url(${supportBg})`,
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+            backgroundRepeat: 'no-repeat',
+            minHeight: '100vh',
+            width: '100%',
+            position: 'relative',
+          }}
+        >
+          {/* White overlay */}
+          <div
+            style={{
+              position: 'absolute',
+              top: 0,
+              left: 0,
+              right: 0,
+              bottom: 0,
+              backgroundColor: 'rgba(255, 255, 255, 0.53)',
+              zIndex: 1,
+              padding: '2rem',
+              overflowY: 'auto',
+            }}
+          >
+            <h2 className="support-heading">All Support Tickets</h2>
 
-              {/* Cards for mobile */}
-              <div className="support-cards">
+            {loading ? (
+              <div className="spinner-wrapper">
+                <FaSpinner className="loading-spinner" />
+              </div>
+            ) : error ? (
+              <div className="error-message">{error}</div>
+            ) : supportTickets.length === 0 ? (
+              <p className="no-tickets">No support tickets available.</p>
+            ) : (
+              <div className="support-card-grid">
                 {supportTickets.map((ticket) => (
                   <div key={ticket.uid} className="support-card">
-                    <p><strong>Support ID:</strong> {ticket.uid}</p>
+                    <p><strong>ID:</strong> {ticket.uid}</p>
                     <p><strong>Name:</strong> {ticket.name}</p>
                     <p><strong>Email:</strong> {ticket.email}</p>
                     <p><strong>Phone:</strong> {ticket.phone}</p>
@@ -225,13 +111,13 @@ const AdminSupport = () => {
                       className="delete-btn"
                       onClick={() => handleDelete(ticket.uid)}
                     >
-                      <FaTrashAlt /> Delete
+                      <FaTrashAlt /> 
                     </button>
                   </div>
                 ))}
               </div>
-            </>
-          )}
+            )}
+          </div>
         </div>
       </div>
     </div>

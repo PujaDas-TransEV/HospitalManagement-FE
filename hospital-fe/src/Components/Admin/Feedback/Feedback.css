@@ -1,61 +1,92 @@
 
-.admin-feedback-container {
-  padding: 20px;
-  background-color: #f9f9f9;
+.feedback-page {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.feedback-layout {
+  display: flex;
   flex: 1;
-  margin-left: 230px; /* sidebar width on large screens */
-  transition: margin-left 0.3s ease;
 }
 
-/* Medium screens (tablets) */
-@media (max-width: 992px) {
-  .admin-feedback-container {
-    margin-left: 180px; /* smaller sidebar or collapsed sidebar */
-  }
+.feedback-bg {
+  flex: 1;
+  background-size: cover;
+  background-position: center;
+  position: relative;
 }
 
-/* Small screens (mobile) */
-@media (max-width: 768px) {
-  .admin-feedback-container {
-    margin-left: 0; /* no left margin, sidebar probably overlays */
-    padding: 15px 10px;
-  }
+.feedback-overlay {
+  position: absolute;
+  inset: 0;
+  background-color: rgba(255, 255, 255, 0.664);
+  padding: 2rem;
+  overflow-y: auto;
 }
 
-/* Grid container for feedback cards */
-.feedback-list {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); /* 3 per row approx */
-  gap: 20px;
+.feedback-heading {
+  font-size: 2rem;
+  font-weight: 600;
+  color: #1a237e;
+  margin-bottom: 1.5rem;
 }
 
-/* Individual feedback card styling */
+.spinner-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 200px;
+}
+
+.spinner {
+  font-size: 2.5rem;
+  color: #0d6efd;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.info-text,
+.error-text {
+  font-size: 1rem;
+  margin: 1rem 0;
+  color: #666;
+}
+
+.error-text {
+  color: #d32f2f;
+}
+
+.feedback-card-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1.5rem;
+}
+
 .feedback-card {
-  background-color: #fff;
-  padding: 15px 20px;
+  width: 300px;
+  max-width: 100%;
   border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  transition: box-shadow 0.3s ease;
+  padding: 1.5rem;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  transition: transform 0.2s ease;
 }
 
 .feedback-card:hover {
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+  transform: translateY(-5px);
 }
 
 .feedback-card h3 {
-  margin-top: 0;
-  margin-bottom: 10px;
-  font-size: 18px;
-  color: #007bff; /* or any accent color */
+  margin: 0 0 0.5rem;
+  font-size: 1.2rem;
 }
 
 .feedback-card p {
-  margin: 5px 0;
-  font-size: 14px;
-  color: #555;
-}
-
-.error {
-  color: red;
-  font-weight: 500;
+  margin: 0.3rem 0;
+  font-size: 0.95rem;
+  color: #333;
 }
