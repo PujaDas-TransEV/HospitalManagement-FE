@@ -3,7 +3,8 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import AdminNavbar from '../Adminnavbar/AdminNavbar';
 import Adminsidebar from '../Adminsidebar/AdminSidebar';
-import { FaSearch } from 'react-icons/fa';
+import { FaSearch, FaFlask, FaSpinner, FaRedo,FaEdit,FaSave,FaTimes } from 'react-icons/fa';
+import './AdminLabtest.css'; // import the new CSS
 
 const AdminLabTestPage = () => {
   const [labReports, setLabReports] = useState([]);
@@ -24,7 +25,7 @@ const AdminLabTestPage = () => {
       const reports = Array.isArray(res.data?.data) ? res.data.data : (Array.isArray(res.data) ? res.data : []);
       setLabReports(reports);
     } catch (error) {
-      console.error('Error fetching all lab reports:', error);
+      console.error('Error fetching lab reports:', error);
       setLabReports([]);
     } finally {
       setLoading(false);
@@ -42,7 +43,7 @@ const AdminLabTestPage = () => {
       const reports = Array.isArray(result) ? result : [result];
       setLabReports(reports);
     } catch (error) {
-      console.error('Error searching lab report:', error);
+      console.error('Search error:', error);
       setLabReports([]);
     } finally {
       setLoading(false);
@@ -71,9 +72,9 @@ const AdminLabTestPage = () => {
     setUpdating(true);
     try {
       const formData = new FormData();
-      formData.append('labid', editData.labid); // backend expects labid
-      formData.append('patientid', editData.patientid || '');
-      formData.append('labphyreportid', editData.hospitalgeneratedreportid || '');
+      formData.append('labid', editData.labid);
+      formData.append('patientid', editData.patientid);
+      formData.append('labphyreportid', editData.hospitalgeneratedreportid);
       formData.append('patientsymptoms', editData.patientsymptoms || '');
       formData.append('doctorreferal', editData.doctorreferal || '');
       formData.append('typeoftest', editData.typeoftest || '');
@@ -84,7 +85,7 @@ const AdminLabTestPage = () => {
       setEditModalOpen(false);
       fetchAllReports();
     } catch (error) {
-      console.error('Error updating lab report:', error);
+      console.error('Update error:', error);
       alert('Failed to update lab report');
     } finally {
       setUpdating(false);
@@ -92,83 +93,57 @@ const AdminLabTestPage = () => {
   };
 
   return (
-    <div className="dashboard-container">
+    <div className="dashboard-container-lab">
       <AdminNavbar />
-      <div className="dashboard-content" style={{ display: 'flex' }}>
+      <div className="dashboard-content-lab">
         <Adminsidebar />
-        <div style={{ padding: 20 }}>
-          <h1 style={{ marginBottom: 20 }}>Admin Lab Test Management</h1>
+        <div className="labtest-main">
+          <h1>Admin Lab Test Management</h1>
 
-          <button
-            onClick={() => (window.location.href = '/admin/labreport')}
-            style={{ marginBottom: 20, padding: '10px 20px', backgroundColor: '#007bff', color: 'white', border: 'none', borderRadius: 5, cursor: 'pointer' }}
-          >
-            Create New Lab Test Report
+          <button className="create-new-btnn" onClick={() => (window.location.href = '/admin/labreport')}>
+            <FaFlask /> Create New Lab Test Report
           </button>
 
-          <div style={{ marginBottom: 20 }}>
+          <div className="search-controls">
             <input
               type="text"
               placeholder="Search by Lab Report ID"
               value={searchId}
               onChange={(e) => setSearchId(e.target.value)}
-              style={{ padding: '8px 12px', width: 250, marginRight: 10, borderRadius: 4, border: '1px solid #ccc' }}
             />
-            <button onClick={handleSearch} style={{ padding: '8px 16px', cursor: 'pointer' }}>
-              <FaSearch />
-            </button>
-            <button
-              onClick={() => {
-                setSearchId('');
-                fetchAllReports();
-              }}
-              style={{ marginLeft: 10, padding: '8px 16px', cursor: 'pointer' }}
-            >
-              Reset
-            </button>
+            <button onClick={handleSearch}><FaSearch /></button>
+            <button onClick={() => { setSearchId(''); fetchAllReports(); }}>  <FaRedo style={{ marginRight: '6px' }} /></button>
           </div>
 
-          {loading && <p>Loading lab reports...</p>}
+          {loading && <div className="loading-overlay"><FaSpinner className="spin large" /></div>}
           {!loading && labReports.length === 0 && <p>No lab reports found.</p>}
 
           {!loading && labReports.length > 0 && (
-            <table style={{ width: '100%', borderCollapse: 'collapse', boxShadow: '0 0 10px rgba(0,0,0,0.1)' }}>
+            <table className="responsive-table">
               <thead>
-                <tr style={{ backgroundColor: '#007bff', color: 'white' }}>
-                  <th style={{ padding: 10, border: '1px solid #ddd' }}>Report ID</th>
-                  <th style={{ padding: 10, border: '1px solid #ddd' }}>Patient Name</th>
-                  <th style={{ padding: 10, border: '1px solid #ddd' }}>Lab Phy Report ID</th>
-                  <th style={{ padding: 10, border: '1px solid #ddd' }}>Symptoms</th>
-                  <th style={{ padding: 10, border: '1px solid #ddd' }}>Doctor Referral</th>
-                  <th style={{ padding: 10, border: '1px solid #ddd' }}>Type of Test</th>
-                  <th style={{ padding: 10, border: '1px solid #ddd' }}>Final Report</th>
-                  <th style={{ padding: 10, border: '1px solid #ddd' }}>Actions</th>
+                <tr>
+                  <th>Report ID</th>
+                  <th>Patient Name</th>
+                  <th>Lab Phy Report ID</th>
+                  <th>Symptoms</th>
+                  <th>Doctor Referral</th>
+                  <th>Type of Test</th>
+                  <th>Final Report</th>
+                  <th>Actions</th>
                 </tr>
               </thead>
               <tbody>
                 {labReports.map((report) => (
-                  <tr key={report.labreportid || report.id}>
-                    <td style={{ padding: 10, border: '1px solid #ddd' }}>{report.uid || report.labreportid}</td>
-                    <td style={{ padding: 10, border: '1px solid #ddd' }}>{report.patientname || '-'}</td>
-                    <td style={{ padding: 10, border: '1px solid #ddd' }}>{report.hospitalgeneratedreportid || report.labphyreportid || '-'}</td>
-                    <td style={{ padding: 10, border: '1px solid #ddd' }}>{report.patientsymptoms}</td>
-                    <td style={{ padding: 10, border: '1px solid #ddd' }}>{report.doctorreferal}</td>
-                    <td style={{ padding: 10, border: '1px solid #ddd' }}>{report.typeoftest}</td>
-                    <td style={{ padding: 10, border: '1px solid #ddd' }}>{report.finalreport}</td>
-                    <td style={{ padding: 10, border: '1px solid #ddd' }}>
-                      <button
-                        onClick={() => openEditModal(report)}
-                        style={{
-                          backgroundColor: '#28a745',
-                          color: 'white',
-                          border: 'none',
-                          padding: '6px 12px',
-                          borderRadius: 4,
-                          cursor: 'pointer',
-                        }}
-                      >
-                        Edit
-                      </button>
+                  <tr key={report.labreportid || report.uid}>
+                    <td data-label="Report ID">{report.uid || report.labreportid}</td>
+                    <td data-label="Patient Name">{report.patientname || '-'}</td>
+                    <td data-label="Lab Phy Report ID">{report.hospitalgeneratedreportid || report.labphyreportid || '-'}</td>
+                    <td data-label="Symptoms">{report.patientsymptoms}</td>
+                    <td data-label="Doctor Referral">{report.doctorreferal}</td>
+                    <td data-label="Type of Test">{report.typeoftest}</td>
+                    <td data-label="Final Report">{report.finalreport}</td>
+                    <td data-label="Actions">
+                      <button className="editt-btn" onClick={() => openEditModal(report)}> <FaEdit style={{ marginRight: '6px' }} /> </button>
                     </td>
                   </tr>
                 ))}
@@ -177,128 +152,63 @@ const AdminLabTestPage = () => {
           )}
 
           {editModalOpen && editData && (
-            <div
-              style={{
-                position: 'fixed',
-                top: 0,
-                left: 0,
-                right: 0,
-                bottom: 0,
-                backgroundColor: 'rgba(0,0,0,0.5)',
-                display: 'flex',
-                justifyContent: 'center',
-                alignItems: 'center',
-                zIndex: 9999,
-              }}
-              onClick={() => setEditModalOpen(false)}
-            >
-              <form
-                onSubmit={handleUpdate}
-                onClick={(e) => e.stopPropagation()}
-                style={{
-                  backgroundColor: 'white',
-                  padding: 30,
-                  borderRadius: 8,
-                  width: 500,
-                  maxWidth: '90%',
-                  boxShadow: '0 0 20px rgba(0,0,0,0.2)',
-                }}
-              >
+            <div className="edit-modal" onClick={() => setEditModalOpen(false)}>
+              <form className="edit-form" onSubmit={handleUpdate} onClick={(e) => e.stopPropagation()}>
                 <h2>Edit Lab Report</h2>
 
-                <label>
-                  Lab Report ID:
-                  <input
-                    type="text"
-                    value={editData.labid}
-                    readOnly
-                    style={{ width: '100%', marginBottom: 12, padding: 8, borderRadius: 4, border: '1px solid #ccc' }}
-                  />
-                </label>
+                <label>Lab Report ID:<input type="text" value={editData.labid} readOnly /></label>
+                <label>Patient Name:<input type="text" value={editData.patientname} readOnly /></label>
+                <label>Lab Phy Report ID:<input name="hospitalgeneratedreportid" value={editData.hospitalgeneratedreportid} onChange={handleEditChange} /></label>
+                <label>Symptoms:<textarea name="patientsymptoms" value={editData.patientsymptoms || ''} onChange={handleEditChange} rows={3} /></label>
+                <label>Doctor Referral:<input name="doctorreferal" value={editData.doctorreferal || ''} onChange={handleEditChange} /></label>
+                <label>Type of Test:<input name="typeoftest" value={editData.typeoftest || ''} onChange={handleEditChange} /></label>
+                <label>Final Report:<textarea name="finalreport" value={editData.finalreport || ''} onChange={handleEditChange} rows={3} /></label>
 
-                <label>
-                  Patient Name:
-                  <input
-                    type="text"
-                    name="patientname"
-                    value={editData.patientname}
-                    readOnly
-                    style={{ width: '100%', marginBottom: 12, padding: 8, borderRadius: 4, border: '1px solid #ccc' }}
-                  />
-                </label>
+                <div className="edit-actions">
+                  {/* <button type="button" onClick={() => setEditModalOpen(false)}><FaTimes/></button>
+               <button type="submit" disabled={updating}>
+  {updating ? <FaSave /> : <> <FaSave style={{ marginLeft: '6px' }} /></>}
+</button> */}
+<button
+  type="button"
+  onClick={() => setEditModalOpen(false)}
+  style={{
+    backgroundColor: '#dc3545', // Bootstrap red for cancel
+    color: 'white',
+    border: 'none',
+    padding: '8px 12px',
+    borderRadius: '4px',
+    cursor: 'pointer',
+    fontSize: '16px',
+    display: 'flex',
+    alignItems: 'center',
+    gap: '6px',
+  }}
+  aria-label="Close edit modal"
+>
+  <FaTimes />
+</button>
 
-                <label>
-                  Lab Phy Report ID:
-                  <input
-                    type="text"
-                    name="hospitalgeneratedreportid"
-                    value={editData.hospitalgeneratedreportid}
-                    onChange={handleEditChange}
-                    style={{ width: '100%', marginBottom: 12, padding: 8, borderRadius: 4, border: '1px solid #ccc' }}
-                  />
-                </label>
+<button
+  type="submit"
+  disabled={updating}
+  style={{
+    backgroundColor: updating ? '#6c757d' : '#28a745', // Gray if updating, green otherwise
+    color: 'white',
+    border: 'none',
+    padding: '8px 14px',
+    borderRadius: '4px',
+    cursor: updating ? 'not-allowed' : 'pointer',
+    fontSize: '16px',
+    display: 'flex',
+    alignItems: 'center',
+    gap: '6px',
+  }}
+>
+  {updating ? <FaSave /> : <>Update <FaSave /></>}
+</button>
 
-                <label>
-                  Symptoms:
-                  <textarea
-                    name="patientsymptoms"
-                    value={editData.patientsymptoms || ''}
-                    onChange={handleEditChange}
-                    style={{ width: '100%', marginBottom: 12, padding: 8, borderRadius: 4, border: '1px solid #ccc' }}
-                    rows={3}
-                  />
-                </label>
 
-                <label>
-                  Doctor Referral:
-                  <input
-                    type="text"
-                    name="doctorreferal"
-                    value={editData.doctorreferal || ''}
-                    onChange={handleEditChange}
-                    style={{ width: '100%', marginBottom: 12, padding: 8, borderRadius: 4, border: '1px solid #ccc' }}
-                  />
-                </label>
-
-                <label>
-                  Type of Test:
-                  <input
-                    type="text"
-                    name="typeoftest"
-                    value={editData.typeoftest || ''}
-                    onChange={handleEditChange}
-                    style={{ width: '100%', marginBottom: 12, padding: 8, borderRadius: 4, border: '1px solid #ccc' }}
-                  />
-                </label>
-
-                <label>
-                  Final Report:
-                  <textarea
-                    name="finalreport"
-                    value={editData.finalreport || ''}
-                    onChange={handleEditChange}
-                    style={{ width: '100%', marginBottom: 20, padding: 8, borderRadius: 4, border: '1px solid #ccc' }}
-                    rows={3}
-                  />
-                </label>
-
-                <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                  <button type="button" onClick={() => setEditModalOpen(false)} style={{ padding: '8px 16px' }}>
-                    Cancel
-                  </button>
-                  <button
-                    type="submit"
-                    disabled={updating}
-                    style={{
-                      padding: '8px 16px',
-                      backgroundColor: updating ? '#ccc' : '#007bff',
-                      color: 'white',
-                      border: 'none',
-                      cursor: updating ? 'not-allowed' : 'pointer',
-                    }}
-                  >
-                    {updating ? 'Updating...' : 'Update'}
-                  </button>
                 </div>
               </form>
             </div>

@@ -578,3 +578,10 @@
   }
 }
 }
+.black-label {
+  color: black;
+}
+.actionss-column {
+  color: #010a13; /* Example: Bootstrap blue */
+  font-weight: bold;
+}

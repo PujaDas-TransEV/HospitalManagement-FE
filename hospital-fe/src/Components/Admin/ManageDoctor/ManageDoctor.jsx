@@ -305,12 +305,12 @@ const handleEditSubmit = (e) => {
           <tbody>
             {filteredDoctors.map((doctor) => (
               <tr key={doctor.uid}>
-                <td>{doctor.fullname}</td>
-                <td>{doctor.specialization}</td>
-                <td>{doctor.phonenumber}</td>
-                <td>{doctor.yoe} years</td>
-                <td>{doctor.qualification}</td>
-                <td className="actions-column">
+                <td className="actionss-column">{doctor.fullname}</td>
+                <td className="actionss-column">{doctor.specialization}</td>
+                <td className="actionss-column">{doctor.phonenumber}</td>
+                <td className="actionss-column">{doctor.yoe} years</td>
+                <td className="actionss-column">{doctor.qualification}</td>
+                <td className="actionss-column">
                   <FaUserEdit
                     className="action-icon edit-icon"
                     title="Edit"
