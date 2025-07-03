@@ -113,68 +113,62 @@ const AdminDashboard = () => {
           </div>
         ))}
 
-        <Row className="mt-4 info-cards">
-          <Col md={4} xs={12}>
-            <Card className="card-doctors" style={{
-    backgroundColor: '#4e79a7', // light blue (you can change this to any hex or color name)
-    padding: '15px',
-    borderRadius: '8px',
-  }}>
-              <Card.Body>
-                <FaUserMd className="card-icon" color="yellow"/>
-                <h5  >Doctors</h5>
-                <p >{loading ? <Spinner animation="border" size="sm" /> : doctors.length}</p>
-              </Card.Body>
-            </Card>
-          </Col>
-          <Col md={4} xs={12}>
-            <Card className="card-patients" style={{
-    backgroundColor: '#aec785', // light blue (you can change this to any hex or color name)
-    padding: '15px',
-    borderRadius: '8px',
-  }}>
-              <Card.Body>
-                <FaUserInjured className="card-icon" />
-                {/* <h5>Patients</h5>
-                <p>{loading ? <Spinner animation="border" size="sm" /> : patients.length}</p> */}
-                <h5 >Patients</h5>
-<p >
-  {loading ? <Spinner animation="border" size="sm" /> : patients.length}
-</p>
+      <Row className="mt-4 info-cards">
+  <div style={{ display: 'flex', justifyContent: 'space-between', width: '100%' }}>
+    {/* Left-aligned card */}
+    <Card
+      className="card-doctors"
+      style={{
+        backgroundColor: '#4e79a7',
+        padding: '15px',
+        borderRadius: '8px',
+        width: '30%',
+      }}
+    >
+      <Card.Body className="dashboard-card-body">
+        <FaUserMd className="card-icon" color="yellow" />
+        <h5>Doctors</h5>
+        <p>{loading ? <Spinner animation="border" size="sm" /> : doctors.length}</p>
+      </Card.Body>
+    </Card>
 
-              </Card.Body>
-            </Card>
-          </Col>
-          <Col md={4} xs={12}>
-            <Card className="card-appointments" style={{
-    backgroundColor: '#94b0d1', // light blue (you can change this to any hex or color name)
-    padding: '15px',
-    borderRadius: '8px',
-  }}>
-              <Card.Body>
-                <FaCalendarAlt className="card-icon" color="pink"/>
-                <h5  >Upcoming Appointments</h5>
-                <p >{loading ? <Spinner animation="border" size="sm" /> : upcomingCount}</p>
-              </Card.Body>
-            </Card>
-          </Col>
-        </Row>
+    {/* Center-aligned card */}
+    <Card
+      className="card-patients"
+      style={{
+        backgroundColor: '#aec785',
+        padding: '15px',
+        borderRadius: '8px',
+        width: '30%',
+      }}
+    >
+      <Card.Body className="dashboard-card-body">
+        <FaUserInjured className="card-icon" />
+        <h5>Patients</h5>
+        <p>{loading ? <Spinner animation="border" size="sm" /> : patients.length}</p>
+      </Card.Body>
+    </Card>
 
-        {/* <Card className="mt-4 recent-activity-card">
-          <Card.Header>Recent Activity</Card.Header>
-          <Card.Body>
-            {loading ? <Spinner /> : (
-              recentActivity.length
-                ? recentActivity.map((a, i) => (
-                  <div key={i} className="activity-entry">
-                    <strong>Dr.{a.doctor_fullname}</strong> with <strong>{a.patient_firstname} {a.patient_lastname}</strong> — {a.appoinmentstatus}
-                  </div>
-                ))
-                : <p>No recent activity.</p>
-            )}
-          </Card.Body>
-        </Card> */}
-        <Card className="mt-4 recent-activity-card">
+    {/* Right-aligned card */}
+    <Card
+      className="card-appointments"
+      style={{
+        backgroundColor: '#94b0d1',
+        padding: '15px',
+        borderRadius: '8px',
+        width: '30%',
+      }}
+    >
+      <Card.Body className="dashboard-card-body">
+        <FaCalendarAlt className="card-icon" color="pink" />
+        <h5>Upcoming Appointments</h5>
+        <p>{loading ? <Spinner animation="border" size="sm" /> : upcomingCount}</p>
+      </Card.Body>
+    </Card>
+  </div>
+</Row>
+
+        <Card className="mt-4 recent-activity-card"style={{ backgroundColor: 'skyblue' }}>
   <Card.Header>Recent Activity</Card.Header>
   <Card.Body>
     {loading ? (

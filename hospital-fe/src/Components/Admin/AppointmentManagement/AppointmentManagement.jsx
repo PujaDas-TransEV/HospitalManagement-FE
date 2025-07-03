@@ -170,7 +170,7 @@ const AdminAppointments = () => {
 
               {isEditing && (
                 <div className="edit-modal">
-                  <form onSubmit={saveEdit} className="modal-form"style={{
+                  <form onSubmit={saveEdit} className="modal-form" style={{
           backgroundColor: "#e0f7fa",
           padding: "20px",
           borderRadius: "8px",

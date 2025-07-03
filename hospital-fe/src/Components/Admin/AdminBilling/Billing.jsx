@@ -263,7 +263,7 @@ const AdminBillingPage = () => {
 
           {editBill && (
             <div className="edit-popup">
-              <div className="edit-popup-inner">
+              <div className="edit-popup-inner"style={{ backgroundColor: "#e0f7fa", padding: "20px", borderRadius: "8px" }}>
                 <button className="close-btn" onClick={() => setEditBill(null)}><FaTimes /></button>
                 <h3>Edit Bill - {editBill.billid}</h3>
 
