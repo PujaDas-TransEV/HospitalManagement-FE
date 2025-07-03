@@ -1,64 +1,144 @@
 
-   .prescription-wrapper {
-  display: flex;
+.prescription-wrapper {
+   display: flex;
   flex-direction: column;
-  height: 100%;
-  background-color: #f0f2f5;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-image: url('../../Assests/background.jpg'); /* Make sure path is correct */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  min-height:100vh;
+}
+
+.prescription-wrapper::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 100vh; /* make overlay 1.5 times viewport height */
+  background-color: rgba(255, 255, 255, 0.452);
+  z-index: 2;
 }
 
 .main-content {
+   display: flex;
+  /* flex-grow: 1; */
+  padding: 20px;
+  justify-content: center;
+}
+
+.spinner-center {
   display: flex;
-  flex-direction: row;
-  min-height: calc(100vh - 60px); /* adjust if navbar height is different */
+  justify-content: center;
+  align-items: center;
+  padding: 40px;
+  font-size: 2rem;
+  color: #007bff;
 }
-
-/* Content area */
-.prescription-page {
-  flex: 1;
-  padding: 30px;
-  background-color: #fff;
-  border-radius: 10px;
-  margin: 20px auto; /* Center horizontally */
-  overflow-x: auto;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  max-width: 1000px; /* 👈 Reduce width as needed */
+.prescription-page{
+  background-color: rgba(255, 255, 255, 0.97);
+  border-radius: 15px;
+  padding: 30px 40px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  max-width: 1000px;
   width: 100%;
+  margin-top: 60px;
+  z-index: 2;
+}
+.viewer-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  z-index: 2000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-
-/* Heading */
-.prescription-page h2 {
-  font-size: 26px;
-  margin-bottom: 25px;
-  text-align: center;
-  color: #333;
-  border-bottom: 2px solid #3498db;
-  padding-bottom: 10px;
+.viewer-box {
+  background: #fff;
+  padding: 20px;
+  max-width: 800px;
+  width: 90%;
+  border-radius: 8px;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+  overflow-y: auto;
+  max-height: 90vh;
 }
 
-/* Table responsive wrapper */
+/* Table responsive and clean */
 .table-responsive {
-  overflow-x: auto;
+  overflow-x: hidden; /* No scrollbar */
 }
 
-/* Embed styling for modal PDF */
-embed {
-  border: 1px solid #ccc;
-  border-radius: 5px;
+/* Hide mobile cards by default */
+.mobile-view {
+  display: none;
 }
 
+/* Show cards only on mobile */
 @media (max-width: 768px) {
-  .prescription-page {
-    padding: 15px;
-    margin: 10px;
+  .main-content {
+    margin-left: 0;
+    padding: 10px;
   }
 
-  .table th,
-  .table td {
-    font-size: 14px;
+  .desktop-view {
+    display: none; /* Hide table */
   }
 
-  embed {
-    height: 400px;
+  .mobile-view {
+    display: block;
   }
+
+  .mobile-view .card {
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  }
+
+  .mobile-view .card-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+  }
+}
+.popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.5); /* semi-transparent black */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1050; /* high enough to overlay */
+}
+
+.popup-content {
+  background: #fff;
+  padding: 1.5rem;
+  max-width: 700px;
+  width: 90%;
+  max-height: 90vh;
+  overflow-y: auto;
+  border-radius: 8px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+  outline: none; /* Remove focus outline */
+  position: relative;
+}
+
+.popup-close-btn {
+  margin-top: 1rem;
+  padding: 0.5rem 1rem;
+  background: #6c757d;
+  border: none;
+  color: white;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+.popup-close-btn:hover {
+  background: #5a6268;
 }
