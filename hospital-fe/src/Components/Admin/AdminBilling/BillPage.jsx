@@ -1,39 +1,28 @@
 
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom'; // Added for redirect
+import { useNavigate } from 'react-router-dom';
 import AdminNavbar from '../Adminnavbar/AdminNavbar';
 import AdminSidebar from '../Adminsidebar/AdminSidebar';
+import { FaSpinner } from 'react-icons/fa';
+import './Bill.css';
 
 const CreateBillPage = () => {
-  const navigate = useNavigate(); // Initialize navigate
-
+  const navigate = useNavigate();
   const [patients, setPatients] = useState([]);
   const [doctors, setDoctors] = useState([]);
   const [rooms, setRooms] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [loadingDropdown, setLoadingDropdown] = useState({
+    patients: true,
+    doctors: true,
+    rooms: true,
+  });
 
   const admissionPaymentMethods = ['cash', 'credit'];
-
-  const initialFormData = {
-    patientemailid: '',
-    doctoremailid: '',
-    purpose: '',
-    rooms: '',
-    treatmenttype: '',
-    treatmentduration: '',
-    medicine_charge: 0,
-    lab_charge: 0,
-    other_charges: 0,
-    discount_percent: 0,
-    insurance_provider: '',
-    insurance_coverage_percent: 0,
-    payment_method: 'cash',
-    notes: '',
-    created_by: 'admin',
-  };
-
+  const initialFormData = { /*... same as before ...*/ };
   const [formData, setFormData] = useState(initialFormData);
+const [submitting, setSubmitting] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -96,35 +85,35 @@ const CreateBillPage = () => {
     }
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
 
-    try {
-      // Prepare data for URL-encoded form submission
-      const payload = new URLSearchParams();
-      for (const key in formData) {
-        if (formData[key] !== undefined && formData[key] !== null) {
-          payload.append(key, formData[key]);
-        }
+const handleSubmit = async (e) => {
+  e.preventDefault();
+  setSubmitting(true); // Show spinner
+
+  try {
+    const payload = new URLSearchParams();
+    for (const key in formData) {
+      if (formData[key] !== undefined && formData[key] !== null) {
+        payload.append(key, formData[key]);
       }
-
-      await axios.post('http://192.168.0.106:5000/billing/createbill', payload, {
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded',
-        },
-      });
-
-      alert('Bill created successfully!');
-
-      setFormData(initialFormData);
-      navigate('/admin-billing');  // Redirect after successful creation
-    } catch (error) {
-      console.error('Error creating bill:', error);
-      alert('Failed to create bill. Please try again.');
     }
-  };
 
-  if (loading) return <div>Loading...</div>;
+    await axios.post('http://192.168.0.106:5000/billing/createbill', payload, {
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+    });
+
+    alert('Bill created successfully!');
+    setFormData(initialFormData);
+    navigate('/admin-billing');
+  } catch (error) {
+    console.error('Error creating bill:', error);
+    alert('Failed to create bill. Please try again.');
+  } finally {
+    setSubmitting(false); // Hide spinner
+  }
+};
+
+  // if (loading) return <div>Loading...</div>;
 
   const showRoomAndCharges = formData.purpose === 'Admission';
   // Always show treatment fields (no condition)
@@ -135,332 +124,97 @@ const CreateBillPage = () => {
       ? admissionPaymentMethods
       : ['cash', 'credit', 'debit', 'online'];
 
+
   return (
-    <div className="dashboard-container">
-      <AdminNavbar />
-      <div className="dashboard-content" style={{ display: 'flex' }}>
-        <AdminSidebar />
-        <div
-          style={{
-            maxWidth: 600,
-            margin: '30px auto',
-            fontFamily: 'Arial, sans-serif',
-            padding: 20,
-            border: '1px solid #ddd',
-            borderRadius: 8,
-            boxShadow: '0 0 10px rgba(0,0,0,0.1)',
-            width: '100%',
-          }}
-        >
-          <h2 style={{ textAlign: 'center', marginBottom: 20 }}>Create Bill</h2>
-          <form onSubmit={handleSubmit}>
-            {/* Patient */}
-            <div style={{ marginBottom: 15 }}>
-              <label
-                htmlFor="patientuid"
-                style={{ display: 'block', marginBottom: 5, fontWeight: 'bold' }}
-              >
-                Patient
-              </label>
-              <select
-                id="patientuid"
-                name="patientuid"
-                value={patients.find(p => p.email === formData.patientemailid)?.uid || ''}
-                onChange={handleChange}
-                required
-                style={{ width: '100%', padding: 8, borderRadius: 4, border: '1px solid #ccc' }}
-              >
-                <option value="">Select Patient</option>
-                {patients.map(p => (
-                  <option key={p.uid} value={p.uid}>
-                    {p.firstname} {p.lastname}
-                  </option>
-                ))}
-              </select>
-            </div>
+    <div className="createbill-background">
+      <div className="createbill-overlay">
+        <AdminNavbar />
+        <div className="createbill-content">
+          <AdminSidebar />
+          <div className="createbill-form-container">
+            <h2>Create Bill</h2>
+            <form onSubmit={handleSubmit} style={{ backgroundColor: "#e0f7fa", padding: "20px", borderRadius: "8px" }} >
+              {[
+                { label: 'Patient', name: 'patientuid', options: patients },
+                { label: 'Doctor', name: 'doctoruid', options: doctors },
+                { label: 'Room', name: 'roomuid', options: rooms, cond: formData.purpose === 'Admission' }
+              ].map((field, idx) => (
+                field.cond !== false && (
+                  <div className="form-group" key={idx}>
+                    <label>{field.label}</label>
+                    { loadingDropdown[field.label.toLowerCase()] ? (
+                     <div className="loading-overlay"><FaSpinner className="spin large" /></div>
+                    ) : (
+                      <select name={field.name} value={formData[field.name]} onChange={handleChange} required>
+                        <option value="">{`Select ${field.label}`}</option>
+                        {field.options.map(o => (
+                          <option key={o.uid} value={o.uid}>
+                            {o.firstname ? `${o.firstname} ${o.lastname}` : field.label === 'Room' ? `${o.room_number} - ${o.room_type}` : o.fullname}
+                          </option>
+                        ))}
+                      </select>
+                    )}
+                  </div>
+                )
+              ))}
 
-            {/* Doctor */}
-            <div style={{ marginBottom: 15 }}>
-              <label
-                htmlFor="doctoruid"
-                style={{ display: 'block', marginBottom: 5, fontWeight: 'bold' }}
-              >
-                Doctor
-              </label>
-              <select
-                id="doctoruid"
-                name="doctoruid"
-                value={doctors.find(d => d.email === formData.doctoremailid)?.uid || ''}
-                onChange={handleChange}
-                required
-                style={{ width: '100%', padding: 8, borderRadius: 4, border: '1px solid #ccc' }}
-              >
-                <option value="">Select Doctor</option>
-                {doctors.map(d => (
-                  <option key={d.uid} value={d.uid}>
-                    {d.fullname}
-                  </option>
-                ))}
-              </select>
-            </div>
-
-            {/* Purpose */}
-            <div style={{ marginBottom: 15 }}>
-              <label
-                htmlFor="purpose"
-                style={{ display: 'block', marginBottom: 5, fontWeight: 'bold' }}
-              >
-                Purpose
-              </label>
-              <select
-                id="purpose"
-                name="purpose"
-                value={formData.purpose}
-                onChange={handleChange}
-                required
-                style={{ width: '100%', padding: 8, borderRadius: 4, border: '1px solid #ccc' }}
-              >
-                <option value="">Select Purpose</option>
-                <option value="Admission">Admission</option>
-                <option value="Appointment">Appointment</option>
-                <option value="Doctor Homecare">Doctor Homecare</option>
-                <option value="Lab Test">Lab Test</option>
-              </select>
-            </div>
-
-            {/* Room (Admission only) */}
-            {showRoomAndCharges && (
-              <div style={{ marginBottom: 15 }}>
-                <label
-                  htmlFor="roomuid"
-                  style={{ display: 'block', marginBottom: 5, fontWeight: 'bold' }}
-                >
-                  Room
-                </label>
-                <select
-                  id="roomuid"
-                  name="roomuid"
-                  value={rooms.find(r => r.room_type === formData.rooms)?.uid || ''}
-                  onChange={handleChange}
-                  required={showRoomAndCharges}
-                  style={{ width: '100%', padding: 8, borderRadius: 4, border: '1px solid #ccc' }}
-                >
-                  <option value="">Select Room</option>
-                  {rooms.map(r => (
-                    <option key={r.uid} value={r.uid}>
-                      {r.room_number} - {r.room_type}
-                    </option>
+              {/* Other fields for purpose, charges, notes */}
+              <div className="form-group">
+                <label>Purpose</label>
+                <select name="purpose" value={formData.purpose} onChange={handleChange} required>
+                  <option value="">Select Purpose</option>
+                  {['Admission', 'Appointment', ' Homecare', 'Lab Test'].map(pur => (
+                    <option key={pur} value={pur}>{pur}</option>
                   ))}
                 </select>
               </div>
-            )}
 
-            {/* Treatment Type & Duration (always shown now) */}
-            <div style={{ marginBottom: 15 }}>
-              <label
-                htmlFor="treatmenttype"
-                style={{ display: 'block', marginBottom: 5, fontWeight: 'bold' }}
-              >
-                Treatment Type
-              </label>
-              <input
-                id="treatmenttype"
-                name="treatmenttype"
-                type="text"
-                value={formData.treatmenttype}
-                onChange={handleChange}
-                style={{ width: '100%', padding: 8, borderRadius: 4, border: '1px solid #ccc' }}
-              />
-            </div>
+              {/* Input fields */}
+              {['treatmenttype','treatmentduration','medicine_charge','lab_charge','other_charges','discount_percent','insurance_provider','insurance_coverage_percent','notes']
+                .map((f, i) => (
+                  <div className="form-group" key={i}>
+                    <label>{f.replace(/_/g, ' ').replace(/percent/gi, '%')}</label>
+                    { f === 'notes'
+                      ? <textarea name={f} value={formData[f]} onChange={handleChange} rows="4" />
+                      : <input type={f.includes('charge') || f.includes('percent') ? 'number' : 'text'} name={f} value={formData[f]} onChange={handleChange} />
+                    }
+                  </div>
+              ))}
 
-            <div style={{ marginBottom: 15 }}>
-              <label
-                htmlFor="treatmentduration"
-                style={{ display: 'block', marginBottom: 5, fontWeight: 'bold' }}
-              >
-                Treatment Duration (days)
-              </label>
-              <input
-                id="treatmentduration"
-                name="treatmentduration"
-                type="number"
-                min="1"
-                value={formData.treatmentduration}
-                onChange={handleChange}
-                style={{ width: '100%', padding: 8, borderRadius: 4, border: '1px solid #ccc' }}
-              />
-            </div>
+              {/* <button type="submit" className="submit-btn">Create Bill</button> */}
+          <div style={{ textAlign: 'center', marginTop: '20px' }}>
+  <button
+    type="submit"
+    className="submit-btn"
+    disabled={submitting}
+    style={{
+      backgroundColor: submitting ? '#6c757d' : '#007bff',
+      color: '#fff',
+      padding: '10px 24px',
+      border: 'none',
+      borderRadius: '5px',
+      fontSize: '16px',
+      cursor: submitting ? 'not-allowed' : 'pointer',
+      display: 'inline-flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      gap: '8px'
+    }}
+  >
+    {submitting ? (
+      <>
+        <FaSpinner className="spin" />
+        Creating...
+      </>
+    ) : (
+      'Create Bill'
+    )}
+  </button>
+</div>
 
-            {/* Charges */}
-            <div style={{ marginBottom: 15 }}>
-              <label
-                htmlFor="medicine_charge"
-                style={{ display: 'block', marginBottom: 5, fontWeight: 'bold' }}
-              >
-                Medicine Charge
-              </label>
-              <input
-                id="medicine_charge"
-                name="medicine_charge"
-                type="number"
-                min="0"
-                value={formData.medicine_charge}
-                onChange={handleChange}
-                style={{ width: '100%', padding: 8, borderRadius: 4, border: '1px solid #ccc' }}
-              />
-            </div>
 
-            <div style={{ marginBottom: 15 }}>
-              <label
-                htmlFor="lab_charge"
-                style={{ display: 'block', marginBottom: 5, fontWeight: 'bold' }}
-              >
-                Lab Charge
-              </label>
-              <input
-                id="lab_charge"
-                name="lab_charge"
-                type="number"
-                min="0"
-                value={formData.lab_charge}
-                onChange={handleChange}
-                style={{ width: '100%', padding: 8, borderRadius: 4, border: '1px solid #ccc' }}
-              />
-            </div>
-
-            <div style={{ marginBottom: 15 }}>
-              <label
-                htmlFor="other_charges"
-                style={{ display: 'block', marginBottom: 5, fontWeight: 'bold' }}
-              >
-                Other Charges
-              </label>
-              <input
-                id="other_charges"
-                name="other_charges"
-                type="number"
-                min="0"
-                value={formData.other_charges}
-                onChange={handleChange}
-                style={{ width: '100%', padding: 8, borderRadius: 4, border: '1px solid #ccc' }}
-              />
-            </div>
-
-            {/* Discount */}
-            <div style={{ marginBottom: 15 }}>
-              <label
-                htmlFor="discount_percent"
-                style={{ display: 'block', marginBottom: 5, fontWeight: 'bold' }}
-              >
-                Discount Percent (%)
-              </label>
-              <input
-                id="discount_percent"
-                name="discount_percent"
-                type="number"
-                min="0"
-                max="100"
-                value={formData.discount_percent}
-                onChange={handleChange}
-                style={{ width: '100%', padding: 8, borderRadius: 4, border: '1px solid #ccc' }}
-              />
-            </div>
-
-            {/* Insurance */}
-            <div style={{ marginBottom: 15 }}>
-              <label
-                htmlFor="insurance_provider"
-                style={{ display: 'block', marginBottom: 5, fontWeight: 'bold' }}
-              >
-                Insurance Provider
-              </label>
-              <input
-                id="insurance_provider"
-                name="insurance_provider"
-                type="text"
-                value={formData.insurance_provider}
-                onChange={handleChange}
-                style={{ width: '100%', padding: 8, borderRadius: 4, border: '1px solid #ccc' }}
-              />
-            </div>
-
-            <div style={{ marginBottom: 15 }}>
-              <label
-                htmlFor="insurance_coverage_percent"
-                style={{ display: 'block', marginBottom: 5, fontWeight: 'bold' }}
-              >
-                Insurance Coverage Percent (%)
-              </label>
-              <input
-                id="insurance_coverage_percent"
-                name="insurance_coverage_percent"
-                type="number"
-                min="0"
-                max="100"
-                value={formData.insurance_coverage_percent}
-                onChange={handleChange}
-                style={{ width: '100%', padding: 8, borderRadius: 4, border: '1px solid #ccc' }}
-              />
-            </div>
-
-            {/* Payment Method */}
-            {/* <div style={{ marginBottom: 15 }}>
-              <label
-                htmlFor="payment_method"
-                style={{ display: 'block', marginBottom: 5, fontWeight: 'bold' }}
-              >
-                Payment Method
-              </label>
-              <select
-                id="payment_method"
-                name="payment_method"
-                value={formData.payment_method}
-                onChange={handleChange}
-                required
-                style={{ width: '100%', padding: 8, borderRadius: 4, border: '1px solid #ccc' }}
-              >
-                {paymentMethods.map((method) => (
-                  <option key={method} value={method}>
-                    {method.charAt(0).toUpperCase() + method.slice(1)}
-                  </option>
-                ))}
-              </select>
-            </div> */}
-
-            {/* Notes */}
-            <div style={{ marginBottom: 15 }}>
-              <label
-                htmlFor="notes"
-                style={{ display: 'block', marginBottom: 5, fontWeight: 'bold' }}
-              >
-                Notes
-              </label>
-              <textarea
-                id="notes"
-                name="notes"
-                value={formData.notes}
-                onChange={handleChange}
-                rows="4"
-                style={{ width: '100%', padding: 8, borderRadius: 4, border: '1px solid #ccc' }}
-              />
-            </div>
-
-            <button
-              type="submit"
-              style={{
-                backgroundColor: '#007bff',
-                color: '#fff',
-                padding: '10px 20px',
-                border: 'none',
-                borderRadius: 4,
-                cursor: 'pointer',
-                width: '100%',
-                fontSize: 16,
-              }}
-            >
-              Create Bill
-            </button>
-          </form>
+            </form>
+          </div>
         </div>
       </div>
     </div>

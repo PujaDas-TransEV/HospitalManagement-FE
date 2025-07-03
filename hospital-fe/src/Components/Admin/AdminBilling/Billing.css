@@ -1,194 +1,225 @@
-/* .dashboard-container {
-  display: flex;
+
+.billing-background {
+ position: relative;
+ background-image: url('../../Assests/background.jpg');
+  background-size: cover;
+  background-position: center;
+  min-height: 100vh;
 }
 
+/* Overlay to slightly darken background for readability */
+.billing-background::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-color: rgba(255, 255, 255, 0.486);
+  z-index: 1;
+}
 
+/* Make content appear above overlay */
+.dashboard-contenta {
+   position: relative;
+ 
+  margin-left: 250px;
+}
 
+/* Container for billing table and controls */
 .billing-containera {
-  max-width: 1200px;
-  margin: 20px auto;
-  padding: 20px;
-  background-color: #fff;
-  border-radius: 8px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-}
-
-.billing-containera h2 {
-  font-size: 24px;
-  margin-bottom: 20px;
+   flex: 1; 
+  position: relative;
+  z-index: 2;
+  padding: 20px 30px;
+  overflow-y: auto;
+   display: flex; 
+  flex-direction: column; 
 }
 
 .search-containera {
   display: flex;
-  gap: 10px;
-  margin-bottom: 20px;
+  gap: 12px;
+  margin-bottom: 25px;
 }
 
-.search-containera input {
-  flex: 1;
-  padding: 8px;
-  font-size: 16px;
-  border-radius: 4px;
-  border: 1px solid #ccc;
+.search-containera input[type="text"] {
+  width: 250px; /* Set a fixed width */
+  padding: 10px 14px;
+  border: 1.5px solid #ccc;
+  border-radius: 6px;
+  font-size: 1rem;
+  transition: border-color 0.3s ease;
 }
 
+.search-containera input[type="text"]:focus {
+  outline: none;
+  border-color: #2196F3;
+}
+
+
+/* Buttons style */
 .search-containera button {
-  padding: 8px 16px;
   border: none;
-  border-radius: 4px;
+  padding: 10px 16px;
+  font-size: 1rem;
+  border-radius: 6px;
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: background-color 0.3s ease;
 }
 
 .search-containera button:hover {
-  opacity: 0.9;
+  filter: brightness(0.9);
 }
 
+/* Billing table */
 .billing-table {
   width: 100%;
   border-collapse: collapse;
-  margin-top: 20px;
+  font-size: 1rem;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
 }
 
-.billing-table th,
-.billing-table td {
-  padding: 12px;
-  border: 1px solid #ddd;
-  text-align: left;
-}
-
-.billing-table th {
-  background-color: #007bff;
-  color: white;
-}
-
-.billing-table td {
-  background-color: #f9f9f9;
-}
-
-.billing-table button {
-  padding: 6px 12px;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  margin-right: 5px;
-}
-
-.billing-table button:hover {
-  opacity: 0.9;
-}
-
-.billing-table button:nth-child(1) {
-  background-color: #17a2b8;
-  color: white;
-}
-
-.billing-table button:nth-child(2) {
-  background-color: #ffc107;
-  color: white;
-} */
-/* Billing.css */
-.billing-containera {
-  max-width: 1000px;
-  margin: 20px auto;
-  padding: 20px;
-  background: #fff;
-  border-radius: 8px;
-}
-
-.search-containera {
-  display: flex;
-  gap: 10px;
-  margin-bottom: 20px;
-}
-
-.billing-table {
-  width: 100%;
-  border-collapse: collapse;
+.billing-table thead tr {
+  background-color: #2196F3;
+  color: #fff;
+  font-weight: 600;
 }
 
 .billing-table th, .billing-table td {
-  padding: 12px;
+  padding: 12px 15px;
   border: 1px solid #ddd;
   text-align: left;
 }
 
-.billing-table th {
-  background-color: #007bff;
+.billing-table tbody tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+.action-buttons button {
+  margin-right: 8px;
+  padding: 6px 12px;
+  font-size: 0.9rem;
+  border-radius: 5px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  border: none;
+  cursor: pointer;
+}
+
+.btn-view {
+  background-color: #009688;
   color: white;
 }
 
-/* .edit-popup {
+.btn-view:hover {
+  background-color: #00796b;
+}
+
+.btn-edit {
+  background-color: #FF9800;
+  color: white;
+}
+
+.btn-edit:hover {
+  background-color: #ef6c00;
+}
+
+/* Spinner container */
+.spinner-container {
+  display: flex;
+  justify-content: center;
+  padding: 50px 0;
+}
+
+/* Edit popup */
+.edit-popup {
   position: fixed;
   top: 0; left: 0; right: 0; bottom: 0;
-  background: rgba(0,0,0,0.5);
-  display: flex; justify-content: center; align-items: center;
-}
-
-.edit-popup-inner {
-  background: white;
-  padding: 30px;
-  border-radius: 8px;
-  width: 400px;
-  position: relative;
-}
-
-.edit-popup-inner input, .edit-popup-inner select, .edit-popup-inner textarea {
-  width: 100%;
-  padding: 8px;
-  margin-bottom: 12px;
-}
-
-.close-btn {
-  position: absolute;
-  top: 10px; right: 10px;
-  background: none;
-  border: none;
-  font-size: 18px;
-  cursor: pointer;
-} */
-/* .edit-popup {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0,0,0,0.5);
+  background: rgba(0,0,0,0.6);
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 10;
-} */
-.edit-popup {
-  position: fixed;
-  top: 10%; /* ↓ shifted downward from top */
-  left: 0;
-  width: 100%;
-  height: 90%; /* optionally reduce height if needed */
-  background: rgba(0,0,0,0.5);
-  display: flex;
-  justify-content: center;
-  align-items: flex-start; /* align from top instead of center */
-  z-index: 10;
-  padding-top: 20px; /* optional spacing */
+  z-index: 9999;
 }
 
 .edit-popup-inner {
   background: #fff;
-  padding: 20px;
-  max-height: 90vh;
-  overflow-y: auto;
-  border-radius: 8px;
-  width: 500px;
+  padding: 30px 40px;
+  width: 600px;
+  max-width: 90vw;
+  border-radius: 10px;
   position: relative;
+  max-height: 80vh;
+  overflow-y: auto;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.25);
 }
 
 .close-btn {
   position: absolute;
-  top: -10px;
-  right: 10px;
-   background: transparent;
-  /* border: none;
-  font-size: 24px;  */
-  color: black;
+  top: 15px;
+  right: 15px;
+  background: transparent;
+  border: none;
+  font-size: 1.3rem;
   cursor: pointer;
+  color: #666;
+}
+
+.edit-popup h3 {
+  margin-bottom: 20px;
+  color: #333;
+  text-align: center;
+}
+
+/* Edit fields */
+.edit-field {
+  margin-bottom: 15px;
+  display: flex;
+  flex-direction: column;
+}
+
+.edit-field label {
+  font-weight: 600;
+  margin-bottom: 6px;
+  color: #555;
+}
+
+.edit-field input,
+.edit-field textarea {
+  padding: 10px 14px;
+  font-size: 1rem;
+  border: 1.5px solid #ccc;
+  border-radius: 6px;
+  transition: border-color 0.3s ease;
+  resize: vertical;
+  min-height: 36px;
+}
+
+.edit-field textarea {
+  min-height: 80px;
+}
+
+.edit-field input:focus,
+.edit-field textarea:focus {
+  outline: none;
+  border-color: #2196F3;
+}
+
+/* Update button */
+.update-btn {
+  background-color: #2196F3;
+  color: white;
+  padding: 12px 25px;
+  border: none;
+  border-radius: 8px;
+  font-size: 1.1rem;
+  cursor: pointer;
+  width: 100%;
+  transition: background-color 0.3s ease;
+}
+
+.update-btn:hover {
+  background-color: #1769aa;
 }

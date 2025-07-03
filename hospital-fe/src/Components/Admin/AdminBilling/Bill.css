@@ -1,0 +1,116 @@
+.createbill-background {
+ position: relative;
+ background-image: url('../../Assests/background.jpg');
+  background-size: cover;
+  background-position: center;
+  min-height: 200vh;
+}
+
+.createbill-overlay {
+   content: '';
+  position: absolute;
+  inset: 0;
+  background-color: rgba(255, 255, 255, 0.486);
+  z-index: 1;
+}
+
+.loading-overlay {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.spin {
+  animation: spin 1s linear infinite;
+}
+.spin.large { font-size: 2rem; }
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.createbill-content {
+  display: flex;
+  flex: 1;
+}
+
+.createbill-form-container {
+  flex: 1;
+  max-width: 800px;
+  margin: 40px auto;
+  padding: 30px;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 14px rgba(0,0,0,0.1);
+}
+
+.createbill-form-container h2 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.form-group {
+  margin-bottom: 18px;
+}
+
+.form-group label {
+  font-weight: 600;
+  margin-bottom: 6px;
+  display: block;
+}
+
+.form-group select,
+.form-group input,
+.form-group textarea {
+  width: 100%;
+  padding: 8px 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 0.95rem;
+  transition: border-color .3s;
+}
+
+.form-group select:focus,
+.form-group input:focus,
+.form-group textarea:focus {
+  border-color: #2196F3;
+  outline: none;
+}
+
+.row {
+  display: flex;
+  gap: 15px;
+  margin-bottom: 18px;
+}
+
+.col {
+  flex: 1;
+}
+
+.row-spinner {
+  display: flex;
+  justify-content: center;
+  padding: 8px 0;
+}
+
+.submit-btn {
+  width: 100%;
+  padding: 12px;
+  font-size: 1.05rem;
+  background: #2196F3;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background .3s;
+}
+
+.submit-btn:hover {
+  background: #1769aa;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .row { flex-direction: column; }
+}
