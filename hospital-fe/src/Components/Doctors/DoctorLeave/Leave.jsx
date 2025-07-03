@@ -389,7 +389,17 @@ const DoctorLeave = () => {
                   </label>
 
                   <div className="form-actions">
-                    <button type="submit" className={isEditing ? "update-btn" : ""}>
+                    <button type="submit" className={isEditing ? "update-btn" : ""}   style={{
+      width: '120px',
+      padding: '8px 0',
+      fontSize: '14px',
+      border: 'none',
+      borderRadius: '4px',
+      cursor: 'pointer',
+      color: 'white',
+      background: 'linear-gradient(to right, #0a3b84, #2568a8)',
+      marginRight: '10px'
+    }}>
                       {isEditing ? (
                         <>
                           <FaSave /> Update

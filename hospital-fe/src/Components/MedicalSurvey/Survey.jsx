@@ -83,7 +83,10 @@ const MedicalSurveyPage = () => {
     <div className="medical-survey-container">
       <h2>Medical Survey Form</h2>
 
-      <form className="survey-form" onSubmit={handleSubmit}>
+      <form className="survey-form" onSubmit={handleSubmit} style={{
+          backgroundColor: "#e0f7fa",
+          padding: "20px",
+          borderRadius: "8px"}}>
         <label>
          Name:
           <input
