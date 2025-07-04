@@ -6,39 +6,39 @@
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-/* Wrapper with background image */
+
 .ptadm-wrapper {
   display: flex;
   flex-direction: column;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background-image: url('../../Assests/background.jpg'); /* Make sure path is correct */
+  background-image: url('../../Assests/background.jpg');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
   min-height:100vh;
 }
 
-/* Optional overlay for better readability */
+
 .ptadm-wrapper::before {
   content: '';
   position: absolute;
   top: 0;
   left: 0;
   right: 0;
-  height: 100vh; /* make overlay 1.5 times viewport height */
+  height: 100vh; 
   background-color: rgba(255, 255, 255, 0.452);
   z-index: 2;
 }
 
-/* Content area */
+
 .ptadm-content {
   display: flex;
-  /* flex-grow: 1; */
+ 
   padding: 20px;
   justify-content: center;
 }
 
-/* Main container */
+
 .ptadm-container {
  background-color: rgba(255, 255, 255, 0.97);
   border-radius: 15px;
@@ -50,7 +50,7 @@
   z-index: 2;
 }
 
-/* Heading */
+
 .ptadm-container h2 {
   margin-bottom: 20px;
   color: #004e92;
@@ -58,7 +58,7 @@
   text-align: center;
 }
 
-/* Controls: admit button + search */
+
 .controls {
   display: flex;
   justify-content: space-between;
@@ -67,7 +67,7 @@
   flex-wrap: wrap;
 }
 
-/* Buttons */
+
 .btn {
   display: flex;
   align-items: center;
@@ -95,7 +95,7 @@
   padding: 0 12px;
 }
 
-/* Search input and wrapper */
+
 .search-input {
   display: flex;
   border: 1.5px solid #ccc;
@@ -113,7 +113,7 @@
   outline: none;
 }
 
-/* Spinner */
+
 .spinner {
   text-align: center;
   font-size: 1.5rem;
@@ -127,7 +127,7 @@
   100% { transform: rotate(360deg);}
 }
 
-/* Error and success messages */
+
 .error, .success {
   text-align: center;
   margin-bottom: 15px;
@@ -148,7 +148,7 @@
   border: 1px solid #badbcc;
 }
 
-/* Admission detail card */
+
 .detail-card {
   position: relative;
   background: #e9f1fa;
@@ -169,7 +169,7 @@
   color: #333;
 }
 
-/* Close button */
+
 .close-btn {
   position: absolute;
   top: 8px;
@@ -181,7 +181,7 @@
   color: #333;
 }
 
-/* Table for all admissions */
+
 .bed-table {
   margin-top: 40px;
   overflow-x: auto;
@@ -217,7 +217,6 @@
   background: #f1faff;
 }
 
-/* Modal Overlay */
 .modal-overlay {
   position: fixed;
   inset: 0;
@@ -229,7 +228,7 @@
   z-index: 999;
 }
 
-/* Modal Content */
+
 .modal-content {
   position: relative;
   background: #fff;
@@ -240,7 +239,7 @@
   box-shadow: 0 10px 25px rgba(0,0,0,0.15);
 }
 
-/* Modal close button */
+
 .modal-content .close-btn {
   position: absolute;
   top: 16px;
@@ -252,7 +251,7 @@
   color: #004e92;
 }
 
-/* Admission form */
+
 .adm-form {
   display: flex;
   flex-direction: column;
@@ -281,7 +280,7 @@
   border-color: #00356b;
 }
 
-/* Submit button */
+
 .submit-btnn {
   background: #004e92;
   color: #fff;
@@ -290,12 +289,12 @@
   border: none;
   border-radius: 6px;
   width: fit-content;
-  margin: 20px auto 0 auto; /* centers the button horizontally */
+  margin: 20px auto 0 auto;
   display: block;
 }
 
 
-/* Responsive */
+
 @media (max-width: 600px) {
   .controls {
     flex-direction: column;

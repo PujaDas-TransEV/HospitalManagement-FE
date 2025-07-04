@@ -10,7 +10,7 @@
   content: '';
   position: absolute;
   inset: 0;
-  background-color: rgba(255,255,255,0.8);
+  background-color: rgba(255, 255, 255, 0.678);
   z-index: 1;
 }
 
@@ -67,17 +67,7 @@
 .card-patients { background: #aec785; }
 .card-appointments { background: #94b0d1; }
 
-/* .recent-activity-card {
-  margin-bottom: 40px;
-  box-shadow: 0 5px 18px rgba(0,0,0,0.1);
-}
-.activity-entry {
-  padding: 10px;
-  border-bottom: 1px solid #ddd;
-}
-.activity-entry:last-child {
-  border-bottom: none;
-} */
+
  .recent-activity-card {
   margin-top: 40px;
   padding: 20px;

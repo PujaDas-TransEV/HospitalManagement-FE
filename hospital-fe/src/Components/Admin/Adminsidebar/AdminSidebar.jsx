@@ -4,7 +4,7 @@ import { Link, useLocation } from 'react-router-dom';
 import {
   FaTachometerAlt, FaUserMd, FaUserInjured, FaCalendarAlt, FaMoneyBillWave,
   FaCogs, FaSignOutAlt, FaBars, FaPills, FaPlusCircle, FaBed, FaTools,
-  FaBuilding, FaUser, FaQuestionCircle, FaClinicMedical, FaAngleDoubleLeft, FaAngleDoubleRight,FaCommentDots
+  FaBuilding, FaUser, FaQuestionCircle, FaClinicMedical, FaAngleDoubleLeft, FaAngleDoubleRight,FaCommentDots,FaUserPlus
 } from 'react-icons/fa';
 import './AdminSidebar.css';
 import { useNavigate } from "react-router-dom";
@@ -79,6 +79,12 @@ const handleLogout = () => {
             <Link to="/facility-management" className="nav-link" onClick={handleLinkClick}>
               <FaBuilding className="nav-icon" />
               {showText && <span>Facility Management</span>}
+            </Link>
+          </li>
+           <li className="nav-item">
+            <Link to="/patient-admission" className="nav-link" onClick={handleLinkClick}>
+              <FaUserPlus className="nav-icon" />
+              {showText && <span>Patient Admission</span>}
             </Link>
           </li>
           <li className="nav-item">

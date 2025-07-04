@@ -238,7 +238,7 @@ import Footer from './Components/Footer/Footer';
 import GuestDashboardWrapper from './Components/Guest/GuestDashboard';
 import Guestlabreport from './Components/Guest/Guestlabreport.jsx/labreport';
 import GuestPrescription from './Components/Guest/GuestPrescription/Prescription';
-
+import DischargeList from './Components/Admin/DischargeList/Discharge';
 // ✅ Conditional Navbar using path matching
 const ConditionalNavbar = () => {
   const location = useLocation();
@@ -261,7 +261,7 @@ const ConditionalNavbar = () => {
     '/home-care-service', '/home-care-request', '/homecare',
     '/patients', '/patient-navbar', '/patient-sidebar',
     '/doctor-navbar', '/doctor-sidebar', '/adnavbar', '/adsidebar','/doctor-homecare','/labreport',
-    '/admin/labreport','/admin-labtest','/admin-billing','/bill','/invoice','/admin-feedback','/admin-survey','/admin/notification','/doctor/notification','/guest-dashboard','/guest/lab-reports','/guest/prescriptions','/guest/login'
+    '/admin/labreport','/admin-labtest','/admin-billing','/bill','/invoice','/admin-feedback','/admin-survey','/admin/notification','/doctor/notification','/guest-dashboard','/guest/lab-reports','/guest/prescriptions','/guest/login','/discharge-list'
   ];
 
   const hidePatterns = [
@@ -357,6 +357,7 @@ function App() {
                    <Route path="/guest-dashboard" element={<GuestDashboardWrapper/>} />
                       <Route path="/guest/lab-reports" element={<Guestlabreport/>} />
                         <Route path="/guest/prescriptions" element={<GuestPrescription/>} />
+                           <Route path="/discharge-list" element={<DischargeList/>} />
       </Routes>
     </Router>
   );
