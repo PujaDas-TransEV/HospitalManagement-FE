@@ -155,6 +155,31 @@ const faqs = [
           </div>
         </div>
       </section>
+<section className="design-professionals-section">
+  <div className="container">
+    <h2 className="section-heading">Our Design Professionals</h2>
+    <p className="sub-heading">
+      Our dedicated design professionals help craft patient-centered medical environments with comfort and care in mind.
+    </p>
+    <div className="professional-cards">
+      <div className="professional-card">
+        <img src="https://img.icons8.com/color/96/architect.png" alt="Architect" />
+        <h3>Anirban Roy</h3>
+        <p>Senior Medical Architect with 12+ years of experience designing state-of-the-art health facilities.</p>
+      </div>
+      <div className="professional-card">
+        <img src="https://img.icons8.com/color/96/engineer.png" alt="Engineer" />
+        <h3>Pooja Mehta</h3>
+        <p>Biomedical Engineer ensuring medical environments are safe, efficient, and compliant with global standards.</p>
+      </div>
+      <div className="professional-card">
+        <img src="https://img.icons8.com/color/96/interior.png" alt="Interior Designer" />
+        <h3>Rahul Sinha</h3>
+        <p>Interior Designer focused on creating healing spaces that promote patient well-being and comfort.</p>
+      </div>
+    </div>
+  </div>
+</section>
 
       {/* Departments Section */}
       <section className="departments-sections">

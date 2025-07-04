@@ -1,13 +1,18 @@
-
-
- 
- .medical-container {
-  flex: 1;
+.medical-container {
+ flex: 1;
   padding: 30px;
   background-color: #daf5f0;
   overflow-y: auto;
   max-height: calc(100vh - 70px);
-} 
+
+  scrollbar-width: none;
+  -ms-overflow-style: none;  
+}
+
+.medical-container::-webkit-scrollbar {
+  display: none; 
+}
+
 
 .page-title {
   font-size: 28px;
@@ -49,7 +54,8 @@
 .patient-wardmail { background-color: #cfa560; }
 .patient-room     { background-color: #5a728a; }
 .patient-type     { background-color: #a7b8b9; }
-
+.patient-discharge-date { background-color: #8bc4a9;}
+.patient-discharge-time { background-color: #daa8b8;}
 .icon {
   font-size: 1.2rem;
 }

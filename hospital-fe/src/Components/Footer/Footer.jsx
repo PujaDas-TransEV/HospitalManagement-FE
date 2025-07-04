@@ -28,19 +28,19 @@ const Footer = () => {
       <div className="text">
         <h3 style={{ color: 'white' }}>Newsletter</h3>
         <p style={{ color: 'whitesmoke' }}>Stay updated with health tips and hospital news.</p>
-        <form style={{ marginTop: '10px' }}>
+        <form>
         
           <input
   type="email"
   placeholder="Enter your email"
-  style={{
-    padding: '10px 15px',
-    width: '220px',
-    borderRadius: '30px',
-    border: '2px solid #00b894',
-    outline: 'none',
-    transition: '0.3s',
-  }}
+  // style={{
+  //   padding: '10px 15px',
+  //   width: '220px',
+  //   borderRadius: '30px',
+  //   border: '2px solid #00b894',
+  //   outline: 'none',
+  //   transition: '0.3s',
+  // }}
   onFocus={(e) => e.target.style.borderColor = '#0984e3'}
   onBlur={(e) => e.target.style.borderColor = '#00b894'}
 />
