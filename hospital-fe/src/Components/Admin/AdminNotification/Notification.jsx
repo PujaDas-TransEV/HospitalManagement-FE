@@ -1,3 +1,5 @@
+
+
 import React, { useState, useEffect } from 'react';
 import AdminNotificationForm from './AdminNotificationform';
 import './Notification.css';
@@ -16,7 +18,10 @@ const AdminNotificationList = () => {
       const res = await fetch('http://192.168.0.106:5000/notify/show/all');
       const data = await res.json();
       if (!res.ok) throw new Error(data.message || 'Failed to fetch');
-      setNotifications(data);
+
+      // Sort notifications by most recent
+      const sortedData = data.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+      setNotifications(sortedData);
     } catch (err) {
       console.error('Fetch error:', err);
     } finally {
@@ -29,26 +34,25 @@ const AdminNotificationList = () => {
   }, []);
 
   const handleDelete = async (uid) => {
-  if (!window.confirm('Delete this notification?')) return;
+    if (!window.confirm('Delete this notification?')) return;
 
-  try {
-    const formData = new FormData();
-    formData.append('notificationuid', uid);
+    try {
+      const formData = new FormData();
+      formData.append('notificationuid', uid);
 
-    const res = await fetch('http://192.168.0.106:5000/notify/delete', {
-      method: 'POST',
-      body: formData,
-    });
+      const res = await fetch('http://192.168.0.106:5000/notify/delete', {
+        method: 'POST',
+        body: formData,
+      });
 
-    const data = await res.json();
+      const data = await res.json();
 
-    if (!res.ok) throw new Error(data.message || 'Delete failed');
-    setNotifications((prev) => prev.filter((n) => n.uid !== uid));
-  } catch (err) {
-    alert(err.message);
-  }
-};
-
+      if (!res.ok) throw new Error(data.message || 'Delete failed');
+      setNotifications((prev) => prev.filter((n) => n.uid !== uid));
+    } catch (err) {
+      alert(err.message);
+    }
+  };
 
   const handleStatusToggle = async (uid, currentStatus) => {
     const newStatus = currentStatus === 'active' ? 'inactive' : 'active';
@@ -82,9 +86,9 @@ const AdminNotificationList = () => {
   };
 
   return (
-    <div className="facility-management-page">
+    <div className="facilityy-management-page">
       <AdminNavbar />
-      <div className="facility-management-content">
+      <div className="facilityy-management-content">
         <AdminSidebar />
         <div className="notification-wrapper">
           <h2>Admin Notifications</h2>
@@ -101,7 +105,14 @@ const AdminNotificationList = () => {
 
           {showForm && (
             <div className="modal-overlay">
-              <div className="modal-content">
+              <div
+                className="modal-content"
+                style={{
+                  backgroundColor: '#e0f7fa',
+                  padding: '20px',
+                  borderRadius: '8px',
+                }}
+              >
                 <button className="modal-close-btn" onClick={handleFormClose}>
                   ✖
                 </button>
@@ -141,7 +152,9 @@ const AdminNotificationList = () => {
                       </button>
                     </div>
                   </div>
-                  <p><strong>Type:</strong> {n.notificationtype}</p>
+                  <p>
+                    <strong>Type:</strong> {n.notificationtype}
+                  </p>
                   <p>{n.notificationdescription}</p>
                   <p>
                     <small>{new Date(n.created_at).toLocaleString()}</small>
@@ -151,9 +164,15 @@ const AdminNotificationList = () => {
                       onClick={() =>
                         handleStatusToggle(n.uid, n.notificationstatus)
                       }
-                      className={n.notificationstatus === 'active' ? 'active' : 'inactive'}
+                      className={
+                        n.notificationstatus === 'active'
+                          ? 'active'
+                          : 'inactive'
+                      }
                     >
-                      {n.notificationstatus === 'active' ? 'Deactivate' : 'Activate'}
+                      {n.notificationstatus === 'active'
+                        ? 'Deactivate'
+                        : 'Activate'}
                     </button>
                   </div>
                 </div>
@@ -167,4 +186,3 @@ const AdminNotificationList = () => {
 };
 
 export default AdminNotificationList;
-
