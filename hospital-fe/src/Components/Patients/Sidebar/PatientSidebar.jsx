@@ -4,7 +4,7 @@ import { Link, useLocation } from 'react-router-dom';
 import {
   FaHome, FaHeartbeat, FaCalendarCheck, FaNotesMedical,
   FaEnvelope, FaFileAlt, FaUser, FaBars, FaQuestionCircle, FaCog,
-  FaAngleDoubleLeft, FaAngleDoubleRight,FaRegClipboard,FaClinicMedical, FaPrescriptionBottleAlt, FaFileInvoice
+  FaAngleDoubleLeft, FaAngleDoubleRight,FaRegClipboard,FaClinicMedical, FaPrescriptionBottleAlt, FaFileInvoice,FaUserMd
 } from 'react-icons/fa';
 import { MdMedicalServices } from 'react-icons/md';
 
@@ -66,6 +66,16 @@ const PatientSidebar = () => {
               {(isExpanded || isMobileOpen) && <span>Dashboard</span>}
             </Link>
           </li>
+          <li className="nav-item">
+  <Link
+    to="/doctor/schedule"
+    className={`nav-link ${location.pathname === '/doctor-time-list' ? 'active-link' : ''}`}
+    onClick={handleLinkClick}
+  >
+    <FaUserMd className="nav-icon" />
+    {(isExpanded || isMobileOpen) && <span>Doctor Time List</span>}
+  </Link>
+</li>
           <li className="nav-item">
             <Link to="/home-care-service" className={`nav-link ${location.pathname === '/home-care-service' ? 'active-link' : ''}`} onClick={handleLinkClick}>
               <FaClinicMedical className="nav-icon" />

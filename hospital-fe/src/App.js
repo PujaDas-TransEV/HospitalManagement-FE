@@ -240,6 +240,7 @@ import Guestlabreport from './Components/Guest/Guestlabreport.jsx/labreport';
 import GuestPrescription from './Components/Guest/GuestPrescription/Prescription';
 import DischargeList from './Components/Admin/DischargeList/Discharge';
 import DoctorTimeSchedule from './Components/Admin/TimeSchedule/Timeschedule';
+import DoctorTime from './Components/Patients/TimeRable/DoctorTime';
 // ✅ Conditional Navbar using path matching
 const ConditionalNavbar = () => {
   const location = useLocation();
@@ -262,7 +263,7 @@ const ConditionalNavbar = () => {
     '/home-care-service', '/home-care-request', '/homecare',
     '/patients', '/patient-navbar', '/patient-sidebar',
     '/doctor-navbar', '/doctor-sidebar', '/adnavbar', '/adsidebar','/doctor-homecare','/labreport',
-    '/admin/labreport','/admin-labtest','/admin-billing','/bill','/invoice','/admin-feedback','/admin-survey','/admin/notification','/doctor/notification','/guest-dashboard','/guest/lab-reports','/guest/prescriptions','/guest/login','/discharge-list','/admin/doctor-time'
+    '/admin/labreport','/admin-labtest','/admin-billing','/bill','/invoice','/admin-feedback','/admin-survey','/admin/notification','/doctor/notification','/guest-dashboard','/guest/lab-reports','/guest/prescriptions','/guest/login','/discharge-list','/admin/doctor-time','/doctor/schedule'
   ];
 
   const hidePatterns = [
@@ -360,6 +361,7 @@ function App() {
             <Route path="/guest/prescriptions" element={<GuestPrescription/>} />
             <Route path="/discharge-list" element={<DischargeList/>} />
             <Route path="/admin/doctor-time" element={<DoctorTimeSchedule/>}/>
+               <Route path="/doctor/schedule" element={<DoctorTime/>}/>
       </Routes>
     </Router>
   );
