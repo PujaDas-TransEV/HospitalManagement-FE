@@ -7,6 +7,7 @@ import { FaSpinner } from 'react-icons/fa';
 import AdminNavbar from '../Adminnavbar/AdminNavbar';
 import AdminSidebar from '../Adminsidebar/AdminSidebar';
 import './AdminAppointmentBooking.css'; // You'll need matching CSS
+import { FaClock } from 'react-icons/fa';
 
 const AppointmentBookingPage = () => {
   const [departments, setDepartments] = useState([]);
@@ -216,7 +217,7 @@ const AppointmentBookingPage = () => {
           />
 
           <label>Time</label>
-          <select
+          {/* <select
             value={selectedTime}
             onChange={e => setSelectedTime(e.target.value)}
           >
@@ -226,7 +227,22 @@ const AppointmentBookingPage = () => {
                 {t.slice(0,5)}
               </option>
             ))}
-          </select>
+          </select> */}
+<div style={{ display: 'flex', alignItems: 'center', marginBottom: '15px' }}>
+  <FaClock style={{ marginRight: '8px', color: '#007bff' }} />
+  <input
+    type="time"
+    value={selectedTime}
+    onChange={e => setSelectedTime(e.target.value)}
+    style={{
+      padding: '8px 12px',
+      borderRadius: '4px',
+      border: '1px solid #ccc',
+      width: '180px',
+    }}
+    required
+  />
+</div>
 
           <label>Reason For appointment Booking</label>
           <textarea

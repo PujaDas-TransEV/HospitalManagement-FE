@@ -7,6 +7,7 @@ import './Departmentwisebook.css';
 import PatientNavbar from '../Navbar/PatientNavbar';
 import PatientSidebar from '../Sidebar/PatientSidebar';
 import { FaSpinner } from 'react-icons/fa';
+import { FaClock } from 'react-icons/fa';
 
 // ...
 
@@ -186,29 +187,34 @@ const AppointmentBookingPage = () => {
               />
             </div>
 
-            <div className="form-group">
-              <label>Select Time:</label>
-              <select
-                value={selectedTime}
-                onChange={(e) => setSelectedTime(e.target.value)}
-                required
-                disabled={!selectedDate}
-              >
-                <option value="">-- Select Time --</option>
-                {(departmentTimes[departmentId] || []).map((time) => {
-                  const [hourStr, minute] = time.split(':');
-                  const hour = parseInt(hourStr, 10);
-                  const hour12 = hour % 12 === 0 ? 12 : hour % 12;
-                  const ampm = hour < 12 ? 'AM' : 'PM';
-                  const timeLabel = `${hour12}:${minute} ${ampm}`;
-                  return (
-                    <option key={time} value={time}>
-                      {timeLabel}
-                    </option>
-                  );
-                })}
-              </select>
-            </div>
+          <div style={{
+  display: 'flex',
+  alignItems: 'center',
+  gap: '10px',
+  marginBottom: '20px',
+  fontWeight: '500',
+  color: '#333'
+}}>
+  <label htmlFor="appointmentTime" style={{ display: 'flex', alignItems: 'center' }}>
+    <FaClock style={{ marginRight: '8px', color: '#007bff' }} />
+    Appointment Time:
+  </label>
+  <input
+    id="appointmentTime"
+    type="time"
+    value={selectedTime}
+    onChange={e => setSelectedTime(e.target.value)}
+    style={{
+      padding: '8px 12px',
+      borderRadius: '4px',
+      border: '1px solid #ccc',
+      width: '160px',
+      fontSize: '14px'
+    }}
+    required
+  />
+</div>
+
 
             <div className="form-group">
               <label> Reason Of Appointment:</label>
@@ -227,10 +233,10 @@ const AppointmentBookingPage = () => {
   disabled={isBooking}
   className="book-btn"
   style={{ 
-    display: 'block',      // makes the button a block element so margin auto works
-    margin: '0 auto',      // centers the button horizontally
+    display: 'block',    
+    margin: '0 auto',     
     width: '250px',
-    backgroundColor: '#1f6695'  // camelCase for React inline styles
+    backgroundColor: '#1f6695'  
   }}
 >
   Book Appointment

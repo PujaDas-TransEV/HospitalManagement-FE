@@ -253,7 +253,12 @@ const StaffManagement = () => {
                   <Table striped bordered hover>
                     <thead>
                       <tr>
-                        <th>ID</th><th>Name</th><th>Details</th><th>Age</th><th>Gender</th><th>Hospital ID</th>
+                      <th class="table-header">ID</th>
+  <th class="table-header">Name</th>
+  <th class="table-header">Details</th>
+  <th class="table-header">Age</th>
+  <th class="table-header">Gender</th>
+  <th class="table-header">Hospital ID</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -278,12 +283,61 @@ const StaffManagement = () => {
               </Button>
 
               <Table striped bordered hover className="staff-table" style={{ marginTop: '20px' }}>
-                <thead>
+                {/* <thead>
                   <tr>
                     <th>ID</th><th>Name</th><th>Details</th><th>Age</th><th>Gender</th><th>Type</th>
                     <th>Category</th><th>SalaryDate</th><th>PaymentStatus</th><th>WorkingStatus</th><th>Actions</th>
                   </tr>
-                </thead>
+                </thead> */}
+             <thead style={{ backgroundColor: "#e0e0e0", color: "black" }}>
+
+  <tr>
+    <th style={{ backgroundColor: "#e0e0e0", color: "black", padding: "8px", textAlign: "left" }}>
+  ID
+</th>
+
+   <th style={{ backgroundColor: "#e0e0e0", color: "black", padding: "8px", textAlign: "left" }}>
+ Name
+</th>
+
+  <th style={{ backgroundColor: "#e0e0e0", color: "black", padding: "8px", textAlign: "left" }}>
+Details
+</th>
+
+    <th style={{ backgroundColor: "#e0e0e0", color: "black", padding: "8px", textAlign: "left" }}>
+ Age
+</th>
+
+   <th style={{ backgroundColor: "#e0e0e0", color: "black", padding: "8px", textAlign: "left" }}>
+ Gender
+</th>
+
+   <th style={{ backgroundColor: "#e0e0e0", color: "black", padding: "8px", textAlign: "left" }}>
+  Type
+</th>
+
+   <th style={{ backgroundColor: "#e0e0e0", color: "black", padding: "8px", textAlign: "left" }}>
+ Category
+</th>
+
+   <th style={{ backgroundColor: "#e0e0e0", color: "black", padding: "8px", textAlign: "left" }}>
+ Salary Date
+</th>
+
+  <th style={{ backgroundColor: "#e0e0e0", color: "black", padding: "8px", textAlign: "left" }}>
+ Payment Status
+</th>
+
+ <th style={{ backgroundColor: "#e0e0e0", color: "black", padding: "8px", textAlign: "left" }}>
+  Working Status
+</th>
+
+   <th style={{ backgroundColor: "#e0e0e0", color: "black", padding: "8px", textAlign: "left" }}>
+Actions
+</th>
+
+  </tr>
+</thead>
                 {/* <tbody>
                   {staffList.map(s => (
                     <tr key={s.uid}>

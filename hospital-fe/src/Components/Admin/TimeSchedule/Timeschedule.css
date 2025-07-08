@@ -1,0 +1,206 @@
+/* 🌐 Import professional font */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
+
+body, html {
+  margin: 0;
+  padding: 0;
+  font-family: 'Roboto', sans-serif;
+  background-color: #f2f6f9;
+}
+
+/* 🌄 Page background and container */
+.doctor-scheduler-page {
+  position: relative;
+  min-height: 100vh;
+  background-image: url('../../Assests/background.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.doctor-scheduler-page::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background-color: rgba(255, 255, 255, 0.5); /* light overlay */
+  z-index: 0;
+}
+
+/* 📦 Layout for sidebar + content */
+.doctor-management-content {
+  display: flex;
+  padding: 20px;
+  gap: 20px;
+  position: relative;
+
+  flex-wrap: wrap;
+  box-sizing: border-box;
+  justify-content: center;
+}
+
+/* 📋 Main scheduling panel */
+.doctor-schedule-page {
+  background-color: rgba(255, 255, 255, 0.95);
+  border-radius: 15px;
+  padding: 30px 40px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  max-width: 1100px;
+  width: 100%;
+  z-index: 2;
+  box-sizing: border-box;
+  overflow-x: auto;
+}
+
+/* 🟡 Headings */
+.doctor-schedule-page h1,
+.doctor-schedule-page h2,
+.doctor-block h3 {
+  color: #558b2f;
+  margin-bottom: 20px;
+}
+
+/* 📄 Form styles */
+.schedule-form {
+  background: rgba(220, 234, 236, 0.9);
+  padding: 20px 30px;
+  border-radius: 8px;
+  max-width: 700px;
+  margin: 0 auto 40px auto;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.schedule-form label {
+  display: block;
+  margin-bottom: 15px;
+  font-weight: 500;
+  color: #222;
+}
+
+/* ⏱️ Inputs and Select */
+.schedule-form input[type="date"],
+.schedule-form input[type="time"],
+.schedule-form select {
+  width: calc(50% - 12px);
+  padding: 8px 10px;
+  margin-top: 5px;
+  margin-right: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+/* ⌛ Slot layout */
+.slots-list {
+  margin-bottom: 20px;
+}
+
+.slot {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.slot .icon {
+  margin-right: 8px;
+  color: #007bff;
+}
+
+.slot input[type="time"] {
+  width: 120px;
+}
+
+/* ➕➖ Slot buttons */
+.add-slot-btn,
+.submit-btn,
+.icon-button {
+  display: inline-flex;
+  align-items: center;
+  padding: 8px 14px;
+  border-radius: 4px;
+  border: none;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.add-slot-btn {
+  background-color: #17a2b8;
+  color: #fff;
+  margin-bottom: 20px;
+}
+
+.add-slot-btn:hover {
+  background-color: #138496;
+}
+
+.submit-btn {
+  background-color: #28a745;
+  color: #fff;
+  margin-left: 10px;
+}
+
+.submit-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.icon-button {
+  background: transparent;
+  margin-left: 10px;
+  color: #dc3545;
+}
+
+.icon-button:hover {
+  color: #c82333;
+}
+
+/* 🔄 Spinner animation */
+.spin {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* 🩺 Doctor timetable block */
+.doctor-block {
+  background: rgba(255, 255, 255, 0.85);
+  padding: 20px;
+  border-radius: 8px;
+  max-width: 1000px;
+  margin: 20px auto;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+/* 📅 Table for doctor schedules */
+.timetable-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+}
+
+.timetable-table th,
+.timetable-table td {
+  text-align: left;
+  font-size: 0.95rem;
+  padding: 8px;
+  border: 1px solid #ccc;
+}
+
+.timetable-table thead {
+  background-color: #cbd8ec;
+}
+
+.timetable-table button {
+  background: none;
+  border: none;
+  color: #007bff;
+  cursor: pointer;
+}
+
+.timetable-table button:hover {
+  text-decoration: underline;
+}

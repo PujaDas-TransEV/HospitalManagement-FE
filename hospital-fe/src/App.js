@@ -202,7 +202,7 @@ import DoctorSettings from './Components/Doctors/DoctorSettings/DoctorSettings';
 import AppointmentManagement from './Components/Admin/AppointmentManagement/AppointmentManagement';
 import DoctorAppointment from './Components/Doctors/DoctorAppointment/DoctorAppointment';
 import DepartmentwisebookAppointment from './Components/Patients/Departmentwisebookappointment/Departmentwisebook';
-import AdminAppointBookDepartmentwise from './Components/Admin/AdminDepartmentwiseAppointmentBook/AdminAppointmentBook';
+import Adminappointmentdepartment from './Components/Admin/AdminDepartmentwiseAppointmentBook/AdminAppointmentBook';
 import PatientDepartmnetwiseList from './Components/Admin/DepartmetwisePatientsList/DepartmentwisePatientsList';
 import PatientList from './Components/Doctors/PatientList/PatientList';
 import Prescription from './Components/Patients/Prescription/Prescription';
@@ -239,6 +239,7 @@ import GuestDashboardWrapper from './Components/Guest/GuestDashboard';
 import Guestlabreport from './Components/Guest/Guestlabreport.jsx/labreport';
 import GuestPrescription from './Components/Guest/GuestPrescription/Prescription';
 import DischargeList from './Components/Admin/DischargeList/Discharge';
+import DoctorTimeSchedule from './Components/Admin/TimeSchedule/Timeschedule';
 // ✅ Conditional Navbar using path matching
 const ConditionalNavbar = () => {
   const location = useLocation();
@@ -261,7 +262,7 @@ const ConditionalNavbar = () => {
     '/home-care-service', '/home-care-request', '/homecare',
     '/patients', '/patient-navbar', '/patient-sidebar',
     '/doctor-navbar', '/doctor-sidebar', '/adnavbar', '/adsidebar','/doctor-homecare','/labreport',
-    '/admin/labreport','/admin-labtest','/admin-billing','/bill','/invoice','/admin-feedback','/admin-survey','/admin/notification','/doctor/notification','/guest-dashboard','/guest/lab-reports','/guest/prescriptions','/guest/login','/discharge-list'
+    '/admin/labreport','/admin-labtest','/admin-billing','/bill','/invoice','/admin-feedback','/admin-survey','/admin/notification','/doctor/notification','/guest-dashboard','/guest/lab-reports','/guest/prescriptions','/guest/login','/discharge-list','/admin/doctor-time'
   ];
 
   const hidePatterns = [
@@ -352,12 +353,13 @@ function App() {
            <Route path="/admin-survey" element={<AdminMedicalSurvey/>} />
             <Route path="/guest/login" element={<GuestLogin/>} />
             <Route path="/admin/notification" element={<AdminNotification/>} />
-              <Route path="/doctor/notification" element={<DoctorNotification/>} />
-                  <Route path="/footer" element={<Footer/>} />
-                   <Route path="/guest-dashboard" element={<GuestDashboardWrapper/>} />
-                      <Route path="/guest/lab-reports" element={<Guestlabreport/>} />
-                        <Route path="/guest/prescriptions" element={<GuestPrescription/>} />
-                           <Route path="/discharge-list" element={<DischargeList/>} />
+            <Route path="/doctor/notification" element={<DoctorNotification/>} />
+            <Route path="/footer" element={<Footer/>} />
+            <Route path="/guest-dashboard" element={<GuestDashboardWrapper/>} />
+            <Route path="/guest/lab-reports" element={<Guestlabreport/>} />
+            <Route path="/guest/prescriptions" element={<GuestPrescription/>} />
+            <Route path="/discharge-list" element={<DischargeList/>} />
+            <Route path="/admin/doctor-time" element={<DoctorTimeSchedule/>}/>
       </Routes>
     </Router>
   );
