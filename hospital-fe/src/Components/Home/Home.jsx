@@ -35,6 +35,7 @@ import patient5 from '../Assests/p5.jpg';
 import doctor from '../Assests/h1.avif';
 import MainSlider from '../Home/MainSlider';
 import Footer from '../Footer/Footer';
+import about from '../Assests/adminloginback.jpg';
 
 const HospitalDashboard = () => {
   const [count, setCount] = useState(0);
@@ -180,7 +181,7 @@ const HospitalDashboard = () => {
       <div id="about-us">
         <div className="about-us-content">
           <div className="about-us-left">
-            <img src={aboutImage} alt="Hospital" />
+            <img src={about} alt="Hospital" />
           </div>
           <div className="about-us-right">
             <h2>About Us</h2>

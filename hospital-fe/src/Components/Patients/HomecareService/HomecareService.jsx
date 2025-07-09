@@ -156,17 +156,17 @@ const HomeCareService = () => {
   };
 
   return (
-    <div className="dashboard-container">
+    <div className="dashboard-containerr">
       {/* Navbar */}
       <PatientNavbar />
 
-      <div className="dashboard-contenter">
+      <div className="dashboard-contenterr">
         {/* Sidebar */}
         <PatientSidebar />
 
         {/* Overlay container */}
         <div className="homecare-overlay">
-          <div className="homecare-container">
+          <div className="homecare-containerr">
             <div className="homecare-box">
               <h2>🏠 Book Home Care Service</h2>
 

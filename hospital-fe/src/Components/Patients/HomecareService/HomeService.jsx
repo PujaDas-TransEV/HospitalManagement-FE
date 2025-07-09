@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Modal from 'react-modal';
 import { useNavigate } from 'react-router-dom';
-import { FaEye, FaTimesCircle, FaSave, FaBan, FaTrash, FaHome,FaClock } from 'react-icons/fa';
+import { FaEye, FaTimesCircle, FaSave, FaBan, FaTrash, FaHome,FaClock,FaSpinner } from 'react-icons/fa';
 import './HomeService.css';
 import PatientNavbar from '../Navbar/PatientNavbar';
 import PatientSidebar from '../Sidebar/PatientSidebar';
@@ -158,17 +158,14 @@ const HomeCareServicePage = () => {
 
           <h2>My Home Care Requests</h2>
 
-          {/* Loading modal */}
-          <Modal
-            isOpen={loading}
-            ariaHideApp={false}
-            className="loading-modal"
-            overlayClassName="modal-overlay"
-            shouldCloseOnOverlayClick={false}
-          >
-            <div className="spinner"></div>
-            <p>Loading Booking...</p>
-          </Modal>
+        
+       {loading && (
+   <div className="loading-overlay" aria-label="Loading">
+     <FaSpinner className="spinner-icon" />
+    <p>Loading Homecare Booking...</p>
+  </div>
+)}
+
 
           {error && <p className="error-msg">{error}</p>}
 
