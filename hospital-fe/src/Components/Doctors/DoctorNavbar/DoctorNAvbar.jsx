@@ -105,10 +105,10 @@ const DoctorNavbar = () => {
       <Navbar.Collapse id="basic-navbar-nav" className="justify-content-end">
         <Nav className="align-items-center">
           {/* Notification Icon with Badge */}
-          <div className="notification-icon" onClick={handleBellClick}>
+          <div className="notifications-icon" onClick={handleBellClick}>
             <FaBell size={20} color="white" />
             {unseenCount > 0 && (
-              <Badge pill bg="danger" className="notification-badge">
+              <Badge pill bg="danger" className="notifications-badge">
                 {unseenCount}
               </Badge>
             )}

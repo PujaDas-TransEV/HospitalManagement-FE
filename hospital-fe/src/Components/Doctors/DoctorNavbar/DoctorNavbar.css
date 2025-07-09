@@ -120,7 +120,7 @@
   }
 }
 
-.notification-icon {
+.notifications-icon {
   position: relative;
   display: inline-flex;
   align-items: center;
@@ -132,7 +132,7 @@
   transform: translateY(2px);
 }
 
-.notification-badge {
+.notifications-badge {
   position: absolute;
   top: -6px;
   right: -8px;
@@ -148,15 +148,15 @@
 }
 
 
-.notification-icon:hover {
+.notifications-icon:hover {
   opacity: 0.8;
 }
 @media (max-width: 992px) {
-  .notification-icon {
+  .notifications-icon {
     margin-right: 10px;
   }
 
-  .notification-badge {
+  .notifications-badge {
     font-size: 0.6rem;
     padding: 2px 5px;
     top: -5px;
@@ -165,12 +165,12 @@
 }
 
 @media (max-width: 576px) {
-  .notification-icon {
+  .notifications-icon {
     margin-right: 5px;
     font-size: 1rem;
   }
 
-  .notification-badge {
+  .notifications-badge {
     font-size: 0.5rem;
     top: -4px;
     right: -5px;

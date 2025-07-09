@@ -7,6 +7,13 @@
   min-height: 100vh;
   z-index: 0;
 }
+.dashboard-container-doctor::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background-color: rgba(255, 255, 255, 0.514); /* white with 60% opacity */
+  z-index: 0;  /* behind content */
+}
 .dashboard-content {
   display: flex;
   /* width: 100%; */
@@ -64,8 +71,8 @@
 .card-header svg { margin-right: 12px; }
 .card-body { padding: 20px; }
 
-/* List items */
-.appointment-card .list-group-item,
+
+/* .appointment-card .list-group-item,
 .patient-card .list-group-item,
 .medical-record-card .list-group-item,
 .leave-card .list-group-item {
@@ -80,7 +87,25 @@
   font-size: 16px;
   color: #333;
   transition: background-color .2s;
-}
+} */
+.appointment-card .list-group-item,
+.patient-card .list-group-item,
+.medical-record-card .list-group-item,
+.leave-card .list-group-item {
+ background: #fdfdfd;
+  border: 1px solid #e0e0e0;
+  padding: 14px 20px;
+  border-radius: 8px;
+  margin: 10px auto; 
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 16px;
+  color: #333;
+  transition: background-color 0.2s;
+
+  width: 90%;        
+  max-width: 800px; } 
 .appointment-card .list-group-item:hover,
 .patient-card .list-group-item:hover,
 .medical-record-card .list-group-item:hover,

@@ -68,7 +68,7 @@ const DoctorLoginPage = () => {
 
   return (
     <div className="login-page-doctor">
-      <div className="login-card" style={{ backgroundColor: '#d0f0e0' }}>
+      <div className="login-card" style={{ backgroundColor: '#ccf2f4' }}>
         <h1 style={{ fontSize: '24px', color: '#4169e1' }}>
           Doctor Login - Welcome Back!
         </h1>

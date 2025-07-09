@@ -13,8 +13,12 @@ const DoctorNotifications = () => {
     try {
       const res = await fetch("http://192.168.0.106:5000/notify/show/active");
       const data = await res.json();
+
       if (res.ok && Array.isArray(data)) {
-        setNotifications(data);
+        const sorted = data.sort(
+          (a, b) => new Date(b.created_at) - new Date(a.created_at)
+        );
+        setNotifications(sorted);
       } else {
         console.error("Failed to load notifications.");
       }
@@ -56,40 +60,39 @@ const DoctorNotifications = () => {
   return (
     <div className="doctor-notifications-page">
       <DoctorNavbar />
-            <div className="doctor-main-content">
+      <div className="doctor-main-content">
         <DoctorSidebar />
+        <div className="notification-content">
+          <h2>Notifications</h2>
 
-      <div className="notification-content">
-        <h2>Notifications</h2>
-
-        {loading ? (
-          <p>Loading notifications...</p>
-        ) : notifications.length === 0 ? (
-          <p>No active notifications found.</p>
-        ) : (
-          <div className="notification-list">
-            {notifications.map((n) => (
-              <div key={n.uid} className="notification-item">
-                <div className="notification-info">
-                  <h4>{n.notificationtitle}</h4>
-                  <p>{n.notificationdescription}</p>
-                  <span className="timestamp">
-                    {new Date(n.created_at).toLocaleString()}
-                  </span>
+          {loading ? (
+            <p className="loading-text">Loading notifications...</p>
+          ) : notifications.length === 0 ? (
+            <p className="no-data">No active notifications found.</p>
+          ) : (
+            <div className="notification-list">
+              {notifications.map((n) => (
+                <div key={n.uid} className="notification-item">
+                  <div className="notification-info">
+                    <h4>{n.notificationtitle}</h4>
+                    <p>{n.notificationdescription}</p>
+                    <span className="timestamp">
+                      {new Date(n.created_at).toLocaleString()}
+                    </span>
+                  </div>
+                  <button
+                    className="delete-button"
+                    onClick={() => handleDelete(n.uid)}
+                    title="Delete Notification"
+                  >
+                    <FaTrashAlt />
+                  </button>
                 </div>
-                <button
-                  className="delete-button"
-                  onClick={() => handleDelete(n.uid)}
-                  title="Delete Notification"
-                >
-                  <FaTrashAlt />
-                </button>
-              </div>
-            ))}
-          </div>
-        )}
+              ))}
+            </div>
+          )}
+        </div>
       </div>
-    </div>
     </div>
   );
 };

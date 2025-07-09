@@ -1,37 +1,54 @@
-.doctor-navbar .notification-icon-wrapper {
-  position: relative;
-  margin-right: 1rem;
-  cursor: pointer;
-}
 
-.notification-icon {
-  font-size: 1.25rem;
-  color: #fff;
-}
 
-.notification-count {
-  position: absolute;
-  top: -6px;
-  right: -8px;
-  font-size: 0.75rem;
-}
 .doctor-notifications-page {
-  padding-top: 70px; /* To offset fixed navbar */
-  background-color: #f8f9fa;
+  padding-top: 80px;
   min-height: 100vh;
+  background-image: url('../../Assests/background.jpg'); 
+  background-size: cover;
+  background-position: center;
+  position: relative;
+  z-index: 0;
 }
+
+
+.doctor-notifications-page::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-color: rgba(255, 255, 255, 0.8);
+  z-index: -1;
+}
+
+
+.doctor-main-content {
+  display: flex;
+  padding: 20px;
+  gap: 20px;
+  position: relative;
+  z-index: 1;
+}
+
 
 .notification-content {
+  flex: 1;
   max-width: 900px;
   margin: auto;
-  padding: 20px;
+  background-color: #ffffff;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.05);
+  position: relative;
+  z-index: 1;
 }
 
 .notification-content h2 {
   text-align: center;
+  font-size: 28px;
+  color: #2c3e50;
+  font-weight: 600;
   margin-bottom: 30px;
-  color: #333;
 }
+
 
 .notification-list {
   display: flex;
@@ -40,14 +57,19 @@
 }
 
 .notification-item {
-  background: #fff;
+  background: #fdfdfd;
   border-left: 5px solid #007bff;
-  padding: 15px 20px;
+  padding: 20px;
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-  border-radius: 5px;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+  transition: transform 0.2s;
+}
+
+.notification-item:hover {
+  transform: translateY(-2px);
 }
 
 .notification-info {
@@ -55,12 +77,13 @@
 }
 
 .notification-info h4 {
-  margin: 0 0 8px;
+  font-size: 18px;
+  margin-bottom: 8px;
   color: #007bff;
 }
 
 .notification-info p {
-  margin: 0 0 5px;
+  margin: 0 0 8px;
   color: #444;
 }
 
@@ -69,6 +92,7 @@
   color: #666;
 }
 
+
 .delete-button {
   background: transparent;
   border: none;
@@ -76,13 +100,19 @@
   font-size: 1.2rem;
   cursor: pointer;
   margin-left: 15px;
+  transition: color 0.2s;
 }
 
 .delete-button:hover {
   color: #a30000;
 }
 
-@media (max-width: 600px) {
+
+@media (max-width: 768px) {
+  .doctor-main-content {
+    flex-direction: column;
+  }
+
   .notification-item {
     flex-direction: column;
     align-items: flex-start;
