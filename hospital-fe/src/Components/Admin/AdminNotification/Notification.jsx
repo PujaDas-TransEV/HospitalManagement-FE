@@ -1,5 +1,4 @@
 
-
 import React, { useState, useEffect } from 'react';
 import AdminNotificationForm from './AdminNotificationform';
 import './Notification.css';
@@ -126,7 +125,10 @@ const AdminNotificationList = () => {
           )}
 
           {loading ? (
-            <p>Loading notifications...</p>
+            // <p>Loading notifications...</p>
+           <p style={{ marginLeft: '400px' }}>Loading notifications...</p>
+
+
           ) : notifications.length === 0 ? (
             <p>No notifications found.</p>
           ) : (

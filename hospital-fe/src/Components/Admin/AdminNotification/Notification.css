@@ -1,4 +1,4 @@
-/* Page container with background image */
+
 .facilityy-management-page {
   position: relative;
   background-image: url('../../Assests/background.jpg'); /* Adjust path if needed */
@@ -13,7 +13,7 @@
   content: "";
   position: absolute;
   inset: 0;
-  background-color: rgba(255, 255, 255, 0.6);
+  background-color: rgba(255, 255, 255, 0.445);
   z-index: 0;
 }
 
@@ -21,9 +21,10 @@
 .facilityy-management-content {
   display: flex;
   position: relative;
-
   padding: 20px;
   gap: 20px;
+  
+  flex-wrap: wrap;
 }
 
 /* Sidebar + main content width handling */
@@ -38,16 +39,18 @@
 }
 
 /* Header */
-h2 {
+.notification-wrapper h2 {
   margin-bottom: 20px;
   font-size: 26px;
   color: #2c3e50;
   font-weight: 600;
+  text-align: center;
 }
 
 /* Create button */
 .create-button {
-  margin-bottom: 20px;
+  display: block;
+  margin: 0 auto 20px auto;
   padding: 10px 20px;
   background-color: #007bff;
   color: #fff;
@@ -56,18 +59,24 @@ h2 {
   border-radius: 6px;
   cursor: pointer;
   transition: background 0.3s ease;
-  margin-left: 400px;
 }
 
 .create-button:hover {
   background-color: #0056b3;
 }
 
+/* Loading text styling */
+.loading-text {
+  text-align: center;
+  font-size: 16px;
+  color: #333;
+}
+
+/* Notification List */
 .notification-list {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
   gap: 20px;
-  justify-content: center;
 }
 
 .notification-card {
@@ -75,12 +84,14 @@ h2 {
   border: 1px solid #dee2e6;
   border-radius: 10px;
   padding: 16px;
-  width: 40%;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  margin-left: 500px;
+
+  width: 90%;               /* Make it responsive */
+  max-width: 700px;         /* Limit max width */
+  margin: 0 auto;           /* Center horizontally */
 }
 
 
@@ -159,7 +170,6 @@ h2 {
   background-color: #dc3545;
 }
 
-/* Modal overlay */
 
 
 /* Responsive Design */
@@ -172,38 +182,18 @@ h2 {
     width: 100%;
   }
 
-  .notification-wrapper {
-    margin: 0;
-  }
-
   .notification-card {
-    max-width: 100%;
-  }
-}
-
-@media screen and (max-width: 768px) {
-  .notification-list {
-    flex-direction: column;
-    align-items: center;
-  }
-
-  .notification-card {
-    width: 95%;
+    width: 100%;
   }
 
   .modal-content {
     padding: 20px;
   }
-
-  h2 {
-    font-size: 22px;
-  }
 }
 
-@media screen and (max-width: 480px) {
-  .create-button {
-    width: 100%;
-    font-size: 16px;
+@media screen and (max-width: 768px) {
+  h2 {
+    font-size: 22px;
   }
 
   .notification-header h3 {
@@ -216,7 +206,23 @@ h2 {
   }
 
   .status-toggle button {
-    width: 100%;
     font-size: 14px;
+    width: 100%;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .create-button {
+    width: 100%;
+    font-size: 16px;
+  }
+
+  .notification-card {
+    padding: 12px;
+  }
+
+  .modal-content {
+    width: 95%;
+    padding: 15px;
   }
 }
