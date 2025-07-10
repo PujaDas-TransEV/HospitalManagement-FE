@@ -100,37 +100,43 @@ const EquipmentManagementPage = () => {
         <div className="equipment-main" style={{ flex: 1, padding: '20px' }}>
           <h2>Equipment Management</h2>
 
-        <Form 
+<Form 
   onSubmit={searchEquipmentByID} 
   style={{ display: 'flex', alignItems: 'center', marginBottom: '20px', flexWrap: 'wrap', gap: '10px' }}
 >
   <div style={{ position: 'relative', display: 'inline-block', width: '250px' }}>
-  <Form.Control
-    type="text"
-    placeholder="Search by Equipment ID"
-    value={searchID}
-    onChange={e => setSearchID(e.target.value)}
-    style={{
-      paddingRight: '30px', // space for the icon inside
-      minWidth: '200px',
-      borderRadius: '4px',
-      border: '1px solid #ced4da',
-    }}
-  />
-  <FaSearch
-    style={{
-      position: 'absolute',
-      right: '10px',
-      top: '50%',
-      transform: 'translateY(-50%)',
-      color: '#6c757d',
-      pointerEvents: 'none',
-    }}
-  />
-</div>
+    <Form.Control
+      type="text"
+      placeholder="Search by Equipment ID"
+      value={searchID}
+      onChange={e => setSearchID(e.target.value)}
+      style={{
+        paddingRight: '30px',
+        minWidth: '200px',
+        borderRadius: '4px',
+        border: '1px solid #ced4da',
+      }}
+    />
 
-
-  <Button 
+    {/* Search Icon Button */}
+    <button
+      type="submit"
+      style={{
+        position: 'absolute',
+        right: '5px',
+        top: '50%',
+        transform: 'translateY(-50%)',
+        background: 'transparent',
+        border: 'none',
+        cursor: 'pointer',
+        padding: 0,
+        color: '#6c757d',
+      }}
+    >
+      <FaSearch />
+    </button>
+  </div>
+   <Button 
     variant="secondary" 
     onClick={() => { setSearchID(''); fetchEquipments(); }} 
     style={{ padding: '6px 12px' }}
