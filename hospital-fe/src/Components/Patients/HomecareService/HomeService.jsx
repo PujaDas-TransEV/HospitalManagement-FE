@@ -223,7 +223,7 @@ const HomeCareServicePage = () => {
                 <div className="modal-header-homecare">
                   <h2>Request Details</h2>
                   <button
-                    className="icon-btn close-btn"
+                    className="icon-btn closee-btn"
                     onClick={() => setSelectedRequest(null)}
                     title="Close"
                   >
