@@ -6,7 +6,7 @@ import {
   FaUserMd, FaUserInjured, FaCalendarAlt, FaHome, FaHospital,
   FaClipboardList, FaToolbox, FaWallet, FaCog, FaFileMedical,
   FaUserShield, FaBed, FaUsers, FaPrescriptionBottleAlt, FaPlusCircle,
-  FaProcedures,FaUserPlus,FaComments,FaLifeRing,FaUserMinus
+  FaProcedures,FaUserPlus,FaComments,FaLifeRing,FaUserMinus,FaFirstAid
 } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
 import AdminNavbar from '../Adminnavbar/AdminNavbar';
@@ -81,9 +81,10 @@ const AdminDashboard = () => {
     [
      
   { icon: <FaUserPlus />, label: 'Patient Admission', to: '/patient-admission', bg: '#6aaed6' },
+  { icon: <FaFirstAid /> , label: 'Emergency', to: '/admin/emergency',  bg: '#d62828' },
    {icon: <FaUserMinus />, label: 'Patient Discharge', to: '/discharge-list', bg: '#f67280'}, // light blue
-  { icon: <FaComments />, label: 'Patient Feedbacks', to: '/patient-feedbacks', bg: '#8cd790' }, // soft green
-  { icon: <FaLifeRing />, label: 'Support Ticket', to: '/support-ticket', bg: '#f6c26b' }  // orange yellow
+  { icon: <FaComments />, label: 'Patient Feedbacks', to: '/admin-feedback', bg: '#8cd790' }, // soft green
+  { icon: <FaLifeRing />, label: 'Support Ticket', to: '/admin-support', bg: '#f6c26b' }  // orange yellow
 
  ]
   ];
@@ -129,7 +130,11 @@ const AdminDashboard = () => {
       <Card.Body className="dashboard-card-body">
         <FaUserMd className="card-icon" color="yellow" />
         <h5>Doctors</h5>
-        <p>{loading ? <Spinner animation="border" size="sm" /> : doctors.length}</p>
+        {/* <p>{loading ? <Spinner animation="border" size="sm" /> : doctors.length}</p> */}
+        <p style={{ color: 'orange', fontWeight: 'bold', fontSize: '16px' }}>
+  {loading ? <Spinner animation="border" size="sm" /> : doctors.length}
+</p>
+
       </Card.Body>
     </Card>
 
@@ -146,7 +151,10 @@ const AdminDashboard = () => {
       <Card.Body className="dashboard-card-body">
         <FaUserInjured className="card-icon" />
         <h5>Patients</h5>
-        <p>{loading ? <Spinner animation="border" size="sm" /> : patients.length}</p>
+        {/* <p>{loading ? <Spinner animation="border" size="sm" /> : patients.length}</p> */}
+          <p style={{ color: 'orange', fontWeight: 'bold', fontSize: '16px' }}>
+  {loading ? <Spinner animation="border" size="sm" /> : patients.length}
+</p>
       </Card.Body>
     </Card>
 
@@ -163,7 +171,10 @@ const AdminDashboard = () => {
       <Card.Body className="dashboard-card-body">
         <FaCalendarAlt className="card-icon" color="pink" />
         <h5>Upcoming Appointments</h5>
-        <p>{loading ? <Spinner animation="border" size="sm" /> : upcomingCount}</p>
+        {/* <p>{loading ? <Spinner animation="border" size="sm" /> : upcomingCount}</p> */}
+           <p style={{ color: 'orange', fontWeight: 'bold', fontSize: '16px' }}>
+  {loading ? <Spinner animation="border" size="sm" /> : upcomingCount}
+</p>
       </Card.Body>
     </Card>
   </div>
