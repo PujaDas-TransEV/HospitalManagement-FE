@@ -190,7 +190,7 @@ const HomeCareService = () => {
                   </select>
                 </label>
 
-                {formData.caretype === 'doctor' && (
+                {/* {formData.caretype === 'doctor' && (
                   <label className="select-with-spinner">
                     Reference Doctor Name:
                     <Select
@@ -203,7 +203,31 @@ const HomeCareService = () => {
                     />
                     {fieldLoading.refrencedoctorname && <div className="small-spinner"></div>}
                   </label>
-                )}
+                )} */}
+{formData.caretype === 'doctor' && (
+  <label className="select-with-spinner">
+    Reference Doctor Name:
+    <Select
+      options={doctors.map(doc => ({
+        ...doc,
+        label: `Dr. ${doc.label?.replace(/^Dr\.?\s*/i, '')}` // Ensure no duplicate "Dr."
+      }))}
+      value={
+        doctors
+          .map(doc => ({
+            ...doc,
+            label: `Dr. ${doc.label?.replace(/^Dr\.?\s*/i, '')}`
+          }))
+          .find(doc => doc.value === formData.refrencedoctorname) || null
+      }
+      onChange={handleSelectChange}
+      isLoading={loadingDoctors}
+      placeholder="Select a doctor"
+      classNamePrefix="react-select"
+    />
+    {fieldLoading.refrencedoctorname && <div className="small-spinner"></div>}
+  </label>
+)}
 
                 <label>
                   Patient Name:

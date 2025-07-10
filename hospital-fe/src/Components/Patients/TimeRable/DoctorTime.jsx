@@ -39,7 +39,7 @@ const DepartmentwiseTimetable = () => {
                 <h2>{dept.charAt(0).toUpperCase() + dept.slice(1)}</h2>
                 {docs.map(doc => (
                   <div key={doc.uid} className="doctors-card">
-                    <h3>{doc.fullname} ({doc.qualification})</h3>
+                    <h3> Dr. {doc.fullname} ({doc.qualification})</h3>
                     {doc.timetable.length > 0 ? (
                       <table className="timetable-table">
                         <thead>
