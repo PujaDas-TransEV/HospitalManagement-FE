@@ -7,12 +7,12 @@
     background-size: cover;
     background-position: center;
     display: flex;
-    justify-content: flex-end; /* Align form to the right */
+    justify-content: flex-end; 
     align-items: center;
     position: relative;
 }
 
-/* Optional green overlay layer */
+
 .greenLayer {
     background-color: rgba(126, 211, 165, 0.44);
     position: absolute;
@@ -23,20 +23,20 @@
     z-index: 0;
 }
 
-/* Signup form on right side */
+
 .signup-form {
-    background-color: skyblue; /* Sky blue form background */
+    background-color: skyblue; 
     border-radius: 10px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
     padding: 40px;
     max-width: 450px;
     width: 90%;
-    margin-right: 5%; /* Space from right edge */
+    margin-right: 5%; 
     z-index: 1;
     position: relative;
 }
 
-/* Title */
+
 h2 {
     color: #045d58;
     font-size: 28px;
@@ -44,13 +44,13 @@ h2 {
     margin-bottom: 20px;
 }
 
-/* Form container */
+
 #signUpform {
     width: 100%;
     margin: auto;
 }
 
-/* Input styles */
+
 input,
 select {
     width: 100%;
@@ -73,7 +73,7 @@ input:focus, select:focus {
     margin-top: 5px;
 }
 
-/* Signup button */
+
 #signUp {
     padding: 15px 30px;
     color: rgb(153, 223, 228);
@@ -100,7 +100,6 @@ input:focus, select:focus {
     text-decoration: underline;
 }
 
-/* Mobile responsiveness */
 @media (max-width: 768px) {
     #signUpBody {
         justify-content: center;

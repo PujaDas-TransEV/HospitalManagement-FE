@@ -1,4 +1,4 @@
-/* Full page background with image + overlay */
+
 .signup-page {
   position: relative;
   min-height: 100vh;
@@ -14,25 +14,25 @@
 .overlay {
   position: absolute;
   inset: 0;
-  background-color: rgba(0,0,0,0.5); /* dark translucent overlay */
+  background-color: rgba(0,0,0,0.5); 
   z-index: 1;
 }
 
-/* Form container on top of overlay */
+
 .signup-form-container {
   position: relative;
   z-index: 2;
   background: rgba(255,255,255,0.95);
   border-radius: 12px;
-  max-width: 900px; /* increased width */
+  max-width: 900px; 
   width: 100%;
-  padding: 2rem 4rem; /* more horizontal padding */
+  padding: 2rem 4rem; 
   box-shadow: 0 8px 24px rgba(0,0,0,0.25);
   color: #333;
   font-family: Arial, sans-serif;
 }
 
-/* Success popup message */
+
 .success-popup {
   background-color: #4BB543;
   color: white;
@@ -44,23 +44,22 @@
   font-size: 1rem;
 }
 
-/* Form styling */
+
 .signup-forms {
   display: flex;
   flex-direction: column;
   gap: 1rem;
 }
 
-/* Each row contains two inputs side by side */
 .form-row {
   display: flex;
   gap: 1.5rem;
   flex-wrap: wrap;
 }
 
-/* Each input container */
+
 .form-group {
-  flex: 1 1 45%; /* slightly narrower for better gap */
+  flex: 1 1 45%; 
   display: flex;
   flex-direction: column;
 }
@@ -85,14 +84,14 @@
   outline: none;
 }
 
-/* Validation messages */
+
 .validation-message {
   color: red;
   font-size: 0.85rem;
   margin-top: 0.25rem;
 }
 
-/* Button styles */
+
 .submit-button {
   margin-top: 1.5rem;
   background-color: #887700;
@@ -115,7 +114,7 @@
   cursor: not-allowed;
 }
 
-/* Spinner icon animation */
+
 .spinner {
   animation: spin 1s linear infinite;
   font-size: 1.3rem;
@@ -126,7 +125,7 @@
   100% { transform: rotate(360deg); }
 }
 
-/* Responsive tweaks */
+
 @media (max-width: 700px) {
   .form-row {
     flex-direction: column;

@@ -5,7 +5,6 @@ body, html {
   padding: 0;
 }
 
-/* Full page background */
 .guest-wrapper {
   display: flex;
   align-items: center;
@@ -16,7 +15,7 @@ body, html {
   padding-left: 60px;
 }
 
-/* Card styling */
+
 .guest-card {
   background: rgba(255, 255, 255, 0.92);
   border-radius: 10px;
@@ -26,21 +25,21 @@ body, html {
   width: 100%;
 }
 
-/* Heading */
+
 .guest-card h2 {
   text-align: center;
   margin-bottom: 25px;
   color: #333;
 }
 
-/* Form layout */
+
 .guest-form {
   display: flex;
   flex-direction: column;
   gap: 15px;
 }
 
-/* Inputs */
+
 .guest-form input {
   padding: 12px 15px;
   font-size: 1rem;
@@ -52,7 +51,7 @@ body, html {
   outline: none;
 }
 
-/* Button style */
+
 .guest-btn{
   width: 150px;
   margin: 0 auto;
@@ -77,7 +76,7 @@ body, html {
   cursor: default;
 }
 
-/* Spinner animation */
+
 .spinner {
   animation: rotate 1s linear infinite;
 }
@@ -95,7 +94,7 @@ body, html {
   100% { stroke-dasharray: 90, 150; stroke-dashoffset: -124; }
 }
 
-/* Message styling */
+
 .guest-message {
   margin-top: 20px;
   text-align: center;
@@ -103,7 +102,7 @@ body, html {
   color: #72c02c;
 }
 
-/* Responsive layout */
+
 @media (max-width: 768px) {
   .guest-wrapper {
     padding-left: 20px;
