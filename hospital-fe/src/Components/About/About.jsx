@@ -1,4 +1,3 @@
-
 import React from "react";
 import { Link } from "react-router-dom";
 import AboutImage from '../Assests/home.png';
@@ -20,7 +19,7 @@ const About = () => {
   return (
     <div>
 
-      {/* Background Section */}
+     
       <div
         style={{
           minHeight: '100vh',
@@ -55,7 +54,7 @@ const About = () => {
         fontSize: index === 0 ? '3rem' : '1.125rem',
         fontWeight: index === 0 ? 'bold' : 'normal',
         animationDelay: `${index * 0.5}s`,
-        color: 'white'  // Ensures white text color
+        color: 'white'  
       }}
     >
       {line}
@@ -66,7 +65,7 @@ const About = () => {
 
       </div>
 
-      {/* About Section */}
+      
       <div style={{ marginTop: '-25px', textAlign: 'center' }}>
         <div
           style={{
@@ -85,9 +84,7 @@ const About = () => {
         </div>
       </div>
 
-      {/* Unity Hospital Section */}
-    
-        <div style={{
+    <div style={{
   padding: '2rem',
   marginBottom: '40px',
   backgroundColor: '#ffffff',
@@ -129,7 +126,7 @@ const About = () => {
         </blockquote>
       </div>
 
-      {/* Mission Section */}
+     
       <div style={{ backgroundColor: '#f0f8ff', padding: '40px', display: 'flex', flexWrap: 'wrap' }}>
         <div style={{ flex: '1', padding: '10px' }}>
           <img src={MissionImage} alt="Mission" style={{ width: '100%' }} />
@@ -152,7 +149,7 @@ const About = () => {
         </div>
       </div>
 
-      {/* Vision Section */}
+    
       <div style={{ backgroundColor: '#e6ffe6', padding: '40px', display: 'flex', flexWrap: 'wrap' }}>
         <div style={{ flex: '1', padding: '10px' }}>
           <h2>Vision</h2>
@@ -173,7 +170,7 @@ const About = () => {
         </div>
       </div>
 
-      {/* Values Section */}
+      
       <div style={{ backgroundColor: '#fffacd', padding: '40px', display: 'flex', flexWrap: 'wrap' }}>
         <div style={{ flex: '1', padding: '10px' }}>
           <img src={ValuesImage} alt="Values" style={{ width: '100%' }} />
@@ -201,7 +198,7 @@ const About = () => {
         </div>
       </div>
 
-      {/* Departments Section */}
+     
       <div style={{ backgroundColor: '#f9f9f9', padding: '60px 0' }}>
         <h2 style={{ fontSize: '2.5rem', textAlign: 'center' }}>
           Our <span style={{ color: '#72c02c' }}>Departments</span>
@@ -280,7 +277,7 @@ const About = () => {
 
       </div>
 
-      {/* Contact Info */}
+     
       <div style={{ backgroundColor: '#ffffff', padding: '60px 0' }}>
         <h2 style={{ fontSize: '2.5rem', textAlign: 'center' }}>
           Contact <span style={{ color: '#72c02c' }}>Information</span>
@@ -304,7 +301,7 @@ const About = () => {
         </div>
       </div>
 
-      {/* Footer */}
+     
    
 
 <Footer/>
