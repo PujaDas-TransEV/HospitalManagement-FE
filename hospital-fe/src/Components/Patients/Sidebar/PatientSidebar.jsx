@@ -13,8 +13,8 @@ import { MdDashboard } from 'react-icons/md';
 import { MdSupportAgent } from 'react-icons/md';
 
 const PatientSidebar = () => {
-  const [isExpanded, setIsExpanded] = useState(false); // desktop expand/collapse
-  const [isMobileOpen, setIsMobileOpen] = useState(false); // mobile sidebar open/close
+  const [isExpanded, setIsExpanded] = useState(false); 
+  const [isMobileOpen, setIsMobileOpen] = useState(false); 
   const location = useLocation();
 
   const toggleSidebar = () => {
@@ -25,7 +25,7 @@ const PatientSidebar = () => {
     setIsMobileOpen(!isMobileOpen);
   };
 
-  // Lock scroll when mobile sidebar is open
+ 
   useEffect(() => {
     if (isMobileOpen) {
       document.body.style.overflow = 'hidden';
@@ -34,19 +34,19 @@ const PatientSidebar = () => {
     }
   }, [isMobileOpen]);
 
-  // Close mobile sidebar on navigation click
+ 
   const handleLinkClick = () => {
     if (isMobileOpen) setIsMobileOpen(false);
   };
 
   return (
     <>
-      {/* Hamburger button only on mobile */}
+      
       <button className="hamburger-btn" onClick={toggleMobileSidebar} aria-label="Toggle sidebar">
         <FaBars />
       </button>
 
-      {/* Sidebar */}
+     
       <div
         className={`
           sidebar-nav 
@@ -54,7 +54,7 @@ const PatientSidebar = () => {
           ${isMobileOpen ? 'mobile-open' : 'mobile-closed'}
         `}
       >
-        {/* Desktop expand/collapse toggle */}
+       
         <button className="expand-toggle-btnn" onClick={toggleSidebar} aria-label="Expand sidebar">
           {isExpanded ? <FaAngleDoubleLeft /> : <FaAngleDoubleRight />}
         </button>
@@ -145,7 +145,7 @@ const PatientSidebar = () => {
         </ul>
       </div>
 
-      {/* Overlay behind sidebar on mobile */}
+     
       {isMobileOpen && <div className="sidebar-overlay" onClick={toggleMobileSidebar} />}
     </>
   );

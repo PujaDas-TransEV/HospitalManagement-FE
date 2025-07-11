@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Select from 'react-select';
@@ -30,14 +29,14 @@ const HomeCareService = () => {
   const [doctors, setDoctors] = useState([]);
   const [loadingDoctors, setLoadingDoctors] = useState(false);
 
-  // Track loading spinner per field (here only doctor select)
+ 
   const [fieldLoading, setFieldLoading] = useState({
     refrencedoctorname: false,
   });
 
   const navigate = useNavigate();
 
-  // Fetch patient profile on mount
+ 
   useEffect(() => {
     const fetchPatientProfile = async () => {
       const patientId = localStorage.getItem('patientId');
@@ -71,7 +70,7 @@ const HomeCareService = () => {
     fetchPatientProfile();
   }, []);
 
-  // Fetch doctors when caretype is doctor
+
   useEffect(() => {
     if (formData.caretype === 'doctor') {
       setFieldLoading(prev => ({ ...prev, refrencedoctorname: true }));
@@ -101,7 +100,7 @@ const HomeCareService = () => {
     setFormData(prev => ({ ...prev, refrencedoctorname: selectedOption?.value || '' }));
   };
 
-  // Format datetime-local value to "YYYY-MM-DD HH:MM:SS"
+
   const formatDateTime = (value) => {
     const date = new Date(value);
     const yyyy = date.getFullYear();
@@ -157,14 +156,14 @@ const HomeCareService = () => {
 
   return (
     <div className="dashboard-containerr">
-      {/* Navbar */}
+    
       <PatientNavbar />
 
       <div className="dashboard-contenterr">
-        {/* Sidebar */}
+       
         <PatientSidebar />
 
-        {/* Overlay container */}
+       
         <div className="homecare-overlay">
           <div className="homecare-containerr">
             <div className="homecare-box">
@@ -210,7 +209,7 @@ const HomeCareService = () => {
     <Select
       options={doctors.map(doc => ({
         ...doc,
-        label: `Dr. ${doc.label?.replace(/^Dr\.?\s*/i, '')}` // Ensure no duplicate "Dr."
+        label: `Dr. ${doc.label?.replace(/^Dr\.?\s*/i, '')}` 
       }))}
       value={
         doctors

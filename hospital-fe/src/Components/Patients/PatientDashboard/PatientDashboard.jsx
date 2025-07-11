@@ -49,7 +49,7 @@ const PatientDashboard = () => {
         setLoading(true);
         if (!token || !patientId) return;
 
-        // Profile
+  
         const formData = new FormData();
         formData.append('patientid', patientId);
         const pr = await fetch('http://192.168.0.106:5000/patients/profile/getbyid', {
@@ -60,7 +60,7 @@ const PatientDashboard = () => {
         const pd = await pr.json();
         if (pr.ok) setProfile(pd.data);
 
-        // Appointments
+       
         const af = new FormData();
         af.append('patientid', patientId);
         const ar = await fetch('http://192.168.0.106:5000/getappoinmenthistory', {
@@ -78,7 +78,7 @@ const PatientDashboard = () => {
           setAppointments(up);
         }
 
-        // Bills
+       
         const email = pd.data?.email;
         if (email) {
           const br = await fetch('http://192.168.0.106:5000/billing/getbillbypatientemail', {
@@ -139,11 +139,11 @@ const downloadInvoice = async (billId) => {
       doc.text(text, x, yPos, opts.align || {});
     };
 
-    // Header
+
     drawText('Hospital Invoice', leftMargin, y, { size: 22, fontStyle: 'bold', color: '#1976d2' });
     y += 15;
 
-    // Invoice Info Box (vertical layout)
+
 checkPageSpace(30);
 doc.setFillColor('#e3f2fd');
 doc.rect(leftMargin, y, rightMargin - leftMargin, 20, 'F');
@@ -156,7 +156,7 @@ y += 30;
     doc.line(leftMargin, y, rightMargin, y);
     y += 10;
 
-    // Patient Info
+ 
     checkPageSpace(50);
     doc.setFillColor('#f0f4f8');
     doc.rect(leftMargin, y, rightMargin - leftMargin, 50, 'F');
@@ -167,7 +167,7 @@ y += 30;
     drawText(`Phone: ${bill.patient_phone}`, leftMargin + 5, y); y += 8;
     drawText(`Email: ${bill.patient_email}`, leftMargin + 5, y); y += 20;
 
-    // Doctor Info
+
     checkPageSpace(30);
     doc.setFillColor('#fff7e6');
     doc.rect(leftMargin, y, rightMargin - leftMargin, 30, 'F');
@@ -175,7 +175,7 @@ y += 30;
     drawText(`Dr. ${bill.doctor_name}`, leftMargin + 5, y + 27);
     y += 40;
 
-    // Charges Header
+
     checkPageSpace(15);
     doc.setFillColor('#cce4f7');
     doc.rect(leftMargin, y, rightMargin - leftMargin, 12, 'F');
@@ -183,7 +183,7 @@ y += 30;
     drawText('Amount', rightMargin - 15, y + 9, { align: 'right', fontStyle: 'bold', size: 13, color: '#1976d2' });
     y += 12;
 
-    // Charges Table
+   
     const charges = [
       ['Medicine', bill.medicine_charge],
       ['Treatment', bill.treatment_charge],
@@ -202,7 +202,7 @@ y += 30;
 
     y += 10;
 
-    // Total Summary Header
+   
     checkPageSpace(15);
     doc.setFillColor('#d7f0d7');
     doc.rect(leftMargin, y, rightMargin - leftMargin, 12, 'F');

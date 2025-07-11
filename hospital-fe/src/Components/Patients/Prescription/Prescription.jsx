@@ -42,9 +42,9 @@ const PrescriptionPage = () => {
       });
 
       if (res.status === 404) {
-        // No prescriptions found
+       
         setPrescriptions([]);
-        setError(''); // clear error
+        setError(''); 
         return;
       }
 
@@ -55,7 +55,7 @@ const PrescriptionPage = () => {
       const data = await res.json();
       setPrescriptions(data || []);
 
-      // fetch doctor info for each prescription
+      
       data?.forEach(async (p) => await fetchDoctor(p));
     } catch (e) {
       setError('Failed to load prescriptions.');
@@ -167,7 +167,7 @@ const PrescriptionPage = () => {
 
         {!loading && prescriptions && prescriptions.length === 0 && (
           <div className="no-prescriptions" style={{ textAlign: 'center', padding: '20px', color: '#666',backgroundColor:'#10b981',width:'100%' }}>
-            {/* <FaTimesCircle size={40} /> */}
+          
             <p>No prescriptions found.</p>
           </div>
         )}
@@ -178,7 +178,7 @@ const PrescriptionPage = () => {
             <h2>Prescriptions</h2>
 
             {isMobile ? (
-              // MOBILE CARD VIEW
+             
               <div className="mobile-presc-cards">
                 {prescriptions.map((p) => (
                   <div className="presc-card" key={p.prescription_id}>
@@ -205,7 +205,7 @@ const PrescriptionPage = () => {
                 ))}
               </div>
             ) : (
-              // DESKTOP TABLE VIEW
+            
               <div className="table-responsive">
                 <table className="presc-table" aria-label="Prescriptions table">
                   <thead>

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import './Password.css'; // Import your CSS file
+import './Password.css'; 
 
 function AdminForgotPasswordPage() {
   const [email, setEmail] = useState('');
@@ -8,17 +8,17 @@ function AdminForgotPasswordPage() {
   const [newPassword, setNewPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [message, setMessage] = useState('');
-  const [isOtpSent, setIsOtpSent] = useState(false); // To check if OTP is sent
+  const [isOtpSent, setIsOtpSent] = useState(false); 
   const navigate = useNavigate();
 
-  // Handle the first POST request for sending OTP
+  
   const handleEmailSubmit = (event) => {
     event.preventDefault();
 
     const formData = new FormData();
     formData.append('email', email);
 
-    // Send email to backend to trigger OTP sending
+   
     fetch('http://192.168.0.106:5000/adminpasswordreset', {
       method: 'POST',
       body: formData,
@@ -27,7 +27,7 @@ function AdminForgotPasswordPage() {
       .then((data) => {
         if (data.message === 'OTP sent to your email for password reset.') {
           setMessage('OTP has been sent to your email. Please check your inbox.');
-          setIsOtpSent(true); // OTP sent, so show OTP and new password input
+          setIsOtpSent(true); 
         } else {
           setMessage('Error sending OTP. Please try again.');
         }
@@ -38,7 +38,7 @@ function AdminForgotPasswordPage() {
       });
   };
 
-  // Handle the second POST request for resetting password
+  
   const handlePasswordReset = (event) => {
     event.preventDefault();
 
@@ -52,7 +52,7 @@ function AdminForgotPasswordPage() {
     formData.append('otp', otp);
     formData.append('newpassword', newPassword);
 
-    // Send new password, OTP, and email to backend for resetting
+   
     fetch('http://192.168.0.106:5000/adminpasswordreset', {
       method: 'POST',
       body: formData,
@@ -61,7 +61,7 @@ function AdminForgotPasswordPage() {
       .then((data) => {
         if (data.message === 'Password reset successfully.') {
           alert('Password reset successful!');
-          navigate('/admin/login'); // Redirect to admin login page after successful reset
+          navigate('/admin/login'); 
         } else {
           alert('Error resetting password. Please try again.');
         }
@@ -77,7 +77,7 @@ function AdminForgotPasswordPage() {
       <div className="admin-forgot-password-card">
         <h1 style={{ fontSize: '24px', color: '#800000' }}>Admin Forgot Password</h1>
 
-        {/* Step 1: Email submission form */}
+      
         {!isOtpSent && (
           <form onSubmit={handleEmailSubmit}  style={{ backgroundColor: '#d0f0f8', padding: '20px', borderRadius: '8px' }}>
             <div className="input-group">
@@ -95,7 +95,7 @@ function AdminForgotPasswordPage() {
           </form>
         )}
 
-        {/* Step 2: OTP & Password Reset Form (after OTP sent) */}
+      
         {isOtpSent && (
           <form onSubmit={handlePasswordReset}>
             <div className="input-group">
@@ -138,7 +138,7 @@ function AdminForgotPasswordPage() {
           </form>
         )}
 
-        {/* Display the status message */}
+       
         {message && <p>{message}</p>}
       </div>
     </div>

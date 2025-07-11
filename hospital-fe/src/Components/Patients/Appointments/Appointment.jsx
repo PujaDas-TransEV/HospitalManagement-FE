@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {jwtDecode} from 'jwt-decode';
@@ -261,7 +260,7 @@ const Appointment = () => {
             padding: '50px 20px',
             fontSize: '1.5rem',
             color: '#555',
-            backgroundColor: '#e8f6fc', // light sky-blueish
+            backgroundColor: '#e8f6fc', 
             fontWeight: '500',
             letterSpacing: '0.5px'
           }}

@@ -10,7 +10,7 @@ const PatientNavbar = () => {
   const [profileData, setProfileData] = useState({
     firstname: "",
     lastname: "",
-    profilePicture: "/images/default-profile.jpg", // Default image
+    profilePicture: "/images/default-profile.jpg", 
   });
   const navigate = useNavigate();
 
@@ -67,7 +67,7 @@ const PatientNavbar = () => {
 
   const handleLogout = () => {
     localStorage.removeItem("accessToken");
-    navigate("/"); // Redirect to home page after logout
+    navigate("/"); 
   };
 
   return (

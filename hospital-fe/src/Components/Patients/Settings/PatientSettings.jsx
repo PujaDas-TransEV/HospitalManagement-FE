@@ -17,24 +17,24 @@ import backgroundImage from "../../Assests/background.jpg";
 const PatientSettings = () => {
   const navigate = useNavigate();
 
-  // State management
+
   const [isDeleteConfirmed, setIsDeleteConfirmed] = useState(false);
   const [errorMessage, setErrorMessage] = useState(null);
   const [successMessage, setSuccessMessage] = useState(null);
   const [isPasswordModalOpen, setIsPasswordModalOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
 
-  // Handlers for opening modals
+ 
   const handleChangePassword = () => setIsPasswordModalOpen(true);
   const handleDeleteAccount = () => setIsDeleteModalOpen(true);
 
-  // Password confirmation
+
   const confirmPasswordChange = () => {
     setIsPasswordModalOpen(false);
     navigate("/password");
   };
 
-  // Account deletion confirmation
+  
   const confirmAccountDeletion = async () => {
     setIsDeleteModalOpen(false);
 
@@ -65,7 +65,7 @@ const PatientSettings = () => {
       if (response.ok) {
         setSuccessMessage("Your account has been deleted successfully.");
         setErrorMessage(null);
-        // Optionally redirect or clear storage
+       
         localStorage.removeItem("accessToken");
         setTimeout(() => navigate("/"), 3000);
       } else {
@@ -78,7 +78,7 @@ const PatientSettings = () => {
     }
   };
 
-  // Close all modals
+
   const closeModal = () => {
     setIsPasswordModalOpen(false);
     setIsDeleteModalOpen(false);
@@ -100,7 +100,7 @@ const PatientSettings = () => {
         <div className="settings-container-patient">
           <h1 className="settings-title">Patient Settings</h1>
 
-          {/* Change Password Section */}
+         
           <div
             className="settings-section password-section"
             style={{ backgroundColor: "rgba(215, 216, 136, 0.9)" }}
@@ -117,7 +117,7 @@ const PatientSettings = () => {
             </button>
           </div>
 
-          {/* Delete Account Section */}
+         
           <div
             className="settings-section delete-section"
             style={{ backgroundColor: "rgba(126, 172, 180, 0.9)" }}
@@ -147,7 +147,7 @@ const PatientSettings = () => {
             )}
           </div>
 
-          {/* Success & Error Feedback */}
+       
           {errorMessage && (
             <div className="error-message">
               <FiXCircle className="message-icon" /> {errorMessage}
@@ -159,7 +159,7 @@ const PatientSettings = () => {
             </div>
           )}
 
-          {/* Password Modal */}
+      
           {isPasswordModalOpen && (
             <div className="modal-overlay-settings">
               <div className="modal-settings">
@@ -176,7 +176,7 @@ const PatientSettings = () => {
             </div>
           )}
 
-          {/* Delete Modal */}
+      
           {isDeleteModalOpen && (
             <div className="modal-overlay-settings">
               <div className="modal-settings">

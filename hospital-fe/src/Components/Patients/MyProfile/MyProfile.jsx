@@ -14,7 +14,7 @@ const PatientProfile = () => {
   const [error, setError] = useState(null);
   const [successMessage, setSuccessMessage] = useState(null);
   const [isUpdated, setIsUpdated] = useState(false);
-  const [isLoading, setIsLoading] = useState(true); // NEW: loading for initial fetch
+  const [isLoading, setIsLoading] = useState(true); 
 
   const [formData, setFormData] = useState({
     firstname: "",
@@ -41,7 +41,7 @@ const PatientProfile = () => {
         return;
       }
 
-      setIsLoading(true); // start loading spinner
+      setIsLoading(true); 
 
       try {
         const decodedToken = jwtDecode(accessToken);
@@ -72,7 +72,7 @@ const PatientProfile = () => {
         console.error("Error fetching profile:", error);
         setError("An error occurred while fetching the profile.");
       } finally {
-        setIsLoading(false); // stop loading spinner
+        setIsLoading(false); 
       }
     };
 
@@ -186,14 +186,14 @@ const PatientProfile = () => {
               <h2>My Profile</h2>
             </div>
 
-            {/* Show spinner only when loading initial data */}
+          
             {isLoading && (
               <div className="loading-overlay" aria-label="Loading">
                 <FaSpinner className="spinner-icon" />
               </div>
             )}
 
-            {/* Show profile form only when NOT loading */}
+         
             {!isLoading && (
               <div
                 className="profile-card"
@@ -228,7 +228,7 @@ const PatientProfile = () => {
                 </div>
 
                 <div className="profile-details">
-                  {/* 2 per row */}
+            
                   <div className="profile-detail-row">
                     <div className="input-group">
                       <label>First Name:</label>
@@ -359,7 +359,7 @@ const PatientProfile = () => {
               <div className="success-message">{successMessage}</div>
             )}
 
-            {/* Show Update button only if NOT loading */}
+          
             {!isLoading && (
              
               <button
@@ -368,7 +368,7 @@ const PatientProfile = () => {
   disabled={!isUpdated}
   style={{
     display: "block",
-    margin: "20px auto 0 auto", // centers horizontally with top margin
+    margin: "20px auto 0 auto",
     width: "150px",
   }}
 >

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import './AdminSignup.css'; // Make sure to add the corresponding CSS for styling
+import './AdminSignup.css';
 import { NavLink } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 
@@ -13,14 +13,14 @@ function AdminSignupPage() {
   const [otp, setOtp] = useState('');
   const [passwordMatchDisplay, setPasswordMatchDisplay] = useState('none');
   const [passwordValidationMessage, setPasswordValidationMessage] = useState('');
-  const [isOtpSent, setIsOtpSent] = useState(false); // Flag to check if OTP is sent
-  const [isSignupComplete, setIsSignupComplete] = useState(false); // Flag to check if signup is complete
+  const [isOtpSent, setIsOtpSent] = useState(false); 
+  const [isSignupComplete, setIsSignupComplete] = useState(false); 
 
-  // Handle form submission for admin signup (send OTP)
+
   const handleSubmit = (event) => {
     event.preventDefault();
 
-    // Validate if password and confirm password match
+    
     if (password !== confirmPassword) {
       setPasswordMatchDisplay('block');
       return;
@@ -29,20 +29,20 @@ function AdminSignupPage() {
     const formData = new FormData();
     formData.append('name', fullName);
     formData.append('email', email);
-    // Added admin code
+   
     formData.append('password', password);
     formData.append('confirm_password', confirmPassword);
 
-    // Send the form data to the backend to send OTP
+  
     fetch('http://192.168.0.106:5000/admins/signup', {
       method: 'POST',
       body: formData,
     })
       .then(response => response.json())
       .then(data => {
-        // Ensure backend responds with OTP sent confirmation
+        
         if (data.message === 'OTP sent to your email! Please verify.') {
-          setIsOtpSent(true); // OTP sent successfully, show OTP field
+          setIsOtpSent(true); 
         } else {
           console.error(data.errors || data.error);
         }
@@ -52,24 +52,24 @@ function AdminSignupPage() {
       });
   };
 
-  // Handle OTP verification after signup (when OTP is entered)
+ 
   const handleVerifyOtp = (event) => {
     event.preventDefault();
 
-    // Validate if password and confirm password match again before sending data
+  
     if (password !== confirmPassword) {
       setPasswordMatchDisplay('block');
       return;
     }
 
     const formData = new FormData();
-    formData.append('name', fullName); // Add name to formData
-    formData.append('email', email); // Reuse email from state
-    formData.append('password', password); // Reuse password from state
-    formData.append('confirm_password', confirmPassword); // Reuse confirm password from state
-    formData.append('otp', otp); // OTP entered by the user
+    formData.append('name', fullName); 
+    formData.append('email', email); 
+    formData.append('password', password); 
+    formData.append('confirm_password', confirmPassword); 
+    formData.append('otp', otp); 
 
-    // Send the OTP for verification along with the other details (name, email, password, confirm_password) to the backend
+    
     fetch('http://192.168.0.106:5000/admins/signup', {
       method: 'POST',
       body: formData,
@@ -79,7 +79,7 @@ function AdminSignupPage() {
         if (data.message === 'Signup successful!') {
           alert('Signup Successful!');
           setIsSignupComplete(true);
-          navigate('/login'); // Navigate to admin login page after successful signup
+          navigate('/login');
         } else {
           alert('OTP verification failed! Please try again.');
         }
@@ -89,7 +89,7 @@ function AdminSignupPage() {
       });
   };
 
-  // Effect to handle password validation and matching
+ 
   useEffect(() => {
     if (password.length > 0 && password?.trim()?.length <= 6) {
       setPasswordValidationMessage('Password length must be greater than 6 characters');
@@ -189,23 +189,21 @@ function AdminSignupPage() {
           )}
 
           <div className="text-center">
-            {/* <button id="adminSignUp" type="submit">
-              {isOtpSent ? 'Verify OTP' : 'Sign Up'}
-            </button> */}
+           
             <button
   id="adminSignUp"
   type="submit"
   style={{
-    width: '150px',               // Smaller width
+    width: '150px',               
     padding: '10px',
     fontSize: '15px',
     border: 'none',
     borderRadius: '4px',
-    backgroundColor: '#1e88e5',   // Blue color
+    backgroundColor: '#1e88e5',   
     color: 'white',
     cursor: 'pointer',
     display: 'block',
-    margin: '20px auto'           // Center horizontally
+    margin: '20px auto'         
   }}
 >
   {isOtpSent ? 'Verify OTP' : 'Sign Up'}

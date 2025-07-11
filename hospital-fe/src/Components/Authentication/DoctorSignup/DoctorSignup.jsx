@@ -30,7 +30,7 @@ function DoctorSignupPage() {
   const [loading, setLoading] = useState(false);
   const [successMessage, setSuccessMessage] = useState('');
 
-  // Fetch departments on mount
+
   useEffect(() => {
     fetch('http://192.168.0.106:5000/facilityops/getallfacility')
       .then(res => res.json())
@@ -42,7 +42,7 @@ function DoctorSignupPage() {
       .catch(err => console.error('Error fetching departments:', err));
   }, []);
 
-  // Password validation and match check
+
   useEffect(() => {
     if (password.length > 0 && password.trim().length <= 6) {
       setPasswordValidationMessage('Password length must be greater than 6 characters');
@@ -165,7 +165,7 @@ function DoctorSignupPage() {
           <div className="success-popup">{successMessage}</div>
         )}
         <form onSubmit={isOtpSent ? handleVerifyOtp : handleSubmit} className="signup-forms"style={{ backgroundColor: '#e0f7fa', padding: '20px', borderRadius: '8px' }}>
-          {/* Use divs with class 'form-row' to wrap pairs */}
+        
           <div className="form-row">
             <div className="form-group">
               <label>Full Name</label>
@@ -259,7 +259,7 @@ function DoctorSignupPage() {
             </div>
           </div>
 
-          {/* OTP input (shown only if OTP sent and signup not complete) */}
+        
           {isOtpSent && !isSignupComplete && (
             <div className="form-row">
               <div className="form-group" style={{ flex: '1 1 100%' }}>
@@ -274,7 +274,7 @@ function DoctorSignupPage() {
             </div>
           )}
 
-          {/* Profile Picture */}
+        
           <div className="form-row">
             <div className="form-group" style={{ flex: '1 1 100%' }}>
               <label>Profile Picture</label>

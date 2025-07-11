@@ -1,7 +1,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import {jwtDecode} from 'jwt-decode';  // corrected import
+import {jwtDecode} from 'jwt-decode';  
 import './DoctorLogin.css';
 
 const DoctorLoginPage = () => {
