@@ -344,27 +344,27 @@ function App() {
         <Route path="/home-care-service" element={<PatientHomecareService />} />
         <Route path="/home-care-request" element={<HomeCareRequest />} />
         <Route path="/homecare" element={<AdminHomecare />} />
-         <Route path="/doctor-homecare" element={<Doctorhomecare/>} />
+        <Route path="/doctor-homecare" element={<Doctorhomecare/>} />
         <Route path="/labreport" element={< PatientsLabreport/>} />
-         <Route path="/admin/labreport" element={< AdminLabreport/>} />
-          <Route path="/admin-labtest" element={< AdminLabTestPage/>} />
-          <Route path="/admin-billing" element={< AdminBilling/>} />
-           <Route path="/bill" element={< BillPage/>} />
-           <Route path="/invoice" element={< PatientBill/>} />
-            <Route path="/admin-feedback" element={<AdminFeedback/>} />
-            <Route path="/survey" element={<MedicalSurvey/>} />
-           <Route path="/admin-survey" element={<AdminMedicalSurvey/>} />
-            <Route path="/guest/login" element={<GuestLogin/>} />
-            <Route path="/admin/notification" element={<AdminNotification/>} />
-            <Route path="/doctor/notification" element={<DoctorNotification/>} />
-            <Route path="/footer" element={<Footer/>} />
-            <Route path="/guest-dashboard" element={<GuestDashboardWrapper/>} />
-            <Route path="/guest/lab-reports" element={<Guestlabreport/>} />
-            <Route path="/guest/prescriptions" element={<GuestPrescription/>} />
-            <Route path="/discharge-list" element={<DischargeList/>} />
-            <Route path="/admin/doctor-time" element={<DoctorTimeSchedule/>}/>
-               <Route path="/doctor/schedule" element={<DoctorTime/>}/>
-                <Route path="/admin/emergency" element={<Emergencydashboard/>}/>
+        <Route path="/admin/labreport" element={< AdminLabreport/>} />
+        <Route path="/admin-labtest" element={< AdminLabTestPage/>} />
+        <Route path="/admin-billing" element={< AdminBilling/>} />
+        <Route path="/bill" element={< BillPage/>} />
+        <Route path="/invoice" element={< PatientBill/>} />
+        <Route path="/admin-feedback" element={<AdminFeedback/>} />
+        <Route path="/survey" element={<MedicalSurvey/>} />
+        <Route path="/admin-survey" element={<AdminMedicalSurvey/>} />
+        <Route path="/guest/login" element={<GuestLogin/>} />
+        <Route path="/admin/notification" element={<AdminNotification/>} />
+        <Route path="/doctor/notification" element={<DoctorNotification/>} />
+        <Route path="/footer" element={<Footer/>} />
+        <Route path="/guest-dashboard" element={<GuestDashboardWrapper/>} />
+        <Route path="/guest/lab-reports" element={<Guestlabreport/>} />
+        <Route path="/guest/prescriptions" element={<GuestPrescription/>} />
+        <Route path="/discharge-list" element={<DischargeList/>} />
+        <Route path="/admin/doctor-time" element={<DoctorTimeSchedule/>}/>
+        <Route path="/doctor/schedule" element={<DoctorTime/>}/>
+        <Route path="/admin/emergency" element={<Emergencydashboard/>}/>
               
       </Routes>
     </Router>

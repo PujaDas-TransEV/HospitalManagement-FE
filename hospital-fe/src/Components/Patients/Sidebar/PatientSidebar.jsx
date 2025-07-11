@@ -2,9 +2,9 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import {
-  FaHome, FaHeartbeat, FaCalendarCheck, FaNotesMedical,
-  FaEnvelope, FaFileAlt, FaUser, FaBars, FaQuestionCircle, FaCog,
-  FaAngleDoubleLeft, FaAngleDoubleRight,FaRegClipboard,FaClinicMedical, FaPrescriptionBottleAlt, FaFileInvoice,FaUserMd
+  FaHome,  FaCalendarCheck,
+   FaFileAlt, FaUser, FaBars,  FaCog,
+  FaAngleDoubleLeft, FaAngleDoubleRight,FaClinicMedical, FaPrescriptionBottleAlt, FaFileInvoice,FaUserMd
 } from 'react-icons/fa';
 import { MdMedicalServices } from 'react-icons/md';
 
