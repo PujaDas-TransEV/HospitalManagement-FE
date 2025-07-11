@@ -27,7 +27,7 @@
   align-items: center;
   position: relative;
   cursor: pointer;
-  gap: 8px; /* maintains spacing between elements */
+  gap: 8px; 
 }
 
 .admin-profile-img {
@@ -52,7 +52,6 @@
   line-height: 1;
 }
 
-/* ==================== DROPDOWN ==================== */
 
 .dropdown-menu {
   position: absolute;
@@ -84,9 +83,6 @@
   background-color: #f0f0f0;
 }
 
-/* ==================== RESPONSIVE BREAKPOINTS ==================== */
-
-/* Medium Screens (tablets) */
 @media (max-width: 992px) {
   .navbar-content {
     flex-direction: column;
@@ -112,7 +108,7 @@
   }
 }
 
-/* Small Screens (phones) */
+
 @media (max-width: 768px) {
   .brand-name {
     font-size: 1.2rem;
@@ -143,7 +139,6 @@
   }
 }
 
-/* Extra Small Devices */
 @media (max-width: 480px) {
   .brand-name {
     font-size: 1rem;
@@ -163,20 +158,20 @@
   }
 }
 .notification-icon {
-  font-size: 1.25rem; /* scales with root font size */
+  font-size: 1.25rem;
   color: #ffffff;
   margin-right: 1rem;
   cursor: pointer;
   transition: color 0.2s, transform 0.2s;
 }
 
-/* Hover effect */
+
 .notification-icon:hover {
   color: #ffc107;
-  transform: scale(1.1); /* slight zoom effect */
+  transform: scale(1.1); 
 }
 
-/* For tablets (≤ 768px) */
+
 @media (max-width: 768px) {
   .notification-icon {
     font-size: 1.1rem;
@@ -184,7 +179,6 @@
   }
 }
 
-/* For phones (≤ 480px) */
 @media (max-width: 480px) {
   .notification-icon {
     font-size: 1rem;

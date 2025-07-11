@@ -459,9 +459,7 @@ td:nth-child(6) {
     margin-top: 10px;
   }
 }
-/* ========== Responsive Enhancements ========== */
 
-/* Adjust layout for tablets */
 @media (max-width: 992px) {
   .presc-content {
     flex-direction: column;
@@ -489,7 +487,7 @@ td:nth-child(6) {
   }
 }
 
-/* Adjust layout for mobile devices */
+
 @media (max-width: 768px) {
   .presc-main {
     padding: 15px;
@@ -562,7 +560,7 @@ td:nth-child(6) {
   }
 }
 
-/* Adjust layout for small mobile devices */
+
 @media (max-width: 480px) {
   .presc-main h2 {
     font-size: 1.3rem;

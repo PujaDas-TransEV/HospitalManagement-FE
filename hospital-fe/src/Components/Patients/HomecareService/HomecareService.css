@@ -6,7 +6,7 @@
   box-sizing: border-box;
 }
 
-/* Optional heading styling */
+
 .homecare-containerr h2 {
   margin-bottom: 30px;
   font-size: 1.8rem;
@@ -16,7 +16,7 @@
 
 .homecare-form {
   display: grid;
-  grid-template-columns: repeat(2, 1fr); /* Two columns layout */
+  grid-template-columns: repeat(2, 1fr); 
   gap: 24px 40px;
   width: 100%;
   max-width: 1400px;
@@ -68,7 +68,6 @@
   background-color: #304177;
 }
 
-/* Spinner styling for async inputs */
 .select-with-spinner {
   position: relative;
 }
@@ -92,7 +91,7 @@
   }
 }
 
-/* Responsive behavior */
+
 @media (max-width: 992px) {
   .homecare-form {
     grid-template-columns: 1fr;

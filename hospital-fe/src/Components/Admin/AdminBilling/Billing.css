@@ -7,7 +7,7 @@
   min-height: 100vh;
 }
 
-/* Overlay to slightly darken background for readability */
+
 .billing-background::before {
   content: '';
   position: absolute;
@@ -16,14 +16,14 @@
   z-index: 1;
 }
 
-/* Make content appear above overlay */
+
 .dashboard-contenta {
    position: relative;
  
   margin-left: 250px;
 }
 
-/* Container for billing table and controls */
+
 .billing-containera {
    flex: 1; 
   position: relative;
@@ -41,7 +41,7 @@
 }
 
 .search-containera input[type="text"] {
-  width: 250px; /* Set a fixed width */
+  width: 250px;
   padding: 10px 14px;
   border: 1.5px solid #ccc;
   border-radius: 6px;
@@ -55,7 +55,7 @@
 }
 
 
-/* Buttons style */
+
 .search-containera button {
   border: none;
   padding: 10px 16px;
@@ -72,7 +72,7 @@
   filter: brightness(0.9);
 }
 
-/* Billing table */
+
 .billing-table {
   width: 100%;
   border-collapse: collapse;
@@ -126,14 +126,14 @@
   background-color: #ef6c00;
 }
 
-/* Spinner container */
+
 .spinner-container {
   display: flex;
   justify-content: center;
   padding: 50px 0;
 }
 
-/* Edit popup */
+
 .edit-popup {
   position: fixed;
   top: 0; left: 0; right: 0; bottom: 0;
@@ -173,7 +173,7 @@
   text-align: center;
 }
 
-/* Edit fields */
+
 .edit-field {
   margin-bottom: 15px;
   display: flex;
@@ -207,7 +207,7 @@
   border-color: #2196F3;
 }
 
-/* Update button */
+
 .update-btn {
   background-color: #2196F3;
   color: white;

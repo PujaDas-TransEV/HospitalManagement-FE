@@ -110,7 +110,7 @@
   background: #1769aa;
 }
 
-/* Responsive */
+
 @media (max-width: 768px) {
   .row { flex-direction: column; }
 }

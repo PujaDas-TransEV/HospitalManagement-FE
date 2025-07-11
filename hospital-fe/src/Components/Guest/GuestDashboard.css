@@ -71,7 +71,7 @@
   color: #666;
 }
 
-/* Responsive Adjustments */
+
 @media (max-width: 600px) {
   .patient-card {
     padding: 15px;

@@ -51,7 +51,7 @@
   to { transform: rotate(360deg); }
 }
 
-/* Table hidden on mobile */
+
 .desktop-table {
   width: 100%;
   border-collapse: collapse;
@@ -69,14 +69,14 @@
   color: white;
 }
 
-/* Hide table on small screens */
+
 @media (max-width: 768px) {
   .desktop-table {
     display: none;
   }
 }
 
-/* Mobile card styles */
+
 .mobile-cards {
   display: none;
 }
@@ -122,7 +122,7 @@
   }
 }
 
-/* Modal styles (overlay and content) */
+
 .modal-overlay {
   position: fixed;
   top: 0;

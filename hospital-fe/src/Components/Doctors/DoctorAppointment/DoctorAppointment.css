@@ -1,11 +1,11 @@
 
 .appointment-bg {
-  position: relative; /* needed for ::before overlay */
-  background-image: url('../../Assests/background.jpg'); /* replace with your image path */
+  position: relative; 
+  background-image: url('../../Assests/background.jpg');
   background-size: cover;
   background-position: center;
   min-height: 100vh;
-  padding-top: 70px; /* space for navbar if fixed */
+  padding-top: 70px; 
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   z-index: 0;
 }
@@ -20,21 +20,19 @@
 }
 
 .appointment-overlay {
-  position: relative; /* to be above the ::before overlay */
+  position: relative; 
   background-color: rgba(244, 248, 248, 0.95);
-  margin: 40px auto; /* more spacing top and bottom */
+  margin: 40px auto;
   max-width: 1200px;
   padding: 30px 40px;
   border-radius: 10px;
   box-shadow: 0 0 15px rgba(0,0,0,0.15);
-  /* Remove min-height to allow content to determine height */
-  /* min-height: calc(100vh - 140px); */
   display: flex;
   flex-direction: column;
-  z-index: 2; /* make sure it is above the overlay */
+  z-index: 2; 
 }
 
-/* Section title */
+
 .section-title {
   font-size: 2rem;
   margin-bottom: 30px;
@@ -43,16 +41,16 @@
   text-align: center;
 }
 
-/* Loading spinner container */
+
 .loading-spinner {
   display: flex;
   justify-content: center;
   align-items: center;
   min-height: 200px;
-  color: #007bff; /* bootstrap primary color */
+  color: #007bff;
 }
 
-/* Spinner rotation animation */
+
 .spin {
   animation: spin 1s linear infinite;
 }
@@ -63,7 +61,7 @@
   }
 }
 
-/* Table styles */
+
 .appointment-table table {
   width: 100%;
   border-collapse: collapse;
@@ -89,7 +87,7 @@
   background-color: #f9f9f9;
 }
 
-/* Button icon styles */
+
 .btn-icon {
   display: inline-flex;
   align-items: center;
@@ -109,7 +107,7 @@
   filter: brightness(85%);
 }
 
-/* Cards for mobile */
+
 .appointment-cards {
   display: none;
   flex-direction: column;
@@ -140,11 +138,11 @@
   margin-top: 15px;
 }
 
-/* Responsive Styles */
+
 @media (max-width: 992px) {
   .appointment-overlay {
     padding: 20px 30px;
-    margin: 30px auto; /* reduce margin for smaller screens */
+    margin: 30px auto; 
   }
 
   .section-title {
@@ -157,12 +155,12 @@
 }
 
 @media (max-width: 768px) {
-  /* Hide table on small devices */
+  
   .appointment-table {
     display: none;
   }
 
-  /* Show cards on mobile */
+  
   .appointment-cards {
     display: flex;
   }
@@ -189,7 +187,7 @@
   }
 }
 .appointment-th {
-  background-color: #0056b3;  /* Dark blue background */
+  background-color: #0056b3; 
   color: white;
   font-weight: bold;
   padding: 10px;

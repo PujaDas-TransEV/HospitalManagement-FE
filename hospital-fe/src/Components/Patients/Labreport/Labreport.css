@@ -25,7 +25,7 @@
 
 .lab-main-layout {
   display: flex;
-  /* position: relative; */
+ 
   z-index: 2;
 } 
 
@@ -40,7 +40,7 @@
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
 }
 
-/* Cards container */
+
 .lab-cards-container {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
@@ -48,7 +48,7 @@
   margin-top: 20px;
 }
 
-/* Lab card with dropdown-style highlight */
+
 .lab-card {
   background: #ffffff;
   border-left: 5px solid #2a74d9;
@@ -65,24 +65,24 @@
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.12);
 }
 
-/* Highlight style to match dropdown upcoming/bill */
+
 .lab-card.lab-upcoming {
-  background-color: #e8f5e9; /* Light green for "Upcoming-like" lab reports */
+  background-color: #e8f5e9;
   border-left: 4px solid #43a047;
 }
 
 .lab-card.lab-recent {
-  background-color: #fff3e0; /* Light orange for recent/completed */
+  background-color: #fff3e0; 
   border-left: 4px solid #fb8c00;
 }
 
-/* Info section */
+
 .lab-card-info p {
   margin: 6px 0;
   font-size: 14px;
 }
 
-/* Action icons */
+
 .lab-card-actions {
   margin-top: 12px;
   display: flex;
@@ -90,7 +90,7 @@
   gap: 12px;
 }
 
-/* Icon buttons */
+
 .lab-icon-btn {
   background: transparent;
   border: none;
@@ -117,12 +117,12 @@
   opacity: 0.6;
 }
 
-/* Spinner animation */
+
 .icon-spin {
   animation: spin 1s linear infinite;
 }
 
-/* Loading Overlay */
+
 .loading-overlay {
   position: fixed;
   inset: 0;
@@ -139,7 +139,6 @@
   animation: spin 1.2s linear infinite;
 }
 
-/* Error message */
 .lab-error {
   background-color: #ffd6d6;
   color: #a10000;
@@ -149,7 +148,7 @@
   text-align: center;
 }
 
-/* Empty state */
+
 .lab-empty {
   font-style: italic;
   text-align: center;
@@ -157,13 +156,13 @@
   margin-top: 20px;
 }
 
-/* Spinner keyframe */
+
 @keyframes spin {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
 }
 
-/* Sticky Navbar */
+
 .patient-navbar {
   position: sticky;
   top: 0;

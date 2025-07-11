@@ -4,7 +4,7 @@
   flex-direction: column;
   min-height: 100vh;
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-  background-color: rgba(0, 0, 0, 0.6); /* Fallback overlay */
+  background-color: rgba(0, 0, 0, 0.6); 
 }
 .dashboard-container-settings::before {
   content: "";
@@ -16,18 +16,7 @@
  background-color: rgba(207, 233, 217, 0.6);  
   z-index: 0;
 }
-/* Layout split between sidebar and main content */
-/* .dashboard-content-settings {
-  display: flex;
-  flex: 1;
-  position: relative;
-  z-index: 1;
-  padding: 30px;
-  gap: 20px;
-  flex-wrap: wrap;
-}  */
 
-/* Main settings card */
 .settings-container-patient {
   flex-grow: 1;
   background-color: rgba(255, 255, 255, 0.96);
@@ -41,7 +30,7 @@
   margin-top: 30px; 
 }
 
-/* Section titles */
+
 .settings-title {
   font-size: 2.2rem;
   font-weight: bold;
@@ -69,14 +58,14 @@
   color: #c62828;
 }
 
-/* Text under each section */
+
 .settings-section p {
   font-size: 1.05rem;
   margin-bottom: 20px;
   color: #333;
 }
 
-/* Buttons */
+
 .action-button,
 .delete-button {
   padding: 12px 24px;
@@ -107,7 +96,7 @@
   background-color: #8e0000;
 }
 
-/* Toggle confirmation checkbox */
+
 .toggle-container {
   display: flex;
   align-items: center;
@@ -126,7 +115,7 @@
   cursor: pointer;
 }
 
-/* Error and success messages */
+
 .error-message,
 .success-message {
   display: flex;
@@ -156,7 +145,7 @@
 }
 
 
-/* Modal entrance animation */
+
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -169,7 +158,7 @@
 }
 
 
-/* Media Queries for responsiveness */
+
 @media (max-width: 768px) {
   .dashboard-content-settings {
     flex-direction: column;
@@ -232,7 +221,7 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.6); /* Darkened background */
+  background: rgba(0, 0, 0, 0.6); 
   display: flex;
   justify-content: center;
   align-items: center;
@@ -285,7 +274,7 @@
   transform: scale(1.05);
 }
 
-/* Animations */
+
 @keyframes fadeIn {
   from {
     opacity: 0;

@@ -3,7 +3,7 @@
    display: flex;
   flex-direction: column;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background-image: url('../../Assests/background.jpg'); /* Make sure path is correct */
+  background-image: url('../../Assests/background.jpg'); 
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -16,14 +16,14 @@
   top: 0;
   left: 0;
   right: 0;
-  height: 100vh; /* make overlay 1.5 times viewport height */
+  height: 100vh;
   background-color: rgba(255, 255, 255, 0.452);
   z-index: 2;
 }
 
 .main-content {
    display: flex;
-  /* flex-grow: 1; */
+
   padding: 20px;
   justify-content: center;
 }
@@ -67,17 +67,17 @@
   max-height: 90vh;
 }
 
-/* Table responsive and clean */
+
 .table-responsive {
-  overflow-x: hidden; /* No scrollbar */
+  overflow-x: hidden;
 }
 
-/* Hide mobile cards by default */
+
 .mobile-view {
   display: none;
 }
 
-/* Show cards only on mobile */
+
 @media (max-width: 768px) {
   .main-content {
     margin-left: 0;
@@ -85,7 +85,7 @@
   }
 
   .desktop-view {
-    display: none; /* Hide table */
+    display: none; 
   }
 
   .mobile-view {
@@ -108,11 +108,11 @@
   left: 0;
   width: 100vw;
   height: 100vh;
-  background: rgba(0, 0, 0, 0.5); /* semi-transparent black */
+  background: rgba(0, 0, 0, 0.5); 
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 1050; /* high enough to overlay */
+  z-index: 1050; 
 }
 
 .popup-content {
@@ -124,7 +124,7 @@
   overflow-y: auto;
   border-radius: 8px;
   box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-  outline: none; /* Remove focus outline */
+  outline: none; 
   position: relative;
 }
 

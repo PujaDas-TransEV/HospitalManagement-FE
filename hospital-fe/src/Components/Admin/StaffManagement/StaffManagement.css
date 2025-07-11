@@ -1,17 +1,15 @@
-/* StaffManagement.css */
 
-/* Base styling for the page */
 .staff-management-page {
   display: flex;
   flex-direction: column;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background-image: url('../../Assests/background.jpg'); /* Update path as needed */
+  background-image: url('../../Assests/background.jpg'); 
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
   min-height: 100vh;
   position: relative;
-  padding-bottom: 40px; /* some padding for bottom */
+  padding-bottom: 40px; 
 }
 
 .staff-management-page::before {
@@ -28,7 +26,7 @@
   padding: 20px;
   justify-content: center;
   position: relative;
-  /* z-index: 2; */
+
   flex-wrap: wrap;
   gap: 20px;
   box-sizing: border-box;
@@ -44,10 +42,10 @@
   position: relative;
   z-index: 2;
   box-sizing: border-box;
-  overflow-x: auto; /* allow horizontal scroll if needed */
+  overflow-x: auto; 
 }
 
-/* Search form */
+
 .search-wrapper {
   width: 100%;
   max-width: 400px;
@@ -91,7 +89,7 @@
   background-color: #0056b3 !important;
 }
 
-/* Spinner */
+
 .spinner-wrapper {
   display: flex;
   justify-content: center;
@@ -111,7 +109,6 @@
   }
 }
 
-/* Staff Table */
 .staff-table {
   width: 100%;
   border-collapse: collapse;
@@ -132,13 +129,13 @@
   font-weight: 600;
 }
 
-/* Buttons in table */
+
 .staff-table td button {
   margin-right: 5px;
   min-width: 35px;
 }
 
-/* Popup Form Styling */
+
 .form-popup {
   position: fixed;
   top: 50%;
@@ -156,7 +153,7 @@
   box-sizing: border-box;
 }
 
-/* Close button */
+
 .form-popup .close-btn {
   position: absolute;
   top: 12px;
@@ -174,7 +171,6 @@
   color: #d60e40;
 }
 
-/* Staff Form */
 .staff-form {
   width: 100%;
   background-color: #e0f7fa;
@@ -212,9 +208,7 @@
   opacity: 0.6;
 }
 
-/* Responsive Styles */
 
-/* Tablets (medium screens) */
 @media (max-width: 992px) {
   .staff-management-content {
     padding: 15px;
@@ -235,7 +229,7 @@
   }
 }
 
-/* Mobile (small screens) */
+
 @media (max-width: 768px) {
   .staff-management-content {
     flex-direction: column;
@@ -278,7 +272,7 @@
   }
 
   .staff-table thead tr {
-    display: none; /* Hide table headers */
+    display: none;
   }
 
   .staff-table tbody tr {
@@ -310,14 +304,14 @@
     border-bottom: 0;
   }
 
-  /* Buttons in table: align nicely */
+ 
   .staff-table tbody td[data-label="Actions"] {
     justify-content: flex-start;
     gap: 10px;
   }
 }
 
-/* Extra small screens */
+
 @media (max-width: 480px) {
   .search-wrapper input[type="text"] {
     max-width: 60%;
@@ -337,15 +331,15 @@
 .staff-table {
   width: 100%;
   border-collapse: collapse;
-  table-layout: auto; /* default, adjust column width */
-  overflow-x: visible; /* no horizontal scrollbar on desktop */
+  table-layout: auto; 
+  overflow-x: visible; 
 }
 
 .staff-management-container {
-  overflow-x: hidden; /* hide any overflow from container */
+  overflow-x: hidden; 
 }
 
-/* On smaller screens: allow horizontal scrolling */
+
 @media (max-width: 768px) {
   .staff-management-container {
     overflow-x: auto;
@@ -355,6 +349,6 @@
     display: block;
     width: 100%;
     overflow-x: auto;
-    white-space: nowrap; /* keep columns inline */
+    white-space: nowrap; 
   }
 }

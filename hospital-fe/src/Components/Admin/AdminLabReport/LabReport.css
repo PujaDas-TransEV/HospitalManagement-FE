@@ -19,7 +19,7 @@
 .dashboard-content {
   display: flex;
   position: relative;
-  /* z-index: 2; */
+
   padding: 20px;
   margin-left: 250px;
 }

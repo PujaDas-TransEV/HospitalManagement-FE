@@ -16,7 +16,7 @@ position: relative;
 .equipment-content {
  position: relative;
   margin-left: 250px;
-  /* z-index: 2; */
+
   transition: margin-left 0.3s ease;
 }
 .equipment-main {

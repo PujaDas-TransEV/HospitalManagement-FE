@@ -1,13 +1,12 @@
-
 import React, { useState, useEffect } from 'react';
 import {  useNavigate } from 'react-router-dom';
-import './Home.css'; // Ensure you have corresponding CSS
+import './Home.css';
 import mainsImage from '../Assests/mains.png';
 import dt1 from '../Assests/dt1.jpg';
 import dt2 from '../Assests/dt2.jpg';
 import dt3 from '../Assests/dt3.jpg';
-import heart from '../Assests/heart.jpg'; // Added
-import medicine from '../Assests/medicine.webp'; // Added
+import heart from '../Assests/heart.jpg'; 
+import medicine from '../Assests/medicine.webp'; 
 import s3 from '../Assests/s3.png';
 import p1 from '../Assests/p1.png';
 import p2 from '../Assests/p2.png';

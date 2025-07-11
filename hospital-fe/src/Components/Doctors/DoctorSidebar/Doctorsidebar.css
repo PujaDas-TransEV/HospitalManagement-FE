@@ -8,7 +8,7 @@
   transition: width 0.3s ease, transform 0.3s ease;
   overflow-x: hidden;
   z-index: 1000;
-  width: 70px; /* collapsed by default */
+  width: 70px; 
 }
 
 .doctor-sidebar.expanded {
@@ -34,7 +34,7 @@
   align-items: center;
   text-decoration: none;
   transition: background-color 0.3s ease;
-  margin-bottom: 30px; /* <-- Add this for vertical spacing */
+  margin-bottom: 30px; 
 }
 
 
@@ -63,7 +63,7 @@
   z-index: 1100;
 }
 
-/* Hamburger for mobile */
+
 .hamburger-btn {
   display: none;
   position: fixed;
@@ -81,7 +81,7 @@
   align-items: center;
 }
 
-/* Mobile overlay */
+
 .sidebar-overlay {
   position: fixed;
   top: 0;
@@ -92,7 +92,7 @@
   z-index: 900;
 }
 
-/* Mobile styles */
+
 @media (max-width: 768px) {
   .hamburger-btn {
     display: flex;

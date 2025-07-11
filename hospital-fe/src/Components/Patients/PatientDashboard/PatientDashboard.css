@@ -138,12 +138,12 @@
   .feature-grid { grid-template-columns: repeat(2, 1fr); }
   .notif-dropdown { width: 90%; right: 5%; }
 }
-/* Highlight styles */
+
 .dropdown-section.upcoming {
-  background-color: #e8f5e9; /* Light green */
+  background-color: #e8f5e9;
   border-left: 4px solid #43a047;
 }
 .dropdown-section.bill {
-  background-color: #fff3e0; /* Light orange */
+  background-color: #fff3e0;
   border-left: 4px solid #fb8c00;
 }

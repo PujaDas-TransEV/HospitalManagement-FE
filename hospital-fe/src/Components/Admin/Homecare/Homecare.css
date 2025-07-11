@@ -1,12 +1,12 @@
 
 .spinner {
   border: 6px solid #f3f3f3;
-  border-top: 6px solid #3498db; /* Blue */
+  border-top: 6px solid #3498db; 
   border-radius: 50%;
   width: 40px;
   height: 40px;
   animation: spin 1s linear infinite;
-  /* margin: 100px auto; */
+
   margin-right: 700px;
   margin-top: 200px;
 }
@@ -16,7 +16,7 @@
   100% { transform: rotate(360deg); }
 }
 
-/* Background image on the whole page */
+
 .facility-management-page {
    position: relative;
   background-image: url('../../Assests/background.jpg');
@@ -25,7 +25,6 @@
   min-height: 100vh;
 }
 
-/* Add a translucent overlay for better readability */
 .facility-management-content::before {
     content: '';
   position: absolute;
@@ -33,9 +32,6 @@
   background-color: rgba(255, 255, 255, 0.719);
   z-index: 1;
 }
-
-/* Make content on top of overlay */
-
 .admin-panel{
    flex: 1;
   position: relative;
@@ -45,9 +41,9 @@
   display: flex;
   flex-direction: column;
 }
-/* Table styling */
+
 .responsive-table-table {
-  /* No overflow properties here to prevent scrollbars */
+
   max-width: 1000px;
   margin-left: 0;
   margin-right: 100px;
@@ -60,10 +56,10 @@
   background-color: rgba(227, 238, 241, 0.9);
   color: #333;
   border-radius: 8px;
-  overflow: visible;  /* important: avoid overflow hidden/scroll */
+  overflow: visible; 
   box-shadow: 0 0 15px rgba(0,0,0,0.3);
-  table-layout: fixed; /* to prevent content forcing scroll */
-  word-wrap: break-word; /* allow text wrapping */
+  table-layout: fixed; 
+  word-wrap: break-word;
 }
 
 
@@ -84,7 +80,7 @@
   cursor: pointer;
 }
 
-/* Form container */
+
 .form-container {
   background-color: rgba(255, 255, 255, 0.95);
   padding: 20px;
@@ -127,15 +123,15 @@
 .form-actions button:hover {
   background-color: #2980b9;
 }
-/* Table styles */
+
 .responsive-table {
   width: 100%;
-  overflow-x: visible; /* remove scrollbar */
+  overflow-x: visible; 
 }
 
 table {
   width: 100%;
-  min-width: 900px; /* adjust as needed */
+  min-width: 900px; 
   border-collapse: collapse;
 }
 
@@ -150,7 +146,7 @@ td, th {
   border-bottom: 1px solid #ddd;
 }
 
-/* Card layout for mobile */
+
 .cards-container {
   display: flex;
   flex-direction: column;
@@ -166,7 +162,7 @@ td, th {
   box-shadow: 0 1px 4px rgb(0 0 0 / 0.1);
 }
 
-/* Edit button style */
+
 .edit-btn {
   background-color: transparent;
   border: none;
@@ -183,14 +179,13 @@ td, th {
   color: #217dbb;
 }
 
-/* Hide table on small screens */
+
 @media (max-width: 768px) {
   .responsive-table {
     display: none;
   }
 }
 
-/* Modal overlay */
 .modal-overlay {
   position: fixed;
   top: 0;
@@ -206,7 +201,7 @@ td, th {
   box-sizing: border-box;
 }
 
-/* Modal content box */
+
 .modal-content {
   background: white;
   border-radius: 8px;
@@ -218,7 +213,7 @@ td, th {
   overflow-y: auto;
 }
 
-/* Form labels and selects */
+
 .modal-content label {
   display: block;
   margin-bottom: 12px;
@@ -234,7 +229,7 @@ td, th {
   font-size: 1em;
 }
 
-/* Form actions */
+
 .form-actions {
   margin-top: 20px;
   display: flex;

@@ -17,8 +17,8 @@
 }
 .patientlist-container {
   flex: 1;
-  max-width: 1400px; /* adjust this as needed */
-  margin: 120px auto 40px; /* center horizontally */
+  max-width: 1400px;
+  margin: 120px auto 40px; 
   padding: 20px;
   background: #f0efeb;
   border-radius: 8px;
@@ -142,11 +142,11 @@
   min-width: 36px;
 }
 .patient-th {
-  background-color: #007bff;  /* Bootstrap primary blue */
+  background-color: #007bff;  
   color: white;
   font-weight: 600;
   text-align: center;
   padding: 10px;
   border-bottom: 2px solid #0056b3;
-  user-select: none; /* Optional: prevent text selection */
+  user-select: none; 
 }

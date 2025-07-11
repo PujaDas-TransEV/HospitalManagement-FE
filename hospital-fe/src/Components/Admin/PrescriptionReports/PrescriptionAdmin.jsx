@@ -1,5 +1,3 @@
-
-
 import React, { useState, useEffect } from 'react';
 import { Spinner, Button, Modal, Alert, Table } from 'react-bootstrap';
 import AdminNavbar from '../Adminnavbar/AdminNavbar';

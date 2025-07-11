@@ -21,9 +21,9 @@
   background: #d1e0e4dd;
   border-radius: 12px;
   padding: 30px;
-  max-width: 1400px;         /* Limit the width */
-  width: 100%;             /* Make it responsive */
-  margin: 0 auto;           /* Center horizontally */
+  max-width: 1400px;        
+  width: 100%;            
+  margin: 0 auto;         
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
   min-height: 80vh;
   display: flex;

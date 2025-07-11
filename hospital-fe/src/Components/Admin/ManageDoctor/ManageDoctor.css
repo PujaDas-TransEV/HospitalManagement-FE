@@ -1,5 +1,4 @@
 
-/* Background image with white transparent overlay */
 .manage-doctors-wrapper {
  position: relative;
  background-image: url('../../Assests/background.jpg');
@@ -31,7 +30,7 @@
   flex-direction: column; 
 } 
 
-/* Header with icon and button */
+
 .header-section {
   display: flex;
   justify-content: space-between;
@@ -66,7 +65,6 @@
   background-color: #3b5d7a;
 }
 
-/* Departments cards container */
 .departments-container {
   display: flex;
   gap: 16px;
@@ -105,7 +103,7 @@
   justify-content: center;
 }
 
-/* Doctors section */
+
 .doctors-section {
   flex: 1;
   overflow-x: auto;
@@ -117,7 +115,6 @@
   color: #2c3e50;
 }
 
-/* Table styling */
 .table-responsive {
   max-width: 100%;
   overflow-x: auto;
@@ -156,14 +153,14 @@
   color: #7a1f1b;
 }
 
-/* Spinner center */
+
 .spinner-center {
   display: flex;
   justify-content: center;
   padding: 40px 0;
 }
 
-/* Popup overlay and content */
+
 .popup-overlay {
   position: fixed;
   top: 0;
@@ -253,7 +250,7 @@
   background-color: #bbb;
 }
 
-/* Responsive tweaks */
+
 @media (max-width: 900px) {
   .departments-container {
     justify-content: center;
@@ -291,14 +288,14 @@
     font-size: 1rem;
   }
 }
-/* Spinner overlay for loading */
+
 .modal-overlay-doctor {
   position: fixed;
   top: 0;
   left: 0;
   width: 100vw;
   height: 100vh;
-  /* background-color: rgba(0, 0, 0, 0.25); */
+ 
   z-index: 1050;
   display: flex;
   justify-content: center;
@@ -309,7 +306,7 @@
   padding: 2rem 3rem;
   border-radius: 8px;
   text-align: center;
-  /* box-shadow: 0 0 12px rgba(0,0,0,0.15); */
+
   font-size: 1.2rem;
   color: #00796b;
   display: flex;
@@ -318,7 +315,7 @@
   gap: 1rem;
 }
 
-/* Spin animation for FaSpinner */
+
 .spin {
   animation: spin 1.5s linear infinite;
 }
@@ -332,7 +329,7 @@
   100% { transform: rotate(360deg);}
 }
 
-/* Table styling improvements */
+
 .custom-doctors-table {
   font-size: 0.95rem;
   background: #fff;
@@ -373,7 +370,7 @@
   color: #e76f51;
 }
 
-/* Departments container improvements */
+
 .departments-container {
   display: flex;
   flex-wrap: wrap;
@@ -402,7 +399,7 @@
   font-size: 1.6rem;
 }
 
-/* Popup styles */
+
 .popup-overlay {
   position: fixed;
   inset: 0;
@@ -484,7 +481,7 @@
   font-weight: bold;
   text-align: center;
 }
-/* Hide cards by default, show table */
+
 .doctors-card-list {
   display: none;
 }
@@ -492,7 +489,7 @@
   display: block;
 }
 
-/* On small screens (mobile), show cards and hide table */
+
 @media (max-width: 768px) {
   .doctors-card-list {
     display: block;
@@ -501,7 +498,7 @@
     display: none;
   }
 
-  /* Optional styling for cards */
+ 
   .doctor-card {
   background: rgb(185, 197, 116);
   border-radius: 8px;
@@ -511,13 +508,13 @@
   transition: padding 0.3s ease, font-size 0.3s ease;
 }
 
-/* Slight spacing inside card rows */
+
 .card-row {
   margin-bottom: 8px;
   font-size: 1rem;
 }
 
-/* Action icons styling */
+
 .card-actions svg {
   cursor: pointer;
   margin-right: 12px;
@@ -532,9 +529,7 @@
   transform: scale(1.1);
 }
 
-/* Responsive tweaks */
 
-/* Smaller tablets and big phones */
 @media (max-width: 768px) {
   .doctor-card {
     padding: 12px;
@@ -548,7 +543,7 @@
   }
 }
 
-/* Small phones */
+
 @media (max-width: 480px) {
   .doctor-card {
     padding: 10px;
@@ -563,7 +558,7 @@
   }
 }
 
-/* Extra small phones */
+
 @media (max-width: 360px) {
   .doctor-card {
     padding: 8px;
@@ -582,6 +577,6 @@
   color: black;
 }
 .actionss-column {
-  color: #010a13; /* Example: Bootstrap blue */
+  color: #010a13; 
   font-weight: bold;
 }

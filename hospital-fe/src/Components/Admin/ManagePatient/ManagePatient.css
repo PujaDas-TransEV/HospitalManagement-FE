@@ -17,8 +17,7 @@
 
 .manage-patients-content {
   position: relative;
-  /* z-index: 2; */
-  /* padding: 20px; */
+  
   margin-left: 250px;
 }
 
@@ -107,7 +106,7 @@
   color: #2c3e50;
 }
 
-/* Modal & Spinner */
+
 .modal-overlay,
 .popup-overlay {
   position: fixed;
@@ -139,7 +138,7 @@
   to { transform: rotate(360deg); }
 }
 
-/* Popup Forms */
+
 .popup-content form {
   display: flex;
   flex-direction: column;
@@ -176,9 +175,7 @@
   color: #333;
 }
 
-/* -----------------------------
-   ✅ RESPONSIVE MEDIA QUERIES
------------------------------ */
+
 
 @media (max-width: 1024px) {
   .manage-patients-content {
@@ -245,7 +242,7 @@
     font-size: 0.8rem;
   }
 }
-/* By default, show table and hide cards */
+
 .patients-card-list {
   display: none;
 }
@@ -253,12 +250,12 @@
   display: block;
 }
 
-/* On small screens (mobile) */
+
 @media (max-width: 768px) {
   .patients-card-list {
-    display: block;  /* Show cards */
+    display: block; 
   }
   .table-responsive {
-    display: none;   /* Hide table */
+    display: none;  
   }
 }

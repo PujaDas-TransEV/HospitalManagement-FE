@@ -7,7 +7,7 @@
   margin-bottom: 1.5rem;
 }
 
-/* Spinner styling */
+
 .spinner-container {
   display: flex;
   justify-content: center;
@@ -27,7 +27,7 @@
   }
 }
 
-/* Background & overlay */
+
 .survey-bg {
   flex: 1;
   background-size: cover;
@@ -44,7 +44,7 @@
   overflow-y: auto;
 }
 
-/* Card grid layout */
+
 .survey-card-grid {
   display: flex;
   flex-wrap: wrap;
@@ -52,7 +52,7 @@
   gap: 1.5rem;
 }
 
-/* Individual card */
+
 .survey-card {
   width: 300px;
   max-width: 100%;
@@ -64,11 +64,11 @@
 }
 
 .survey-card:nth-child(even) {
-  background-color: #e3f2fd; /* Light blue */
+  background-color: #e3f2fd; 
 }
 
 .survey-card:nth-child(odd) {
-  background-color: #f1f8e9; /* Light green */
+  background-color: #f1f8e9; 
 }
 
 .survey-card:hover {
@@ -81,13 +81,13 @@
   color: #333;
 }
 
-/* Button */
+
 
 .delete-btn:hover {
   background-color: #c62828;
 }
 
-/* Page wrapper layout */
+
 .survey-page {
   display: flex;
   flex-direction: column;
@@ -99,7 +99,7 @@
   flex: 1;
 }
 
-/* Text helpers */
+
 .info-text {
   font-size: 1rem;
   color: #666;

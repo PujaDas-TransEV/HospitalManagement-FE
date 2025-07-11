@@ -1,5 +1,3 @@
-/* Prescription.css */
-
 .prescription-page {
   max-width: 900px;
   margin: 40px auto;
@@ -18,7 +16,7 @@
   font-size: 2rem;
 }
 
-/* Prescription Card */
+
 .prescription-card {
   background: #ffffff;
   border: 1px solid #ddd;
@@ -49,7 +47,7 @@
   color: #555;
 }
 
-/* PDF iframe styling */
+
 .report-pdf {
   width: 100%;
   height: 500px;
@@ -60,7 +58,7 @@
   background: #fff;
 }
 
-/* Buttons */
+
 .generate-btn,
 .download-btn {
   display: inline-block;
@@ -86,7 +84,7 @@
   box-shadow: 0 5px 15px rgba(28, 89, 128, 0.6);
 }
 
-/* Loading and message text */
+
 .loading-text,
 .message-text {
   text-align: center;
@@ -97,7 +95,6 @@
   user-select: none;
 }
 
-/* Responsive Adjustments */
 @media (max-width: 768px) {
   .prescription-page {
     padding: 0 15px;

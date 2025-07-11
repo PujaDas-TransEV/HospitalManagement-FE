@@ -1,14 +1,14 @@
 
 .facilityy-management-page {
   position: relative;
-  background-image: url('../../Assests/background.jpg'); /* Adjust path if needed */
+  background-image: url('../../Assests/background.jpg');
   background-size: cover;
   background-position: center;
   min-height: 100vh;
   z-index: 0;
 }
 
-/* Semi-transparent white overlay */
+
 .facilityy-management-page::before {
   content: "";
   position: absolute;
@@ -17,7 +17,7 @@
   z-index: 0;
 }
 
-/* Content container above overlay */
+
 .facilityy-management-content {
   display: flex;
   position: relative;
@@ -27,7 +27,6 @@
   flex-wrap: wrap;
 }
 
-/* Sidebar + main content width handling */
 .facilityy-management-content > div:first-child {
   flex: 0 0 220px;
 }
@@ -38,7 +37,7 @@
   box-sizing: border-box;
 }
 
-/* Header */
+
 .notification-wrapper h2 {
   margin-bottom: 20px;
   font-size: 26px;
@@ -47,7 +46,7 @@
   text-align: center;
 }
 
-/* Create button */
+
 .create-button {
   display: block;
   margin: 0 auto 20px auto;
@@ -65,14 +64,14 @@
   background-color: #0056b3;
 }
 
-/* Loading text styling */
+
 .loading-text {
   text-align: center;
   font-size: 16px;
   color: #333;
 }
 
-/* Notification List */
+
 .notification-list {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
@@ -89,13 +88,13 @@
   flex-direction: column;
   justify-content: space-between;
 
-  width: 90%;               /* Make it responsive */
-  max-width: 700px;         /* Limit max width */
-  margin: 0 auto;           /* Center horizontally */
+  width: 90%;               
+  max-width: 700px;         
+  margin: 0 auto;           
 }
 
 
-/* Card header */
+
 .notification-header {
   display: flex;
   justify-content: space-between;
@@ -109,7 +108,7 @@
   color: #333;
 }
 
-/* Action buttons */
+
 .action-buttons {
   display: flex;
   gap: 10px;
@@ -135,7 +134,7 @@
   color: #dc3545;
 }
 
-/* Card text */
+
 .notification-card p {
   margin: 4px 0;
   color: #555;
@@ -147,7 +146,7 @@
   font-size: 12px;
 }
 
-/* Status button */
+
 .status-toggle {
   margin-top: 12px;
 }
@@ -172,7 +171,7 @@
 
 
 
-/* Responsive Design */
+
 @media screen and (max-width: 992px) {
   .facilityy-management-content {
     flex-direction: column;

@@ -1,9 +1,9 @@
-/* Main container */
+
 .dashboard-container-admin {
   display: flex;
   flex-direction: column;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background-image: url('../../Assests/background.jpg'); /* Make sure path is correct */
+  background-image: url('../../Assests/background.jpg'); 
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -15,22 +15,18 @@
   top: 0;
   left: 0;
   right: 0;
-  height: 150vh; /* make overlay 1.5 times viewport height */
+  height: 150vh; 
   background-color: rgba(255,255,255,0.8);
   z-index: 2;
 }
-
-
-
-/* Content layout */
 .dashboard-content-admin {
   display: flex;
-  /* flex-grow: 1; */
+ 
   padding: 20px;
   justify-content: center;
 }
 
-/* Settings container */
+
 .settings-container-admin {
   background-color: rgba(255, 255, 255, 0.97);
   border-radius: 15px;
@@ -42,7 +38,7 @@
   z-index: 2;
 }
 
-/* Title */
+
 .settings-title-admin {
   font-size: 2.3rem;
   margin-bottom: 30px;
@@ -51,7 +47,7 @@
   font-weight: 700;
 }
 
-/* Each settings section */
+
 .settings-section-admin {
   padding: 25px;
   border-radius: 12px;
@@ -60,12 +56,12 @@
   box-shadow: 0 3px 6px rgba(0, 0, 0, 0.07);
 }
 
-/* Hospital Info specific */
+
 .hospital-info {
   background-color: rgba(230, 245, 242, 0.95);
 }
 
-/* Section titles */
+
 .section-title-admin {
   font-size: 1.6rem;
   margin-bottom: 20px;
@@ -73,7 +69,7 @@
   font-weight: 600;
 }
 
-/* Settings fields */
+
 .settings-field-admin {
   display: flex;
   flex-direction: column;
@@ -99,7 +95,7 @@
   outline: none;
 }
 
-/* Buttons */
+
 .action-button-admin,
 .delete-button-admin {
   padding: 12px 25px;
@@ -131,7 +127,7 @@
   background-color: #ab2a26;
 }
 
-/* Deletion status messages */
+
 .deletion-status-admin {
   margin-top: 15px;
   font-weight: 600;
@@ -152,7 +148,7 @@
   border-radius: 8px;
 }
 
-/* Responsive */
+
 @media (max-width: 768px) {
   .settings-container-admin {
     padding: 20px;

@@ -23,7 +23,7 @@
   z-index: 10;
 }
 
-/* Increased width */
+
 .appointment-admin__inner {
   position: relative;
   padding: 2rem;
@@ -31,7 +31,7 @@
   background: rgba(255,255,255,0.9);
   margin: 1rem auto;
   border-radius: 8px;
-  max-width: 1500px; /* Increased from 1200px */
+  max-width: 1500px; 
   z-index: 5;
 }
 
@@ -41,19 +41,7 @@
   gap: 1rem;
 }
 
-/* .dept-card {
-  background: #e6cdcd;
-  border: 2px solid transparent;
-  padding: 1rem;
-  flex: 0 0 auto;
-  cursor: pointer;
-  text-align: center;
-  border-radius: 6px;
-  min-width: 120px;
-}
-.dept-card.active {
-  border-color: #007bff;
-} */
+
 
 .appt-list .appt-cards {
   display: grid;
@@ -62,9 +50,9 @@
   margin-top: 1rem;
 }
 
-/* Updated appointment card background & style */
+
 .appt-card {
-  background-color: #e9f0ff; /* light blue */
+  background-color: #e9f0ff;
   border-left: 5px solid #007bff;
   border-radius: 8px;
   padding: 1rem;
@@ -155,7 +143,7 @@
   }
 }
 
-/* === Updated departments container to grid with 5 columns === */
+
 .departments-container {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
@@ -163,7 +151,7 @@
   padding: 1rem 0;
 }
 
-/* Department cards */
+
 .department-card {
   background: #d3e9f0;
   padding: 1rem;
@@ -174,7 +162,7 @@
   width: 120px;
   box-shadow: 0 2px 5px rgba(0,0,0,0.1);
   user-select: none;
-  margin: 0 auto; /* center within grid cell */
+  margin: 0 auto; 
 }
 
 .department-card:hover {

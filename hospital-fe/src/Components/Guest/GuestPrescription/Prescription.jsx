@@ -58,7 +58,7 @@ const GuestPrescriptions = () => {
         }
       } catch (err) {
         console.error(err);
-        setMessage('Failed to fetch prescriptions.');
+        setMessage('Failed to fetch Prescriptions.');
       }
 
       setLoading(false);
@@ -72,7 +72,7 @@ const GuestPrescriptions = () => {
     };
   }, []);
 
-  if (loading) return <p className="loading-text">Loading prescriptions...</p>;
+  if (loading) return <p className="loading-text">Loading Prescriptions...</p>;
   if (message) return <p className="message-text">{message}</p>;
 
   return (
@@ -81,7 +81,7 @@ const GuestPrescriptions = () => {
     <div className="prescription-page">
       <h2>Your Prescriptions</h2>
       {prescriptions.length === 0 ? (
-        <p className="message-text">No prescriptions found.</p>
+        <p className="message-text">No Prescriptions found.</p>
       ) : (
         prescriptions.map((prescription, idx) => (
           <div key={idx} className="prescription-card">

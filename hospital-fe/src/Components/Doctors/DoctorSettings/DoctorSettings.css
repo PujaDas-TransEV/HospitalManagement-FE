@@ -1,22 +1,22 @@
-/* Main container layout with background image */
+
 .dashboard-container-settings {
   display: flex;
   flex-direction: column;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background-image: url('../../Assests/background.jpg'); /* Make sure path is correct */
+  background-image: url('../../Assests/background.jpg'); 
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
   min-height: 100vh;
 }
 
-/* Dashboard content layout */
+
 .dashboard-content-settings {
   display: flex;
   flex-grow: 1;
 }
 
-/* Settings container for doctor */
+
 .settings-container-doctor {
 
   flex-grow: 1;
@@ -25,7 +25,7 @@
   padding: 30px 40px;
    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15); 
   max-width: 800px;
-  /* margin: auto; */
+ 
   position: relative;  
   z-index: 2;  
   margin-top: 30px; 
@@ -33,9 +33,6 @@
   margin: auto;
 
 }
-
-
-/* Title */
 .settings-title {
   font-size: 2rem;
   margin-bottom: 30px;
@@ -43,12 +40,12 @@
   color: #2c3e50;
 }
 
-/* Each section like password/delete */
+
 .settings-section {
   padding: 25px;
   border-radius: 10px;
   margin-bottom: 30px;
-  background-color: rgba(255, 255, 255, 0.85); /* Optional: separate section bg */
+  background-color: rgba(255, 255, 255, 0.85); 
 }
 
 .section-title {
@@ -63,7 +60,7 @@
   font-size: 1.3rem;
 }
 
-/* Button styles */
+
 .action-button,
 .delete-button-settings {
   padding: 10px 20px;
@@ -82,7 +79,7 @@
   background-color: #1565c0;
 }
 
-/* Toggle styles */
+
 .toggle-container {
   margin-top: 15px;
   display: flex;
@@ -99,7 +96,7 @@
   cursor: pointer;
 }
 
-/* Success and error messages */
+
 .success-message,
 .error-message {
   padding: 12px 16px;
@@ -127,7 +124,7 @@
   font-size: 1.3rem;
 }
 
-/* Modal overlay */
+
 .modal-overlay-settings {
   position: fixed;
   top: 0;
@@ -141,7 +138,7 @@
   z-index: 1000;
 }
 
-/* Modal content */
+
 .modal-settings {
   background-color: white;
   padding: 25px 30px;
@@ -181,7 +178,7 @@
   opacity: 0.9;
 }
 
-/* Responsive adjustments */
+
 @media (max-width: 768px) {
   .settings-container-doctor {
     padding: 20px;

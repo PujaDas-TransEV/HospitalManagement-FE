@@ -22,14 +22,14 @@
   display: none;
 }
 
-/* Scrollable content container */
+
 .sidebar-content {
   flex-grow: 1;
   overflow-y: auto;
   padding-bottom: 20px;
 }
 
-/* Custom scrollbar */
+
 .sidebar-content::-webkit-scrollbar {
   width: 6px;
 }

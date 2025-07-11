@@ -19,7 +19,7 @@
 .dashboard-content-lab {
   position: relative;
   margin-left: 250px;
-  /* z-index: 2; */
+
   transition: margin-left 0.3s ease;
 }
 
@@ -33,7 +33,7 @@
   flex-direction: column;
 }
 
-/* Create New Button */
+
 .create-new-btnn {
   background: linear-gradient(135deg, #4a90e2, #357ABD);
   color: white;
@@ -54,7 +54,7 @@
   box-shadow: 0 6px 12px rgba(40, 92, 142, 0.6);
 }
 
-/* Search Controls */
+
 .search-controls {
   margin-bottom: 20px;
   display: flex;
@@ -98,7 +98,7 @@
   box-shadow: 0 6px 12px rgba(53, 122, 189, 0.7);
 }
 
-/* Edit Button */
+
 .editt-btn {
   background-color: #28a745;
   color: white;
@@ -117,7 +117,7 @@
   box-shadow: 0 6px 12px rgba(33, 136, 56, 0.6);
 }
 
-/* Responsive Table */
+
 .responsive-table {
   width: 100%;
   border-collapse: collapse;
@@ -135,7 +135,7 @@
   border-bottom: 1px solid #ddd;
 }
 
-/* Mobile styles */
+
 @media (max-width: 992px) {
   .dashboard-content-lab {
     margin-left: 0;
@@ -208,7 +208,7 @@
   }
 }
 
-/* Modal Styles */
+
 .edit-modal {
   position: fixed;
   top: 0;

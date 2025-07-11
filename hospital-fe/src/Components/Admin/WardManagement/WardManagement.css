@@ -6,39 +6,39 @@
   padding: 0;
 }
 
-/* Wrapper & Layout */
+
 .ward-management-wrapper {
   display: flex;
   flex-direction: column;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background-image: url('../../Assests/background.jpg'); /* Make sure path is correct */
+  background-image: url('../../Assests/background.jpg'); 
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
   min-height:100vh;
 }
 
-/* Overlay */
+
 .ward-management-wrapper::before {
  content: '';
   position: absolute;
   top: 0;
   left: 0;
   right: 0;
-  height: 100vh; /* make overlay 1.5 times viewport height */
+  height: 100vh; 
   background-color: rgba(255, 255, 255, 0.404);
   z-index: 2;
 }
 
-/* Content Layout */
+
 .ward-management-content {
    display: flex;
-  /* flex-grow: 1; */
+ 
   padding: 20px;
   justify-content: center;
 }
 
-/* Container for ward content */
+
 .ward-container {
   background-color: rgba(255, 255, 255, 0.97);
   border-radius: 15px;
@@ -57,7 +57,7 @@
   margin-bottom: 12px;
 }
 
-/* Messages */
+
 .error-message, .success-message {
   padding: 12px 20px;
   border-radius: 8px;
@@ -81,7 +81,7 @@
   border: 1px solid #badbcc;
 }
 
-/* Controls Row */
+
 .controls-row {
   display: flex;
   gap: 16px;
@@ -145,7 +145,7 @@
 }
 
 .search-btn {
-  background-color: #0d6efd; /* Bootstrap primary blue */
+  background-color: #0d6efd; 
   border: none;
   padding: 0.6rem 1rem;
   cursor: pointer;
@@ -158,10 +158,10 @@
 }
 
 .search-btn:hover {
-  background-color: #084cd4; /* Darker blue on hover */
+  background-color: #084cd4; 
 }
 
-/* Ward Details Card */
+
 .ward-details-card {
   background-color: #e9f1fa;
   border-radius: 10px;
@@ -201,7 +201,7 @@
   background-color: #991c29;
 }
 
-/* Table Styling */
+
 .wards-table {
   width: 100%;
   border-collapse: collapse;
@@ -245,7 +245,7 @@
   background-color: #991c29;
 }
 
-/* Mobile Card Layout for wards */
+
 .wards-cards {
   display: none;
   flex-direction: column;
@@ -288,7 +288,7 @@
   background-color: #991c29;
 }
 
-/* Loading spinner */
+
 .loading-spinner {
   text-align: center;
   padding: 20px 0;
@@ -296,7 +296,6 @@
   font-weight: 600;
 }
 
-/* Modal Overlay */
 .modal-overlay {
   position: fixed;
   top: 0;
@@ -311,7 +310,7 @@
   padding: 15px;
 }
 
-/* Modal Content */
+
 .modal-content {
   background-color: #fff;
   border-radius: 12px;
@@ -325,7 +324,7 @@
   gap: 18px;
 }
 
-/* Close button */
+
 .modal-close-btn {
   position: absolute;
   top: 16px;
@@ -342,7 +341,7 @@
   color: #001f3f;
 }
 
-/* Form inside modal */
+
 .create-ward-form {
   display: flex;
   flex-direction: column;
@@ -372,7 +371,7 @@
   border-color: #002a5c;
 }
 
-/* Submit button */
+
 .submit-btn {
   background-color: #004e92;
   color: white;
@@ -389,9 +388,7 @@
   background-color: #00356b;
 }
 
-/* Responsive */
 
-/* Tablet and below */
 @media (max-width: 900px) {
   .ward-management-content {
     flex-direction: column;
@@ -414,8 +411,7 @@
   }
 }
 
-/* Mobile (under 600px) */
-/* Hide table, show cards */
+
 @media (max-width: 600px) {
   .wards-table {
     display: none;

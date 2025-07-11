@@ -1,4 +1,4 @@
-/* Container and Layout */
+
 .dashboard-container-doctor {
   position: relative;
   background-image: url('../../Assests/background.jpg');
@@ -11,12 +11,12 @@
   content: "";
   position: absolute;
   top: 0; left: 0; right: 0; bottom: 0;
-  background-color: rgba(255, 255, 255, 0.514); /* white with 60% opacity */
-  z-index: 0;  /* behind content */
+  background-color: rgba(255, 255, 255, 0.514); 
+  z-index: 0; 
 }
 .dashboard-content {
   display: flex;
-  /* width: 100%; */
+ 
   padding: 20px;
   margin-left: 250px;
   transition: margin-left 0.3s ease;
@@ -42,7 +42,7 @@
   margin-bottom: 20px;
 }
 
-/* Card Styling */
+
 .card {
   border-radius: 14px;
   background: #fff;
@@ -54,7 +54,7 @@
   transform: translateY(-4px);
 }
 
-/* Colored Headers */
+
 .appointment-card .card-header { background: linear-gradient(90deg,#6a11cb,#2575fc); }
 .patient-card .card-header { background: linear-gradient(90deg,#11998e,#38ef7d); }
 .medical-record-card .card-header { background: linear-gradient(90deg,#ff6a00,#ee0979); }
@@ -71,23 +71,6 @@
 .card-header svg { margin-right: 12px; }
 .card-body { padding: 20px; }
 
-
-/* .appointment-card .list-group-item,
-.patient-card .list-group-item,
-.medical-record-card .list-group-item,
-.leave-card .list-group-item {
-  background: #fdfdfd;
-  border: 1px solid #e0e0e0;
-  padding: 14px 20px;
-  border-radius: 8px;
-  margin-bottom: 10px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  font-size: 16px;
-  color: #333;
-  transition: background-color .2s;
-} */
 .appointment-card .list-group-item,
 .patient-card .list-group-item,
 .medical-record-card .list-group-item,
@@ -113,7 +96,7 @@
   background: #f4f7fa;
 }
 
-/* Button Actions */
+
 .appointment-card .float-right,
 .patient-card .float-right {
   background: #17a2b8;
@@ -129,7 +112,7 @@
   background: #138496;
 }
 
-/* Leave Card */
+
 .leave-card {
   background: #fff;
   border-radius: 12px;
@@ -137,7 +120,7 @@
 }
 .leave-card .list-group-item:last-child { border-bottom: none; }
 
-/* Notification Icon & Summary */
+
 .notification-icon {
   cursor: pointer;
   color: #4a6a8a;
@@ -158,7 +141,7 @@
   overflow-y: auto;
 }
 
-/* Icon Row (Action Buttons) */
+
 .icon-card-row {
   display: flex;
   flex-wrap: wrap;
@@ -195,11 +178,11 @@
   white-space: nowrap;
 }
 
-/* Hide scrollbar */
+
 .icon-card-row::-webkit-scrollbar { display: none; }
 .icon-card-row { -ms-overflow-style: none; scrollbar-width: none; }
 
-/* Responsive Breakpoints */
+
 @media (max-width: 991px) {
   .dashboard-content { margin-left: 200px; }
   .icon-card-row { gap: 20px; }
