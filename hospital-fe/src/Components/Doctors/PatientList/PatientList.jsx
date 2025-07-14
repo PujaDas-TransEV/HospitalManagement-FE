@@ -123,7 +123,7 @@ const DoctorPatientListPage = () => {
       <div className="dashboard-content-patientlist">
         <Doctorsidebar />
         <div className="patientlist-container">
-          <h2 className="patientlist-title"><FaStethoscope /> Patients</h2>
+          <h2 className="patientlist-title">  <FaStethoscope style={{ color: '#354394ff' }} /> Patient List </h2>
           {error && <Alert variant="danger">{error}</Alert>}
 
           {loading ? (

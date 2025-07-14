@@ -212,3 +212,43 @@
   .icon-card svg { font-size: 1.6rem; }
   .icon-card p { top: 105%; font-size: 0.85rem; }
 }
+/* Timetable Card Styles */
+.timetable-card .card-header {
+  background: linear-gradient(90deg, #ff758c, #ff7eb3);
+  color: #fff;
+  font-weight: 600;
+  font-size: 18px;
+  display: flex;
+  align-items: center;
+  padding: 12px 24px;
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
+}
+
+.timetable-card .list-group-item {
+  background: #fdfdfd;
+  border: 1px solid #e0e0e0;
+  padding: 14px 20px;
+  border-radius: 8px;
+  margin: 10px auto;
+  font-size: 16px;
+  color: #333;
+  width: 90%;
+  max-width: 800px;
+  transition: background-color 0.2s ease;
+}
+
+.timetable-card .list-group-item:hover {
+  background-color: #f4f7fa;
+}
+
+.timetable-card ul {
+  padding-left: 18px;
+  margin-top: 8px;
+}
+
+.timetable-card ul li {
+  list-style-type: disc;
+  font-size: 15px;
+  color: #444;
+}

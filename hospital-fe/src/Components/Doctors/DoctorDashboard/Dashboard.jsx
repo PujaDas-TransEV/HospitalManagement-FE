@@ -1,8 +1,17 @@
-
 import React, { useState, useEffect } from 'react';
 import { Row, Col, Card, ListGroup, Button } from 'react-bootstrap';
-import { FaCalendarAlt, FaUserMd, FaRegCalendarAlt, FaUserInjured, FaPlaneDeparture, FaHome, FaCog, FaUserCircle, FaBell } from 'react-icons/fa';
-import {jwtDecode} from 'jwt-decode'; // fixed import
+import {
+  FaCalendarAlt,
+  FaUserMd,
+  FaRegCalendarAlt,
+  FaUserInjured,
+  FaPlaneDeparture,
+  FaHome,
+  FaCog,
+  FaUserCircle,
+  FaBell,
+} from 'react-icons/fa';
+import { jwtDecode } from 'jwt-decode';
 import DoctorNavbar from '../DoctorNavbar/DoctorNAvbar';
 import Doctorsidebar from '../DoctorSidebar/Doctorsidebar';
 import { Link, useNavigate } from 'react-router-dom';
@@ -20,6 +29,7 @@ const DoctorDashboard = () => {
 
   const [appointments, setAppointments] = useState([]);
   const [patients, setPatients] = useState([]);
+  const [timetable, setTimetable] = useState([]); // ✅ New state
   const [showSummary, setShowSummary] = useState(false);
   const navigate = useNavigate();
 
@@ -45,17 +55,25 @@ const DoctorDashboard = () => {
         if (result.message.includes('Doctor data hasbeen fetched successfully')) {
           const d = result.data;
 
-          setDoctorData((prev) => ({
-            ...prev,
-            fullname: d.fullname || '',
-            specialization: d.specialization || '', // Make sure API sends this field
-            profilepictures: d.profilepictures
-              ? `data:image/jpeg;base64,${d.profilepictures}`
-              : '/images/default-profile.jpg',
-            leaveFrom: d.leavefrom || '',
-            leaveTo: d.leaveto || '',
-            leaveStatus: d.status || '',
-          }));
+        setDoctorData((prev) => ({
+  ...prev,
+  fullname: d.fullname || '',
+  specialization: d.specialization || '',
+  profilepictures: d.profilepictures
+    ? `data:image/jpeg;base64,${d.profilepictures}`
+    : '/images/default-profile.jpg',
+  leaveFrom: d.leavefrom || '',
+  leaveTo: d.leaveto || '',
+  leaveStatus: d.status || '',
+  timetable: d.timetable || [], // 👈 Add this
+}));
+
+
+          // ✅ Set and sort timetable
+          const sortedTimetable = (d.timetable || []).sort(
+            (a, b) => new Date(a.date) - new Date(b.date)
+          );
+          setTimetable(sortedTimetable);
         } else {
           console.warn('Unexpected response message:', result.message);
         }
@@ -135,7 +153,6 @@ const DoctorDashboard = () => {
     fetchPatientDetails();
   }, []);
 
-  // Icon buttons config
   const iconButtons = [
     { icon: <FaRegCalendarAlt size={36} />, label: 'Appointments', onClick: () => navigate('/appointments'), bgColor: '#007bff' },
     { icon: <FaUserInjured size={36} />, label: 'Patients List', onClick: () => navigate('/patients'), bgColor: '#28a745' },
@@ -151,41 +168,35 @@ const DoctorDashboard = () => {
       <div className="dashboard-content d-flex">
         <Doctorsidebar />
         <div className="doctor-dashboard flex-grow-1 p-3 position-relative">
-          {/* Top welcome & specialization + notification bell */}
+          {/* Top welcome */}
           <div className="d-flex justify-content-between align-items-center mb-3">
-            {/* <div>
-              <h2>Welcome, Dr. {doctorData.fullname || 'Loading...'}</h2>
-              <p className="specialization">{doctorData.specialization || 'Loading specialization...'}</p>
-            </div> */}
             <div
-  style={{
-    backgroundColor: '#e3f2fd', // Light blue background
-    padding: '20px 30px',
-    borderRadius: '12px',
-    boxShadow: '0 4px 12px rgba(0, 0, 0, 0.1)',
-    color: '#0d47a1', // Dark blue text
-    marginBottom: '30px',
-    textAlign: 'left'
-  }}
->
-  <h2 style={{ margin: '0 0 10px', fontSize: '28px', fontWeight: '700' }}>
-    Welcome, Dr. {doctorData.fullname || 'Loading...'}
-  </h2>
-  <p
-    className="specialization"
-    style={{
-      margin: '0',
-      fontSize: '18px',
-      color: '#1565c0', // Slightly lighter blue
-      fontWeight: '500',
-      marginLeft:'470px'
-    }}
-  >
-    Specialization: {doctorData.specialization || 'Loading specialization...'}
-  </p>
-</div>
-
-            <div
+              style={{
+                backgroundColor: '#e3f2fd',
+                padding: '20px 30px',
+                borderRadius: '12px',
+                boxShadow: '0 4px 12px rgba(0, 0, 0, 0.1)',
+                color: '#0d47a1',
+                marginBottom: '30px',
+                textAlign: 'left',
+              }}
+            >
+              <h2 style={{ margin: '0 0 10px', fontSize: '28px', fontWeight: '700' }}>
+                Welcome, Dr. {doctorData.fullname || 'Loading...'}
+              </h2>
+              <p
+                style={{
+                  margin: '0',
+                  fontSize: '18px',
+                  color: '#1565c0',
+                  fontWeight: '500',
+                  marginLeft: '470px',
+                }}
+              >
+                Specialization: {doctorData.specialization || 'Loading...'}
+              </p>
+            </div>
+            {/* <div
               className="notification-icon"
               onClick={() => setShowSummary(!showSummary)}
               tabIndex={0}
@@ -195,7 +206,7 @@ const DoctorDashboard = () => {
               aria-label="Toggle summary panel"
             >
               <FaBell size={28} />
-            </div>
+            </div> */}
           </div>
 
           {/* Summary panel */}
@@ -229,43 +240,29 @@ const DoctorDashboard = () => {
             </Card>
           )}
 
-          {/* Icon row */}
-     <div className="icon-card-row d-flex flex-wrap justify-content-start gap-3 my-4">
-  {iconButtons.map(({ icon, label, onClick, bgColor, textColor }) => (
-    <div
-      key={label}
-      className="icon-card"
-      onClick={onClick}
-      role="button"
-      tabIndex={0}
-      onKeyDown={(e) => e.key === 'Enter' && onClick()}
-      style={{ backgroundColor: bgColor, color: textColor || '#fff' }}
-      aria-label={`Go to ${label}`}
-    >
-      {icon}
-      <p>{label}</p>
-    </div>
-  ))}
-</div>
+          {/* Icon Buttons */}
+          <div className="icon-card-row d-flex flex-wrap justify-content-start gap-3 my-4">
+            {iconButtons.map(({ icon, label, onClick, bgColor, textColor }) => (
+              <div
+                key={label}
+                className="icon-card"
+                onClick={onClick}
+                role="button"
+                tabIndex={0}
+                onKeyDown={(e) => e.key === 'Enter' && onClick()}
+                style={{ backgroundColor: bgColor, color: textColor || '#fff' }}
+                aria-label={`Go to ${label}`}
+              >
+                {icon}
+                <p>{label}</p>
+              </div>
+            ))}
+          </div>
 
-
-          {/* Existing cards for appointments, patients, leave */}
-          <Row className="mb-2"style={{ paddingTop: '30px' }}>
+          {/* Appointment and Patient cards */}
+          <Row className="mb-2" style={{ paddingTop: '30px' }}>
             <Col md={6} sm={12}>
-             <Card
-  className="appointment-card h-100"
-  style={{
-    backgroundColor: '#ffffff',
-    borderRadius: '14px',
-    boxShadow: '0 6px 20px rgba(0, 0, 0, 0.06)',
-    overflow: 'hidden',
-    transition: 'transform 0.2s ease',
-    marginTop: '20px',           // 👈 pushes it down
-    marginBottom: '10px',
-    padding: '0',
-  }}
->
-
+              <Card className="appointment-card h-100" style={{ marginTop: '20px', marginBottom: '10px' }}>
                 <Card.Header>
                   <FaCalendarAlt style={{ marginRight: '8px' }} />
                   Upcoming Appointments
@@ -275,7 +272,6 @@ const DoctorDashboard = () => {
                     appointments.map((appointment) => (
                       <ListGroup.Item key={appointment.id}>
                         {appointment.patientName} at {appointment.time} - Status: {appointment.status}
-
                         <Link to="/appointments" className="float-end">
                           <Button variant="outline-primary" size="sm">
                             View
@@ -302,7 +298,7 @@ const DoctorDashboard = () => {
                       <ListGroup.Item key={patient.id}>
                         {patient.name} - Age: {patient.age} - Blood Group: {patient.condition}
                         <Link to="/patients" className="float-end">
-                          <Button variant="outline-primary" size="sm" className="float-end">
+                          <Button variant="outline-primary" size="sm">
                             View Record
                           </Button>
                         </Link>
@@ -316,24 +312,51 @@ const DoctorDashboard = () => {
             </Col>
           </Row>
 
-          <Row className="mb-4">
-            <Col md={12}>
-              <Card className="leave-card">
-                <Card.Header>Leave Status</Card.Header>
-                <ListGroup variant="flush">
-                  <ListGroup.Item style={{ backgroundColor: '#f8f9fa', color: '#000' }}>
-                    Leave From: <strong>{doctorData.leaveFrom || 'N/A'}</strong>
+   {/* Leave Status */}
+      <Row className="mb-4">
+        <Col xs={12} md={6}>
+          <Card className="leave-card" style={{ width: '120%',maxWidth: '1200px', margin: '0 auto' }}>
+            <Card.Header>Leave Status</Card.Header>
+            <ListGroup variant="flush">
+              <ListGroup.Item style={{ backgroundColor: '#f8f9fa', color: '#000' }}>
+                Leave From: <strong>{doctorData.leaveFrom || 'N/A'}</strong>
+              </ListGroup.Item>
+              <ListGroup.Item style={{ backgroundColor: '#f8f9fa', color: '#000' }}>
+                Leave To: <strong>{doctorData.leaveTo || 'N/A'}</strong>
+              </ListGroup.Item>
+              <ListGroup.Item style={{ backgroundColor: '#f8f9fa', color: '#000' }}>
+                Status: <strong>{doctorData.leaveStatus || 'N/A'}</strong>
+              </ListGroup.Item>
+            </ListGroup>
+          </Card>
+        </Col>
+
+        <Col xs={12} md={6}>
+          <Card className="timetable-card" style={{ width: '150%', maxWidth: '1200px', marginLeft: '100px',    padding: '15px', }}>
+            <Card.Header>Availability Schedule</Card.Header>
+            <ListGroup variant="flush">
+              {doctorData.timetable?.length > 0 ? (
+                doctorData.timetable.map((entry, idx) => (
+                  <ListGroup.Item key={idx} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
+                    <div style={{ flex: '1' }}>
+                      <strong>{entry.date}</strong>
+                    </div>
+                    <div style={{ flex: '2', display: 'flex', flexDirection: 'column', gap: '4px' }}>
+                      {entry.slots.map((slot, id2) => (
+                        <span key={id2}>{slot.start_time} - {slot.end_time}</span>
+                      ))}
+                    </div>
                   </ListGroup.Item>
-                  <ListGroup.Item style={{ backgroundColor: '#f8f9fa', color: '#000' }}>
-                    Leave To: <strong>{doctorData.leaveTo || 'N/A'}</strong>
-                  </ListGroup.Item>
-                  <ListGroup.Item style={{ backgroundColor: '#f8f9fa', color: '#000' }}>
-                    Status: <strong>{doctorData.leaveStatus || 'N/A'}</strong>
-                  </ListGroup.Item>
-                </ListGroup>
-              </Card>
-            </Col>
-          </Row>
+                ))
+              ) : (
+                <ListGroup.Item>No timetable available</ListGroup.Item>
+              )}
+            </ListGroup>
+          </Card>
+        </Col>
+      </Row>
+
+
         </div>
       </div>
     </div>

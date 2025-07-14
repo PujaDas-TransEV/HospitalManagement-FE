@@ -20,7 +20,7 @@
   max-width: 1400px;
   margin: 120px auto 40px; 
   padding: 20px;
-  background: #f0efeb;
+  background: #a8ceee;
   border-radius: 8px;
   box-shadow: 0 0 12px rgba(0,0,0,0.1);
   min-height: 40vh;
@@ -149,4 +149,10 @@
   padding: 10px;
   border-bottom: 2px solid #0056b3;
   user-select: none; 
+}
+/* Hide cards on medium+ screens (desktop) */
+@media (min-width: 768px) {
+  .patientlist-cards {
+    display: none !important;
+  }
 }
