@@ -1,7 +1,7 @@
 
-.dashboard-container-adminappointment{
-    position: relative;
-  background-image: url('../../Assests/background.jpg');
+.dashboard-container-adminappointment {
+   position: relative;
+background-image: url('../../Assests/background.jpg');
   background-size: cover;
   background-position: center;
   min-height: 100vh;  
@@ -10,138 +10,198 @@
   content: '';
   position: absolute;
   inset: 0;
-  background-color: rgba(255, 255, 255, 0.603);
+  background-color: rgba(255, 255, 255, 0.527);
   z-index: 1;
 }
-.appointment-booking-container {
- 
-   position: relative;
+
+  .appointment-booking-container {
+
+  position: relative;
   padding: 2rem;
   color: #333;
   background: rgba(255,255,255,0.9);
   margin: 1rem auto;
   border-radius: 8px;
-  max-width: 1500px;
+  max-width: 800px;   /* Increased width */
+  width: 90vw;         /* Responsive width */
   z-index: 5;
 }
 
-.page-banner {
-  width: 100%;
-  height: 200px;
-  object-fit: cover;
-  border-radius: 8px;
-  margin-bottom: 20px;
+
+
+
+@media (max-width: 768px) {
+  .appointment-booking-container {
+    padding: 20px;
+    margin: 20px;
+    width: 100%;
+  }
 }
 
-h2 {
-  margin-bottom: 20px;
+.appointment-booking-container h2 {
+  margin-bottom: 24px;
+  color: #0077b6;
+}
+
+/* Form elements */
+label {
+  font-weight: 600;
+  display: block;
+  margin: 20px 0 8px;
   color: #333;
 }
 
-
-label {
-  display: block;
-  margin-top: 15px;
-  font-weight: 600;
-  color: #444;
-}
-
 select,
-input[type='date'],
-textarea {
+textarea,
+input[type='text'],
+input[type='date'] {
   width: 100%;
   padding: 10px;
-  margin-top: 5px;
-  border-radius: 6px;
   border: 1px solid #ccc;
-  font-size: 1rem;
-  background-color: #fff;
+  border-radius: 6px;
+  font-size: 15px;
+  margin-bottom: 10px;
+  box-sizing: border-box;
 }
 
 textarea {
-  min-height: 80px;
   resize: vertical;
 }
 
-
+/* Booking button */
 .book-btnn {
- margin-top: 20px;
-padding: 10px 20px;
-background-color: #007bff;
-border: none;
-color: white;
-font-weight: bold;
-border-radius: 6px;
-cursor: pointer;
-transition: background 0.3s ease;
-
+  background-color: #0077b6;
+  color: white;
+  border: none;
+  padding: 12px 20px;
+  font-size: 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  margin-top: 20px;
+  transition: background-color 0.3s ease;
 }
 
-.book-btn:hover {
-  background-color: #0056b3;
+.book-btnn:hover {
+  background-color: #005f8a;
 }
 
-.book-btn:disabled {
-  background-color: #6c757d;
+.book-btnn:disabled {
+  background-color: #ccc;
   cursor: not-allowed;
 }
 
+/* Timeslot button styles */
+.timeslots-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 10px;
+}
 
+.timeslot-button {
+  padding: 8px 14px;
+  background-color: #e0f7fa;
+  border: 1px solid #0097a7;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background-color 0.2s ease;
+}
+
+.timeslot-button:hover {
+  background-color: #b2ebf2;
+}
+
+.timeslot-button.selected {
+  background-color: #00796b;
+  color: white;
+  font-weight: bold;
+}
+
+/* Calendar date styles */
+.react-datepicker {
+  font-family: inherit;
+  border: 1px solid #ccc;
+  padding: 10px;
+  border-radius: 8px;
+}
+
+.cal-available {
+  background-color: #66e76a !important;
+  border-radius: 50% !important;
+}
+
+.cal-disabled {
+  color: #ccc !important;
+  background-color: #f0f0f0 !important;
+  pointer-events: none;
+}
+
+.cal-today {
+  border: 2px solid #007bff !important;
+  border-radius: 50% !important;
+}
+
+.cal-past-available {
+  background-color: #ffe082 !important;
+  border-radius: 50% !important;
+}
+
+/* Spinner animation */
 .spin {
   animation: spin 1s linear infinite;
-  display: inline-block;
-  font-size: 1.1rem;
-  vertical-align: middle;
-  margin-right: 5px;
 }
 
 @keyframes spin {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
+  to {
     transform: rotate(360deg);
   }
 }
 
-
+/* Popup styles */
 .popup-overlay {
   position: fixed;
-  inset: 0;
-  background-color: rgba(0, 0, 0, 0.5);
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.4);
+  z-index: 999;
   display: flex;
-  justify-content: center;
   align-items: center;
-  z-index: 100;
+  justify-content: center;
 }
 
 .popup-box {
-  background: #fff;
-  padding: 2rem;
+  background: white;
+  padding: 30px 40px;
   border-radius: 10px;
-  max-width: 400px;
-  width: 90%;
   text-align: center;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  max-width: 400px;
 }
 
 .popup-box p {
-  font-size: 1.1rem;
-  margin-bottom: 1.5rem;
-  color: #333;
+  font-size: 16px;
+  margin-bottom: 20px;
 }
 
 .popup-box button {
-  padding: 8px 16px;
-  background-color: #28a745;
-  border: none;
-  border-radius: 6px;
+  background-color: #0077b6;
   color: white;
-  font-weight: bold;
+  border: none;
+  padding: 10px 16px;
+  border-radius: 6px;
   cursor: pointer;
-  transition: background 0.3s ease;
+  font-size: 14px;
 }
 
 .popup-box button:hover {
-  background-color: #218838;
+  background-color: #005f8a;
+}
+
+/* Status message */
+.status-msg {
+  margin-top: 10px;
+  color: #d84315;
+  font-weight: 500;
 }

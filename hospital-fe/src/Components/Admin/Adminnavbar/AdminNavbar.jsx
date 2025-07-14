@@ -68,7 +68,7 @@ const AdminNavbar = () => {
 
   const handleLogout = () => {
     localStorage.removeItem("accessToken");
-    navigate("/admin/login");
+    navigate("/");
   };
 
   const handleNotifications = () => {
