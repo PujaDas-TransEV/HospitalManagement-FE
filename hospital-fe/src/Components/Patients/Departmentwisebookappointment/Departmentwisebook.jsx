@@ -1,276 +1,211 @@
-
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import {jwtDecode} from 'jwt-decode'; // fixed import
-import './Departmentwisebook.css';
+import { jwtDecode } from 'jwt-decode';
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
 import PatientNavbar from '../Navbar/PatientNavbar';
 import PatientSidebar from '../Sidebar/PatientSidebar';
-import { FaSpinner } from 'react-icons/fa';
-import { FaClock } from 'react-icons/fa';
-
-// ...
-
-<div className="popup-overlay" style={{ backgroundColor: '#e0f7fa', padding: '20px', borderRadius: '10px', textAlign: 'center' }}>
-  <FaSpinner className="spin" />
-  <p>Booking appointment...</p>
-</div>
-
-const departmentTimes = {
-  cardiology: ["09:00:00", "10:00:00", "11:00:00"],
-  neurology: ["10:00:00", "12:00:00", "14:00:00"],
-  dermatology: ["11:00:00", "13:00:00", "15:00:00"],
-  orthopedics: ["12:00:00", "13:00:00", "18:00:00"],
-  pediatrics: ["13:00:00", "14:00:00", "18:00:00"],
-  surgery: ["13:00:00", "13:00:00", "18:00:00"],
-};
+import { FaSpinner, FaClock } from 'react-icons/fa';
+import './Departmentwisebook.css';
 
 const AppointmentBookingPage = () => {
   const { departmentId } = useParams();
+  const navigate = useNavigate();
+
   const [doctors, setDoctors] = useState([]);
-  const [selectedDoctor, setSelectedDoctor] = useState('');
-  const [selectedDate, setSelectedDate] = useState('');
+  const [selectedDoctorUid, setSelectedDoctorUid] = useState('');
+  const [selectedDoctorData, setSelectedDoctorData] = useState(null);
+  const [selectedDate, setSelectedDate] = useState(null);
+  const [availableTimes, setAvailableTimes] = useState([]);
   const [selectedTime, setSelectedTime] = useState('');
   const [appointmentDetails, setAppointmentDetails] = useState('');
   const [appointmentStatus, setAppointmentStatus] = useState('');
   const [patientId, setPatientId] = useState(null);
   const [isBooking, setIsBooking] = useState(false);
   const [showPopup, setShowPopup] = useState(false);
-  const navigate = useNavigate();
+
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
 
   useEffect(() => {
-    const fetchPatientProfile = async () => {
-      const accessToken = localStorage.getItem("accessToken");
-      if (!accessToken) {
-        navigate("/login");
-        return;
-      }
-      try {
-        const decodedToken = jwtDecode(accessToken);
-        const patientId = decodedToken.userid;
-        setPatientId(patientId);
-      } catch (error) {
-        console.error('Error decoding token:', error);
-        navigate("/login");
-      }
-    };
-    fetchPatientProfile();
+    const token = localStorage.getItem('accessToken');
+    if (!token) return navigate('/login');
+    try {
+      const { userid } = jwtDecode(token);
+      setPatientId(userid);
+    } catch {
+      navigate('/login');
+    }
   }, [navigate]);
 
   useEffect(() => {
-    const fetchDoctors = async () => {
+    async function loadDoctors() {
       try {
-        const formData = new FormData();
-        formData.append('doctorspecialization', departmentId);
-        const response = await axios.post('http://192.168.0.106:5000/selectivedoctordata', formData, {
-          headers: { 'Content-Type': 'multipart/form-data' },
-        });
-        if (response.data.data && Array.isArray(response.data.data)) {
-          const doctorList = response.data.data.map((doctor) => ({
-            id: doctor.uid,
-            name: doctor.fullname,
-            specialization: doctor.specialization,
-          }));
-          setDoctors(doctorList);
-          setAppointmentStatus('');
-        } else {
-          setDoctors([]);
-          setAppointmentStatus('No doctors available for this specialization.');
-        }
-      } catch (error) {
-        console.error('Error fetching doctors:', error);
-        if (error.response && error.response.status === 404) {
-        // If 404, show no doctors available message
+        const form = new FormData();
+        form.append('doctorspecialization', departmentId);
+        const res = await axios.post('http://192.168.0.106:5000/selectivedoctordata', form);
+        setDoctors(res.data.data || []);
+      } catch (err) {
+        console.error(err);
         setDoctors([]);
-        setAppointmentStatus('No doctors available for this specialization.');
-      } else {
-        setDoctors([]);
-        setAppointmentStatus('Error fetching doctor data.');
       }
     }
-  };
-      
-
-    if (departmentId) fetchDoctors();
-    else setAppointmentStatus('Invalid department ID.');
+    if (departmentId) loadDoctors();
   }, [departmentId]);
 
-  const handleBookAppointment = async () => {
-    if (!selectedDoctor || !selectedDate || !selectedTime || !appointmentDetails || !patientId) {
-      setAppointmentStatus('Please fill all the required fields.');
-      return;
-    }
+  useEffect(() => {
+    const doc = doctors.find(d => d.uid === selectedDoctorUid);
+    setSelectedDoctorData(doc || null);
+    setSelectedDate(null);
+    setAvailableTimes([]);
+    setSelectedTime('');
+  }, [selectedDoctorUid, doctors]);
 
-    const doctor = doctors.find((doc) => doc.id === selectedDoctor);
-    if (!doctor) {
-      setAppointmentStatus('Invalid doctor selection.');
-      return;
-    }
+  const isDateSelectable = date => {
+    return selectedDoctorData?.timetable.some(t =>
+      new Date(t.date).toDateString() === date.toDateString()
+    );
+  };
 
-    const appointmentDateTime = `${selectedDate} ${selectedTime}`;
+  const isPastAvailableDate = date => {
+    const d = new Date(date.setHours(0, 0, 0, 0));
+    return d < today && selectedDoctorData?.timetable.some(
+      t => new Date(t.date).toDateString() === d.toDateString()
+    );
+  };
 
-    try {
-      setIsBooking(true);
-      setAppointmentStatus('');
-      const formData = new FormData();
-      formData.append('doctorid', doctor.id);
-      formData.append('patinetid', patientId);
-      formData.append('appoinmenttime', appointmentDateTime);
-      formData.append('appointmentdetails', appointmentDetails);
-
-      const response = await axios.post('http://192.168.0.106:5000/createappoinment', formData, {
-        headers: { 'Content-Type': 'multipart/form-data' },
-      });
-
-      setIsBooking(false);
-
-      if (response.data && response.data.message) {
-        setAppointmentStatus(`Appointment successfully booked with Dr. ${doctor.name} for ${appointmentDateTime}.`);
-        setShowPopup(true);
-
-        setTimeout(() => {
-          setShowPopup(false);
-          navigate('/patient-Appointments');
-        }, 2000);
-      } else {
-        setAppointmentStatus('Error booking the appointment.');
+  const handleDateChange = date => {
+    setSelectedDate(date);
+    setSelectedTime('');
+    const entry = selectedDoctorData.timetable.find(t =>
+      new Date(t.date).toDateString() === date.toDateString()
+    );
+    if (!entry) return setAvailableTimes([]);
+    const slots = [];
+    entry.schedule.forEach(({ start_time, end_time }) => {
+      const [sh, sm] = start_time.split(':').map(Number);
+      const [eh, em] = end_time.split(':').map(Number);
+      let curr = new Date(date);
+      curr.setHours(sh, sm);
+      const end = new Date(date);
+      end.setHours(eh, em);
+      while (curr < end) {
+        slots.push(curr.toTimeString().slice(0, 5));
+        curr.setHours(curr.getHours() + 1);
       }
-    } catch (error) {
+    });
+    setAvailableTimes(slots);
+  };
+
+  const handleBook = async e => {
+    e.preventDefault();
+    if (!selectedDoctorData || !selectedDate || !selectedTime || !appointmentDetails || !patientId) {
+      return setAppointmentStatus('Fill all fields.');
+    }
+    setIsBooking(true);
+    const appointmentTime = `${selectedDate.toISOString().split('T')[0]} ${selectedTime}`;
+    try {
+      const form = new FormData();
+      form.append('doctorid', selectedDoctorData.uid);
+      form.append('patinetid', patientId);
+      form.append('appoinmenttime', appointmentTime);
+      form.append('appointmentdetails', appointmentDetails);
+      await axios.post('http://192.168.0.106:5000/createappoinment', form);
+      setShowPopup(true);
+      setAppointmentStatus(`Booked with Dr. ${selectedDoctorData.fullname} at ${appointmentTime}`);
+      setTimeout(() => navigate('/patient-Appointments'), 2000);
+    } catch {
+      setAppointmentStatus('Booking error.');
+    } finally {
       setIsBooking(false);
-      console.error('Error booking appointment:', error);
-      setAppointmentStatus('Error booking the appointment.');
     }
   };
 
   return (
-    <div className="dashboard-container-department">
+    <div className="page-background">
       <PatientNavbar />
       <div className="dashboard-content">
         <PatientSidebar />
-        <div className="appointment-booking-container">
-          <h2>Book Appointment - {departmentId}</h2>
+        <div className="booking-overlay">
+          <form onSubmit={handleBook} className="booking-form">
+            <h2>Book Appointment — {departmentId}</h2>
 
-          <form
-            className="appointment-form"style={{ backgroundColor: '#e0f7fa'}}
-            onSubmit={(e) => {
-              e.preventDefault();
-              handleBookAppointment();
-            }}
-          >
             <div className="form-group">
-              <label>Select Doctor:</label>
-              <select
-                value={selectedDoctor}
-                onChange={(e) => setSelectedDoctor(e.target.value)}
-                required
-              >
-                <option value="">-- Select Doctor --</option>
-                {doctors.length > 0
-                  ? doctors.map((doctor) => (
-                      <option key={doctor.id} value={doctor.id}>
-                        {doctor.name} (UID: {doctor.id})
-                      </option>
-                    ))
-                  : (
-                    <option value="" disabled>No doctors available</option>
-                  )}
+              <label>Select Doctor</label>
+              <select value={selectedDoctorUid} onChange={e => setSelectedDoctorUid(e.target.value)} required>
+                <option value="">-- Choose Doctor --</option>
+                {doctors.map(d => (
+                  <option key={d.uid} value={d.uid}>Dr. {d.fullname}</option>
+                ))}
               </select>
             </div>
-
-            <div className="form-group">
-              <label>Select Date:</label>
-              <input
-                type="date"
-                value={selectedDate}
-                onChange={(e) => setSelectedDate(e.target.value)}
-                required
-              />
-            </div>
-
-          <div style={{
-  display: 'flex',
-  alignItems: 'center',
-  gap: '10px',
-  marginBottom: '20px',
-  fontWeight: '500',
-  color: '#333'
-}}>
-  <label htmlFor="appointmentTime" style={{ display: 'flex', alignItems: 'center' }}>
-    <FaClock style={{ marginRight: '8px', color: '#007bff' }} />
-    Appointment Time:
-  </label>
-  <input
-    id="appointmentTime"
-    type="time"
-    value={selectedTime}
-    onChange={e => setSelectedTime(e.target.value)}
-    style={{
-      padding: '8px 12px',
-      borderRadius: '4px',
-      border: '1px solid #ccc',
-      width: '160px',
-      fontSize: '14px'
-    }}
-    required
-  />
-</div>
+          
 
 
-            <div className="form-group">
-              <label> Reason Of Appointment:</label>
-              <textarea
-                value={appointmentDetails}
-                onChange={(e) => setAppointmentDetails(e.target.value)}
-                placeholder="Enter appointment reason"
-                required
-                rows={4}
-              />
-            </div>
+            {selectedDoctorData && (
+              <>
+                <div className="form-group calendar-group">
+                  <label>Select Available Date</label>
+                  <DatePicker
+                    selected={selectedDate}
+                    onChange={handleDateChange}
+                    filterDate={date => date >= today && isDateSelectable(date)}
+                    dayClassName={date => {
+                      const d = new Date(date.setHours(0, 0, 0, 0));
+                      if (d.getTime() === today.getTime()) return 'cal-today';
+                      if (isPastAvailableDate(d)) return 'cal-past-available';
+                      if (d < today) return 'cal-disabled';
+                      return isDateSelectable(d) ? 'cal-available' : 'cal-disabled';
+                    }}
+                    inline
+                  />
+                </div>
 
-           
-            <button
-  type="submit"
-  disabled={isBooking}
-  className="book-btn"
-  style={{ 
-    display: 'block',    
-    margin: '0 auto',     
-    width: '250px',
-    backgroundColor: '#1f6695'  
-  }}
->
-  Book Appointment
-</button>
-
-
-
-            {appointmentStatus && !showPopup && (
-              <div className="appointment-status">{appointmentStatus}</div>
+                {availableTimes.length > 0 && (
+                  <div className="form-group timeslot-group">
+                    <label><FaClock /> Available Time Slots</label>
+                    <div className="timeslots-container">
+                      {availableTimes.map(time => (
+                        <button
+                          key={time}
+                          type="button"
+                          className={`timeslot-button ${selectedTime === time ? 'selected' : ''}`}
+                          onClick={() => setSelectedTime(time)}
+                        >{time}</button>
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </>
             )}
-          </form>
 
-          {/* Spinner Popup during booking */}
-          {isBooking && (
-            // <div className="popup-overlay">
-            //   <div className="spinner-popup"style={{ backgroundColor: '#e0f7fa'}}>
-            //     <div className="spinner"></div>
-            <div className="popup-overlay" style={{ backgroundColor: '#e0f7fa', padding: '20px', borderRadius: '10px', textAlign: 'center' }}>
-  <FaSpinner className="spin" />
-                <p>Booking appointment...</p>
-              </div>
-        
-          )}
-
-          {/* Success Popup */}
-          {showPopup && (
-            <div className="popup-overlay">
-              <div className="popup-content">
-                <h3>Success!</h3>
-                <p>{appointmentStatus}</p>
-              </div>
+            <div className="form-group">
+              <label>Reason for Appointment</label>
+              <textarea
+                rows="3"
+                required
+                value={appointmentDetails}
+                onChange={e => setAppointmentDetails(e.target.value)}
+              />
             </div>
-          )}
+
+            <button type="submit" disabled={isBooking}>
+              {isBooking ? <><FaSpinner className="spin" /> Booking...</> : 'Confirm Booking'}
+            </button>
+
+            {appointmentStatus && <p className="status-msg">{appointmentStatus}</p>}
+          </form>
         </div>
+
+        {showPopup && (
+          <div className="popup-overlay">
+            <div className="popup-content">
+              <h3>Success!</h3>
+              <p>{appointmentStatus}</p>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );

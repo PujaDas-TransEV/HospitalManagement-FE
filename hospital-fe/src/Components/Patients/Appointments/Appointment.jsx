@@ -276,11 +276,11 @@ const Appointment = () => {
           <td data-label="Doctor">{a.doctor_fullname}</td>
           <td data-label="Details">{a.appoinmentdetails}</td>
           <td data-label="Actions" className="action-buttons">
-            <button className="btnn-icon" onClick={() => handleEdit(a)} title="Edit">
+            <button className="btnn-iconn" onClick={() => handleEdit(a)} title="Edit">
               <FaEdit />
             </button>
             <button
-              className="btn-icon btn-delete"
+              className="btn-icon btn-deletee"
               onClick={() => handleDelete(a.uid)}
               disabled={actionLoading}
               title="Delete"

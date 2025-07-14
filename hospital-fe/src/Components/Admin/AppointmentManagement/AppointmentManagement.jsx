@@ -158,8 +158,8 @@ const AdminAppointments = () => {
                           <div>{a.appoinmentdetails}</div>
                           <div>Status: {a.appoinmentstatus}</div>
                           <div className="actions">
-                            <FaEdit className="btn-edit" onClick={() => openEdit(a)} />
-                            <FaTrashAlt className="btn-delete" onClick={() => deleteAppt(a.uid)} />
+                            <FaEdit className="btn-editt" onClick={() => openEdit(a)} />
+                            <FaTrashAlt className="btn-deletee" onClick={() => deleteAppt(a.uid)} />
                           </div>
                         </div>
                       ))}
