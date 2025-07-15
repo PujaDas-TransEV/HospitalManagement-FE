@@ -4,7 +4,7 @@ import './DoctorTime.css';
 import PatientNavbar from '../Navbar/PatientNavbar';
 import PatientSidebar from '../Sidebar/PatientSidebar';
 
-const API_URL = 'http://localhost:5000/doctorops/getalldoctor';
+const API_URL = 'http://192.168.0.106:5000/doctorops/getalldoctor';
 
 const DepartmentwiseTimetable = () => {
   const [doctors, setDoctors] = useState([]);

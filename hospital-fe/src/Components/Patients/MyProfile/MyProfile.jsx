@@ -1,6 +1,7 @@
+
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import {jwtDecode} from "jwt-decode";
+import {jwtDecode} from "jwt-decode"; // fixed import (without braces)
 import { FaSpinner } from "react-icons/fa";
 import "./MyProfile.css";
 import PatientNavbar from "../Navbar/PatientNavbar";
@@ -14,7 +15,8 @@ const PatientProfile = () => {
   const [error, setError] = useState(null);
   const [successMessage, setSuccessMessage] = useState(null);
   const [isUpdated, setIsUpdated] = useState(false);
-  const [isLoading, setIsLoading] = useState(true); 
+  const [isLoading, setIsLoading] = useState(true);
+  const [changedFields, setChangedFields] = useState({});
 
   const [formData, setFormData] = useState({
     firstname: "",
@@ -41,7 +43,7 @@ const PatientProfile = () => {
         return;
       }
 
-      setIsLoading(true); 
+      setIsLoading(true);
 
       try {
         const decodedToken = jwtDecode(accessToken);
@@ -62,8 +64,19 @@ const PatientProfile = () => {
         const data = await response.json();
 
         if (response.ok) {
+          const normalizedGender = data.data.gender
+            ? data.data.gender.charAt(0).toUpperCase() +
+              data.data.gender.slice(1).toLowerCase()
+            : "";
+
+          const sanitizedData = Object.fromEntries(
+            Object.entries(data.data).map(([key, value]) => [key, value ?? ""])
+          );
+
+          sanitizedData.gender = normalizedGender;
+
           setProfileData(data.data);
-          setFormData(data.data);
+          setFormData(sanitizedData);
           setError(null);
         } else {
           setError(data.message || "Failed to fetch profile.");
@@ -72,7 +85,7 @@ const PatientProfile = () => {
         console.error("Error fetching profile:", error);
         setError("An error occurred while fetching the profile.");
       } finally {
-        setIsLoading(false); 
+        setIsLoading(false);
       }
     };
 
@@ -85,6 +98,10 @@ const PatientProfile = () => {
       const reader = new FileReader();
       reader.onloadend = () => {
         setNewImage(reader.result);
+        setChangedFields((prev) => ({
+          ...prev,
+          profilepicture: reader.result,
+        }));
         setIsUpdated(true);
       };
       reader.readAsDataURL(file);
@@ -113,12 +130,17 @@ const PatientProfile = () => {
 
     const formDataObj = new FormData();
     formDataObj.append("patientid", patientId);
-    Object.keys(formData).forEach((key) => {
-      formDataObj.append(key, formData[key]);
+
+    // Append only changed fields except profilepicture
+    Object.keys(changedFields).forEach((key) => {
+      if (key !== "profilepicture") {
+        formDataObj.append(key, changedFields[key]);
+      }
     });
 
-    if (newImage) {
-      const imageBlob = dataURItoBlob(newImage);
+    // Append image if changed
+    if (changedFields.profilepicture) {
+      const imageBlob = dataURItoBlob(changedFields.profilepicture);
       formDataObj.append("profilepicture", imageBlob, "profilepicture.jpg");
     }
 
@@ -141,6 +163,7 @@ const PatientProfile = () => {
         setError(null);
         setIsUpdated(false);
         setNewImage(null);
+        setChangedFields({});
       } else {
         setError(data.message || "Failed to update profile.");
         setSuccessMessage(null);
@@ -156,6 +179,10 @@ const PatientProfile = () => {
     const { name, value } = e.target;
     setFormData((prevData) => ({
       ...prevData,
+      [name]: value,
+    }));
+    setChangedFields((prev) => ({
+      ...prev,
       [name]: value,
     }));
     setIsUpdated(true);
@@ -186,14 +213,12 @@ const PatientProfile = () => {
               <h2>My Profile</h2>
             </div>
 
-          
             {isLoading && (
               <div className="loading-overlay" aria-label="Loading">
                 <FaSpinner className="spinner-icon" />
               </div>
             )}
 
-         
             {!isLoading && (
               <div
                 className="profile-card"
@@ -228,7 +253,6 @@ const PatientProfile = () => {
                 </div>
 
                 <div className="profile-details">
-            
                   <div className="profile-detail-row">
                     <div className="input-group">
                       <label>First Name:</label>
@@ -338,15 +362,11 @@ const PatientProfile = () => {
                   <div className="profile-detail-row">
                     <div className="input-group full-width">
                       <label>Gender:</label>
-                      <select
-                        name="gender"
-                        value={formData.gender}
-                        onChange={handleChange}
-                      >
+                      <select name="gender" value={formData.gender} onChange={handleChange}>
                         <option value="">Select gender</option>
-                        <option value="male">Male</option>
-                        <option value="female">Female</option>
-                        <option value="other">Other</option>
+                        <option value="Male">Male</option>
+                        <option value="Female">Female</option>
+                        <option value="Other">Other</option>
                       </select>
                     </div>
                   </div>
@@ -355,26 +375,21 @@ const PatientProfile = () => {
             )}
 
             {error && <div className="error-message">{error}</div>}
-            {successMessage && (
-              <div className="success-message">{successMessage}</div>
-            )}
+            {successMessage && <div className="success-message">{successMessage}</div>}
 
-          
             {!isLoading && (
-             
               <button
-  onClick={handleUpdateProfile}
-  className="update-button"
-  disabled={!isUpdated}
-  style={{
-    display: "block",
-    margin: "20px auto 0 auto",
-    width: "150px",
-  }}
->
-  Update Profile
-</button>
-
+                onClick={handleUpdateProfile}
+                className="update-button"
+                disabled={!isUpdated}
+                style={{
+                  display: "block",
+                  margin: "20px auto 0 auto",
+                  width: "150px",
+                }}
+              >
+                Update Profile
+              </button>
             )}
           </div>
         </div>

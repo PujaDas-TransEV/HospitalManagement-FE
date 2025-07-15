@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState, useRef } from 'react';
 import {jwtDecode} from 'jwt-decode';
 import jsPDF from 'jspdf';
@@ -31,7 +30,8 @@ const PatientInvoicePage = () => {
     'Overall Satisfaction',
   ];
 
-  useEffect(() => {
+  
+useEffect(() => {
     const fetchBills = async () => {
       try {
         const token = localStorage.getItem('accessToken');
@@ -48,11 +48,21 @@ const PatientInvoicePage = () => {
         });
 
         const data = await response.json();
-        if (!response.ok) throw new Error(data.error || 'Failed to fetch bills');
+
+        // ✅ Check if no billing records found
+        if (data.status === false && data.message) {
+          setError(data.message);
+          setBills([]);
+          return;
+        }
+
+        if (!response.ok || !data.bills) {
+          throw new Error(data.error || 'Failed to fetch bills');
+        }
 
         setBills(data.bills || []);
         if (data.bills.length > 0) {
-          setFormData((prev) => ({
+          setFormData(prev => ({
             ...prev,
             name: data.bills[0].patient_name,
             email: data.bills[0].patient_email,
@@ -68,7 +78,6 @@ const PatientInvoicePage = () => {
 
     fetchBills();
   }, []);
-
   const [invoiceData, setInvoiceData] = useState(null);
 
   const handleViewInvoice = async (billId) => {

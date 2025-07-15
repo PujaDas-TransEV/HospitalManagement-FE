@@ -112,47 +112,105 @@ const HomeCareService = () => {
     return `${yyyy}-${mm}-${dd} ${hh}:${min}:${ss}`;
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      const formPayload = new FormData();
-      for (let key in formData) {
-        let value = formData[key];
-        if (key === 'timefrom' || key === 'timeto') {
-          value = formatDateTime(value);
-        }
-        formPayload.append(key, value);
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
+  //   try {
+  //     const formPayload = new FormData();
+  //     for (let key in formData) {
+  //       let value = formData[key];
+  //       if (key === 'timefrom' || key === 'timeto') {
+  //         value = formatDateTime(value);
+  //       }
+  //       formPayload.append(key, value);
+  //     }
+
+  //     await axios.post('http://192.168.0.106:5000/management/homecare', formPayload, {
+  //       headers: { 'Content-Type': 'multipart/form-data' }
+  //     });
+
+  //     setSubmitted(true);
+  //     alert('✅ Home care service request submitted!');
+  //     setFormData({
+  //       patientname: '',
+  //       patientdetails: '',
+  //       patientphonenum: '',
+  //       patinetaddress: '',
+  //       patientientguardian: '',
+  //       patientientguardianphno: '',
+  //       refrencedoctorname: '',
+  //       patientid: '',
+  //       timefrom: '',
+  //       timeto: '',
+  //       reason: '',
+  //       status: 'scheduled',
+  //       doctorid: '',
+  //       caretype: '',
+  //       assignedstaffid: ''
+  //     });
+  //     navigate('/home-care-service');
+  //   } catch (error) {
+  //     console.error('Error submitting form:', error);
+  //     alert('❌ Failed to submit the request.');
+  //   }
+  // };
+const [attachments, setAttachments] = useState([]);
+
+const handleAttachmentsChange = (e) => {
+  const files = Array.from(e.target.files);
+  if (files.length > 10) {
+    alert("You can upload a maximum of 10 attachments.");
+    return;
+  }
+  setAttachments(files);
+};
+
+// In handleSubmit, append files to formDataPayload:
+const handleSubmit = async (e) => {
+  e.preventDefault();
+  try {
+    const formPayload = new FormData();
+    for (let key in formData) {
+      let value = formData[key];
+      if (key === 'timefrom' || key === 'timeto') {
+        value = formatDateTime(value);
       }
-
-      await axios.post('http://192.168.0.106:5000/management/homecare', formPayload, {
-        headers: { 'Content-Type': 'multipart/form-data' }
-      });
-
-      setSubmitted(true);
-      alert('✅ Home care service request submitted!');
-      setFormData({
-        patientname: '',
-        patientdetails: '',
-        patientphonenum: '',
-        patinetaddress: '',
-        patientientguardian: '',
-        patientientguardianphno: '',
-        refrencedoctorname: '',
-        patientid: '',
-        timefrom: '',
-        timeto: '',
-        reason: '',
-        status: 'scheduled',
-        doctorid: '',
-        caretype: '',
-        assignedstaffid: ''
-      });
-      navigate('/home-care-service');
-    } catch (error) {
-      console.error('Error submitting form:', error);
-      alert('❌ Failed to submit the request.');
+      formPayload.append(key, value);
     }
-  };
+    // Append attachments files if any
+    attachments.forEach((file, index) => {
+      formPayload.append("attachments", file);
+    });
+
+    await axios.post('http://192.168.0.106:5000/management/homecare', formPayload, {
+      headers: { 'Content-Type': 'multipart/form-data' }
+    });
+
+    setSubmitted(true);
+    alert('✅ Home care service request submitted!');
+    setFormData({
+      patientname: '',
+      patientdetails: '',
+      patientphonenum: '',
+      patinetaddress: '',
+      patientientguardian: '',
+      patientientguardianphno: '',
+      refrencedoctorname: '',
+      patientid: '',
+      timefrom: '',
+      timeto: '',
+      reason: '',
+      status: 'scheduled',
+      doctorid: '',
+      caretype: '',
+      assignedstaffid: ''
+    });
+    setAttachments([]);
+    navigate('/home-care-service');
+  } catch (error) {
+    console.error('Error submitting form:', error);
+    alert('❌ Failed to submit the request.');
+  }
+};
 
   return (
     <div className="dashboard-containerr">
@@ -290,7 +348,7 @@ const HomeCareService = () => {
                   />
                 </label>
 
-                <label>
+                {/* <label>
                   Patient ID:
                   <input
                     type="text"
@@ -298,7 +356,7 @@ const HomeCareService = () => {
                     value={formData.patientid}
                     readOnly
                   />
-                </label>
+                </label> */}
 
                 <label>
                   Time From:
@@ -331,6 +389,16 @@ const HomeCareService = () => {
                     required
                   />
                 </label>
+<label>
+  Attachments: <small>(Optional, max 10 files)</small>
+  <input
+    type="file"
+    name="attachments"
+    multiple
+    onChange={handleAttachmentsChange}
+    accept="image/*,application/pdf" // optional: accept only images and pdfs
+  />
+</label>
 
               
                 <button
