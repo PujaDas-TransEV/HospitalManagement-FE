@@ -89,76 +89,81 @@ const AdminBillingPage = () => {
     fetchBills();
   };
 
-  const handleView = async (billId) => {
-    try {
-      const response = await axios.post('http://192.168.0.106:5000/billing/getbillbybillid', { billid: billId });
-      const bill = response.data.bill;
+ 
+const handleView = async (billId) => {
+  try {
+    const response = await axios.post('http://192.168.0.106:5000/billing/getbillbybillid', { billid: billId });
+    const bill = response.data.bill;
 
-      const invoiceHTML = `
-        <html>
-          <head>
-            <title>Invoice - ${bill.bill_id}</title>
-            <style>
-              body { font-family: Arial, sans-serif; margin: 20px; }
-              h1 { color: #333; }
-              table { width: 100%; border-collapse: collapse; margin-top: 20px; }
-              th, td { border: 1px solid #ccc; padding: 8px; text-align: left; }
-              th { background-color: #f5f5f5; }
-            </style>
-          </head>
-          <body>
-            <h1>Invoice for ${bill.patient_name}</h1>
-            <table>
-              <tbody>
-                <tr><th>Bill ID</th><td>${bill.bill_id}</td></tr>
-                <tr><th>Created At</th><td>${new Date(bill.created_at).toLocaleString()}</td></tr>
-                <tr><th>Department</th><td>${bill.department}</td></tr>
-                <tr><th>Doctor Name</th><td>${bill.doctor_name}</td></tr>
-                <tr><th>Doctor Email</th><td>${bill.doctor_email}</td></tr>
-                <tr><th>Doctor Phone</th><td>${bill.doctor_phone}</td></tr>
-                <tr><th>Patient Name</th><td>${bill.patient_name}</td></tr>
-                <tr><th>Patient Email</th><td>${bill.patient_email}</td></tr>
-                <tr><th>Patient Phone</th><td>${bill.patient_phone}</td></tr>
-                <tr><th>Patient Age</th><td>${bill.patient_age}</td></tr>
-                <tr><th>Patient Gender</th><td>${bill.patient_gender}</td></tr>
-                <tr><th>Purpose</th><td>${bill.purpose}</td></tr>
-                <tr><th>Treatment Type</th><td>${bill.treatment_type}</td></tr>
-                <tr><th>Treatment Duration (days)</th><td>${bill.treatment_duration_days || 'N/A'}</td></tr>
-                <tr><th>Treatment Charge</th><td>₹${bill.treatment_charge}</td></tr>
-                <tr><th>Medicine Charge</th><td>₹${bill.medicine_charge}</td></tr>
-                <tr><th>Lab Charge</th><td>₹${bill.lab_charge}</td></tr>
-                <tr><th>Room Type</th><td>${bill.room_type}</td></tr>
-                <tr><th>Room Charge</th><td>₹${bill.room_charge}</td></tr>
-                <tr><th>Other Charges</th><td>₹${bill.other_charges}</td></tr>
-                <tr><th>Gross Total</th><td>₹${bill.gross_total}</td></tr>
-                <tr><th>Discount Percent</th><td>${bill.discount_percent}%</td></tr>
-                <tr><th>Discount Amount</th><td>₹${bill.discount_amount}</td></tr>
-                <tr><th>Insurance Provider</th><td>${bill.insurance_provider}</td></tr>
-                <tr><th>Insurance Coverage Percent</th><td>${bill.insurance_coverage_percent}%</td></tr>
-                <tr><th>Insurance Coverage Amount</th><td>₹${bill.insurance_coverage_amount}</td></tr>
-                <tr><th>Final Amount Payable</th><td>₹${bill.final_amount_payable}</td></tr>
-                <tr><th>Payment Method</th><td>${bill.payment_method}</td></tr>
-                <tr><th>Payment Status</th><td>${bill.payment_status}</td></tr>
-                <tr><th>Status</th><td>${bill.status}</td></tr>
-                <tr><th>Notes</th><td>${bill.notes}</td></tr>
-                <tr><th>Qualification</th><td>${bill.qualification || 'N/A'}</td></tr>
-                <tr><th>License Number</th><td>${bill.license_number || 'N/A'}</td></tr>
-                <tr><th>Created By</th><td>${bill.created_by || 'N/A'}</td></tr>
-              </tbody>
-            </table>
-          </body>
-        </html>
-      `;
+    const invoiceHTML = `
+      <html>
+        <head>
+          <title>Invoice - ${bill.bill_id}</title>
+          <style>
+            body { font-family: Arial, sans-serif; margin: 20px; }
+            h1 { color: #333; }
+            table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+            th, td { border: 1px solid #ccc; padding: 8px; text-align: left; }
+            th { background-color: #f5f5f5; }
+          </style>
+        </head>
+        <body>
+          <h1>Invoice for ${bill.patient_name}</h1>
+          <table>
+            <tbody>
+              <tr><th>Bill ID</th><td>${bill.bill_id}</td></tr>
+              <tr><th>Created At</th><td>${new Date(bill.created_at).toLocaleString()}</td></tr>
 
-      const pdfWindow = window.open('', '_blank');
-      pdfWindow.document.write(invoiceHTML);
-      pdfWindow.document.close();
-      pdfWindow.focus();
-      pdfWindow.print();
-    } catch (error) {
-      console.error('Error fetching bill details:', error);
-    }
-  };
+              ${bill.department ? `<tr><th>Department</th><td>${bill.department}</td></tr>` : ''}
+
+              ${bill.doctor_name ? `<tr><th>Doctor Name</th><td>${bill.doctor_name}</td></tr>` : ''}
+              ${bill.doctor_email ? `<tr><th>Doctor Email</th><td>${bill.doctor_email}</td></tr>` : ''}
+              ${bill.doctor_phone ? `<tr><th>Doctor Phone</th><td>${bill.doctor_phone}</td></tr>` : ''}
+
+              <tr><th>Patient Name</th><td>${bill.patient_name}</td></tr>
+              <tr><th>Patient Email</th><td>${bill.patient_email}</td></tr>
+              <tr><th>Patient Phone</th><td>${bill.patient_phone}</td></tr>
+              <tr><th>Patient Age</th><td>${bill.patient_age}</td></tr>
+              <tr><th>Patient Gender</th><td>${bill.patient_gender}</td></tr>
+              <tr><th>Purpose</th><td>${bill.purpose}</td></tr>
+              <tr><th>Treatment Type</th><td>${bill.treatment_type}</td></tr>
+              <tr><th>Treatment Duration (days)</th><td>${bill.treatment_duration_days || 'N/A'}</td></tr>
+              <tr><th>Treatment Charge</th><td>₹${bill.treatment_charge}</td></tr>
+              <tr><th>Medicine Charge</th><td>₹${bill.medicine_charge}</td></tr>
+              <tr><th>Lab Charge</th><td>₹${bill.lab_charge}</td></tr>
+              <tr><th>Room Type</th><td>${bill.room_type}</td></tr>
+              <tr><th>Room Charge</th><td>₹${bill.room_charge}</td></tr>
+              <tr><th>Other Charges</th><td>₹${bill.other_charges}</td></tr>
+              <tr><th>Gross Total</th><td>₹${bill.gross_total}</td></tr>
+              <tr><th>Discount Percent</th><td>${bill.discount_percent}%</td></tr>
+              <tr><th>Discount Amount</th><td>₹${bill.discount_amount}</td></tr>
+              <tr><th>Insurance Provider</th><td>${bill.insurance_provider}</td></tr>
+              <tr><th>Insurance Coverage Percent</th><td>${bill.insurance_coverage_percent}%</td></tr>
+              <tr><th>Insurance Coverage Amount</th><td>₹${bill.insurance_coverage_amount}</td></tr>
+              <tr><th>Final Amount Payable</th><td>₹${bill.final_amount_payable}</td></tr>
+              <tr><th>Payment Method</th><td>${bill.payment_method}</td></tr>
+              <tr><th>Payment Status</th><td>${bill.payment_status}</td></tr>
+              <tr><th>Status</th><td>${bill.status}</td></tr>
+              <tr><th>Notes</th><td>${bill.notes}</td></tr>
+              <tr><th>Qualification</th><td>${bill.qualification || 'N/A'}</td></tr>
+              <tr><th>License Number</th><td>${bill.license_number || 'N/A'}</td></tr>
+              <tr><th>Created By</th><td>${bill.created_by || 'N/A'}</td></tr>
+            </tbody>
+          </table>
+        </body>
+      </html>
+    `;
+
+    const pdfWindow = window.open('', '_blank');
+    pdfWindow.document.write(invoiceHTML);
+    pdfWindow.document.close();
+    pdfWindow.focus();
+    pdfWindow.print();
+  } catch (error) {
+    console.error('Error fetching bill details:', error);
+  }
+};
+
 
   const openEditPopup = async (billId) => {
     try {

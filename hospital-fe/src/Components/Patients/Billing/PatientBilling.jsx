@@ -28,6 +28,7 @@ const PatientInvoicePage = () => {
     'Hospital Facility',
     'Staff Behavior',
     'Overall Satisfaction',
+    'Others',
   ];
 
   
@@ -155,12 +156,20 @@ useEffect(() => {
     drawText(`Email: ${invoiceData.patient_email}`, leftMargin + 5, y); y += 15;
 
     // --- Doctor Information ---
-    checkPageSpace(40);
-    doc.setFillColor('#fff7e6'); // light yellow bg
-    doc.rect(leftMargin, y, rightMargin - leftMargin, 40, 'F');
-    drawText('Doctor Information', leftMargin + 5, y + 18, { fontStyle: 'bold', size: 14, color: '#bf6d00' });
-    drawText(`Dr. ${invoiceData.doctor_name} ($invoiceData.department})`, leftMargin + 5, y + 30);
-    y += 50;
+    // checkPageSpace(40);
+    // doc.setFillColor('#fff7e6'); // light yellow bg
+    // doc.rect(leftMargin, y, rightMargin - leftMargin, 40, 'F');
+    // drawText('Doctor Information', leftMargin + 5, y + 18, { fontStyle: 'bold', size: 14, color: '#bf6d00' });
+    // drawText(`Dr. ${invoiceData.doctor_name} ($invoiceData.department})`, leftMargin + 5, y + 30);
+    // y += 50;
+if (invoiceData.doctor_name) {
+  checkPageSpace(40);
+  doc.setFillColor('#fff7e6'); // light yellow bg
+  doc.rect(leftMargin, y, rightMargin - leftMargin, 40, 'F');
+  drawText('Doctor Information', leftMargin + 5, y + 18, { fontStyle: 'bold', size: 14, color: '#bf6d00' });
+  drawText(`Dr. ${invoiceData.doctor_name} (${invoiceData.department || ''})`, leftMargin + 5, y + 30);
+  y += 50;
+}
 
     // --- Charges Header ---
     checkPageSpace(15);
@@ -341,8 +350,8 @@ useEffect(() => {
                   <tr>
                     <th>Bill ID</th>
                     <th>Date</th>
-                    <th>Doctor</th>
-                    <th>Department</th>
+                    <th>Patient Name</th>
+                   
                     <th>Amount (₹)</th>
                     <th>Status</th>
                     <th>Actions</th>
@@ -353,8 +362,8 @@ useEffect(() => {
                     <tr key={bill.bill_id}>
                       <td>{bill.bill_id.slice(0, 8)}</td>
                       <td>{new Date(bill.created_at).toLocaleDateString()}</td>
-                      <td>Dr. {bill.doctor_name}</td>
-                      <td>{bill.department}</td>
+                      <td> {bill.patient_name}</td>
+                      {/* <td>{bill.department}</td> */}
                       <td style={{ textAlign: 'right' }}>{bill.final_amount_payable}</td>
                       <td
                         style={{
@@ -421,8 +430,8 @@ useEffect(() => {
                       </span>
                     </div>
                     <p><strong>Date:</strong> {new Date(bill.created_at).toLocaleDateString()}</p>
-                    <p><strong>Doctor:</strong> Dr. {bill.doctor_name}</p>
-                    <p><strong>Department:</strong> {bill.department}</p>
+                    <p><strong>Patient Name:</strong> {bill.patient_name}</p>
+                    {/* <p><strong>Department:</strong> {bill.department}</p> */}
                     <p><strong>Amount:</strong> ₹{bill.final_amount_payable}</p>
                     <div className="card-actions">
                       <button
@@ -488,7 +497,11 @@ useEffect(() => {
                 <p><strong>Patient:</strong> {invoiceData.patient_name} ({invoiceData.patient_gender}, {invoiceData.patient_age} yrs)</p>
                 <p><strong>Email:</strong> {invoiceData.patient_email}</p>
                 <p><strong>Phone:</strong> {invoiceData.patient_phone}</p>
-                <p><strong>Doctor:</strong> Dr. {invoiceData.doctor_name} ({invoiceData.department})</p>
+                {/* <p><strong>Doctor:</strong> Dr. {invoiceData.doctor_name} ({invoiceData.department})</p> */}
+                {invoiceData.doctor_name && (
+  <p><strong>Doctor:</strong> Dr. {invoiceData.doctor_name} {invoiceData.department && `(${invoiceData.department})`}</p>
+)}
+
                 <p><strong>Treatment:</strong> {invoiceData.treatment_type}</p>
                 <p><strong>Room:</strong> {invoiceData.room_type} - ₹{invoiceData.room_charge}</p>
                 <p><strong>Purpose:</strong> {invoiceData.purpose}</p>
@@ -601,6 +614,6 @@ const btnStyle = {
   userSelect: 'none',
 };
 
-/* CSS for spinner and responsive cards */
+
 
 export default PatientInvoicePage;
