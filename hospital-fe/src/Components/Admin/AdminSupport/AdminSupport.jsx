@@ -100,20 +100,57 @@ const AdminSupport = () => {
             ) : (
               <div className="support-card-grid">
                 {supportTickets.map((ticket) => (
-                  <div key={ticket.uid} className="support-card">
-                    <p><strong>ID:</strong> {ticket.uid}</p>
-                    <p><strong>Name:</strong> {ticket.name}</p>
-                    <p><strong>Email:</strong> {ticket.email}</p>
-                    <p><strong>Phone:</strong> {ticket.phone}</p>
-                    <p><strong>Issue Type:</strong> {ticket.issuetype}</p>
-                    <p><strong>Message:</strong> {ticket.message}</p>
-                    <button
-                      className="delete-btn"
-                      onClick={() => handleDelete(ticket.uid)}
-                    >
-                      <FaTrashAlt /> 
-                    </button>
-                  </div>
+           <div key={ticket.uid} className="support-card">
+  <p><strong>ID:</strong> {ticket.uid}</p>
+  <p><strong>Name:</strong> {ticket.name}</p>
+  <p><strong>Email:</strong> {ticket.email}</p>
+  <p><strong>Phone:</strong> {ticket.phone}</p>
+  <p><strong>Issue Type:</strong> {ticket.issuetype}</p>
+  <p><strong>Message:</strong> {ticket.message}</p>
+
+  {/* ✅ New Section: Document Attachments */}
+  {ticket.documents && ticket.documents.length > 0 && (
+    <div className="support-documents">
+      <strong>Attachments:</strong>
+      <div className="attachment-preview-list">
+        {ticket.documents.map((doc, index) => {
+          const isImage = doc.filename.match(/\.(jpeg|jpg|png|gif|bmp)$/i);
+          const mimeType = doc.filename.match(/\.pdf$/i)
+            ? 'application/pdf'
+            : 'image/*';
+
+          return (
+            <div key={index} className="attachment-preview">
+              {isImage ? (
+                <img
+                  src={`data:${mimeType};base64,${doc.base64}`}
+                  alt={doc.filename}
+                  className="attachment-image"
+                />
+              ) : (
+                <a
+                  href={`data:${mimeType};base64,${doc.base64}`}
+                  download={doc.filename}
+                  className="attachment-link"
+                >
+                  Download {doc.filename}
+                </a>
+              )}
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  )}
+
+  <button
+    className="delete-btn"
+    onClick={() => handleDelete(ticket.uid)}
+  >
+    <FaTrashAlt />
+  </button>
+</div>
+
                 ))}
               </div>
             )}

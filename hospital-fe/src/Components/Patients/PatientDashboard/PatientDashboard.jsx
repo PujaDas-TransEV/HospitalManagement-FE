@@ -14,7 +14,8 @@ import {
   FaLifeRing,
   FaUserCircle,
   FaCog,
-  FaBell
+  FaBell,
+  FaVial
 } from 'react-icons/fa';
 import './PatientDashboard.css';
 
@@ -23,6 +24,7 @@ const FEATURE_BUTTONS = [
   { icon: FaCalendarCheck, label: 'Appointment Booking', path: '/patient-Appointments', color: '#4dabf7' },
   { icon: FaHistory, label: 'Admission History', path: '/medical-history', color: '#ffa94d' },
   { icon: FaPrescriptionBottleAlt, label: 'Prescriptions', path: '/prescription', color: '#63e6be' },
+  { icon: FaVial, label: 'Pathology', path: '/pathologybook', color: '#6672b4ff' },
   { icon: FaFlask, label: 'Lab Report', path: '/labreport', color: '#9775fa' },
   { icon: FaFileInvoice, label: 'Invoice', path: '/invoice', color: '#ff922b' },
   { icon: FaLifeRing, label: 'Support', path: '/patient-support', color: '#74c0fc' },
@@ -168,13 +170,20 @@ y += 30;
     drawText(`Email: ${bill.patient_email}`, leftMargin + 5, y); y += 20;
 
 
-    checkPageSpace(30);
-    doc.setFillColor('#fff7e6');
-    doc.rect(leftMargin, y, rightMargin - leftMargin, 30, 'F');
-    drawText('Doctor Information', leftMargin + 5, y + 15, { fontStyle: 'bold', size: 14, color: '#bf6d00' });
-    drawText(`Dr. ${bill.doctor_name}`, leftMargin + 5, y + 27);
-    y += 40;
-
+    // checkPageSpace(30);
+    // doc.setFillColor('#fff7e6');
+    // doc.rect(leftMargin, y, rightMargin - leftMargin, 30, 'F');
+    // drawText('Doctor Information', leftMargin + 5, y + 15, { fontStyle: 'bold', size: 14, color: '#bf6d00' });
+    // drawText(`Dr. ${bill.doctor_name}`, leftMargin + 5, y + 27);
+    // y += 40;
+if (bill.doctor_name) {
+  checkPageSpace(40);
+  doc.setFillColor('#fff7e6'); // light yellow bg
+  doc.rect(leftMargin, y, rightMargin - leftMargin, 40, 'F');
+  drawText('Doctor Information', leftMargin + 5, y + 18, { fontStyle: 'bold', size: 14, color: '#bf6d00' });
+  drawText(`Dr. ${bill.doctor_name} (${bill.department || ''})`, leftMargin + 5, y + 30);
+  y += 50;
+}
 
     checkPageSpace(15);
     doc.setFillColor('#cce4f7');
