@@ -69,7 +69,7 @@ const LabReportPage = () => {
       fd.append('patientid', patientId);
       fd.append('labid', report.labreportid);
       fd.append('guestaccess', newAccess);
-      await axios.post('http://localhost:5000/patientops/labdataaccessupdate', fd, {
+      await axios.post('http://192.168.0.106:5000/patientops/labdataaccessupdate', fd, {
         headers: {
           Authorization: `Bearer ${token}`,
           'Content-Type': 'multipart/form-data',

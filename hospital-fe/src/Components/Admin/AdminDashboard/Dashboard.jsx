@@ -193,7 +193,7 @@ const AdminDashboard = () => {
     ) : recentActivity.length ? (
       recentActivity.map((a, i) => (
         <div key={i} className="activity-entry">
-          <strong>Dr. {a.doctor_fullname}</strong> with <strong>{a.patient_firstname} {a.patient_lastname}</strong> — {a.appoinmentstatus}
+          <strong>{a.patient_firstname} {a.patient_lastname}</strong> appointment with <strong>Dr. {a.doctor_fullname}</strong> — {a.appoinmentstatus}
         </div>
       ))
     ) : (
