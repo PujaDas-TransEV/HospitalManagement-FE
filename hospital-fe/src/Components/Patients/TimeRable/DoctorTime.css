@@ -92,3 +92,26 @@ body, html {
   font-style: italic;
   margin-top: 10px;
 }
+.timetable-page {
+  padding: 20px;
+}
+
+.dept-block {
+  margin-bottom: 30px;
+}
+
+.timetable-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.timetable-table th, .timetable-table td {
+  border: 1px solid #ccc;
+  padding: 8px;
+  text-align: left;
+}
+
+.no-timetable {
+  font-style: italic;
+  color: red;
+}

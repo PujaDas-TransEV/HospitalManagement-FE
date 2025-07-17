@@ -1,55 +1,62 @@
 
 .manage-doctors-wrapper {
- position: relative;
- background-image: url('../../Assests/background.jpg');
+  position: relative;
+  background-image: url('../../Assests/background.jpg');
   background-size: cover;
   background-position: center;
   min-height: 100vh;
+  overflow-x: hidden;
 }
+
 .manage-doctors-wrapper::before {
   content: '';
   position: absolute;
   inset: 0;
-  background-color: rgba(255,255,255,0.8);
+  background-color: rgba(255, 255, 255, 0.8);
   z-index: 1;
 }
 
+/* --- Main Content Layout --- */
 .manage-doctors-content {
   position: relative;
- 
-  margin-left: 250px;
-} 
+  margin-left: 250px; /* Adjust if you have a sidebar */
+  /* z-index: 2; */
+}
 
 .main-section {
-   flex: 1; 
+  flex: 1;
   position: relative;
   z-index: 2;
   padding: 20px 30px;
   overflow-y: auto;
-   display: flex; 
-  flex-direction: column; 
-} 
+  display: flex;
+  flex-direction: column;
+}
 
-
+/* --- Header Section --- */
 .header-section {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 25px;
+  margin-bottom: 1rem;
+  gap: 10px;
+  flex-wrap: wrap;
 }
 
 .header-icon-text {
   display: flex;
   align-items: center;
-  gap: 15px;
+  gap: 0.8rem;
   color: #4e79a7;
 }
 
 .header-icon-text h1 {
   font-weight: 700;
   font-size: 1.8rem;
+  margin: 0;
 }
 
+/* --- Register Button --- */
 .register-btn {
   background-color: #4e79a7;
   color: white;
@@ -59,36 +66,42 @@
   border-radius: 6px;
   cursor: pointer;
   transition: background-color 0.3s ease;
+  white-space: nowrap;
 }
 
-.register-btn:hover {
+.register-btn:hover,
+.register-btn:focus {
   background-color: #3b5d7a;
+  outline: none;
 }
 
+/* --- Departments Container --- */
 .departments-container {
   display: flex;
-  gap: 16px;
   flex-wrap: wrap;
-  margin-bottom: 30px;
+  gap: 10px;
+  margin: 1rem 0 2rem;
+  justify-content: flex-start;
 }
 
 .department-card {
-  cursor: pointer;
+  flex: 1 1 120px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
   padding: 10px 16px;
   background-color: #f0f4f8;
   border-radius: 12px;
-  display: flex;
-  align-items: center;
-  gap: 8px;
+  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.08);
+  cursor: pointer;
+  user-select: none;
   font-weight: 600;
   color: #333;
-  box-shadow: 0 1px 5px rgba(0,0,0,0.08);
-  user-select: none;
-  transition: background-color 0.25s ease, box-shadow 0.25s ease;
   min-width: 140px;
-  justify-content: center;
-  flex-direction: column;
   text-align: center;
+  transition: background-color 0.25s ease, box-shadow 0.25s ease, color 0.25s ease;
 }
 
 .department-card:hover,
@@ -99,11 +112,13 @@
 }
 
 .dept-icon {
+  font-size: 1.6rem;
   display: flex;
   justify-content: center;
+  align-items: center;
 }
 
-
+/* --- Doctors Section --- */
 .doctors-section {
   flex: 1;
   overflow-x: auto;
@@ -115,227 +130,22 @@
   color: #2c3e50;
 }
 
+/* --- Responsive Table Wrapper --- */
 .table-responsive {
   max-width: 100%;
   overflow-x: auto;
+  display: block;
 }
 
-.actions-column {
-  display: flex;
-  gap: 16px;
-  justify-content: center;
-  align-items: center;
-}
-
-.action-icon {
-  cursor: pointer;
-  color: #4e79a7;
-  transition: color 0.3s ease;
-  outline: none;
-}
-
-.action-icon:hover,
-.action-icon:focus {
-  color: #2c3e50;
-}
-
-.edit-icon {
-  font-size: 1.2rem;
-}
-
-.delete-icon {
-  font-size: 1.2rem;
-  color: #c0392b;
-}
-
-.delete-icon:hover,
-.delete-icon:focus {
-  color: #7a1f1b;
-}
-
-
-.spinner-center {
-  display: flex;
-  justify-content: center;
-  padding: 40px 0;
-}
-
-
-.popup-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  background-color: rgba(0, 0, 0, 0.4);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 9999;
-  padding: 15px;
-}
-
-.popup-content {
-  background-color: white;
-  border-radius: 12px;
-  padding: 30px 35px;
-  width: 400px;
-  max-width: 100%;
-  box-shadow: 0 10px 25px rgba(0,0,0,0.15);
-  display: flex;
-  flex-direction: column;
-}
-
-.popup-content h3 {
-  margin-bottom: 20px;
-  color: #2c3e50;
-  font-weight: 700;
-  text-align: center;
-}
-
-.edit-form label {
-  margin-top: 12px;
-  font-weight: 600;
-  color: #444;
-}
-
-.edit-form input {
-  margin-top: 6px;
-  padding: 8px 10px;
-  border-radius: 6px;
-  border: 1px solid #ccc;
-  font-size: 1rem;
-  width: 100%;
-  box-sizing: border-box;
-  transition: border-color 0.3s ease;
-}
-
-.edit-form input:focus {
-  border-color: #4e79a7;
-  outline: none;
-}
-
-.popup-buttons {
-  margin-top: 25px;
-  display: flex;
-  justify-content: flex-end;
-  gap: 15px;
-}
-
-.popup-buttons .btn {
-  padding: 8px 18px;
-  border-radius: 6px;
-  font-weight: 600;
-}
-
-.btn-primary {
-  background-color: #4e79a7;
-  border: none;
-  color: white;
-  cursor: pointer;
-}
-
-.btn-primary:hover {
-  background-color: #3b5d7a;
-}
-
-.btn-secondary {
-  background-color: #ddd;
-  border: none;
-  color: #555;
-  cursor: pointer;
-}
-
-.btn-secondary:hover {
-  background-color: #bbb;
-}
-
-
-@media (max-width: 900px) {
-  .departments-container {
-    justify-content: center;
-  }
-
-  .department-card {
-    min-width: 120px;
-    font-size: 0.9rem;
-  }
-
-  .popup-content {
-    width: 90%;
-  }
-}
-
-@media (max-width: 600px) {
-  .header-section {
-    flex-direction: column;
-    gap: 15px;
-  }
-
-  .header-icon-text {
-    justify-content: center;
-  }
-
-  .register-btn {
-    width: 100%;
-  }
-
-  .actions-column {
-    gap: 12px;
-  }
-
-  .action-icon {
-    font-size: 1rem;
-  }
-}
-
-.modal-overlay-doctor {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
- 
-  z-index: 1050;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.modal-content-doctor {
-  padding: 2rem 3rem;
-  border-radius: 8px;
-  text-align: center;
-
-  font-size: 1.2rem;
-  color: #00796b;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 1rem;
-}
-
-
-.spin {
-  animation: spin 1.5s linear infinite;
-}
-
-.spin.large {
-  font-size: 3rem;
-}
-
-@keyframes spin {
-  0% { transform: rotate(0deg);}
-  100% { transform: rotate(360deg);}
-}
-
-
+/* --- Custom Doctors Table --- */
 .custom-doctors-table {
+  width: 100%;
   font-size: 0.95rem;
   background: #fff;
   border-radius: 8px;
-  overflow: hidden;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  border-collapse: separate;
+  border-spacing: 0;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
 .custom-doctors-table thead {
@@ -350,64 +160,82 @@
   cursor: pointer;
 }
 
+.custom-doctors-table th,
+.custom-doctors-table td {
+  padding: 12px 15px;
+  text-align: left;
+  border-bottom: 1px solid #e1e8f0;
+}
+
+/* --- Actions Column (Edit/Delete Icons) --- */
 .actions-column {
   display: flex;
   gap: 12px;
   justify-content: center;
+  align-items: center;
 }
 
 .action-icon {
   cursor: pointer;
-  transition: color 0.2s ease;
   font-size: 1.2rem;
+  transition: color 0.3s ease;
+  color: #4e79a7;
+  outline: none;
+}
+
+.action-icon:hover,
+.action-icon:focus {
+  color: #2c3e50;
 }
 
 .edit-icon:hover {
   color: #2a9d8f;
 }
 
-.delete-icon:hover {
-  color: #e76f51;
+.delete-icon {
+  color: #c0392b;
 }
 
+.delete-icon:hover,
+.delete-icon:focus {
+  color: #7a1f1b;
+}
 
-.departments-container {
+/* --- Spinner --- */
+.spinner-center {
   display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  margin: 1rem 0 2rem;
+  justify-content: center;
+  padding: 40px 0;
 }
 
-.department-card {
-  flex: 1 1 120px;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 10px 15px;
-  border-radius: 10px;
-  user-select: none;
-  cursor: pointer;
-  box-shadow: 0 1px 4px rgb(0 0 0 / 0.1);
-  transition: background-color 0.3s ease, color 0.3s ease;
+.spin {
+  animation: spin 1.5s linear infinite;
+  color: #4e79a7;
 }
 
-.department-card.selected {
-  box-shadow: 0 0 10px 2px rgba(78,121,167,0.6);
+.spin.large {
+  font-size: 3rem;
 }
 
-.dept-icon {
-  font-size: 1.6rem;
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
-
+/* --- Popup Modals --- */
 .popup-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(0,0,0,0.4);
+  background: rgba(0, 0, 0, 0.4);
   display: flex;
   justify-content: center;
   align-items: center;
   z-index: 1100;
+  padding: 15px;
 }
 
 .popup-content {
@@ -416,13 +244,24 @@
   border-radius: 10px;
   width: 400px;
   max-width: 90%;
-  box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+  display: flex;
+  flex-direction: column;
+  text-align: center;
 }
 
+.popup-content h3 {
+  margin-bottom: 20px;
+  color: #2c3e50;
+  font-weight: 700;
+}
+
+/* --- Edit Form --- */
 .edit-form label {
   display: block;
   margin-top: 1rem;
   font-weight: 600;
+  color: #444;
 }
 
 .edit-form input {
@@ -432,8 +271,16 @@
   border-radius: 5px;
   margin-top: 0.3rem;
   font-size: 1rem;
+  box-sizing: border-box;
+  transition: border-color 0.3s ease;
 }
 
+.edit-form input:focus {
+  border-color: #4e79a7;
+  outline: none;
+}
+
+/* --- Popup Buttons --- */
 .popup-buttons {
   display: flex;
   justify-content: flex-end;
@@ -441,37 +288,41 @@
   margin-top: 1.5rem;
 }
 
-.register-btn {
+.btn-primary {
   background-color: #4e79a7;
-  color: white;
   border: none;
-  padding: 0.5rem 1.3rem;
-  font-size: 1rem;
-  border-radius: 8px;
+  color: white;
+  padding: 8px 18px;
+  font-weight: 600;
+  border-radius: 6px;
   cursor: pointer;
   transition: background-color 0.3s ease;
 }
 
-.register-btn:hover,
-.register-btn:focus {
-  background-color: #3b5e7d;
+.btn-primary:hover,
+.btn-primary:focus {
+  background-color: #3b5d7a;
   outline: none;
 }
 
-.header-section {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 1rem;
+.btn-secondary {
+  background-color: #ddd;
+  border: none;
+  color: #555;
+  padding: 8px 18px;
+  font-weight: 600;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
 }
 
-.header-icon-text {
-  display: flex;
-  align-items: center;
-  gap: 0.8rem;
-  color: #4e79a7;
+.btn-secondary:hover,
+.btn-secondary:focus {
+  background-color: #bbb;
+  outline: none;
 }
 
+/* --- Success Message --- */
 .success-message {
   background-color: #d4edda;
   color: #155724;
@@ -482,101 +333,118 @@
   text-align: center;
 }
 
+/* --- Responsive Doctor Cards for Small Screens --- */
 .doctors-card-list {
   display: none;
 }
-.table-responsive {
-  display: block;
-}
-
 
 @media (max-width: 768px) {
   .doctors-card-list {
     display: block;
   }
+
   .table-responsive {
     display: none;
   }
 
- 
   .doctor-card {
-  background: rgb(185, 197, 116);
-  border-radius: 8px;
-  padding: 15px;
-  margin-bottom: 15px;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-  transition: padding 0.3s ease, font-size 0.3s ease;
-}
-
-
-.card-row {
-  margin-bottom: 8px;
-  font-size: 1rem;
-}
-
-
-.card-actions svg {
-  cursor: pointer;
-  margin-right: 12px;
-  color: #4e79a7;
-  font-size: 1.3rem;
-  transition: color 0.3s ease, transform 0.2s ease;
-}
-
-.card-actions svg:hover,
-.card-actions svg:focus {
-  color: #2c3e50;
-  transform: scale(1.1);
-}
-
-
-@media (max-width: 768px) {
-  .doctor-card {
-    padding: 12px;
+    background: #b9c574;
+    border-radius: 8px;
+    padding: 15px;
+    margin-bottom: 15px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    transition: padding 0.3s ease, font-size 0.3s ease;
   }
+
   .card-row {
-    font-size: 0.95rem;
+    margin-bottom: 8px;
+    font-size: 1rem;
   }
+
   .card-actions svg {
-    font-size: 1.2rem;
-    margin-right: 10px;
+    cursor: pointer;
+    margin-right: 12px;
+    color: #4e79a7;
+    font-size: 1.3rem;
+    transition: color 0.3s ease, transform 0.2s ease;
+  }
+
+  .card-actions svg:hover,
+  .card-actions svg:focus {
+    color: #2c3e50;
+    transform: scale(1.1);
+    outline: none;
   }
 }
-
 
 @media (max-width: 480px) {
   .doctor-card {
     padding: 10px;
   }
+
   .card-row {
     font-size: 0.9rem;
     margin-bottom: 6px;
   }
+
   .card-actions svg {
     font-size: 1.1rem;
     margin-right: 8px;
   }
 }
 
-
 @media (max-width: 360px) {
   .doctor-card {
     padding: 8px;
   }
+
   .card-row {
     font-size: 0.85rem;
     margin-bottom: 5px;
   }
+
   .card-actions svg {
     font-size: 1rem;
     margin-right: 6px;
   }
 }
+
+/* --- Modal Overlay for Doctor Popups --- */
+.modal-overlay-doctor {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.4);
+  z-index: 1050;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
+
+.modal-content-doctor {
+  padding: 2rem 3rem;
+  border-radius: 8px;
+  text-align: center;
+  font-size: 1.2rem;
+  color: #00796b;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+/* --- Utility Classes --- */
 .black-label {
   color: black;
 }
+
 .actionss-column {
-  color: #010a13; 
+  color: #010a13;
   font-weight: bold;
+}
+.fees-icon {
+  /* Additional styling specific to the save icon */
+  margin-left: 8px;     /* space if needed */
+  /* You can add more styles here */
 }

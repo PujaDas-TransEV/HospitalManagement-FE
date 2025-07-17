@@ -239,7 +239,10 @@ const ManagePatient = () => {
                 <td>{p.email}</td>
                 <td className="actions-column">
                   <FaUserEdit onClick={() => handleEdit(p)} />
-                  <FaTrashAlt onClick={() => handleDelete(p.uid)} />
+                  <FaTrashAlt onClick={() => handleDelete(p.uid)} style={{
+      
+        color: '#af152aff'}}
+                   />
                 </td>
               </tr>
             ))}
