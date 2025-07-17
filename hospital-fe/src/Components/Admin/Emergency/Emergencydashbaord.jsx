@@ -35,8 +35,8 @@ const EmergencyDashboard = () => {
     setLoading(true);
     try {
       const [cRes, dRes] = await Promise.all([
-        axios.get('http://localhost:5000/ops/getallservices'),
-        axios.get('http://localhost:5000/doctorops/getalldoctor')
+        axios.get('http://192.168.0.106:5000/ops/getallservices'),
+        axios.get('http://192.168.0.106:5000/doctorops/getalldoctor')
       ]);
       setCases(cRes.data.data);
       setDoctors(dRes.data.data);
@@ -88,7 +88,7 @@ const EmergencyDashboard = () => {
     const url = editing ? '/emserviceupdate' : '/emservice';
 
     try {
-      await axios.post(`http://localhost:5000${url}`, fd);
+      await axios.post(`http://192.168.0.106:5000${url}`, fd);
       setShowForm(false);
       fetchData();
     } catch (error) {
@@ -103,7 +103,7 @@ const EmergencyDashboard = () => {
     const fd = new FormData();
     fd.append('emserviceid', uid);
     try {
-      await axios.post('http://localhost:5000/ops/emservicebyid', fd);
+      await axios.post('http://192.168.0.106:5000/ops/emservicebyid', fd);
       fetchData();
     } catch (error) {
       console.error('Delete error:', error);

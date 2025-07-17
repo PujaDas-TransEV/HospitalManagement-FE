@@ -1,7 +1,7 @@
 
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { FaEdit,FaSave,FaTimes,FaSpinner } from 'react-icons/fa';
+import { FaEdit, FaSave, FaTimes, FaSpinner, FaEye } from 'react-icons/fa';
 import './Homecare.css';
 import AdminNavbar from '../Adminnavbar/AdminNavbar';
 import AdminSidebar from '../Adminsidebar/AdminSidebar';
@@ -19,6 +19,8 @@ function HomecareAdminPanel() {
   const [staffInfoMap, setStaffInfoMap] = useState({});
   const [loadingStaffNames, setLoadingStaffNames] = useState(true);
 
+  const [attachmentModal, setAttachmentModal] = useState({ open: false, attachment: null });
+
   const editableFields = ['status', 'doctorid', 'assignedstaffid'];
 
   // Track screen size for responsiveness
@@ -30,11 +32,14 @@ function HomecareAdminPanel() {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  // Fetch functions (same as before)
+  // Fetch requests & staff info
   const fetchRequests = async () => {
     try {
       const response = await fetch('http://192.168.0.106:5000/management/homecare');
-      const data = await response.json();
+      let data = await response.json();
+
+      data.sort((a, b) => new Date(b.createdat) - new Date(a.createdat));
+
       setRequests(data);
 
       const uniqueStaffIDs = [...new Set(data.map(req => req.assignedstaffid).filter(id => id))];
@@ -104,12 +109,12 @@ function HomecareAdminPanel() {
       doctorid: req.doctorid || '',
       assignedstaffid: req.assignedstaffid || ''
     });
-    document.body.style.overflow = 'hidden'; // disable background scroll when popup open
+    document.body.style.overflow = 'hidden';
   };
 
   const closeModal = () => {
     setSelectedRequest(null);
-    document.body.style.overflow = 'auto'; // enable scroll again
+    document.body.style.overflow = 'auto';
   };
 
   const handleChange = (e) => {
@@ -156,23 +161,79 @@ function HomecareAdminPanel() {
     }
   };
 
-  // Mobile cards rendering
+  const getStatusColor = (status) => {
+    switch (status) {
+      case 'approved':
+        return '#4CAF50';
+      case 'cancelled':
+        return '#F44336';
+      case 'scheduled':
+        return '#2196F3';
+      case 'pending':
+        return '#FF9800';
+      case 'rejected':
+        return '#9E9E9E';
+      default:
+        return '#000';
+    }
+  };
+
+  // Open attachment modal to view image
+  const openAttachmentModal = (attachment) => {
+    setAttachmentModal({ open: true, attachment });
+    document.body.style.overflow = 'hidden';
+  };
+
+  const closeAttachmentModal = () => {
+    setAttachmentModal({ open: false, attachment: null });
+    document.body.style.overflow = 'auto';
+  };
+  const downloadAttachment = (attachment) => {
+    const link = document.createElement('a');
+    link.href = `data:image/png;base64,${attachment.data}`;
+    link.download = attachment.filename || 'attachment.png';
+    link.click();
+  };
+  // Render cards (always cards, no table)
   const renderCards = () => (
-    <div className="cards-container">
+    <div className="cards-container-homecare">
       {requests.map((req) => {
         const doctor = doctors.find(doc => doc.uid === req.doctorid);
+        const patientName = req.patientname && req.patientname.toLowerCase() !== 'null null' ? req.patientname : '';
+
         return (
-          <div key={req.uid} className="card">
-            <p><strong>Patient:</strong> {req.patientname}</p>
+          <div
+            key={req.uid}
+            className="card-homecare"
+            style={{ borderLeft: `6px solid ${getStatusColor(req.status)}` }}
+          >
+            <p><strong>Patient:</strong> {patientName || '-'}</p>
             <p><strong>Care Type:</strong> {req.caretype}</p>
-            <p><strong>Status:</strong> {req.status}</p>
+            <p><strong>Status:</strong> <span style={{ color: getStatusColor(req.status), fontWeight: 'bold' }}>{req.status}</span></p>
             <p><strong>Doctor ID:</strong> {req.caretype === 'doctor' ? (req.doctorid || '-') : '-'}</p>
             <p><strong>Doctor Name:</strong> {req.caretype === 'doctor' ? (doctor ? doctor.fullname : '-') : '-'}</p>
             <p><strong>Referenced Doctor Name:</strong> {req.caretype === 'doctor' ? (req.refrencedoctorname || '-') : '-'}</p>
             <p><strong>Staff:</strong> {req.assignedstaffid ? `${req.assignedstaffid} (${staffInfoMap[req.assignedstaffid]?.staffname || 'Loading...'})` : '-'}</p>
             <p><strong>Time From:</strong> {req.timefrom || '-'}</p>
             <p><strong>Time To:</strong> {req.timeto || '-'}</p>
-            <button onClick={() => handleEditClick(req)} className="edit-btn">
+
+            {/* Attachments */}
+           {req.attachments?.length > 0 ? (
+                      req.attachments.map((att, idx) => (
+                        <button
+                          key={idx}
+                          className="view-attachment-btn"
+                          onClick={() => downloadAttachment(att)}
+                        >
+                          <FaEye style={{ marginRight: '6px', color: '#007bff' }} />
+                          View Attachment
+                        </button>
+                      ))
+                    ) : (
+                      <p><em>No attachments</em></p>
+                    )}
+
+            <button onClick={() => handleEditClick(req)} className="edit-btn-homecare">
               <FaEdit /> Edit
             </button>
           </div>
@@ -182,148 +243,102 @@ function HomecareAdminPanel() {
   );
 
   return (
-    <div className="facility-management-page">
+    <div className="facility-management-page-homecare">
       <AdminNavbar />
-      <div className="facility-management-content">
+      <div className="facility-management-content-homecare">
         <AdminSidebar />
-        <div className="admin-panel" style={{ maxWidth: '1000px', margin: '20px auto' }}>
-          <h1>Homecare Requests (Admin)  🏠</h1>
+        <div className="admin-panel" style={{ maxWidth: '1200px', margin: '20px auto' }}>
+          <h1>Homecare Requests (Admin) 🏠</h1>
 
           {loadingStaffNames ? (
-           <FaSpinner
-      className="spin large"
-      style={{ marginTop: '150px',marginLeft:'200px'}} // 👈 moves the spinner down
-    />
+            <FaSpinner className="spin large" />
           ) : (
-            isMobile ? (
-              renderCards()
-            ) : (
-             <div className="responsive-table-table">
-  <table>
-    <thead>
-      <tr>
-        <th className="responsive-table1">Patient</th>
-        <th className="responsive-table1">Care Type</th>
-        <th className="responsive-table1">Status</th>
-        <th className="responsive-table1">Doctor ID</th>
-        <th className="responsive-table1">Doctor Name</th>
-        <th className="responsive-table1">Referenced Doctor Name</th>
-        <th className="responsive-table1">Staff</th>
-        <th className="responsive-table1">Time From</th>
-        <th className="responsive-table1">Time To</th>
-        <th className="responsive-table1">Actions</th>
-      </tr>
-    </thead>
-    <tbody>
-                    {requests.map((req) => {
-                      const doctor = doctors.find(doc => doc.uid === req.doctorid);
-                      return (
-                        <tr key={req.uid}>
-                          <td>{req.patientname}</td>
-                          <td>{req.caretype}</td>
-                          <td>{req.status}</td>
-                          <td>{req.caretype === 'doctor' ? (req.doctorid || '-') : '-'}</td>
-                          <td>{req.caretype === 'doctor' ? (doctor ? doctor.fullname : '-') : '-'}</td>
-                          <td>{req.caretype === 'doctor' ? (req.refrencedoctorname || '-') : '-'}</td>
-                          <td>
-                            {req.assignedstaffid
-                              ? `${req.assignedstaffid} (${staffInfoMap[req.assignedstaffid]?.staffname || 'Loading...'})`
-                              : '-'}
-                          </td>
-                          <td>{req.timefrom || '-'}</td>
-                          <td>{req.timeto || '-'}</td>
-                          <td>
-                            <button onClick={() => handleEditClick(req)} className="edit-btn">
-                              <FaEdit />
-                            </button>
-                          </td>
-                        </tr>
-                      );
-                    })}
-                  </tbody>
-                </table>
-              </div>
-            )
+            renderCards()
           )}
 
-          {/* Edit Modal Popup */}
+          {/* Edit Modal */}
           {selectedRequest && (
             <div className="modal-overlay" onClick={closeModal}>
-              <div className="modal-content" onClick={(e) => e.stopPropagation()}style={{
-          backgroundColor: "#e0f7fa",
-          padding: "20px",
-          borderRadius: "8px",
-        }}>
-                {selectedRequest.status !== 'cancelled' ? (
-                  <>
-                    <h2>Edit Request: {selectedRequest.patientname}</h2>
-
-                    <label>
-                      Status:
-                      <select
-                        name="status"
-                        value={formData.status}
-                        onChange={handleChange}
-                      >
-                        <option value="">Select</option>
-                        <option value="pending">Pending</option>
-                        <option value="approved">Approved</option>
-                        <option value="rejected">Rejected</option>
-                        <option value="cancelled">Cancelled</option>
-                      </select>
-                    </label>
-
-                    {selectedRequest.caretype === 'doctor' && (
-                      <label>
-                        Doctor:
-                        <select
-                          name="doctorid"
-                          value={formData.doctorid}
-                          onChange={handleChange}
-                        >
-                          <option value="">Select Doctor</option>
-                          {doctors.map((doc) => (
+              <div className="modal-content" onClick={e => e.stopPropagation()}  style={{
+    backgroundColor: '#d0f3f3ff',
+    borderRadius: '10px',
+    padding: '20px',
+    boxShadow: '0 4px 12px rgba(0, 0, 0, 0.3)',
+    maxWidth: '500px',
+    width: '90%',
+  }}>
+                <h3>Edit Homecare Request</h3>
+                {editableFields.map((field) => {
+                  if (field === 'status') {
+                    return (
+                      <div key={field} className="form-group">
+                        <label>Status:</label>
+                        <select name="status" value={formData.status} onChange={handleChange}>
+                          <option value="pending">Pending</option>
+                          <option value="approved">Approved</option>
+                          <option value="cancelled">Cancelled</option>
+                          <option value="scheduled">Scheduled</option>
+                          <option value="rejected">Rejected</option>
+                        </select>
+                      </div>
+                    );
+                  } else if (field === 'doctorid') {
+                    return (
+                      <div key={field} className="form-group">
+                        <label>Doctor:</label>
+                        <select name="doctorid" value={formData.doctorid} onChange={handleChange}>
+                          <option value="">-- Select Doctor --</option>
+                          {doctors.map(doc => (
                             <option key={doc.uid} value={doc.uid}>
-                              {doc.uid} - {doc.fullname}
+                              {doc.fullname}
                             </option>
                           ))}
                         </select>
-                      </label>
-                    )}
-
-                    {['nurse', 'equipment', 'physiotherapy'].includes(selectedRequest.caretype) && (
-                      <label>
-                        Staff:
-                        <select
-                          name="assignedstaffid"
-                          value={formData.assignedstaffid}
-                          onChange={handleChange}
-                        >
-                          <option value="">Select Staff</option>
-                          {staffList.map((staff) => (
+                      </div>
+                    );
+                  } else if (field === 'assignedstaffid') {
+                    return (
+                      <div key={field} className="form-group">
+                        <label>Assign Staff:</label>
+                        <select name="assignedstaffid" value={formData.assignedstaffid} onChange={handleChange}>
+                          <option value="">-- Select Staff --</option>
+                          {staffList.map(staff => (
                             <option key={staff.uid} value={staff.uid}>
-                              {staff.staffname} ({staff.stafftype})
+                              {staff.staffname}
                             </option>
                           ))}
                         </select>
-                      </label>
-                    )}
+                      </div>
+                    );
+                  }
+                  return null;
+                })}
 
-                    <div className="form-actions">
-                      <button onClick={handleUpdate}><FaSave/></button>
-                      <button onClick={closeModal}><FaTimes/></button>
-                    </div>
-                  </>
-                ) : (
-                  <>
-                    <h2>This request has been cancelled. Editing is not allowed.</h2>
-                    <button onClick={closeModal}>Close</button>
-                  </>
-                )}
+                <div className="modal-actions">
+                  <button onClick={handleUpdate} className="save-btn">
+                    <FaSave /> Save
+                  </button>
+                  <button onClick={closeModal} className="cancel-btn">
+                    <FaTimes /> Cancel
+                  </button>
+                </div>
               </div>
             </div>
           )}
 
+          {/* Attachment Modal */}
+          {attachmentModal.open && (
+            <div className="modal-overlay" onClick={closeAttachmentModal}>
+              <div className="modal-content attachment-modal" onClick={e => e.stopPropagation()}>
+                <button className="close-attachment-btn" onClick={closeAttachmentModal}><FaTimes /></button>
+                <img
+                  src={`data:image/png;base64,${attachmentModal.attachment.data}`}
+                  alt={attachmentModal.attachment.filename || 'Attachment'}
+                  style={{ maxWidth: '100%', maxHeight: '80vh', borderRadius: '8px' }}
+                />
+              </div>
+            </div>
+          )}
         </div>
       </div>
     </div>

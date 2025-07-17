@@ -1,261 +1,268 @@
-
-.spinner {
-  border: 6px solid #f3f3f3;
-  border-top: 6px solid #3498db; 
-  border-radius: 50%;
-  width: 40px;
-  height: 40px;
-  animation: spin 1s linear infinite;
-
-  margin-right: 700px;
-  margin-top: 200px;
-}
-
-@keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
-}
-
-
-.facility-management-page {
-   position: relative;
-  background-image: url('../../Assests/background.jpg');
+/* Background image on the entire page */
+.facility-management-page-homecare {
+  min-height: 100vh;
+ background-image: url('../../Assests/background.jpg');
   background-size: cover;
   background-position: center;
+  background-repeat: no-repeat;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #333;
+}
+
+/* Semi-transparent overlay on content to improve readability */
+.facility-management-content-homecare {
+  background-color: rgba(255, 255, 255, 0.603);
   min-height: 100vh;
+  display: flex; 
+  margin-right: 80px;
+  
 }
 
-.facility-management-content::before {
-    content: '';
-  position: absolute;
-  inset: 0;
-  background-color: rgba(255, 255, 255, 0.719);
-  z-index: 1;
+/* Cards container with 5 cards per row */
+.cards-container-homecare {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 20px 10px;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 20px;
+  justify-items: stretch;
+  width: 100%;
 }
-.admin-panel{
-   flex: 1;
-  position: relative;
-  z-index: 2;
-  padding: 20px 30px;
-  overflow-y: auto;
+
+/* Single card style */
+.card-homecare {
+  background-color: #fff;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+  padding: 18px 22px;
+  border-radius: 10px;
+  cursor: default;
+  transition: transform 0.2s ease;
   display: flex;
   flex-direction: column;
-}
+  gap: 8px;
+  border-left: 6px solid transparent;
+  word-break: break-word;
 
-.responsive-table-table {
-
-  max-width: 1000px;
-  margin-left: 0;
-  margin-right: 100px;
-  margin-top: 60px;
-}
-
-.responsive-table-table table {
-  width: 100%;
-  border-collapse: collapse;
-  background-color: rgba(227, 238, 241, 0.9);
-  color: #333;
-  border-radius: 8px;
-  overflow: visible; 
-  box-shadow: 0 0 15px rgba(0,0,0,0.3);
-  table-layout: fixed; 
-  word-wrap: break-word;
+  /* NEW: increase width */
+  min-width: 260px;
+  max-width: 320px;
 }
 
 
-.responsive-table-table th, 
-.responsive-table-table td {
-  padding: 10px 15px;
-  text-align: left;
-  border-bottom: 1px solid #ddd;
+.card-homecare:hover {
+  transform: scale(1.05);
 }
 
-.responsive-table-table th {
-  background-color: #78c4b3;
-  color: #fff;
-}
-
-.responsive-table-table tr:hover {
-  background-color: #f1f1f1;
-  cursor: pointer;
-}
-
-
-.form-container {
-  background-color: rgba(255, 255, 255, 0.95);
-  padding: 20px;
-  margin-top: 20px;
-  border-radius: 8px;
-  color: #333;
-  box-shadow: 0 0 15px rgba(0,0,0,0.3);
-}
-
-.form-container label {
-  display: block;
-  margin: 10px 0 5px;
-  font-weight: 600;
-}
-
-.form-container select {
-  width: 100%;
-  padding: 8px;
-  margin-bottom: 15px;
-  border-radius: 4px;
-  border: 1px solid #ccc;
-}
-
-.form-actions {
-  display: flex;
-  gap: 10px;
-}
-
-.form-actions button {
-  padding: 10px 15px;
-  border: none;
-  background-color: #3498db;
-  color: white;
-  font-weight: 600;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background-color 0.3s;
-}
-
-.form-actions button:hover {
-  background-color: #2980b9;
-}
-
-.responsive-table {
-  width: 100%;
-  overflow-x: visible; 
-}
-
-table {
-  width: 100%;
-  min-width: 900px; 
-  border-collapse: collapse;
-}
-
-.responsive-table1 {
-  padding: 8px;
-  border-bottom: 1px solid #ddd;
-  text-align: left;
-}
-
-td, th {
-  padding: 8px;
-  border-bottom: 1px solid #ddd;
-}
-
-
-.cards-container {
+/* Attachment container inside card */
+.attachment-container {
+  margin-top: 10px;
   display: flex;
   flex-direction: column;
-  gap: 16px;
-  padding: 10px;
+  gap: 6px;
 }
 
-.card {
-  background: #fff;
-  border: 1px solid #ddd;
-  padding: 12px 16px;
-  border-radius: 6px;
-  box-shadow: 0 1px 4px rgb(0 0 0 / 0.1);
-}
-
-
-.edit-btn {
-  background-color: transparent;
-  border: none;
-  color: #3498db;
-  cursor: pointer;
-  font-size: 1.2em;
-  display: flex;
+/* View Attachment button */
+.view-attachment-btn {
+  display: inline-flex;
   align-items: center;
   gap: 6px;
-  padding: 4px 8px;
+  background-color: #007bff;
+  border: none;
+  color: white;
+  padding: 6px 12px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 0.9rem;
+  transition: background-color 0.3s ease;
 }
 
-.edit-btn:hover {
-  color: #217dbb;
+.view-attachment-btn:hover {
+  background-color: #0056b3;
 }
 
-
-@media (max-width: 768px) {
-  .responsive-table {
-    display: none;
-  }
+/* Edit button style */
+.edit-btn-homecare {
+  margin-top: auto;
+  background-color: #28a745;
+  border: none;
+  color: rgb(215, 224, 117);
+  font-weight: 600;
+  padding: 10px 18px;
+  border-radius: 8px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  justify-content: center;
+  transition: background-color 0.3s ease;
 }
 
+.edit-btn-homecare:hover {
+  background-color: #1e7e34;
+}
+
+/* Modal Overlay */
 .modal-overlay {
   position: fixed;
   top: 0;
   left: 0;
-  width: 100vw;
-  height: 100vh;
-  background-color: rgba(0,0,0,0.5);
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.55);
   display: flex;
   justify-content: center;
   align-items: center;
   z-index: 9999;
-  padding: 20px;
-  box-sizing: border-box;
+  padding: 10px;
 }
 
-
+/* Modal Content */
 .modal-content {
-  background: white;
-  border-radius: 8px;
-  max-width: 400px;
+  background-color: white;
+  padding: 25px 30px;
+  border-radius: 12px;
+  max-width: 450px;
   width: 100%;
-  padding: 24px 30px;
-  box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+  box-shadow: 0 4px 20px rgba(0,0,0,0.25);
+  position: relative;
+}
+
+/* Attachment modal overrides */
+.attachment-modal {
+  max-width: 90vw;
   max-height: 90vh;
-  overflow-y: auto;
-}
-
-
-.modal-content label {
-  display: block;
-  margin-bottom: 12px;
-  font-weight: 600;
-}
-
-.modal-content select {
-  width: 100%;
-  padding: 8px;
-  margin-top: 4px;
-  border-radius: 4px;
-  border: 1px solid #ccc;
-  font-size: 1em;
-}
-
-
-.form-actions {
-  margin-top: 20px;
+  padding: 10px 10px 40px;
   display: flex;
-  gap: 12px;
-  justify-content: flex-end;
+  justify-content: center;
+  align-items: center;
 }
 
-.form-actions button {
-  padding: 8px 16px;
-  font-size: 1em;
-  cursor: pointer;
-  border-radius: 4px;
+/* Close attachment button */
+.close-attachment-btn {
+  position: absolute;
+  top: 10px;
+  right: 12px;
+  background: transparent;
   border: none;
-  background-color: #3498db;
+  font-size: 1.5rem;
+  color: #333;
+  cursor: pointer;
+  transition: color 0.3s ease;
+  z-index: 10000;
+}
+
+.close-attachment-btn:hover {
+  color: #f44336;
+}
+
+/* Form group in modal */
+.form-group {
+  margin-bottom: 18px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 7px;
+  font-weight: 700;
+  font-size: 1rem;
+}
+
+.form-group select {
+  width: 100%;
+  padding: 8px 10px;
+  font-size: 1rem;
+  border-radius: 6px;
+  border: 1.5px solid #ccc;
+  transition: border-color 0.3s ease;
+}
+
+.form-group select:focus {
+  border-color: #007bff;
+  outline: none;
+}
+
+/* Modal buttons container */
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+}
+
+.save-btn {
+  background-color: #007bff;
+  border: none;
   color: white;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
   transition: background-color 0.3s ease;
 }
 
-.form-actions button:hover {
-  background-color: #217dbb;
+.save-btn:hover {
+  background-color: #0056b3;
 }
 
-.form-actions button:last-child {
-  background-color: #999;
+.cancel-btn {
+  background-color: #6c757d;
+  border: none;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: background-color 0.3s ease;
 }
 
-.form-actions button:last-child:hover {
-  background-color: #777;
+.cancel-btn:hover {
+  background-color: #5a6268;
+}
+
+/* Spinner */
+.spin.large {
+  font-size: 48px;
+  color: #007bff;
+  margin: 150px auto 0 auto;
+  display: block;
+}
+
+/* Responsive adjustments */
+@media (max-width: 1400px) {
+  .cards-container {
+    grid-template-columns: repeat(4, 1fr);
+    max-width: 1100px;
+  }
+}
+
+@media (max-width: 1100px) {
+  .cards-container {
+    grid-template-columns: repeat(3, 1fr);
+    max-width: 850px;
+  }
+}
+
+@media (max-width: 768px) {
+  .facility-management-content {
+    flex-direction: column;
+    background-color: rgba(255, 255, 255, 0.95);
+  }
+  .cards-container {
+    grid-template-columns: repeat(2, 1fr);
+    max-width: 600px;
+  }
+}
+
+@media (max-width: 480px) {
+  .cards-container {
+    grid-template-columns: 1fr;
+    max-width: 320px;
+  }
 }
