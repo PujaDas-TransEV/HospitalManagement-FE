@@ -6,7 +6,7 @@ import {
   FaUserMd, FaUserInjured, FaCalendarAlt, FaHome, FaHospital,
   FaClipboardList, FaToolbox, FaWallet, FaCog, FaFileMedical,
   FaUserShield, FaBed, FaUsers, FaPrescriptionBottleAlt, FaPlusCircle,
-  FaProcedures,FaUserPlus,FaComments,FaLifeRing,FaUserMinus,FaFirstAid
+  FaProcedures,FaUserPlus,FaComments,FaLifeRing,FaUserMinus,FaFirstAid,FaVial
 } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
 import AdminNavbar from '../Adminnavbar/AdminNavbar';
@@ -69,17 +69,19 @@ const AdminDashboard = () => {
       { icon: <FaHospital />, label: 'Departments', to: '/facility-management', bg: '#af7aa1' },
     ],
     [
+       { icon: <FaVial />, label: 'Pathology', to: '/admin/pathologybook', bg: '#a1af1eff' },
       { icon: <FaClipboardList />, label: 'Lab Reports', to: '/admin-labtest', bg: '#ff9da7' },
+       
       { icon: <FaToolbox />, label: 'Equipment', to: '/equipment-management', bg: '#9c755f' },
       { icon: <FaWallet />, label: 'Billing', to: '/admin-billing', bg: '#bab0ac' },
       { icon: <FaPrescriptionBottleAlt />, label: 'Prescriptions', to: '/reportsprescription', bg: '#a6761d' },
       { icon: <FaCog />, label: 'Settings', to: '/admin-settings', bg: '#1f77b4' },
       { icon: <FaFileMedical />, label: 'Medical Survey', to: '/admin-survey', bg: '#b07aa1' },
       { icon: <FaUserShield />, label: 'Admin Profile', to: '/admin-profile', bg: '#b801dd' },
-      { icon: <FaPlusCircle />, label: 'Add Doctor', to: '/doctor-signup', bg: '#d62728' },
+     
     ],
     [
-     
+     { icon: <FaPlusCircle />, label: 'Add Doctor', to: '/doctor-signup', bg: '#d62728' }, 
   { icon: <FaUserPlus />, label: 'Patient Admission', to: '/patient-admission', bg: '#6aaed6' },
   { icon: <FaFirstAid /> , label: 'Emergency', to: '/admin/emergency',  bg: '#d62828' },
    {icon: <FaUserMinus />, label: 'Patient Discharge', to: '/discharge-list', bg: '#f67280'}, // light blue
