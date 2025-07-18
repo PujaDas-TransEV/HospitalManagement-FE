@@ -239,3 +239,40 @@
     width: 95%;
   }
 }
+/* --- Filter Section --- */
+.filter-section {
+  display: flex;
+  align-items: center;
+  background-color: #f4f7fc;
+  padding: 10px 20px;
+  border-radius: 8px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+  max-width: 400px;
+  margin-bottom: 1rem;
+  font-size: 16px;
+  color: #333;
+}
+
+/* Style the dropdown */
+.filter-section select {
+  padding: 6px 12px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background: white;
+  cursor: pointer;
+  transition: border 0.2s;
+}
+
+.filter-section select:focus {
+  border-color: #007bff;
+  outline: none;
+}
+
+/* --- Appointments List Section --- */
+.appt-list {
+  background-color: #ffffffc9;
+  padding: 1rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}

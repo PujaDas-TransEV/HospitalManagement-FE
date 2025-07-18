@@ -222,6 +222,7 @@ const Appointment = () => {
                         <div className="upcoming-info">
                           <time>{new Date(a.appoinmenttime).toLocaleString()}</time>
                           <p>with <strong>{a.doctor_fullname}</strong></p>
+                           <p>Status <strong> {a.appoinmentstatus}</strong></p>
                         </div>
                         <div className="upcoming-actions">
                           <button
@@ -246,6 +247,7 @@ const Appointment = () => {
       <th className="history-table" style={{ backgroundColor: '#87CEEB' }}>ID</th>
       <th style={{ backgroundColor: '#87CEEB' }}>Time</th>
       <th style={{ backgroundColor: '#87CEEB' }}>Doctor</th>
+      <th style={{ backgroundColor: '#87CEEB' }}>Appointment Status</th>
       <th style={{ backgroundColor: '#87CEEB' }}>Details</th>
       <th style={{ backgroundColor: '#87CEEB' }}>Actions</th>
     </tr>
@@ -274,6 +276,7 @@ const Appointment = () => {
           <td data-label="ID">{a.uid}</td>
           <td data-label="Time">{new Date(a.appoinmenttime).toLocaleString()}</td>
           <td data-label="Doctor">{a.doctor_fullname}</td>
+           <td data-label="Appointmnet Status">{a.appoinmentstatus}</td>
           <td data-label="Details">{a.appoinmentdetails}</td>
           <td data-label="Actions" className="action-buttons">
             <button className="btnn-iconn" onClick={() => handleEdit(a)} title="Edit">

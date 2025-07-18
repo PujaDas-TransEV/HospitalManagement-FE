@@ -1,13 +1,12 @@
-
 import React, { useState, useEffect } from 'react';
 import { Button } from 'react-bootstrap';
-import { FaEdit, FaTrash, FaSpinner } from 'react-icons/fa';
-import './DoctorAppointment.css';
+import { FaEdit, FaTrash, FaSpinner, FaTimes, FaSave } from 'react-icons/fa';
 import DoctorNavbar from '../DoctorNavbar/DoctorNAvbar';
-import Doctorsidebar from '../DoctorSidebar/Doctorsidebar';
-import {jwtDecode}from 'jwt-decode';
+import DoctorSidebar from '../DoctorSidebar/Doctorsidebar';
+import { jwtDecode } from 'jwt-decode';
 import { useNavigate } from 'react-router-dom';
-import { FaTimes, FaSave } from 'react-icons/fa';
+import './DoctorAppointment.css';
+
 const DoctorAppointmentManagement = () => {
   const navigate = useNavigate();
   const [appointments, setAppointments] = useState([]);
@@ -15,355 +14,253 @@ const DoctorAppointmentManagement = () => {
   const [editingAppointment, setEditingAppointment] = useState(null);
   const [editStatus, setEditStatus] = useState('');
   const [doctorId, setDoctorId] = useState(null);
+  const [filterStatus, setFilterStatus] = useState('All');
 
-  // Get doctor ID from token
+  // Decode token
   useEffect(() => {
-    const accessToken = localStorage.getItem('accessToken');
-    if (!accessToken) {
-      navigate('/login');
-      return;
-    }
-
+    const token = localStorage.getItem('accessToken');
+    if (!token) return navigate('/login');
     try {
-      const decodedToken = jwtDecode(accessToken);
-      if (decodedToken?.doctorid) {
-        setDoctorId(decodedToken.doctorid);
-      } else {
-        console.error('Token does not contain doctorid.');
-        navigate('/login');
-      }
-    } catch (error) {
-      console.error('Invalid token:', error);
+      const decoded = jwtDecode(token);
+      if (decoded.doctorid) setDoctorId(decoded.doctorid);
+      else navigate('/login');
+    } catch {
       navigate('/login');
     }
   }, [navigate]);
 
-  // Fetch appointments
+  // Fetch appointment data
   useEffect(() => {
     if (!doctorId) return;
-
-    const fetchAppointments = async () => {
+    const fetchData = async () => {
       setLoading(true);
       const formData = new FormData();
       formData.append('doctorid', doctorId);
-
       try {
-        const res = await fetch('http://192.168.0.106:5000/getappoinmenthistory', {
+        const response = await fetch('http://192.168.0.106:5000/getappoinmenthistory', {
           method: 'POST',
           body: formData,
         });
-
-        const result = await res.json();
-        const fetchedAppointments = Array.isArray(result.data) ? result.data : [];
-        setAppointments(fetchedAppointments);
-      } catch (error) {
-        console.error('Error fetching appointments:', error);
-      } finally {
-        setLoading(false);
+        const { data } = await response.json();
+        setAppointments(Array.isArray(data) ? data : []);
+      } catch (err) {
+        console.error('Error fetching appointments:', err);
       }
+      setLoading(false);
     };
-
-    fetchAppointments();
+    fetchData();
   }, [doctorId]);
 
-  // Open edit popup with selected appointment
-  const openEditPopup = (appointment) => {
-    setEditingAppointment(appointment);
-    setEditStatus(appointment.appoinmentstatus || 'Pending');
+  const normalizeStatus = (status = '') => {
+    const lower = status.toLowerCase();
+    if (['applied', 'booked', 'confirmed'].includes(lower)) return 'Booked';
+    if (lower === 'completed') return 'Completed';
+    if (['cancelled', 'acancelled'].includes(lower)) return 'Cancelled';
+    return status;
   };
 
-  // Close edit popup
-  const closeEditPopup = () => {
+  const normalizedAppointments = appointments.map(a => ({
+    ...a,
+    appoinmentstatus: normalizeStatus(a.appoinmentstatus),
+  }));
+
+  const filteredAppointments = normalizedAppointments.filter(a => {
+    if (filterStatus === 'All') return true;
+    return a.appoinmentstatus === filterStatus;
+  });
+
+  const openEditPopup = (appointment) => {
+    setEditingAppointment(appointment);
+    setEditStatus(appointment.appoinmentstatus);
+  };
+
+  const closeEdit = () => {
     setEditingAppointment(null);
     setEditStatus('');
   };
 
-  // Handle status change in popup
-  const handleStatusChange = (e) => {
-    setEditStatus(e.target.value);
-  };
-
-  // Save edited status
-  const saveEditedStatus = async () => {
-    if (!editingAppointment?.uid) return;
+  const saveStatus = async () => {
+    if (!editingAppointment) return;
 
     const formData = new FormData();
     formData.append('appoinid', editingAppointment.uid);
     formData.append('appoinmentstatus', editStatus);
 
     try {
-      const response = await fetch('http://192.168.0.106:5000/update/appoinment', {
+      const res = await fetch('http://192.168.0.106:5000/update/appoinment', {
         method: 'POST',
         body: formData,
       });
-
-      const data = await response.json();
-      if (data.message) {
-        setAppointments((prev) =>
-          prev.map((appt) =>
-            appt.uid === editingAppointment.uid
-              ? { ...appt, appoinmentstatus: editStatus }
-              : appt
+      const json = await res.json();
+      if (json.message) {
+        setAppointments(prev =>
+          prev.map(a =>
+            a.uid === editingAppointment.uid
+              ? { ...a, appoinmentstatus: editStatus }
+              : a
           )
         );
-        alert('Appointment updated successfully');
-        closeEditPopup();
+        closeEdit();
+        alert('Appointment updated successfully.');
       } else {
-        alert('Failed to update appointment');
+        alert('Update failed.');
       }
-    } catch (error) {
-      console.error('Error updating appointment:', error);
-      alert('Error updating appointment');
+    } catch (err) {
+      console.error('Update error:', err);
+      alert('Server error');
     }
   };
 
-  // Cancel appointment function remains the same
- const handleCancelAppointment = async (appoinid) => {
-  if (!window.confirm('Are you sure you want to cancel this appointment?')) return;
+  const deleteAppointment = async (uid) => {
+    if (!window.confirm('Are you sure you want to delete this appointment?')) return;
 
-  try {
     const formData = new FormData();
-    formData.append('appoinid', appoinid);
+    formData.append('appoinid', uid);
 
-    const response = await fetch('http://192.168.0.106:5000/ops/appoinmentdelete', {
-      method: 'POST',
-      body: formData,
-    });
-
-    const data = await response.json();
-
-    if (response.status === 200 && data.message) {
-      setAppointments((prev) => prev.filter((appt) => appt.uid !== appoinid));
-      alert('Appointment deleted successfully');
-    } else {
-      alert('Failed to cancel appointment');
+    try {
+      const res = await fetch('http://192.168.0.106:5000/ops/appoinmentdelete', {
+        method: 'POST',
+        body: formData,
+      });
+      const json = await res.json();
+      if (json.message) {
+        setAppointments(prev => prev.filter(a => a.uid !== uid));
+        alert('Appointment deleted.');
+      } else {
+        alert('Delete failed.');
+      }
+    } catch (err) {
+      console.error('Delete error:', err);
+      alert('Server error while deleting.');
     }
-  } catch (error) {
-    console.error('Error cancelling appointment:', error);
-    alert('Error cancelling appointment');
-  }
-};
-
+  };
 
   return (
     <div className="appointment-bg">
       <DoctorNavbar />
       <div className="dashboard-content-appointment">
-        <Doctorsidebar />
+        <DoctorSidebar />
         <div className="appointment-overlay">
           <div className="doctor-appointment-container">
             <h2 className="section-title">Manage Appointments</h2>
 
+       <div
+  style={{
+    display: 'flex',
+    alignItems: 'center',
+    gap: '8px',
+    marginBottom: '20px',
+    fontWeight: '600',
+    fontFamily: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif",
+    color: '#2c3e50',
+    backgroundColor: '#e0f2f1',  // soft teal background
+    padding: '8px 12px',
+    borderRadius: '8px',
+    width: '220px',  // smaller width
+    boxShadow: '0 2px 6px rgba(0,0,0,0.1)',
+  }}
+>
+  <label htmlFor="statusFilter" style={{ flexShrink: 0 }}>
+    Filter by Status:
+  </label>
+  <select
+    id="statusFilter"
+    value={filterStatus}
+    onChange={(e) => setFilterStatus(e.target.value)}
+    style={{
+      padding: '5px 10px',
+      borderRadius: '6px',
+      border: '1px solid #009688', // teal border
+      fontSize: '0.9rem',
+      cursor: 'pointer',
+      outline: 'none',
+      backgroundColor: '#ffffff',
+      color: '#004d40',
+      flexGrow: 1,
+      transition: 'border-color 0.3s ease',
+    }}
+    onFocus={e => (e.target.style.borderColor = '#00796b')}
+    onBlur={e => (e.target.style.borderColor = '#009688')}
+  >
+    <option value="All">All</option>
+    <option value="Booked">Booked</option>
+    <option value="Completed">Completed</option>
+    <option value="Cancelled">Cancelled</option>
+  </select>
+</div>
+
             {loading ? (
-              <div className="loading-spinner" aria-label="Loading appointments">
-                <FaSpinner size={48} className="spin" />
-              </div>
-            ) : appointments.length === 0 ? (
+              <div className="loading-spinner"><FaSpinner className="spin" size={40} /></div>
+            ) : filteredAppointments.length === 0 ? (
               <p>No appointments found.</p>
             ) : (
-              <>
-                {/* Table for desktop */}
-                <div className="appointment-table">
-                  <table>
-                  <thead>
-  <tr>
-    <th className="appointment-th">Appointment ID</th>
-    <th className="appointment-th">Patient Name</th>
-    <th className="appointment-th">Date and Time</th>
-    <th className="appointment-th">Status</th>
-    <th className="appointment-th">Actions</th>
-  </tr>
-</thead>
-
-                    <tbody>
-                      {appointments.map((appointment) =>
-                        appointment?.uid ? (
-                          <tr key={appointment.uid}>
-                            <td>{appointment.uid}</td>
-                            <td>
-                              {appointment.patient_firstname} {appointment.patient_lastname}
-                            </td>
-                            <td>
-                              {appointment.appoinmentdate} {appointment.appoinmenttime}
-                            </td>
-                            <td>{appointment.appoinmentstatus}</td>
-                            <td>
-                              <Button
-                                variant="warning"
-                                onClick={() => openEditPopup(appointment)}
-                                aria-label={`Edit appointment ${appointment.uid}`}
-                                className="btn-icon"
-                              >
-                                <FaEdit />
-                              </Button>{' '}
-                              <Button
-                                variant="danger"
-                                onClick={() => handleCancelAppointment(appointment.uid)}
-                                aria-label={`Delete appointment ${appointment.uid}`}
-                                className="btn-icon"
-                              >
-                                <FaTrash />
-                              </Button>
-                            </td>
-                          </tr>
-                        ) : null
-                      )}
-                    </tbody>
-                  </table>
-                </div>
-
-                {/* Cards for mobile */}
-                <div className="appointment-cards" aria-label="Appointment cards">
-                  {appointments.map((appointment) => (
-                    appointment?.uid && (
-                      <div className="appointment-card" key={appointment.uid}>
-                        <h3 className="card-title">
-                          Appointment ID: {appointment.uid}
-                        </h3>
-                        <p>
-                          <strong>Patient:</strong> {appointment.patient_firstname} {appointment.patient_lastname}
-                        </p>
-                        <p>
-                          <strong>Date:</strong> {appointment.appoinmentdate}
-                        </p>
-                        <p>
-                          <strong>Time:</strong> {appointment.appoinmenttime}
-                        </p>
-                        <p>
-                          <strong>Status:</strong> {appointment.appoinmentstatus}
-                        </p>
-                        <div>
-                          <Button
-                            variant="warning"
-                            onClick={() => openEditPopup(appointment)}
-                            aria-label={`Edit appointment ${appointment.uid}`}
-                            className="btn-icon"
-                            size="sm"
-                            style={{ marginRight: '10px' }}
-                          >
-                            <FaEdit />
-                          </Button>
-                          <Button
-                            variant="danger"
-                            onClick={() => handleCancelAppointment(appointment.uid)}
-                            aria-label={`Delete appointment ${appointment.uid}`}
-                            className="btn-icon"
-                            size="sm"
-                          >
+              <table className="appointment-table">
+                <thead>
+                  <tr>
+                    <th>ID</th>
+                    <th>Patient</th>
+                    <th>Date</th>
+                    <th>Time</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {filteredAppointments.map(appt => (
+                    <tr key={appt.uid}>
+                      <td>{appt.uid}</td>
+                      <td>{appt.patient_firstname} {appt.patient_lastname}</td>
+                     <td>{new Date(appt.created_at).toLocaleString('en-IN', {
+  day: '2-digit',
+  month: 'long',
+  year: 'numeric',
+  hour: '2-digit',
+  minute: '2-digit',
+  hour12: true,
+  timeZone: 'Asia/Kolkata'
+})}</td>
+                      <td>{appt.appoinmenttime}</td>
+                      <td>{appt.appoinmentstatus}</td>
+                      <td>
+                        <Button variant="warning" onClick={() => openEditPopup(appt)}>
+                          <FaEdit />
+                        </Button>{' '}
+                        {appt.appoinmentstatus === 'Completed' && (
+                          <Button variant="danger" onClick={() => deleteAppointment(appt.uid)}>
                             <FaTrash />
                           </Button>
-                        </div>
-                      </div>
-                    )
+                        )}
+                      </td>
+                    </tr>
                   ))}
-                </div>
-              </>
+                </tbody>
+              </table>
             )}
 
-            {/* Edit Popup (centered) */}
+            {/* Edit Popup */}
             {editingAppointment && (
-              <div
-                style={{
-                  position: 'fixed',
-                  top: 0,
-                  left: 0,
-                  width: '100vw',
-                  height: '100vh',
-                  backgroundColor: 'rgba(0,0,0,0.5)',
-                  display: 'flex',
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                  zIndex: 9999,
-                }}
-                onClick={closeEditPopup} // close if clicking outside popup
-                aria-modal="true"
-                role="dialog"
-                aria-labelledby="edit-popup-title"
-              >
-                <div
-                  style={{
-                    backgroundColor: '#e0f7fa',
-                    padding: '20px',
-                    borderRadius: '8px',
-                    minWidth: '320px',
-                    maxWidth: '90%',
-                    boxShadow: '0 2px 10px rgba(0,0,0,0.3)',
-                    position: 'relative',
-                  }}
-                  onClick={(e) => e.stopPropagation()} // prevent closing when clicking inside popup
-                >
-                 
-                  <h3
-  id="edit-popup-title"
-  style={{
-    marginBottom: '1rem',
-    color: '#2c3e50',        // Dark blue-ish color for title
-    fontWeight: '700',
-    fontSize: '1.8rem',
-  }}
->
-  Edit Appointment Status
-</h3>
-
-<p
-  style={{
-    color: '#34495e',        // Slightly lighter dark text
-    marginBottom: '0.5rem',
-    fontSize: '1rem',
-    fontWeight: '600',
-  }}
->
-  <strong style={{ color: '#2c3e50' }}>Appointment ID:</strong> {editingAppointment.uid}
-</p>
-
-<p
-  style={{
-    color: '#34495e',
-    marginBottom: '1rem',
-    fontSize: '1rem',
-    fontWeight: '600',
-  }}
->
-  <strong style={{ color: '#2c3e50' }}>Patient Name:</strong>{' '}
-  {editingAppointment.patient_firstname} {editingAppointment.patient_lastname}
-</p>
-
-<label
-  htmlFor="status-select"
-  style={{
-    display: 'block',
-    marginBottom: '0.5rem',
-    fontWeight: '600',
-    color: '#2c3e50',
-    fontSize: '1rem',
-  }}
->
-  Status:
-</label>
-
+              <div className="popup-overlay" onClick={closeEdit}>
+                <div className="popup-content" onClick={e => e.stopPropagation()}>
+                  <h3>Edit Appointment Status</h3>
+                  <p><strong>ID:</strong> {editingAppointment.uid}</p>
+                  <p><strong>Patient:</strong> {editingAppointment.patient_firstname} {editingAppointment.patient_lastname}</p>
+                  <label>Status:</label>
                   <select
-                    id="status-select"
                     value={editStatus}
-                    onChange={handleStatusChange}
-                    style={{ width: '100%', padding: '8px', marginBottom: '1rem' }}
+                    onChange={(e) => setEditStatus(e.target.value)}
                   >
-                    <option>Pending</option>
-                    <option>Confirmed</option>
-                    <option>Cancelled</option>
+                    <option>Booked</option>
                     <option>Completed</option>
+                    <option>Cancelled</option>
                   </select>
-
-                  <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '10px' }}>
-                <Button variant="links" onClick={closeEditPopup} style={{ padding: 0 }}>
-  <FaTimes color="red" size={30} />
-</Button>
-<Button variant="links" onClick={saveEditedStatus} style={{ padding: 0, marginLeft: '10px' }}>
-  <FaSave color="green" size={30} />
-</Button>
+                  <div className="popup-buttons">
+                    <Button variant="secondary" onClick={closeEdit}><FaTimes /> Cancel</Button>
+                    <Button variant="primary" onClick={saveStatus}><FaSave /> Save</Button>
                   </div>
                 </div>
               </div>
             )}
+
           </div>
         </div>
       </div>

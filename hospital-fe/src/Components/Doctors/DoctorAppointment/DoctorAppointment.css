@@ -1,11 +1,10 @@
-
 .appointment-bg {
-  position: relative; 
+  position: relative;
   background-image: url('../../Assests/background.jpg');
   background-size: cover;
   background-position: center;
   min-height: 100vh;
-  padding-top: 70px; 
+  padding-top: 70px;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   z-index: 0;
 }
@@ -14,24 +13,29 @@
   content: '';
   position: absolute;
   inset: 0;
-  background: rgba(207, 233, 217, 0.6); 
+  background: rgba(207, 233, 217, 0.6);
   z-index: 1;
   pointer-events: none;
 }
 
+.dashboard-content-appointment {
+  display: flex;
+  flex-direction: row;
+}
+
 .appointment-overlay {
-  position: relative; 
+  position: relative;
   background-color: rgba(244, 248, 248, 0.95);
   margin: 40px auto;
   max-width: 1200px;
   padding: 30px 40px;
   border-radius: 10px;
-  box-shadow: 0 0 15px rgba(0,0,0,0.15);
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.15);
   display: flex;
   flex-direction: column;
-  z-index: 2; 
+  z-index: 2;
+  width: 100%;
 }
-
 
 .section-title {
   font-size: 2rem;
@@ -50,7 +54,6 @@
   color: #007bff;
 }
 
-
 .spin {
   animation: spin 1s linear infinite;
 }
@@ -61,11 +64,11 @@
   }
 }
 
-
-.appointment-table table {
+.appointment-table {
   width: 100%;
   border-collapse: collapse;
   font-size: 1rem;
+  margin-top: 20px;
 }
 
 .appointment-table thead {
@@ -87,7 +90,6 @@
   background-color: #f9f9f9;
 }
 
-
 .btn-icon {
   display: inline-flex;
   align-items: center;
@@ -107,6 +109,53 @@
   filter: brightness(85%);
 }
 
+.popup-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.popup-content {
+  background-color: #fff;
+  padding: 25px 30px;
+  border-radius: 8px;
+  max-width: 400px;
+  width: 90%;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  position: relative;
+  z-index: 1000;
+}
+
+.popup-content h3 {
+  margin-bottom: 20px;
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+.popup-content label {
+  font-weight: 600;
+  display: block;
+  margin-top: 10px;
+}
+
+.popup-content select {
+  width: 100%;
+  padding: 8px 12px;
+  margin-top: 5px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
+
+.popup-buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 20px;
+}
 
 .appointment-cards {
   display: none;
@@ -138,11 +187,16 @@
   margin-top: 15px;
 }
 
+.appointment-created {
+  color: #333;
+  font-style: italic;
+}
 
+/* Responsive styles */
 @media (max-width: 992px) {
   .appointment-overlay {
     padding: 20px 30px;
-    margin: 30px auto; 
+    margin: 30px auto;
   }
 
   .section-title {
@@ -155,12 +209,10 @@
 }
 
 @media (max-width: 768px) {
-  
   .appointment-table {
     display: none;
   }
 
-  
   .appointment-cards {
     display: flex;
   }
@@ -185,12 +237,8 @@
     font-size: 1.2rem;
     padding: 5px 8px;
   }
-}
-.appointment-th {
-  background-color: #0056b3; 
-  color: white;
-  font-weight: bold;
-  padding: 10px;
-  text-align: center;
-  border-bottom: 2px solid #003d80;
+
+  .popup-content {
+    padding: 20px;
+  }
 }
