@@ -8,7 +8,8 @@ import {
   FaSpinner,
   FaSave,
   FaTimes,
-  FaPlus
+  FaPlus,
+  FaEye
 } from 'react-icons/fa';
 import { Table } from 'react-bootstrap';
 import AdminNavbar from '../Adminnavbar/AdminNavbar';
@@ -30,7 +31,7 @@ const colorMap = {
   Pediatrics: '#E8F0FF',
   'Infectious Diseases': '#FFF9E8',
   Orthopedics: '#F0E8FF',
-  default: '#f0f4f8',
+  default: '#9ab5d1ff',
 };
 
 const ManageDoctors = () => {
@@ -42,13 +43,16 @@ const ManageDoctors = () => {
   const [selectedDepartment, setSelectedDepartment] = useState(null);
   const [showEditPopup, setShowEditPopup] = useState(false);
   const [editDoctorData, setEditDoctorData] = useState(null);
-
+const [showView, setShowView] = useState(false);
+  const [viewDoc, setViewDoc] = useState(null);
+const [searchText, setSearchText] = useState('');
   // New states for appointment fees modal
   const [showFeePopup, setShowFeePopup] = useState(false);
   const [selectedDoctorEmail, setSelectedDoctorEmail] = useState('');
   const [appointmentFees, setAppointmentFees] = useState('');
   const [feeSuccessMessage, setFeeSuccessMessage] = useState('');
-
+const [searchResultCount, setSearchResultCount] = useState(null);
+ 
   useEffect(() => {
     setLoading(true);
 
@@ -233,6 +237,73 @@ const ManageDoctors = () => {
     .catch(() => alert('Error setting appointment fee.'));
 };
 
+const doSearch = (searchText) => {
+  setLoading(true);
+
+  const formData = new FormData();
+  formData.append('search', searchText);
+
+  fetch('http://192.168.0.106:5000/search', {
+    method: 'POST',
+    body: formData,
+  })
+    .then(res => res.json())
+    .then(data => {
+      const billing = data.billing || [];
+      const doctorsFromApi = data.doctors || [];
+
+      // Normalize billing doctors
+      const billingDoctors = billing.map(bill => ({
+        uid: bill.doctor_uid,
+        fullname: bill.doctor_name,
+        specialization: bill.specialization || 'N/A',
+        phonenumber: bill.doctor_phone,
+        qualification: bill.qualification || 'N/A',
+    
+        yoe: bill.yoe, // Billing data does not have experience
+      }));
+
+    
+const normalizedDoctors = doctorsFromApi.map(doctor => ({
+  uid: doctor.uid,
+  fullname: doctor.fullname,
+  specialization: doctor.specialization || 'N/A',
+  phonenumber: doctor.phonenumber,
+  qualification: doctor.qualification || 'N/A',
+  appointmentfees: doctor.appointmentfees || 'N/A',
+  yoe: doctor.yoe || 'N/A',
+}));
+
+      // Merge doctors and billing doctors by unique uid
+      const combined = [...normalizedDoctors];
+
+      const uids = new Set(combined.map(d => d.uid));
+      billingDoctors.forEach(doc => {
+        if (!uids.has(doc.uid)) {
+          combined.push(doc);
+          uids.add(doc.uid);
+        }
+      });
+
+      if (combined.length === 0) {
+        setFilteredDoctors([]);
+        setSearchResultCount(0);
+      } else {
+        setFilteredDoctors(combined);
+        setSearchResultCount(combined.length);
+      }
+
+      setLoading(false);
+    })
+    .catch(err => {
+      console.error('Search API error:', err);
+      setFilteredDoctors([]);
+      setSearchResultCount(0);
+      setLoading(false);
+    });
+};
+
+
   return (
     <div className="manage-doctors-wrapper">
       <AdminNavbar />
@@ -253,6 +324,40 @@ const ManageDoctors = () => {
               Register Doctor <FaUserPlus />
             </button>
           </div>
+<div style={{ padding: '10px', textAlign: 'center', display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '10px' }}>
+ 
+ <div style={{ display: 'flex', alignItems: 'center', width: '300px', border: '1px solid #ccc', borderRadius: '6px', overflow: 'hidden' }}>
+  <input
+    type="text"
+    placeholder="Search doctors Name"
+    value={searchText}
+    onChange={(e) => {
+      setSearchText(e.target.value);
+      doSearch(e.target.value);
+    }}
+    style={{
+      flex: 1,
+      border: 'none',
+      padding: '10px',
+      fontSize: '16px',
+      outline: 'none',
+    }}
+  />
+  <button
+    onClick={() => doSearch(searchText)}
+    style={{
+      padding: '10px 16px',
+      fontSize: '16px',
+      backgroundColor: '#4CAF50',
+      color: 'white',
+      border: 'none',
+      cursor: 'pointer',
+    }}
+  >
+    🔍
+  </button>
+</div>  
+</div>
 
           <div className="departments-container">
             {loading ? (
@@ -361,6 +466,13 @@ const ManageDoctors = () => {
                 </div>
 
                 {/* Desktop Table */}
+                  <div style={{ marginBottom: '10px', marginTop: '20px' }}>
+        {searchText && searchResultCount !== null && (
+          <p style={{ fontSize: '16px', color: '#007bff', fontWeight: '500' }}>
+            🔍 <strong>{searchResultCount}</strong> result{searchResultCount !== 1 && 's'} for "<strong>{searchText}</strong>"
+          </p>
+        )}
+      </div>
                 <Table striped bordered hover responsive className="doctors-table">
                   <thead>
                     <tr>
@@ -398,6 +510,10 @@ const ManageDoctors = () => {
       
         color: '#af152aff'}}
                   />
+                   <FaEye cursor="pointer" color="#4a90e2" onClick={() => {
+                      setViewDoc(doctor);
+                      setShowView(true);
+                    }} title="View Details" /> 
                    <button
       className="fees-button"
       title="set-fee-button"
@@ -415,14 +531,9 @@ const ManageDoctors = () => {
       }}
     >
      
-      <span> Create Fees</span> <FaPlus className="fees-icon" />
-    </button>  {/* <button
-                            className="set-fee-button"
-                            onClick={() => handleSetFeesClick(doctor)}
-                            aria-label={`Set appointment fee for ${doctor.fullname}`}
-                          >
-                            <FaSave />
-                          </button> */}
+      <span>  Fees</span> <FaPlus className="fees-icon" />
+    </button> 
+   
                         </td>
                       </tr>
                     ))}
@@ -527,7 +638,7 @@ const ManageDoctors = () => {
           color: "#4bb8b2ff"}}>Set Appointment Fee</h3>
                 <form onSubmit={handleFeeSubmit}>
                   <label>
-                    Fee:
+                    Appointment Fees:
                     <input
                       type="number"
                       min="0"
@@ -567,10 +678,81 @@ const ManageDoctors = () => {
               {deleteSuccessMessage}
             </div>
           )}
+            {/* --- View Modal */}
+          {showView && viewDoc && (
+            <div className="modal-overlay">
+              <div className="modal-content">
+                <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                
+                  <h3 style={styles.title}>Doctor Details</h3>
+          <FaTimes style={styles.closeIcon} onClick={() => setShowView(false)} />
+        </div>
+
+        {viewDoc.profile_image && (
+          <img
+            src={`data:image/jpeg;base64,${viewDoc.profile_image}`}
+            alt="profile"
+            style={styles.profileImage}
+          />
+        )}
+
+        <div style={styles.infoRow}><strong>Name:</strong> Dr. {viewDoc.fullname}</div>
+        <div style={styles.infoRow}><strong>Email:</strong> {viewDoc.email}</div>
+        <div style={styles.infoRow}><strong>Specialization:</strong> {viewDoc.specialization}</div>
+        <div style={styles.infoRow}><strong>Phone:</strong> {viewDoc.phonenumber}</div>
+        <div style={styles.infoRow}><strong>Experience:</strong> {viewDoc.yoe} yrs</div>
+        <div style={styles.infoRow}><strong>Qualification:</strong> {viewDoc.qualification}</div>
+        <div style={styles.infoRow}><strong>Fees:</strong> ₹{viewDoc.appointmentfees}</div>
+        <div style={styles.infoRow}><strong>Address:</strong> {viewDoc.address}</div>
+        <div style={styles.infoRow}><strong>DOB:</strong> {viewDoc.dob}</div>
+        <div style={styles.infoRow}><strong>Gender:</strong> {viewDoc.gender}</div>
+        <div style={styles.infoRow}><strong>License:</strong> {viewDoc.license_number}</div>
+              </div>
+            </div>
+          )}
+
         </main>
       </div>
     </div>
   );
 };
+const styles = {
+ 
+  header: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 20,
+  },
+  title: {
+    margin: 0,
+    fontSize: 22,
+    fontWeight: 600,
+  },
+  closeIcon: {
+    fontSize: 22,
+    color: '#888',
+    cursor: 'pointer',
+    transition: 'color 0.3s',
+  },
+  profileImage: {
+    display: 'block',
+    margin: '0 auto 18px auto',
+    borderRadius: '50%',
+    width: 100,
+    height: 100,
+    objectFit: 'cover',
+    border: '3px solid #007bff',
+  },
+ infoRow: {
+  marginBottom: 10,
+  fontSize: 16,
+  lineHeight: 1.4,
+  color: 'black',
 
+
+  },
+};
 export default ManageDoctors;
+
+

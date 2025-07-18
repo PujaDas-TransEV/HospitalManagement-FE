@@ -19,7 +19,7 @@ const DischargeListPage = () => {
     setLoading(true);
     setError("");
     try {
-      const res = await axios.get("http://localhost:5000/discharge/getallpadops");
+      const res = await axios.get("http://192.168.0.106:5000/discharge/getallpadops");
       if (res.data && res.data.data) {
         setDischargeData(res.data.data);
       } else {
@@ -40,7 +40,7 @@ const DischargeListPage = () => {
     formData.append("patientemailid", patientemailid);
 
     try {
-      await axios.post("http://localhost:5000/discharge/deletepadops", formData);
+      await axios.post("http://192.168.0.106:5000/discharge/deletepadops", formData);
       setDischargeData((prev) =>
         prev.filter((item) => item.patientemailid !== patientemailid)
       );
