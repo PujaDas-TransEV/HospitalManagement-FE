@@ -302,8 +302,8 @@ const navigate = useNavigate();
     <tr key={b.admission_uid}>
       <td>{b.admission_uid}</td>
       <td>{b.patient_name}</td>
-      <td>{b.ward_id}</td>
-      <td>{b.room_id}</td>
+        <td>{b.wardname}</td>
+              <td>{b.roomnumber}</td>
       <td>{b.patient_status}</td>
       <td
         style={{
@@ -499,3 +499,4 @@ const navigate = useNavigate();
 };
 
 export default PatientAdmissionPage;
+

@@ -16,7 +16,8 @@ const PatientLabBookings = () => {
     doctor_reference: '',
     custom_doctor_name: '',
     attachment: null,
-    labtesttype: ''
+    labtesttype: '',
+     tempbookingstatus: 'Booking'
   });
   const [labBookings, setLabBookings] = useState([]);
   const [doctors, setDoctors] = useState([]);
@@ -106,7 +107,8 @@ const PatientLabBookings = () => {
           doctor_reference: '',
           custom_doctor_name: '',
           attachment: null,
-          labtesttype: ''
+          labtesttype: '',
+            tempbookingstatus: 'Booking'
         });
       } else {
         setStatus('❌ Creation failed.');
@@ -176,7 +178,8 @@ const PatientLabBookings = () => {
             <select name="doctor_reference" value={formData.doctor_reference} onChange={handleChange} required>
               <option value="">-- Select Doctor --</option>
               {doctors.map(d => (
-                <option key={d.uid} value={d.uid}>
+                // <option key={d.uid} value={d.uid}>
+                <option key={d.uid} value={d.fullname}>
                   {d.fullname} ({d.specialization})
                 </option>
               ))}
@@ -222,6 +225,7 @@ const PatientLabBookings = () => {
                   <p><strong>Lab Test Type:</strong> {b.labtesttype || '-'}</p>
                   <p><strong>Time:</strong> {new Date(b.booking_time).toLocaleString()}</p>
                   <p><strong>Doctor:</strong> {b.doctor_reference}</p>
+                    <p><strong>Status:</strong> {b.tempbookingstatus}</p>
 
                   {b.attachment_base64 && (
                     <div>
