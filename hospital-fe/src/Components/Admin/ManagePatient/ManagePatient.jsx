@@ -1,12 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
   FaUserEdit,
   FaTrashAlt,
   FaUserPlus,
   FaSpinner,
-  FaTimes,
   FaSave,
+  FaTimes,
 } from 'react-icons/fa';
 import { Table } from 'react-bootstrap';
 import AdminNavbar from '../Adminnavbar/AdminNavbar';
@@ -34,32 +34,56 @@ const colorMap = {
 const ManagePatient = () => {
   const navigate = useNavigate();
   const [patients, setPatients] = useState([]);
+  const [filteredPatients, setFilteredPatients] = useState([]);
   const [departments, setDepartments] = useState([]);
   const [selectedDept, setSelectedDept] = useState(null);
   const [loading, setLoading] = useState(true);
   const [editPatient, setEditPatient] = useState(null);
   const [formData, setFormData] = useState({});
+  const [searchText, setSearchText] = useState('');
+  const [searchResultCount, setSearchResultCount] = useState(null);
 
+  // Initial load for all patients and departments
   useEffect(() => {
     setLoading(true);
-    fetch('http://192.168.0.106:5000/facilityops/getallfacility')
-      .then(r => r.json())
-      .then(r => setDepartments(r.data || []))
-      .catch(() => setDepartments([]));
-
-    fetch('http://192.168.0.106:5000/patientops/getallpatient')
-      .then(r => r.json())
-      .then(r => setPatients(r || []))
-      .catch(() => setPatients([]))
-      .finally(() => setLoading(false));
+    Promise.all([
+      fetch('http://192.168.0.106:5000/facilityops/getallfacility').then(r => r.json()),
+      fetch('http://192.168.0.106:5000/patientops/getallpatient').then(r => r.json()),
+    ])
+    .then(([deptR, patR]) => {
+      setDepartments(deptR.data || []);
+      const arr = Array.isArray(patR) ? patR : [];
+      setPatients(arr);
+      setFilteredPatients(arr);
+    })
+    .catch(console.error)
+    .finally(() => setLoading(false));
   }, []);
 
-  const filteredPatients = selectedDept
-    ? patients.filter(p => p.department === selectedDept)
-    : patients;
+  // Live search function
+  const doSearch = (txt) => {
+    setSearchText(txt);
+    setLoading(true);
+    const fd = new FormData();
+    fd.append('search', txt);
 
-  const handleDepartmentClick = (department) => {
-    navigate(`/patients/${department}`);
+    fetch('http://192.168.0.106:5000/search', {
+      method: 'POST',
+      body: fd,
+    })
+    .then(r => r.json())
+    .then(data => {
+      const result = Array.isArray(data.patients?.result) ? data.patients.result : [];
+      setFilteredPatients(result);
+      setSearchResultCount(result.length);
+    })
+    .catch(console.error)
+    .finally(() => setLoading(false));
+  };
+
+  const handleDepartmentClick = deptName => {
+    setSelectedDept(deptName);
+    navigate(`/patients/${deptName}`);
   };
 
   const handleEdit = p => {
@@ -68,65 +92,57 @@ const ManagePatient = () => {
   };
 
   const handleDelete = uid => {
-    if (!window.confirm('Are you sure you want to delete this patient?')) return;
+    if (!window.confirm('Are you sure?')) return;
     const fd = new FormData();
     fd.append('patientid', uid);
+
     fetch('http://192.168.0.106:5000/patientops/deleteprofile', {
       method: 'POST',
       body: fd,
     })
-      .then(r => r.json())
-      .then(() => {
-        setPatients(ps => ps.filter(p => p.uid !== uid));
-      })
-      .catch(console.error);
+    .then(r => r.json())
+    .then(() => {
+      const rem = patients.filter(x => x.uid !== uid);
+      setPatients(rem);
+      setFilteredPatients(rem);
+    })
+    .catch(console.error);
   };
 
-  
   const savePatient = () => {
-  if (!editPatient || !editPatient.uid) {
-    console.error('Patient details or UID are missing!');
-    alert('Patient details or UID are missing!');
-    return;
-  }
+    if (!editPatient?.uid) return alert('Invalid patient!');
+    const fd = new FormData();
+    ['firstname','lastname','bloodgroup','age','weight','height','gender','dob','phonenumber','address','email']
+      .forEach(field => fd.append(field, formData[field] || ''));
+    fd.append('patientid', editPatient.uid);
 
-  const fd = new FormData();
-  fd.append('patientid', editPatient.uid);           // Use uid as patientid
-  fd.append('firstname', formData.firstname || '');
-  fd.append('lastname', formData.lastname || '');
-  fd.append('bloodgroup', formData.bloodgroup || '');
-  fd.append('age', formData.age || '');
-  fd.append('weight', formData.weight || '');
-  fd.append('height', formData.height || '');
-  fd.append('gender', formData.gender || '');
-  fd.append('dob', formData.dob || '');
-  fd.append('phonenumber', formData.phonenumber || '');
-  fd.append('address', formData.address || '');
-  fd.append('email', formData.email || '');
-
-  fetch('http://192.168.0.106:5000/patients/profile/update', {
-    method: 'POST',
-    body: fd,
-  })
-    .then(response => response.json())
-    .then(data => {
-      if (data) {
-        // Update patient list locally with the updated data
-        setPatients(patients.map(patient =>
-          patient.uid === editPatient.uid ? { ...patient, ...data } : patient
-        ));
+    fetch('http://192.168.0.106:5000/patients/profile/update', {
+      method: 'POST',
+      body: fd,
+    })
+    .then(r => r.json())
+    .then(res => {
+      if (res) {
+        const updatedArr = patients.map(x =>
+          x.uid === editPatient.uid ? { ...x, ...res } : x
+        );
+        setPatients(updatedArr);
+        setFilteredPatients(updatedArr);
         setEditPatient(null);
-        alert('Patient profile updated successfully');
+        alert('Updated successfully');
       } else {
-        alert('Error updating patient profile');
+        alert('Update failed');
       }
     })
-    .catch(error => {
-      console.error('Error updating patient:', error);
-      alert('An error occurred while updating the patient');
+    .catch(e => {
+      console.error(e);
+      alert('Error updating');
     });
-};
+  };
 
+  const filteredByDept = selectedDept
+    ? filteredPatients.filter(p => p.department === selectedDept)
+    : filteredPatients;
 
   return (
     <div className="manage-patients-wrapper">
@@ -134,40 +150,105 @@ const ManagePatient = () => {
       <div className="manage-patients-content">
         <AdminSidebar />
         <main className="main-section-patient">
-          <div className="background-overlay" />
-          <div className="header-section">
+          <header className="header-section">
             <h1>Manage Patients</h1>
-            <button
-              className="register-btn"
-              onClick={() => navigate('/signup')}
-            >
+            <button className="register-btn" onClick={() => navigate('/signup')}>
               Register Patient <FaUserPlus />
             </button>
-          </div>
+          </header>
 
-         {loading && (
-  <div className="modal-overlay">
-    <FaSpinner className="spin large" />
-  </div>
-)}
+<div style={{ display: 'flex', alignItems: 'center', width: '300px', border: '1px solid #ccc', borderRadius: '6px', overflow: 'hidden' }}>
+  <input
+    type="text"
+    placeholder="Search Patients Name"
+    value={searchText}
+    onChange={(e) => {
+      setSearchText(e.target.value);
+      doSearch(e.target.value);
+    }}
+    style={{
+      flex: 1,
+      border: 'none',
+      padding: '10px',
+      fontSize: '16px',
+      outline: 'none',
+    }}
+  />
+  <button
+    onClick={() => doSearch(searchText)}
+    style={{
+      padding: '10px 16px',
+      fontSize: '16px',
+      backgroundColor: '#4CAF50',
+      color: 'white',
+      border: 'none',
+      cursor: 'pointer',
+    }}
+  >
+    🔍
+  </button>
+</div>  
+          {/* Search result count */}
+          {searchText && searchResultCount !== null && (
+            <p style={{ textAlign: 'center', color: '#007bff', marginBottom: 10 }}>
+              🔍 <strong>{searchResultCount}</strong> result{searchResultCount !== 1 && 's'} for "<strong>{searchText}</strong>"
+            </p>
+          )}
 
-<div className="departments-container">
+          {/* Departments row */}
+          {/* <div className="departments-container">
+            {departments.map(dept => (
+              <div
+                key={dept.department_name}
+                className="department-card"
+                onClick={() => handleDepartmentClick(dept.department_name)}
+                style={{
+                  backgroundColor: colorMap[dept.department_name] || colorMap.default,
+                  cursor: 'pointer'
+                }}
+              >
+                <span>{iconMap[dept.department_name] || '👤'} {dept.department_name}</span>
+              </div>
+            ))}
+          </div> */}
+<div
+  style={{
+    display: 'flex',
+    flexWrap: 'wrap',
+    gap: '16px',
+    justifyContent: 'center',
+    marginTop: '20px',
+    marginBottom: '20px',
+  }}
+>
   {departments.map((dept) => (
     <div
       key={dept.department_name}
-      className={`department-card ${
-        selectedDept === dept.department_name ? 'selected' : ''
-      }`}
       onClick={() => handleDepartmentClick(dept.department_name)}
       style={{
-        backgroundColor:
-          selectedDept === dept.department_name
-            ? '#4e79a7'
-            : colorMap[dept.department_name] || colorMap.default,
-        color: selectedDept === dept.department_name ? '#fff' : '#333',
+        flex: '0 1 calc(20% - 16px)', // about 5 cards per row
+        minWidth: '140px',            // smaller min width
+        backgroundColor: colorMap[dept.department_name] || colorMap.default,
+        borderRadius: '8px',
+        padding: '16px',
+        textAlign: 'center',
+        boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
+        transition: 'transform 0.2s, box-shadow 0.3s',
+        cursor: 'pointer',
+        color: '#333',
+        fontSize: '15px',
+        fontWeight: '500',
+      }}
+      onMouseEnter={(e) => {
+        e.currentTarget.style.transform = 'scale(1.03)';
+        e.currentTarget.style.boxShadow = '0 6px 14px rgba(0, 0, 0, 0.15)';
+      }}
+      onMouseLeave={(e) => {
+        e.currentTarget.style.transform = 'scale(1)';
+        e.currentTarget.style.boxShadow = '0 4px 8px rgba(0, 0, 0, 0.1)';
       }}
     >
-      <div className="dept-icon">
+      <div style={{ fontSize: '24px', marginBottom: '8px' }}>
         {iconMap[dept.department_name] || '👤'}
       </div>
       <span>{dept.department_name}</span>
@@ -175,199 +256,136 @@ const ManagePatient = () => {
   ))}
 </div>
 
-<section className="patients-section">
-  <h2>All Patients</h2>
 
-  {!loading && filteredPatients.length === 0 && <p>No patients found.</p>}
+          {/* Patients section */}
+          <section className="patients-section">
+            {loading && <FaSpinner className="spin large" />}
 
-  {filteredPatients.length > 0 && (
-    <>
-      {/* Mobile Cards */}
-      <div className="patients-card-list">
-        {filteredPatients.map((p) => (
-          <div key={p.uid} className="patient-card">
-            <div className="card-row">
-              <strong>Name:</strong> {p.firstname} {p.lastname}
-            </div>
-            <div className="card-row">
-              <strong>Gender:</strong> {p.gender}
-            </div>
-            <div className="card-row">
-              <strong>Age:</strong> {p.age}
-            </div>
-            <div className="card-row">
-              <strong>Blood Group:</strong> {p.bloodgroup}
-            </div>
-            <div className="card-row">
-              <strong>Phone:</strong> {p.phonenumber}
-            </div>
-            <div className="card-row">
-              <strong>Email:</strong> {p.email}
-            </div>
-            <div className="card-actions">
-              <FaUserEdit onClick={() => handleEdit(p)} title="Edit" />
-              <FaTrashAlt onClick={() => handleDelete(p.uid)} title="Delete" />
-            </div>
-          </div>
-        ))}
-      </div>
+            {!loading && filteredByDept.length === 0 && (
+              <p style={{ textAlign: 'center', color: '#888' }}>No patients found.</p>
+            )}
 
-      {/* Desktop/Table */}
-      <div className="table-responsive">
-        <Table striped bordered hover responsive className="custom-table">
-          <thead>
-            <tr>
-              <th>First</th>
-              <th>Last</th>
-              <th>Gender</th>
-              <th>Age</th>
-              <th>Blood</th>
-              <th>Phone</th>
-              <th>Email</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {filteredPatients.map((p) => (
-              <tr key={p.uid}>
-                <td>{p.firstname}</td>
-                <td>{p.lastname}</td>
-                <td>{p.gender}</td>
-                <td>{p.age}</td>
-                <td>{p.bloodgroup}</td>
-                <td>{p.phonenumber}</td>
-                <td>{p.email}</td>
-                <td className="actions-column">
-                  <FaUserEdit onClick={() => handleEdit(p)} />
-                  <FaTrashAlt onClick={() => handleDelete(p.uid)} style={{
-      
-        color: '#af152aff'}}
-                   />
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </Table>
-      </div>
-    </>
-  )}
-</section>
-</main>
-     
-        {editPatient && (
-  <div className="popup-overlay" onClick={() => setEditPatient(null)}>
-    <div className="popup-content wide" onClick={e => e.stopPropagation()}>
-      <h3>Edit Patient</h3>
-      <form
-        onSubmit={e => {
-          e.preventDefault();
-          savePatient();
+            {!loading && filteredByDept.length > 0 && (
+              <>
+                {/* Cards for mobile */}
+                <div className="patients-card-list">
+                  {filteredByDept.map(p => (
+                    <div key={p.uid} className="patient-card">
+                      <div><strong>Name:</strong> {p.firstname} {p.lastname}</div>
+                      <div><strong>Gender:</strong> {p.gender}</div>
+                      <div><strong>Age:</strong> {p.age}</div>
+                      <div><strong>Blood:</strong> {p.bloodgroup}</div>
+                      <div><strong>Phone:</strong> {p.phonenumber}</div>
+                      <div><strong>Email:</strong> {p.email}</div>
+                      <div className="card-actions">
+                        <FaUserEdit onClick={() => handleEdit(p)} />
+                        <FaTrashAlt onClick={() => handleDelete(p.uid)} />
+                      </div>
+                    </div>
+                  ))}
+                </div>
+
+                {/* Desktop table */}
+                <div className="table-responsive">
+                  <Table striped bordered hover responsive>
+                    <thead>
+                      <tr>
+                        <th>First</th>
+                        <th>Last</th>
+                        <th>Gender</th>
+                        <th>Age</th>
+                        <th>Blood</th>
+                        <th>Phone</th>
+                        <th>Email</th>
+                        <th>Actions</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {filteredByDept.map(p => (
+                        <tr key={p.uid}>
+                          <td>{p.firstname}</td>
+                          <td>{p.lastname}</td>
+                          <td>{p.gender}</td>
+                          <td>{p.age}</td>
+                          <td>{p.bloodgroup}</td>
+                          <td>{p.phonenumber}</td>
+                          <td>{p.email}</td>
+                          <td>
+                            <FaUserEdit onClick={() => handleEdit(p)} />
+                            <FaTrashAlt onClick={() => handleDelete(p.uid)} style={{ color: '#af152a', marginLeft: 8 }} />
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </Table>
+                </div>
+              </>
+            )}
+          </section>
+
+          {/* Edit patient popup */}
+          {editPatient && (
+            <div className="popup-overlay" onClick={() => setEditPatient(null)}>
+              <div className="popup-content wide" onClick={e => e.stopPropagation()}>
+                <h3>Edit Patient</h3>
+                <form
+                  onSubmit={e => {
+                    e.preventDefault();
+                    savePatient();
+                  }}style={{
+          backgroundColor: "#e0f7fa",
+          padding: "20px",
+          borderRadius: "8px",
         }}
-        style={{
-    backgroundColor: "#e0f7fa",
-    padding: "20px",
-    borderRadius: "8px",
-    maxHeight: "70vh",     // Set a max height for the form
-    overflowY: "auto"      // Make it scrollable if it exceeds max height
-  }}
-      >
-        <div className="form-grid">
-          {[
-            'firstname',
-            'lastname',
-            'gender',
-            'dob',
-            'age',
-            'bloodgroup',
-            'phonenumber',
-            'email',
-            'address',
-            'height',
-            'weight'
-          ].map(f => {
-            if (f === 'gender') {
-              return (
-                <div key={f} className="form-field">
-                  <label>
-                    Gender:
-                    <select
-                      name="gender"
-                      value={formData.gender || ''}
-                      onChange={e =>
-                        setFormData(prev => ({
-                          ...prev,
-                          gender: e.target.value,
-                        }))
-                      }
-                      required
-                    >
-                      <option value="">Select Gender</option>
-                      <option value="Male">Male</option>
-                      <option value="Female">Female</option>
-                      <option value="Other">Other</option>
-                    </select>
-                  </label>
-                </div>
-              );
-            } else if (f === 'dob') {
-              return (
-                <div key={f} className="form-field">
-                  <label>
-                    Date of Birth:
-                    <input
-                      type="date"
-                      name="dob"
-                      value={formData.dob ? formData.dob.split('T')[0] : ''}
-                      onChange={e =>
-                        setFormData(prev => ({
-                          ...prev,
-                          dob: e.target.value,
-                        }))
-                      }
-                      required
-                    />
-                  </label>
-                </div>
-              );
-            } else {
-              return (
-                <div key={f} className="form-field">
-                  <label>
-                    {f.charAt(0).toUpperCase() + f.slice(1)}:
-                    <input
-                      name={f}
-                      value={formData[f] || ''}
-                      onChange={e =>
-                        setFormData(prev => ({
-                          ...prev,
-                          [f]: e.target.value,
-                        }))
-                      }
-                      required
-                    />
-                  </label>
-                </div>
-              );
-            }
-          })}
-        </div>
-        <div className="popup-buttons">
-          <button type="submit" className="btn btn-primary">
-            <FaSave /> Save
-          </button>
-          <button
-            type="button"
-            className="btn btn-secondary"
-            onClick={() => setEditPatient(null)}
-          >
-            <FaTimes /> Cancel
-          </button>
-        </div>
-      </form>
-    </div>
-  </div>
-)}
-
+                >
+                  <div className="form-grid">
+                    {[
+                      'firstname','lastname','gender','dob','age',
+                      'bloodgroup','phonenumber','email','address','height','weight'
+                    ].map(f => (
+                      <div key={f} className="form-field">
+                        <label>
+                          {f[0].toUpperCase() + f.slice(1)}:
+                          {f === 'gender' ? (
+                            <select
+                              value={formData.gender || ''}
+                              onChange={e => setFormData(prev => ({ ...prev, gender: e.target.value }))}
+                              required
+                            >
+                              <option value="">Select</option>
+                              <option>Male</option>
+                              <option>Female</option>
+                              <option>Other</option>
+                            </select>
+                          ) : f === 'dob' ? (
+                            <input
+                              type="date"
+                              value={formData.dob?.split('T')[0] || ''}
+                              onChange={e => setFormData(prev => ({ ...prev, dob: e.target.value }))}
+                              required
+                            />
+                          ) : (
+                            <input
+                              name={f}
+                              value={formData[f] || ''}
+                              onChange={e => setFormData(prev => ({ ...prev, [f]: e.target.value }))}
+                              required
+                            />
+                          )}
+                        </label>
+                      </div>
+                    ))}
+                  </div>
+                  <div className="popup-buttons">
+                    <button type="submit"><FaSave /> Save</button>
+                    <button type="button"  className="cancel-btn" onClick={() => setEditPatient(null)}><FaTimes /> Cancel</button>
+                    
+                  </div>
+                </form>
+              </div>
+            </div>
+          )}
+        </main>
       </div>
     </div>
   );

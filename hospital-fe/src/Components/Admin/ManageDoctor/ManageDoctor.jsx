@@ -237,11 +237,12 @@ const [searchResultCount, setSearchResultCount] = useState(null);
     .catch(() => alert('Error setting appointment fee.'));
 };
 
+
 const doSearch = (searchText) => {
   setLoading(true);
 
   const formData = new FormData();
-  formData.append('search', searchText);
+  formData.append('search', searchText);  // Use 'search_value' as backend expects
 
   fetch('http://192.168.0.106:5000/search', {
     method: 'POST',
@@ -249,8 +250,9 @@ const doSearch = (searchText) => {
   })
     .then(res => res.json())
     .then(data => {
-      const billing = data.billing || [];
-      const doctorsFromApi = data.doctors || [];
+      // Extract bills and doctors data from response
+      const billing = data.bills?.bills || [];        // bills inside bills object
+      const doctorsFromApi = data.doctors?.result || [];  // doctors inside doctors.result
 
       // Normalize billing doctors
       const billingDoctors = billing.map(bill => ({
@@ -259,20 +261,19 @@ const doSearch = (searchText) => {
         specialization: bill.specialization || 'N/A',
         phonenumber: bill.doctor_phone,
         qualification: bill.qualification || 'N/A',
-    
-        yoe: bill.yoe, // Billing data does not have experience
+        yoe: bill.yoe || 'N/A', // Add fallback
       }));
 
-    
-const normalizedDoctors = doctorsFromApi.map(doctor => ({
-  uid: doctor.uid,
-  fullname: doctor.fullname,
-  specialization: doctor.specialization || 'N/A',
-  phonenumber: doctor.phonenumber,
-  qualification: doctor.qualification || 'N/A',
-  appointmentfees: doctor.appointmentfees || 'N/A',
-  yoe: doctor.yoe || 'N/A',
-}));
+      // Normalize doctors from API
+      const normalizedDoctors = doctorsFromApi.map(doctor => ({
+        uid: doctor.uid,
+        fullname: doctor.fullname,
+        specialization: doctor.specialization || 'N/A',
+        phonenumber: doctor.phonenumber,
+        qualification: doctor.qualification || 'N/A',
+        appointmentfees: doctor.appointmentfees || 'N/A',
+        yoe: doctor.yoe || 'N/A',
+      }));
 
       // Merge doctors and billing doctors by unique uid
       const combined = [...normalizedDoctors];
