@@ -194,7 +194,7 @@ const [searchResultCount, setSearchResultCount] = useState(null);
     setShowFeePopup(true);
   };
 
-  const handleFeeSubmit = (e) => {
+const handleFeeSubmit = (e) => {
   e.preventDefault();
 
   const formData = new FormData();
@@ -205,12 +205,21 @@ const [searchResultCount, setSearchResultCount] = useState(null);
     method: 'POST',
     body: formData,
   })
-    .then((res) => res.json())
-    .then((data) => {
-      // Adjusted message check to match backend response exactly
-      if (data.message === 'Appointment fees created successfully!' || data.message === 'Appointment fee added successfully') {
+    .then(async (res) => {
+      const data = await res.json();
+
+      // Success message from backend
+      const successMessages = [
+        'Appointment fees created successfully!',
+        'Appointment fee added successfully',
+        'Appointment fees updated successfully!',
+        'Appointment fee updated successfully'
+      ];
+
+      if (successMessages.includes(data.message)) {
         setFeeSuccessMessage('Appointment fee set successfully!');
-        // Update doctors and filteredDoctors state
+
+        // Update doctor in both lists
         setDoctors((prev) =>
           prev.map((doc) =>
             doc.email === selectedDoctorEmail
@@ -226,12 +235,23 @@ const [searchResultCount, setSearchResultCount] = useState(null);
           )
         );
 
-        setTimeout(() => {
-          setShowFeePopup(false);
-          setFeeSuccessMessage('');
-        }, 2000);
+        // ✅ If backend returned 200 = update → close modal
+        if (res.status === 200) {
+          setTimeout(() => {
+            setShowFeePopup(false);
+            setFeeSuccessMessage('');
+          }, 2000);
+        }
+
+        // Optional: close modal on creation (201) if needed
+        if (res.status === 201) {
+          setTimeout(() => {
+            setShowFeePopup(false);
+            setFeeSuccessMessage('');
+          }, 2000);
+        }
       } else {
-        alert('Failed to set appointment fee.');
+        alert('Failed to set appointment fee: ' + data.message);
       }
     })
     .catch(() => alert('Error setting appointment fee.'));
