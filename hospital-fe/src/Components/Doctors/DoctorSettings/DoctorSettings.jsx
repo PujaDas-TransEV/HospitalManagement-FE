@@ -117,7 +117,7 @@ const DoctorSettings = () => {
           </div>
 
           {/* Delete Account Section */}
-          <div
+          {/* <div
             className="settings-section delete-section"
             style={{ backgroundColor: "rgba(126, 172, 180, 0.9)" }}
           >
@@ -144,7 +144,7 @@ const DoctorSettings = () => {
                 Confirm Delete Account
               </button>
             )}
-          </div>
+          </div> */}
 
           {/* Success & Error Messages */}
           {errorMessage && (

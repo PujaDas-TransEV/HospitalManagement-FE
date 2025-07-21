@@ -74,9 +74,9 @@ const DoctorHomecareDashboard = () => {
                   <thead>
                     <tr>
                      <th className="table-header-patient">Patient</th>
-<th className="table-header-caretype">Care Type</th>
-<th className="table-header-status">Status</th>
-<th className="table-header-schedule">Schedule</th>
+         <th className="table-header-caretype">Care Type</th>
+        <th className="table-header-status">Status</th>
+       <th className="table-header-schedule">Schedule</th>
 
                     </tr>
                   </thead>
