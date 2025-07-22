@@ -127,7 +127,9 @@
 .docdash-status-approved {
   background-color: #27ae60;
 }
-
+.docdash-status-scheduled {
+  background-color: #4391b6;
+}
 .docdash-status-pending {
   background-color: #f39c12;
 }
@@ -135,7 +137,9 @@
 .docdash-status-cancelled {
   background-color: #c0392b;
 }
-
+.docdash-status-completed {
+  background-color: #cfd663;
+}
 
 @media (max-width: 768px) {
   .docdash-table thead {
@@ -208,4 +212,30 @@
   color: white;
   padding: 10px;
   text-align: left;
+}
+
+.docdash-filter-container {
+  margin-bottom: 1rem;
+  display: flex;
+  justify-content: flex-end;
+  max-width: 300px;
+  width: 100%;
+}
+
+.docdash-filter-select {
+  padding: 8px 14px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-weight: 600;
+  font-family: 'Roboto', sans-serif;
+  font-size: 1rem;
+  cursor: pointer;
+  background-color: rgb(179, 205, 216);
+  transition: border-color 0.3s ease;
+}
+
+.docdash-filter-select:focus {
+  outline: none;
+  border-color: #2980b9; /* subtle blue on focus */
+  box-shadow: 0 0 5px rgba(41, 128, 185, 0.5);
 }
