@@ -70,15 +70,15 @@
 }
 .react-datepicker__day--selected,
 .react-datepicker__day--keyboard-selected {
-  background: #28a745 !important; /* Selected background */
+  background: #28a745 !important; 
   color: white !important;
   border-radius: 50%;
 }
 
-/* Hover effect on selected day */
+
 .react-datepicker__day--selected:hover,
 .react-datepicker__day--keyboard-selected:hover {
-  background: #1d5283 !important; /* Darker green on hover */
+  background: #1d5283 !important; 
   color: #fff !important;
 }
 

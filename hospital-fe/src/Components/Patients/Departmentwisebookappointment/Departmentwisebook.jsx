@@ -7,6 +7,7 @@ import 'react-datepicker/dist/react-datepicker.css';
 import PatientNavbar from '../Navbar/PatientNavbar';
 import PatientSidebar from '../Sidebar/PatientSidebar';
 import { FaSpinner, FaClock } from 'react-icons/fa';
+import { format } from 'date-fns'; // ✅ import for local date formatting
 import './Departmentwisebook.css';
 
 const AppointmentBookingPage = () => {
@@ -69,54 +70,54 @@ const AppointmentBookingPage = () => {
   };
 
   const isPastAvailableDate = date => {
-    const d = new Date(date.setHours(0, 0, 0, 0));
+    const d = new Date(date);
+    d.setHours(0, 0, 0, 0);
     return d < today && selectedDoctorData?.timetable.some(
       t => new Date(t.date).toDateString() === d.toDateString()
     );
   };
 
-  const handleDateChange = date => {
+  const handleDateChange = pickedDate => {
+    const date = new Date(pickedDate); // clone
     setSelectedDate(date);
     setSelectedTime('');
-    const entry = selectedDoctorData.timetable.find(t =>
+
+    const entry = selectedDoctorData?.timetable.find(t =>
       new Date(t.date).toDateString() === date.toDateString()
     );
+
     if (!entry) return setAvailableTimes([]);
-    const slots = [];
-    entry.schedule.forEach(({ start_time, end_time }) => {
-      const [sh, sm] = start_time.split(':').map(Number);
-      const [eh, em] = end_time.split(':').map(Number);
-      let curr = new Date(date);
-      curr.setHours(sh, sm);
-      const end = new Date(date);
-      end.setHours(eh, em);
-      while (curr < end) {
-        slots.push(curr.toTimeString().slice(0, 5));
-        curr.setHours(curr.getHours() + 1);
-      }
-    });
+
+    const slots = entry.schedule.map(({ start_time }) => start_time);
     setAvailableTimes(slots);
   };
 
   const handleBook = async e => {
     e.preventDefault();
+
     if (!selectedDoctorData || !selectedDate || !selectedTime || !appointmentDetails || !patientId) {
-      return setAppointmentStatus('Fill all fields.');
+      return setAppointmentStatus('Please fill in all fields.');
     }
+
     setIsBooking(true);
-    const appointmentTime = `${selectedDate.toISOString().split('T')[0]} ${selectedTime}`;
+
+    const localDate = format(selectedDate, 'yyyy-MM-dd'); // ✅ FIX: format in local timezone
+    const appointmentTime = `${localDate} ${selectedTime}`;
+
     try {
       const form = new FormData();
       form.append('doctorid', selectedDoctorData.uid);
       form.append('patinetid', patientId);
       form.append('appoinmenttime', appointmentTime);
       form.append('appointmentdetails', appointmentDetails);
+
       await axios.post('http://192.168.0.106:5000/createappoinment', form);
+
       setShowPopup(true);
       setAppointmentStatus(`Booked with Dr. ${selectedDoctorData.fullname} at ${appointmentTime}`);
       setTimeout(() => navigate('/patient-Appointments'), 2000);
     } catch {
-      setAppointmentStatus('Booking error.');
+      setAppointmentStatus('Booking error. Please try again.');
     } finally {
       setIsBooking(false);
     }
@@ -133,15 +134,19 @@ const AppointmentBookingPage = () => {
 
             <div className="form-group">
               <label>Select Doctor</label>
-              <select value={selectedDoctorUid} onChange={e => setSelectedDoctorUid(e.target.value)} required>
+              <select
+                value={selectedDoctorUid}
+                onChange={e => setSelectedDoctorUid(e.target.value)}
+                required
+              >
                 <option value="">-- Choose Doctor --</option>
                 {doctors.map(d => (
-                  <option key={d.uid} value={d.uid}>Dr. {d.fullname}</option>
+                  <option key={d.uid} value={d.uid}>
+                    Dr. {d.fullname}
+                  </option>
                 ))}
               </select>
             </div>
-          
-
 
             {selectedDoctorData && (
               <>
@@ -152,7 +157,8 @@ const AppointmentBookingPage = () => {
                     onChange={handleDateChange}
                     filterDate={date => date >= today && isDateSelectable(date)}
                     dayClassName={date => {
-                      const d = new Date(date.setHours(0, 0, 0, 0));
+                      const d = new Date(date);
+                      d.setHours(0, 0, 0, 0);
                       if (d.getTime() === today.getTime()) return 'cal-today';
                       if (isPastAvailableDate(d)) return 'cal-past-available';
                       if (d < today) return 'cal-disabled';
@@ -172,7 +178,9 @@ const AppointmentBookingPage = () => {
                           type="button"
                           className={`timeslot-button ${selectedTime === time ? 'selected' : ''}`}
                           onClick={() => setSelectedTime(time)}
-                        >{time}</button>
+                        >
+                          {time}
+                        </button>
                       ))}
                     </div>
                   </div>
@@ -191,7 +199,13 @@ const AppointmentBookingPage = () => {
             </div>
 
             <button type="submit" disabled={isBooking}>
-              {isBooking ? <><FaSpinner className="spin" /> Booking...</> : 'Confirm Booking'}
+              {isBooking ? (
+                <>
+                  <FaSpinner className="spin" /> Booking...
+                </>
+              ) : (
+                'Confirm Booking'
+              )}
             </button>
 
             {appointmentStatus && <p className="status-msg">{appointmentStatus}</p>}

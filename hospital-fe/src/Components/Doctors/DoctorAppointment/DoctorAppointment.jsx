@@ -144,49 +144,79 @@ const DoctorAppointmentManagement = () => {
           <div className="doctor-appointment-container">
             <h2 className="section-title">Manage Appointments</h2>
 
-       <div
+<div
+  style={{
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    marginBottom: '20px',
+    flexWrap: 'wrap',
+    gap: '10px'
+  }}
+>
+  {/* Filter Dropdown */}
+  <div
   style={{
     display: 'flex',
     alignItems: 'center',
     gap: '8px',
-    marginBottom: '20px',
     fontWeight: '600',
     fontFamily: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif",
     color: '#2c3e50',
-    backgroundColor: '#e0f2f1',  // soft teal background
+    backgroundColor: '#e0f2f1',
     padding: '8px 12px',
     borderRadius: '8px',
-    width: '220px',  // smaller width
     boxShadow: '0 2px 6px rgba(0,0,0,0.1)',
+    width: '240px'  // ⬅️ smaller fixed width
   }}
 >
-  <label htmlFor="statusFilter" style={{ flexShrink: 0 }}>
-    Filter by Status:
-  </label>
-  <select
-    id="statusFilter"
-    value={filterStatus}
-    onChange={(e) => setFilterStatus(e.target.value)}
+
+    <label htmlFor="statusFilter" style={{ flexShrink: 0 }}>
+      Filter by Status:
+    </label>
+    <select
+      id="statusFilter"
+      value={filterStatus}
+      onChange={(e) => setFilterStatus(e.target.value)}
+      style={{
+        padding: '5px 10px',
+        borderRadius: '6px',
+        border: '1px solid #009688',
+        fontSize: '0.9rem',
+        cursor: 'pointer',
+        outline: 'none',
+        backgroundColor: '#ffffff',
+        color: '#004d40',
+        flexGrow: 1,
+        transition: 'border-color 0.3s ease',
+      }}
+      onFocus={(e) => (e.target.style.borderColor = '#00796b')}
+      onBlur={(e) => (e.target.style.borderColor = '#009688')}
+    >
+      <option value="All">All</option>
+      <option value="Booked">Booked</option>
+      <option value="Completed">Completed</option>
+      <option value="Cancelled">Cancelled</option>
+    </select>
+  </div>
+
+  {/* Patient List by Slot Button */}
+  <Button
+    variant="info"
+    onClick={() => navigate('/doctor/slot-patients')}
     style={{
-      padding: '5px 10px',
+      backgroundColor: '#009688',
+      borderColor: '#00796b',
+      fontWeight: 'bold',
+      padding: '8px 16px',
       borderRadius: '6px',
-      border: '1px solid #009688', // teal border
-      fontSize: '0.9rem',
-      cursor: 'pointer',
-      outline: 'none',
-      backgroundColor: '#ffffff',
-      color: '#004d40',
-      flexGrow: 1,
-      transition: 'border-color 0.3s ease',
+      color: 'white',
+      whiteSpace: 'nowrap',
+      height: '42px',
     }}
-    onFocus={e => (e.target.style.borderColor = '#00796b')}
-    onBlur={e => (e.target.style.borderColor = '#009688')}
   >
-    <option value="All">All</option>
-    <option value="Booked">Booked</option>
-    <option value="Completed">Completed</option>
-    <option value="Cancelled">Cancelled</option>
-  </select>
+    Patient List by Slot
+  </Button>
 </div>
 
             {loading ? (
@@ -199,8 +229,8 @@ const DoctorAppointmentManagement = () => {
                   <tr>
                     <th>ID</th>
                     <th>Patient</th>
-                    <th>Date</th>
-                    <th>Time</th>
+                    <th>Created Date</th>
+                    <th>Appointment Time</th>
                     <th>Status</th>
                     <th>Actions</th>
                   </tr>
@@ -240,7 +270,7 @@ const DoctorAppointmentManagement = () => {
             {/* Edit Popup */}
             {editingAppointment && (
               <div className="popup-overlay" onClick={closeEdit}>
-                <div className="popup-content" onClick={e => e.stopPropagation()}>
+                <div className="popup-content" onClick={e => e.stopPropagation()} style={{ backgroundColor: '#e0f7fa'}}>
                   <h3>Edit Appointment Status</h3>
                   <p><strong>ID:</strong> {editingAppointment.uid}</p>
                   <p><strong>Patient:</strong> {editingAppointment.patient_firstname} {editingAppointment.patient_lastname}</p>
