@@ -103,7 +103,7 @@ const GuestPrescriptions = () => {
                 <a
                   href={pdfUrls[idx]}
                   download={`Prescription-${prescription.prescription_id}.pdf`}
-                  className="download-btn"
+                  className="downloadd-btn"
                 >
                   Download PDF
                 </a>

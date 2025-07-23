@@ -88,14 +88,14 @@ const GuestLogin = () => {
               <input
                 type="email"
                 name="hospital_email"
-                placeholder="Hospital Email"
+                placeholder="Hospital Email Or Doctor Email"
                 value={formData.hospital_email}
                 onChange={handleChange}
               />
               <input
                 type="text"
                 name="hospital_mobile"
-                placeholder="Hospital Mobile"
+                placeholder="Hospital Mobile or Doctor Mobile"
                 value={formData.hospital_mobile}
                 onChange={handleChange}
               />
