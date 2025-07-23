@@ -15,7 +15,7 @@ const DoctorPatientListPage = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [doctorId, setDoctorId] = useState(null);
-
+ const [medicine, setMedicine] = useState('');
   const [showCreateModal, setShowCreateModal] = useState(false);
   const [showViewModal, setShowViewModal] = useState(false);
 
@@ -78,6 +78,7 @@ const DoctorPatientListPage = () => {
       fm.append('patientid', selectedPatient.uid);
       fm.append('dateandtime', dateTime);
       fm.append('diagonistics', diagnosis);
+         fm.append('medicine', medicine);
 
       const resp = await fetch('http://192.168.0.106:5000/createprescription', { method: 'POST', body: fm });
       const j = await resp.json();
@@ -295,14 +296,29 @@ const DoctorPatientListPage = () => {
                   onChange={e => setHospitalName(e.target.value)}
                 />
               </Form.Group>
+            
               <Form.Group className="mb-3">
-                <Form.Label>Diagnosis</Form.Label>
-                <Form.Control
+                 <Form.Label>Clinical Notes</Form.Label>
+                 <Form.Control
+                  as="textarea"
+                  rows={4}
                   required
                   value={diagnosis}
-                  onChange={e => setDiagnosis(e.target.value)}
+                  onChange={(e) => setDiagnosis(e.target.value)}
+                  placeholder="Describe diagnosis, symptoms, findings etc."
                 />
               </Form.Group>
+               <Form.Group className="mb-3">
+                <Form.Label>Prescribed Medicines</Form.Label>
+                <Form.Control
+                  as="textarea"
+                  rows={4}
+                  required
+                  value={medicine}
+                  onChange={(e) => setMedicine(e.target.value)}
+                  placeholder="List medicines with dosage and frequency"
+                />
+                </Form.Group>
               <Form.Group className="mb-3">
                 <Form.Label>Date & Time</Form.Label>
                 <Form.Control
@@ -312,7 +328,23 @@ const DoctorPatientListPage = () => {
                   onChange={e => setDateTime(e.target.value)}
                 />
               </Form.Group>
-              <Button type="submit" className="w-100">Submit</Button>
+          <Button
+  type="submit"
+  style={{
+    width: '40%',
+    backgroundColor: '#144272ff',
+    color: 'white',
+    padding: '10px',
+    borderRadius: '4px',
+    border: 'none',
+    display: 'block',       // Makes it a block-level element
+    margin: '0 auto'        // Auto left & right margin centers it
+  }}
+>
+  Submit
+</Button>
+
+
             </Form>
           </div>
         </div>
@@ -391,3 +423,4 @@ const DoctorPatientListPage = () => {
 };
 
 export default DoctorPatientListPage;
+
