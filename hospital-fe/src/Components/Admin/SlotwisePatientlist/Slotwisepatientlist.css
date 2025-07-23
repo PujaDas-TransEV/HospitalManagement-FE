@@ -1,0 +1,328 @@
+/* Background with white overlay */
+.admin-page-wrappery {
+  position: relative; /* needed for overlay */
+  display: flex;
+  min-height: 100vh;
+  background-image: url('../../Assests/background.jpg');
+  background-size: cover;
+  background-position: center;
+  color: #222;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.admin-page-wrappery::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-color: rgba(255, 255, 255, 0.589); /* white overlay with 80% opacity */
+  pointer-events: none; /* allows clicks through overlay */
+  z-index: 0;
+}
+
+/* Sidebar styles - adjust according to your AdminSidebar */
+.admin-sidebar {
+  width: 250px;
+  background-color: rgba(0, 0, 0, 0.75);
+  color: #fff;
+  min-height: 100vh;
+}
+
+/* Main content area */
+.admin-main-contents {
+  position: relative; /* place above overlay */
+  z-index: 1;
+  
+  width: 1200px; /* fixed width */
+  margin: 0 auto;
+  padding: 20px 30px;
+  background-color: rgba(255, 255, 255, 0.9);
+  overflow-y: auto;
+  border-radius: 12px;
+}
+
+/* Title */
+.admin-title {
+  margin-bottom: 25px;
+  font-size: 2rem;
+  font-weight: 700;
+  color: #003366;
+  text-align: center;
+}
+
+/* Facility cards */
+.facility-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  justify-content: center;
+  margin-bottom: 30px;
+}
+
+.facility-card {
+  cursor: pointer;
+  border-radius: 12px;
+  background-color: #e0f2ff;
+  box-shadow: 0 3px 6px rgba(0,0,0,0.12);
+  width: 140px;
+  height: 100px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  transition: all 0.3s ease;
+  color: #004a99;
+  font-weight: 600;
+  font-size: 1.1rem;
+}
+
+.facility-card:hover {
+  background-color: #90caf9;
+  color: #fff;
+  box-shadow: 0 5px 15px rgba(25, 118, 210, 0.6);
+}
+
+.facility-card.active {
+  background-color: #1976d2;
+  color: #fff;
+  box-shadow: 0 5px 15px rgba(13, 71, 161, 0.8);
+}
+
+.facility-icon {
+  font-size: 2.5rem;
+  margin-bottom: 8px;
+}
+
+/* Doctor container */
+.doctor-container {
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+.section-title {
+  font-size: 1.6rem;
+  margin-bottom: 20px;
+  color: #004a99;
+  font-weight: 700;
+}
+
+/* Doctor cards */
+.doctor-card {
+  cursor: pointer;
+  background-color: #fff;
+  border: 2px solid #1976d2;
+  padding: 12px 18px;
+  border-radius: 8px;
+  margin: 8px auto;
+  max-width: 300px;
+  color: #1976d2;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  transition: all 0.25s ease;
+}
+
+.doctor-card:hover {
+  background-color: #1976d2;
+  color: #fff;
+}
+
+.doctor-card.active {
+  background-color: #0d47a1;
+  color: #fff;
+}
+
+.doctor-icon {
+  font-size: 1.8rem;
+}
+
+/* Timetable section */
+.timetable-section {
+  margin-top: 40px;
+}
+
+.day-block {
+  margin-bottom: 30px;
+  border: 1px solid #90caf9;
+  border-radius: 10px;
+  background: #e3f2fd;
+  padding: 15px;
+}
+
+.date-header {
+  font-weight: 700;
+  font-size: 1.2rem;
+  color: #0d47a1;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 15px;
+}
+
+.slots-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+}
+
+/* Slot card normal and expanded */
+.slot-card {
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 3px 6px rgb(0 0 0 / 0.1);
+  padding: 12px 16px;
+  width: 280px;
+  transition: width 0.3s ease;
+}
+
+/* Expanded width when table shown */
+.slot-card.expanded {
+  width: 700px; /* Adjust as needed */
+}
+
+.slot-time {
+  font-weight: 600;
+  font-size: 1rem;
+  color: #1565c0;
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.view-btn {
+  background-color: #1976d2;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  padding: 8px 12px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: background-color 0.3s ease;
+}
+
+.view-btn:disabled {
+  cursor: not-allowed;
+  background-color: #90caf9;
+}
+
+.view-btn:hover:not(:disabled) {
+  background-color: #0d47a1;
+}
+
+/* Table styles */
+.patient-table {
+  margin-top: 12px;
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+  table-layout: fixed;
+}
+
+.patient-table th,
+.patient-table td {
+  border: 1px solid #90caf9;
+  padding: 8px 10px;
+  text-align: left;
+}
+
+.patient-table th {
+  background-color: #1976d2;
+  color: white;
+}
+
+.no-patients,
+.empty {
+  color: #555;
+  font-style: italic;
+  margin-top: 10px;
+  text-align: center;
+}
+
+/* Loading spinner */
+.icon.spin {
+  animation: spin 1s linear infinite;
+  font-size: 2rem;
+  color: #1976d2;
+  display: block;
+  margin: 0 auto;
+}
+
+@keyframes spin {
+  100% {
+    transform: rotate(360deg);
+  }
+}
+.patient-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.95rem;
+  margin-top: 12px;
+}
+
+.patient-table th,
+.patient-table td {
+  border: 1px solid #90caf9;
+  padding: 10px 12px;
+  text-align: left;
+  vertical-align: middle;
+  word-break: break-word;
+}
+
+/* Header styling */
+.patient-table th {
+  background-color: #1976d2;
+  color: white;
+  font-weight: 600;
+}
+
+/* Align email and phone columns with a bit more width */
+.patient-table th:nth-child(1), /* Email */
+.patient-table td:nth-child(1) {
+  width: 25%;
+  min-width: 18px;
+}
+
+.patient-table th:nth-child(2), /* Phone No */
+.patient-table td:nth-child(2) {
+  width: 20%;
+  min-width: 130px;
+}
+
+/* Name column */
+.patient-table th:nth-child(3),
+.patient-table td:nth-child(3) {
+  width: 25%;
+}
+
+/* Appointment Time and Status columns */
+.patient-table th:nth-child(4),
+.patient-table td:nth-child(4),
+.patient-table th:nth-child(5),
+.patient-table td:nth-child(5) {
+  width: 15%;
+  text-align: center;
+}
+
+/* Responsive adjustments for smaller screens */
+@media (max-width: 600px) {
+  .patient-table {
+    font-size: 0.85rem;
+  }
+  .patient-table th,
+  .patient-table td {
+    padding: 6px 8px;
+  }
+  .patient-table th:nth-child(1),
+  .patient-table td:nth-child(1),
+  .patient-table th:nth-child(2),
+  .patient-table td:nth-child(2),
+  .patient-table th:nth-child(3),
+  .patient-table td:nth-child(3) {
+    width: auto;
+    min-width: auto;
+  }
+}

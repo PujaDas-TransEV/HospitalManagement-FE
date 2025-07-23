@@ -5,7 +5,7 @@ import AdminNavbar from '../Adminnavbar/AdminNavbar';
 import AdminSidebar from '../Adminsidebar/AdminSidebar';
 import { FaEdit, FaTrashAlt, FaSave, FaTimes, FaSpinner } from 'react-icons/fa';
 import './AppointmentManagement.css';
-
+import { Button } from 'react-bootstrap';
 const iconMap = {
   Cardiology: '❤️',
   Neurology: '🧠',
@@ -195,7 +195,24 @@ const AdminAppointments = () => {
                     <option value="Cancelled">Cancelled</option>
                   </select>
                 </section>
+ <Button
+    variant="info"
+    onClick={() => navigate('/admin/doctor/slot-patients')}
+    style={{
+      backgroundColor: '#009688',
+      borderColor: '#00796b',
+      fontWeight: 'bold',
+      padding: '8px 16px',
+      borderRadius: '6px',
+      color: 'white',
+      whiteSpace: 'nowrap',
+      height: '42px',
 
+   
+    }}
+  >
+   Doctor Wise Patient List by Slot
+  </Button>
                 <section className="appt-list" style={{ marginTop: '20px' }}>
                   <h3>Appointments</h3>
                   {filteredAppointments.length === 0 ? (

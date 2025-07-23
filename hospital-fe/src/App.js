@@ -245,7 +245,7 @@ import Emergencydashboard from './Components/Admin/Emergency/Emergencydashbaord'
 import PathologyBook from './Components/Patients/Pathology/Pathology';
 import AdminPathologyBook from './Components/Admin/PathologyBooking/AdminPathology';
 import DoctorwisePatientlistbyslot from './Components/Doctors/Ptientlistbyslot/Patientslotwise';
-
+import Adminpatientlistslotwise from './Components/Admin/SlotwisePatientlist/SlotwisePtientlist';
 // ✅ Conditional Navbar using path matching
 const ConditionalNavbar = () => {
   const location = useLocation();
@@ -268,7 +268,7 @@ const ConditionalNavbar = () => {
     '/home-care-service', '/home-care-request', '/homecare',
     '/patients', '/patient-navbar', '/patient-sidebar',
     '/doctor-navbar', '/doctor-sidebar', '/adnavbar', '/adsidebar','/doctor-homecare','/labreport',
-    '/admin/labreport','/admin-labtest','/admin-billing','/bill','/invoice','/admin-feedback','/admin-survey','/admin/notification','/doctor/notification','/guest-dashboard','/guest/lab-reports','/guest/prescriptions','/guest/login','/discharge-list','/admin/doctor-time','/doctor/schedule','/admin/emergency','/pathologybook','/admin/pathologybook','/doctor/slot-patients'
+    '/admin/labreport','/admin-labtest','/admin-billing','/bill','/invoice','/admin-feedback','/admin-survey','/admin/notification','/doctor/notification','/guest-dashboard','/guest/lab-reports','/guest/prescriptions','/guest/login','/discharge-list','/admin/doctor-time','/doctor/schedule','/admin/emergency','/pathologybook','/admin/pathologybook','/doctor/slot-patients','/admin/doctor/slot-patients'
   ];
 
   const hidePatterns = [
@@ -371,6 +371,7 @@ function App() {
         <Route path="/pathologybook" element={<PathologyBook/>}/>
         <Route path="/admin/pathologybook" element={<AdminPathologyBook/>}/>
         <Route path="/doctor/slot-patients" element={<DoctorwisePatientlistbyslot/>}/>
+          <Route path="/admin/doctor/slot-patients" element={<Adminpatientlistslotwise/>}/>
               
       </Routes>
     </Router>
