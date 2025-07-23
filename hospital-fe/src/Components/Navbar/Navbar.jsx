@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { jwtDecode } from 'jwt-decode';
 import './Navbar.css';
-
+import MiniNavbar from '../MiniNavbar/Mininavbar'; 
 const Navbar = () => {
   const [isActive, setIsActive] = useState(false);
   const [profilePic, setProfilePic] = useState('/images/default-profile.jpg');
@@ -114,6 +114,8 @@ const Navbar = () => {
   };
 
   return (
+     <>
+     <MiniNavbar /> 
     <nav className={isActive ? 'active' : ''}>
       <div className="logo">
         <h1>LifeCare</h1>
@@ -148,6 +150,7 @@ const Navbar = () => {
         </div>
       )}
     </nav>
+     </>
   );
 };
 

@@ -1,0 +1,39 @@
+
+.mini-navbar-left {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  flex-grow: 1;
+  overflow-x: auto;
+  padding-left: 40px;
+  margin-left: 200px; /* Responsive alignment */
+}
+
+.mini-navbar-right {
+  flex-shrink: 0;
+  padding-right: 40px;
+}
+
+/* Mobile / Small screen responsive adjustments */
+@media (max-width: 768px) {
+  .mini-navbar-left {
+    padding-left: 20px;
+    margin-left: 0;
+    gap: 12px;
+  }
+
+  .mini-navbar-right {
+    padding-right: 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .mini-navbar-left {
+    padding-left: 10px;
+    gap: 8px;
+  }
+
+  .mini-navbar-right {
+    padding-right: 10px;
+  }
+}

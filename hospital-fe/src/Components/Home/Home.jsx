@@ -36,6 +36,7 @@ import MainSlider from '../Home/MainSlider';
 import Footer from '../Footer/Footer';
 import about from '../Assests/adminloginback.jpg';
 
+
 const HospitalDashboard = () => {
   const [count, setCount] = useState(0);
   const [email, setEmail] = useState("");
@@ -159,8 +160,9 @@ const HospitalDashboard = () => {
   };
  
   return (
+    
     <div className="container-home">
-      
+     
 
       {/* Main Content */}
       {/* <div className="main">
