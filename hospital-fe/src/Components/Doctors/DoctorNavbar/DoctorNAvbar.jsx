@@ -114,7 +114,7 @@ const DoctorNavbar = () => {
             )}
           </div>
 
-          {/* Profile Dropdown */}
+          {/* Profile Dropdown
           <Dropdown
             align="end"
             show={profileOpen}
@@ -143,6 +143,67 @@ const DoctorNavbar = () => {
             )}
           </Dropdown>
         </Nav>
+      </Navbar.Collapse>
+    </Navbar> */}
+    {/* Profile Dropdown */}
+<div className="custom-profile-dropdown">
+  <div
+    className="custom-toggle"
+    onClick={toggleProfileDropdown}
+    style={{ cursor: "pointer", display: "flex", alignItems: "center", gap: "10px" }}
+  >
+    <img
+      src={doctorData.profilepictures}
+      alt="Profile"
+      className="custom-profile-img"
+      style={{ width: "40px", height: "40px", borderRadius: "50%" }}
+    />
+    <span className="custom-doctor-name" style={{ fontWeight: 600 }}>
+      {doctorData.fullname}
+    </span>
+  </div>
+
+  {profileOpen && (
+    <div className="custom-dropdown-menu" style={{
+      position: "absolute",
+      top: "100%",
+      right: 0,
+      background: "#fff",
+      boxShadow: "0 4px 8px rgba(0,0,0,0.1)",
+      borderRadius: "6px",
+      marginTop: "10px",
+      zIndex: 1000,
+      minWidth: "160px"
+    }}>
+      <a
+        href="/doctor-profile"
+        className="custom-dropdown-item"
+        style={{
+          padding: "10px 15px",
+          display: "block",
+          textDecoration: "none",
+          color: "#003baa",
+          fontWeight: 500
+        }}
+      >
+        Profile
+      </a>
+      <div
+        onClick={handleLogout}
+        className="custom-dropdown-item"
+        style={{
+          padding: "10px 15px",
+          cursor: "pointer",
+          color: "#a52a2a",
+          fontWeight: 500
+        }}
+      >
+        Log Out
+      </div>
+    </div>
+  )}
+</div>
+  </Nav>
       </Navbar.Collapse>
     </Navbar>
   );
