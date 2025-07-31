@@ -35,8 +35,16 @@ import doctor from '../Assests/h1.avif';
 import MainSlider from '../Home/MainSlider';
 import Footer from '../Footer/Footer';
 import about from '../Assests/adminloginback.jpg';
-
-
+import UpdateTicker  from '../Home/UpdateTicker';
+import Helping from '../Home/HelpingYou';
+import Aboutsection from '../Home/aboutsection';
+import Whychoose from '../Home/Whychoose';
+import InternationalSection from './Internationpatient';
+import Doctor from '../Home/Doctor';
+import CaseStudySection from './CaseStudy';
+import Explore from '../Home/Explore';
+import Testimonial from '../Home/Testimonial';
+import RecentBlogs from '../Home/RecentBlogs';
 const HospitalDashboard = () => {
   const [count, setCount] = useState(0);
   const [email, setEmail] = useState("");
@@ -178,6 +186,9 @@ const HospitalDashboard = () => {
         <img src={mainsImage} alt="Hospital" />
       </div> */}
    <MainSlider />
+   <UpdateTicker/>
+   <Helping/>
+   <Aboutsection/>
       {/* About Us Section */}
       <div id="about-us">
         <div className="about-us-content">
@@ -203,7 +214,7 @@ const HospitalDashboard = () => {
       </div>
 
       {/* Specialties Section */}
-      <div className="specialty-section">
+      {/* <div className="specialty-section">
         <h2>Our Medical Care</h2>
         <div className="specialty-container">
           {specialties.map((specialty, index) => (
@@ -217,14 +228,14 @@ const HospitalDashboard = () => {
             </div>
           ))}
         </div>
-      </div>
-
+      </div> */}
+<Whychoose/>
      
      
  <div className="why-choose-us">
   <div className="why-choose-us-left-container">
     <div className="why-choose-us-left">
-      <h2>Why Choose Us</h2>
+      <h2>  Experience the LifeCare Difference</h2>
       <p>
         <strong>Expert Medical Team:</strong> Our doctors and staff are highly qualified professionals dedicated to providing you with the best care possible.<br /><br />
         <strong>State-of-the-Art Facilities:</strong> We use the latest technology and advanced treatments to ensure accurate diagnosis and effective treatment.<br /><br />
@@ -241,8 +252,12 @@ const HospitalDashboard = () => {
     </div>
   </div>
 </div>
-
-
+<InternationalSection/>
+<Doctor/>
+<CaseStudySection/>
+<Explore/>
+<Testimonial/>
+<RecentBlogs/>
       {/* Gallery Section */}
       <div className="gallery-section">
   <h2>Our Gallery</h2>
@@ -256,40 +271,7 @@ const HospitalDashboard = () => {
   </div>
 </div>
 
-{/* Doctors Section */}
-      <div id="doctor">
-        <div className="head">
-          <h1>Our Doctors</h1>
-        </div>
-        <div className="teams">
-          {doctorCards.map((card, index) => (
-            <div key={index} className="card" onClick={() => handleCardClick(card)}>
-              <img src={card.imgSrc} alt={card.name} />
-           
-              <p style={{ color: 'black' }}>{card.name}</p>
-<p style={{ color: 'black' }}>{card.description}</p>
 
-            </div>
-          ))}
-        </div>
-      </div>
-<div></div>
-      {/* Specialties Section */}
-      <div id="speciality">
-        <div className="head">
-          <h1>Our Specialties</h1>
-        </div>
-        <div className="speciality">
-          {specialtyCards.map((card, index) => (
-            <div key={index} className="spCard">
-              <img src={card.imgSrc} alt={card.title} />
-              <p>{card.title}</p>
-              <p>{card.description}</p>
-            </div>
-          ))}
-        </div>
-       
-      </div>
       {/* Patient Reviews Section */}
       <div className="reviews-section">
   <h2>Patient Reviews</h2>
