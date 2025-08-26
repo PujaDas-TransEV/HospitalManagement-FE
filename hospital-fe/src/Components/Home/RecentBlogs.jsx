@@ -9,18 +9,21 @@ const blogs = [
     date: '24th July, 2025',
     category: 'Health Care',
     title: 'Digestive Health Tips: Lifestyle Habits to Support Your Gut',
+    description: 'Learn practical lifestyle changes to maintain a healthy digestive system and improve overall well-being.',
   },
   {
     img: blog2,
     date: '17th July, 2025',
     category: 'Health Care',
     title: 'Cathlab - As a Patient, What to Look for in a Good Cathlab Setup',
+    description: 'Find out how to identify a reliable and well-equipped cathlab for safe and effective cardiac care.',
   },
   {
     img: blog3,
     date: '10th July, 2025',
     category: 'Health Care',
     title: 'Understanding Chronic Inflammatory Arthritis: Causes, Symptoms & Treatment Options',
+    description: 'Explore symptoms, causes, and modern treatment options for managing chronic inflammatory arthritis.',
   },
 ];
 
@@ -31,7 +34,7 @@ const RecentBlogs = () => {
     <>
       <style>{`
         .recent-section {
-          background-color: #e3f2fd;
+          background-color: #d1dcebff;
           padding: 60px 5%;
           font-family: Arial, sans-serif;
         }
@@ -74,25 +77,27 @@ const RecentBlogs = () => {
         }
 
         .big-heading {
-          font-size: 32px;
+          font-size: 26px;
           font-weight: bold;
           color: #1976d2;
-          text-transform: uppercase;
+         
         }
 
-        .view-all-btn {
+        .view-all-btnn {
           padding: 12px 28px;
-          background-color: #ffd700;
-          color: #000;
+          background-color: #084683ff;
+          color: #fff;
           font-size: 16px;
           font-weight: bold;
-          border: none;
+          border: 2px solid #1976d2;
           border-radius: 4px;
           cursor: pointer;
+          transition: all 0.3s ease;
         }
 
         .view-all-btn:hover {
-          background-color: #e6c200;
+          background-color: transparent;
+          color: #1976d2;
         }
 
         .cards {
@@ -109,6 +114,8 @@ const RecentBlogs = () => {
           box-shadow: 0 6px 15px rgba(0,0,0,0.1);
           display: flex;
           flex-direction: column;
+          padding-left: 12px;
+          padding-right: 12px;
         }
 
         .blog-card img {
@@ -119,46 +126,63 @@ const RecentBlogs = () => {
         }
 
         .blog-content {
-          padding: 16px;
+          padding: 16px 0;
           flex-grow: 1;
           display: flex;
           flex-direction: column;
           gap: 8px;
         }
 
-        .blog-date {
+        .meta-row {
+          display: flex;
+          align-items: center;
+          gap: 16px;
           font-size: 14px;
-          color: #777;
+          color: #555;
         }
 
-        .blog-category {
-          font-size: 12px;
+        .meta-icon {
+          margin-right: 6px;
           color: #1976d2;
-          font-weight: bold;
+        }
+
+        .underline {
+          height: 1px;
+          background-color: #ccc;
+          margin: 8px 0;
+          width: 100%;
         }
 
         .blog-title {
           font-size: 18px;
           font-weight: bold;
-          color: #222;
-          flex-grow: 1;
+          color: #105daaff;
         }
 
-        .read-more-btn {
+        .blog-description {
+          font-size: 14px;
+          color: #444;
+          line-height: 1.4;
+        }
+
+      .read-more-btn {
           margin-top: 12px;
           padding: 8px 20px;
-          background-color: #ffd700;
-          color: #000;
+          background-color: #e4a400;
+          color: #fff;
           font-size: 14px;
           font-weight: bold;
           border: none;
           border-radius: 4px;
           cursor: pointer;
           align-self: flex-start;
+          transition: all 0.3s ease;
         }
 
         .read-more-btn:hover {
-          background-color: #e6c200;
+          background-color: transparent;
+          border: 2px solid #e4a400;
+          color: #ffd700;
         }
 
         @media (max-width: 1024px) {
@@ -187,12 +211,13 @@ const RecentBlogs = () => {
           <div className="left-header">
             <div className="small-title">
               Keeping You Well
-              <div className="divider" />
-              <div className="dot" />
+              <div className="doctors-line">
+              <div className="doctors-dot" /></div>
             </div>
             <div className="big-heading">Recent Blogs</div>
+           
           </div>
-          <button className="view-all-btn" onClick={handleViewAll}>View All</button>
+          <button className="view-all-btnn" onClick={handleViewAll}>View All</button>
         </div>
 
         <div className="cards">
@@ -200,9 +225,13 @@ const RecentBlogs = () => {
             <div key={i} className="blog-card" role="article">
               <img src={b.img} alt={b.title} />
               <div className="blog-content">
-                <div className="blog-date">{b.date}</div>
-                <div className="blog-category">{b.category}</div>
+                <div className="meta-row">
+                  <span><span className="meta-icon">📅</span>{b.date}</span>
+                  <span><span className="meta-icon">🏥</span>{b.category}</span>
+                </div>
+                <div className="underline"></div>
                 <div className="blog-title">{b.title}</div>
+                <div className="blog-description">{b.description}</div>
                 <button
                   className="read-more-btn"
                   onClick={() => window.location.href = `/blog/${i}`}

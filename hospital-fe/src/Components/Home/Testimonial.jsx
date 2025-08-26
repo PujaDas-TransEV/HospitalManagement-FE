@@ -226,6 +226,20 @@ const navigate = useNavigate();
           font-weight: 900;
           margin-top: 4px;
         }
+.card-style-a,
+.card-style-b {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  height: 200px;
+  overflow: hidden;
+  font-size: 14px;
+  color: #333;
+  flex: 1;
+  position: relative;
+}
 
         @media (max-width: 900px) {
           .testimonials-section {
@@ -272,14 +286,16 @@ const navigate = useNavigate();
                
               
                 </div>
-                <div className="card">
-                  <div className="card-label">{label}</div>
-                  <div className="card-top">{review}</div>
-                  <div className="card-bottom">
-                    <div className="title">{title}</div>
-                    <div className="name">{name}</div>
-                  </div>
-                </div>
+               
+                <div className={idx % 2 === 0 ? "card-style-a" : "card-style-b"}>
+  <div className="card-label">{label}</div>
+  <div className="card-top">{review}</div>
+  <div className="card-bottom">
+    <div className="title">{title}</div>
+    <div className="name">{name}</div>
+  </div>
+</div>
+
               </div>
           
           ))}

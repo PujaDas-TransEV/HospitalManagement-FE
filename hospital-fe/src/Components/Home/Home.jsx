@@ -45,6 +45,7 @@ import CaseStudySection from './CaseStudy';
 import Explore from '../Home/Explore';
 import Testimonial from '../Home/Testimonial';
 import RecentBlogs from '../Home/RecentBlogs';
+import ContactUs from '../Home/Contactus';
 const HospitalDashboard = () => {
   const [count, setCount] = useState(0);
   const [email, setEmail] = useState("");
@@ -258,6 +259,7 @@ const HospitalDashboard = () => {
 <Explore/>
 <Testimonial/>
 <RecentBlogs/>
+
       {/* Gallery Section */}
       <div className="gallery-section">
   <h2>Our Gallery</h2>
@@ -272,21 +274,8 @@ const HospitalDashboard = () => {
 </div>
 
 
-      {/* Patient Reviews Section */}
-      <div className="reviews-section">
-  <h2>Patient Reviews</h2>
-  <div className="reviews-container">
-    {reviews.map((review, index) => (
-      <div className="review-card" key={index}>
-        <img src={review.image} alt={review.name} />
-        <div className="review-text">
-          <p><strong>{review.name}</strong></p>
-          <p>"{review.review}"</p>
-        </div>
-      </div>
-    ))}
-  </div>
-</div>
+     
+   
 
       {/* Footer Section */}
     <Footer/>
