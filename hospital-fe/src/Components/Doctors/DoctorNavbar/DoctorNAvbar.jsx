@@ -31,7 +31,7 @@ const DoctorNavbar = () => {
         const formData = new FormData();
         formData.append("doctorid", doctorId);
 
-        const response = await fetch("http://192.168.0.106:5000/doctors/getbyid", {
+        const response = await fetch("https://backend.medapp.transev.site/doctors/getbyid", {
           method: "POST",
           body: formData,
         });
@@ -53,7 +53,7 @@ const DoctorNavbar = () => {
 
     const fetchUnseenNotifications = async () => {
       try {
-        const res = await fetch("http://192.168.0.106:5000/notify/show/unseen");
+        const res = await fetch("https://backend.medapp.transev.site/notify/show/unseen");
         const data = await res.json();
         if (res.ok && Array.isArray(data.notifications)) {
           setUnseenCount(data.unseen_count || 0);
@@ -74,7 +74,7 @@ const DoctorNavbar = () => {
         const formData = new FormData();
         formData.append("notificationuid", notification.uid);
 
-        const res = await fetch("http://192.168.0.106:5000/notify/unseen/update", {
+        const res = await fetch("https://backend.medapp.transev.site/notify/unseen/update", {
           method: "POST",
           body: formData,
         });

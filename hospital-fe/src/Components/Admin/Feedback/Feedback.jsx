@@ -6,7 +6,7 @@ import AdminSidebar from '../Adminsidebar/AdminSidebar';
 import feedbackBg from '../../Assests/background.jpg'; // place your image here
 import './Feedback.css';
 
-const API_URL = 'http://192.168.0.106:5000';
+const API_URL = 'https://backend.medapp.transev.site';
 
 const AdminFeedbackPage = () => {
   const [feedbacks, setFeedbacks] = useState([]);

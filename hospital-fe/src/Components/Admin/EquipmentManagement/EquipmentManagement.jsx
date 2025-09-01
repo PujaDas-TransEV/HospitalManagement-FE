@@ -23,7 +23,7 @@ const EquipmentManagementPage = () => {
 
   const fetchEquipments = () => {
     setLoading(true);
-    fetch('http://192.168.0.106:5000/ops/getallequipment')
+    fetch('https://backend.medapp.transev.site/ops/getallequipment')
       .then(res => res.json())
       .then(data => { if (data.data) setEquipments(data.data); })
       .catch(() => setError('Error fetching data.'))
@@ -35,7 +35,7 @@ const EquipmentManagementPage = () => {
     setLoading(true);
     const fd = new FormData();
     fd.append('equipid', searchID);
-    fetch('http://192.168.0.106:5000/ops/getallequipmentbyid', {
+    fetch('https://backend.medapp.transev.site/ops/getallequipmentbyid', {
       method: 'POST', body: fd
     })
       .then(res => res.json())
@@ -58,7 +58,7 @@ const EquipmentManagementPage = () => {
   const handleDelete = uid => {
     const fd = new FormData();
     fd.append('equipmentid', uid);
-    fetch('http://192.168.0.106:5000/ops/deleteequipment', {
+    fetch('https://backend.medapp.transev.site/ops/deleteequipment', {
       method: 'POST', body: fd
     })
       .then(res => res.json())
@@ -72,8 +72,8 @@ const EquipmentManagementPage = () => {
     e.preventDefault();
     setSubmitting(true);
     const url = editingEquipment
-      ? 'http://192.168.0.106:5000/ops/updatedata'
-      : 'http://192.168.0.106:5000/ops/createequipment';
+      ? 'https://backend.medapp.transev.site/ops/updatedata'
+      : 'https://backend.medapp.transev.site/ops/createequipment';
     const fd = new FormData();
     if (editingEquipment) fd.append('equipmentid', editingEquipment);
     Object.entries(equipmentDetails).forEach(([k, v]) => fd.append(k, v));

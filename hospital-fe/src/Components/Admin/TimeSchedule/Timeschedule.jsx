@@ -6,9 +6,9 @@ import medicalBg from '../../Assests/background.jpg';
 import AdminNavbar from '../Adminnavbar/AdminNavbar';
 import AdminSidebar from '../Adminsidebar/AdminSidebar';
 const API = {
-  doctors: 'http://192.168.0.106:5000/doctorops/getalldoctor',
-  create: 'http://192.168.0.106:5000/doctors/createdoctortimetable',
-  update: 'http://192.168.0.106:5000/doctors/updatedoctortimetable',
+  doctors: 'https://backend.medapp.transev.site/doctorops/getalldoctor',
+  create: 'https://backend.medapp.transev.site/doctors/createdoctortimetable',
+  update: 'https://backend.medapp.transev.site/doctors/updatedoctortimetable',
 };
 
 const DoctorSchedulePage = () => {

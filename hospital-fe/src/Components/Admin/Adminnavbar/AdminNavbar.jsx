@@ -29,7 +29,7 @@ const AdminNavbar = () => {
         const formData = new FormData();
         formData.append("adminid", adminId);
 
-        const response = await fetch("http://192.168.0.106:5000/admin/getdetails", {
+        const response = await fetch("https://backend.medapp.transev.site/admin/getdetails", {
           method: "POST",
           headers: {
             "Authorization": `Bearer ${accessToken}`,

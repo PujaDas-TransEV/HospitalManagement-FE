@@ -36,7 +36,7 @@ const PrescriptionPage = () => {
       const fd = new FormData();
       fd.append('patientid', patientId);
 
-      const res = await fetch('http://192.168.0.106:5000/doctors/getprescribebypatientid', {
+      const res = await fetch('https://backend.medapp.transev.site/doctors/getprescribebypatientid', {
         method: 'POST',
         body: fd,
       });
@@ -69,7 +69,7 @@ const PrescriptionPage = () => {
     const fd = new FormData();
     fd.append('doctorid', prescription.doctorid);
     try {
-      const res = await fetch('http://192.168.0.106:5000/doctors/getbyid', {
+      const res = await fetch('https://backend.medapp.transev.site/doctors/getbyid', {
         method: 'POST',
         body: fd,
       });
@@ -90,7 +90,7 @@ const PrescriptionPage = () => {
       fd.append('prescribeid', p.prescription_id);
       fd.append('guestaccess', newAccess);
 
-      const res = await fetch('http://192.168.0.106:5000/patientops/prescribeaccessupdate', {
+      const res = await fetch('https://backend.medapp.transev.site/patientops/prescribeaccessupdate', {
         method: 'POST',
         body: fd,
       });

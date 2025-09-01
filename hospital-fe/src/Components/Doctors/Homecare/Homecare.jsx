@@ -36,7 +36,7 @@ const DoctorHomecareDashboard = () => {
       const formData = new FormData();
       formData.append('doctorid', doctorId);
 
-      const response = await fetch('http://192.168.0.106:5000/management/homecare/gethomecarebydocid', {
+      const response = await fetch('https://backend.medapp.transev.site/management/homecare/gethomecarebydocid', {
         method: 'POST',
         body: formData,
       });

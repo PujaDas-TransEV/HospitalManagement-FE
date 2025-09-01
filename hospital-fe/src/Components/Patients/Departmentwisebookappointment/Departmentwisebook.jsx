@@ -45,7 +45,7 @@ const AppointmentBookingPage = () => {
       try {
         const form = new FormData();
         form.append('doctorspecialization', departmentId);
-        const res = await axios.post('http://192.168.0.106:5000/selectivedoctordata', form);
+        const res = await axios.post('https://backend.medapp.transev.site/selectivedoctordata', form);
         setDoctors(res.data.data || []);
       } catch (err) {
         console.error(err);
@@ -111,7 +111,7 @@ const AppointmentBookingPage = () => {
       form.append('appoinmenttime', appointmentTime);
       form.append('appointmentdetails', appointmentDetails);
 
-      await axios.post('http://192.168.0.106:5000/createappoinment', form);
+      await axios.post('https://backend.medapp.transev.site/createappoinment', form);
 
       setShowPopup(true);
       setAppointmentStatus(`Booked with Dr. ${selectedDoctorData.fullname} at ${appointmentTime}`);

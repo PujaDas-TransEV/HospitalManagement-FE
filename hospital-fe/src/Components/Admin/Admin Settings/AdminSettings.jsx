@@ -48,7 +48,7 @@ const AdminSettingsPage = () => {
       const formData = new FormData();
       formData.append('adminid', adminId);
 
-      const response = await fetch('http://192.168.0.106:5000/adminops/deleteadminprofile', {
+      const response = await fetch('https://backend.medapp.transev.site/adminops/deleteadminprofile', {
         method: 'POST',
         body: formData,
       });

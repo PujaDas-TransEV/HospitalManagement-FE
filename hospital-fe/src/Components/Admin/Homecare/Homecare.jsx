@@ -35,7 +35,7 @@ function HomecareAdminPanel() {
   // Fetch requests & staff info
   const fetchRequests = async () => {
     try {
-      const response = await fetch('http://192.168.0.106:5000/management/homecare');
+      const response = await fetch('https://backend.medapp.transev.site/management/homecare');
       let data = await response.json();
 
       data.sort((a, b) => new Date(b.createdat) - new Date(a.createdat));
@@ -57,7 +57,7 @@ function HomecareAdminPanel() {
           formData.append('staffid', staffid);
 
           try {
-            const response = await fetch('http://192.168.0.106:5000/ops/getstaffdetailsbyid', {
+            const response = await fetch('https://backend.medapp.transev.site/ops/getstaffdetailsbyid', {
               method: 'POST',
               body: formData,
             });
@@ -80,7 +80,7 @@ function HomecareAdminPanel() {
 
   const fetchStaff = async () => {
     try {
-      const res = await fetch('http://192.168.0.106:5000/ops/listofstaff');
+      const res = await fetch('https://backend.medapp.transev.site/ops/listofstaff');
       const data = await res.json();
       setStaffList(data.data || []);
     } catch (err) {
@@ -90,7 +90,7 @@ function HomecareAdminPanel() {
 
   const fetchDoctors = async () => {
     try {
-      const res = await fetch('http://192.168.0.106:5000/doctorops/getalldoctor');
+      const res = await fetch('https://backend.medapp.transev.site/doctorops/getalldoctor');
       const data = await res.json();
       setDoctors(data.data || []);
     } catch (err) {
@@ -132,7 +132,7 @@ function HomecareAdminPanel() {
     });
 
     try {
-      await axios.post('http://192.168.0.106:5000/ops/updatehomecare', formDataToSend);
+      await axios.post('https://backend.medapp.transev.site/ops/updatehomecare', formDataToSend);
       alert('Updated successfully.');
 
       const updatedStaff = staffList.find(staff => staff.uid === formData.assignedstaffid);

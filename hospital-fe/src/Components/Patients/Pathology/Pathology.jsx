@@ -5,7 +5,7 @@ import PatientNavbar from "../Navbar/PatientNavbar";
 import PatientSidebar from "../Sidebar/PatientSidebar";
 import './Pathology.css';
 
-const API_URL = 'http://192.168.0.106:5000';
+const API_URL = 'https://backend.medapp.transev.site';
 
 const PatientLabBookings = () => {
   const [formData, setFormData] = useState({

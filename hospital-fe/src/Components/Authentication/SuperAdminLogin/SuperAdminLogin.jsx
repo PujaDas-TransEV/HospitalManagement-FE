@@ -17,7 +17,7 @@ function SuperAdminLoginPage() {
     formData.append('password', password);
 
     // Send a POST request to the super admin login endpoint
-    fetch('http://192.168.0.106:5000/superadmin/login', {
+    fetch('https://backend.medapp.transev.site/superadmin/login', {
       method: 'POST',
       body: formData,
     })

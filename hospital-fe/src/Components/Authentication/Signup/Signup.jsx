@@ -46,7 +46,7 @@ function SignupPage() {
       if (key !== 'otp') payload.append(key, value);
     });
 
-    fetch('http://192.168.0.106:5000/patients/signup', {
+    fetch('https://backend.medapp.transev.site/patients/signup', {
       method: 'POST',
       body: payload,
     })
@@ -80,7 +80,7 @@ function SignupPage() {
       payload.append(key, value);
     });
 
-    fetch('http://192.168.0.106:5000/patients/signup', {
+    fetch('https://backend.medapp.transev.site/patients/signup', {
       method: 'POST',
       body: payload,
     })

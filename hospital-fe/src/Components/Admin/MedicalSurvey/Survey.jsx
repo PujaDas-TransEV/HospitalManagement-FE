@@ -6,7 +6,7 @@ import AdminSidebar from '../Adminsidebar/AdminSidebar';
 import surveyBg from '../../Assests/background.jpg'; // Put your image here
 import './Survey.css';
 
-const API_URL = 'http://192.168.0.106:5000';
+const API_URL = 'https://backend.medapp.transev.site';
 
 const AdminMedicalSurveyList = () => {
   const [surveys, setSurveys] = useState([]);

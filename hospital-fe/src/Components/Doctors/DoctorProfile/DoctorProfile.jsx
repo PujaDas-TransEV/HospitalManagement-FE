@@ -50,7 +50,7 @@ const DoctorProfile = () => {
         const formData = new FormData();
         formData.append("doctorid", doctorIdFromToken);
 
-        const response = await fetch("http://192.168.0.106:5000/doctors/getbyid", {
+        const response = await fetch("https://backend.medapp.transev.site/doctors/getbyid", {
           method: "POST",
           headers: {
             Authorization: `Bearer ${accessToken}`,
@@ -129,7 +129,7 @@ const DoctorProfile = () => {
     }
 
     try {
-      const response = await fetch("http://192.168.0.106:5000/doctors/updatedata", {
+      const response = await fetch("https://backend.medapp.transev.site/doctors/updatedata", {
         method: "POST",
         headers: { Authorization: `Bearer ${accessToken}` },
         body: formDataObj,

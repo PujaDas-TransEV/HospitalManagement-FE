@@ -60,7 +60,7 @@ const DoctorLeave = () => {
         formData.append("doctorid", doctorIdFromToken);
 
         const response = await fetch(
-          "http://192.168.0.106:5000/doctors/getallleavebydocid",
+          "https://backend.medapp.transev.site/doctors/getallleavebydocid",
           {
             method: "POST",
             headers: { Authorization: `Bearer ${accessToken}` },
@@ -102,8 +102,8 @@ const DoctorLeave = () => {
 
     try {
       const url = isEdit
-        ? "http://192.168.0.106:5000/doctors/leaveupdate"
-        : "http://192.168.0.106:5000/doctors/create/leave";
+        ? "https://backend.medapp.transev.site/doctors/leaveupdate"
+        : "https://backend.medapp.transev.site/doctors/create/leave";
 
       const response = await fetch(url, {
         method: "POST",
@@ -153,7 +153,7 @@ const DoctorLeave = () => {
 
     try {
       const response = await fetch(
-        "http://192.168.0.106:5000/doctorsops/deleteleave",
+        "https://backend.medapp.transev.site/doctorsops/deleteleave",
         {
           method: "POST",
           headers: { Authorization: `Bearer ${accessToken}` },

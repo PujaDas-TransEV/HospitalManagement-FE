@@ -19,7 +19,7 @@ function AdminForgotPasswordPage() {
     formData.append('email', email);
 
    
-    fetch('http://192.168.0.106:5000/adminpasswordreset', {
+    fetch('https://backend.medapp.transev.site/adminpasswordreset', {
       method: 'POST',
       body: formData,
     })
@@ -53,7 +53,7 @@ function AdminForgotPasswordPage() {
     formData.append('newpassword', newPassword);
 
    
-    fetch('http://192.168.0.106:5000/adminpasswordreset', {
+    fetch('https://backend.medapp.transev.site/adminpasswordreset', {
       method: 'POST',
       body: formData,
     })

@@ -30,10 +30,10 @@ const AdminDashboard = () => {
         const [
           docRes, patRes, billRes, apptRes
         ] = await Promise.all([
-          fetch('http://192.168.0.106:5000/doctorops/getalldoctor'),
-          fetch('http://192.168.0.106:5000/patientops/getallpatient'),
-          fetch('http://192.168.0.106:5000/billing/getallbill'),
-          fetch('http://192.168.0.106:5000/getallappoinment'),
+          fetch('https://backend.medapp.transev.site/doctorops/getalldoctor'),
+          fetch('https://backend.medapp.transev.site/patientops/getallpatient'),
+          fetch('https://backend.medapp.transev.site/billing/getallbill'),
+          fetch('https://backend.medapp.transev.site/getallappoinment'),
         ]);
         const [docData, patData, billData, apptData] = await Promise.all([
           docRes.json(), patRes.json(), billRes.json(), apptRes.json()

@@ -26,7 +26,7 @@ const GuestLogin = () => {
   const sendOTP = async () => {
     setLoading(true);
     try {
-      const res = await axios.post('http://192.168.0.106:5000/guest/login', {
+      const res = await axios.post('https://backend.medapp.transev.site/guest/login', {
         hospital_email: formData.hospital_email,
         hospital_mobile: formData.hospital_mobile,
         patient_email: formData.patient_email,
@@ -50,7 +50,7 @@ const GuestLogin = () => {
   const verifyOTPAndFetchData = async () => {
     setLoading(true);
     try {
-      const res = await axios.post('http://192.168.0.106:5000/guest/login', formData);
+      const res = await axios.post('https://backend.medapp.transev.site/guest/login', formData);
 
       if (res.status === 200 && res.data.session?.patient_uid) {
         localStorage.setItem('guestToken', res.data.token);

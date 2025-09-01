@@ -37,7 +37,7 @@ const navigate = useNavigate();
 
   const fetchWards = async () => {
     try {
-      const res = await axios.get('http://192.168.0.106:5000/ops/getallward');
+      const res = await axios.get('https://backend.medapp.transev.site/ops/getallward');
       setWards(Array.isArray(res.data.data) ? res.data.data : []);
     } catch {
       setErrorMessage('Failed to fetch wards.');
@@ -47,7 +47,7 @@ const navigate = useNavigate();
   const fetchAllRooms = async () => {
     setLoading(true);
     try {
-      const res = await axios.get('http://192.168.0.106:5000/ops/getallrooms');
+      const res = await axios.get('https://backend.medapp.transev.site/ops/getallrooms');
       setAllRooms(Array.isArray(res.data.data) ? res.data.data : []);
     } catch {
       setErrorMessage('Failed to fetch rooms.');
@@ -70,7 +70,7 @@ const navigate = useNavigate();
       fd.append('capacity', capacity);
 
       const res = await axios.post(
-        'http://192.168.0.106:5000/ops/roomfacilitycreate',
+        'https://backend.medapp.transev.site/ops/roomfacilitycreate',
         fd
       );
       if (res.status === 201) {
@@ -97,7 +97,7 @@ const navigate = useNavigate();
       const fd = new FormData();
       fd.append('roomid', roomIdSearch.trim());
       const res = await axios.post(
-        'http://192.168.0.106:5000/ops/getroombyid',
+        'https://backend.medapp.transev.site/ops/getroombyid',
         fd
       );
       if (res.data.data?.length > 0) {
@@ -121,7 +121,7 @@ const navigate = useNavigate();
       const fd = new FormData();
       fd.append('roomid', id);
       const res = await axios.post(
-        'http://192.168.0.106:5000/ops/deleteroom',
+        'https://backend.medapp.transev.site/ops/deleteroom',
         fd
       );
       if (res.status === 200) {

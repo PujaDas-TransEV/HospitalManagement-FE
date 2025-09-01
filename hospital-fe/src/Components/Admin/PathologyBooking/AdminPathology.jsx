@@ -14,7 +14,7 @@ import {
 import { useNavigate } from 'react-router-dom';
 import './AdminPathology.css';
 
-const API_URL = 'http://192.168.0.106:5000';
+const API_URL = 'https://backend.medapp.transev.site';
 
 const AdminPathologyBookings = () => {
   const [bookings, setBookings] = useState([]);

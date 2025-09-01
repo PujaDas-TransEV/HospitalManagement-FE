@@ -37,7 +37,7 @@ const DoctorAppointmentManagement = () => {
       const formData = new FormData();
       formData.append('doctorid', doctorId);
       try {
-        const response = await fetch('http://192.168.0.106:5000/getappoinmenthistory', {
+        const response = await fetch('https://backend.medapp.transev.site/getappoinmenthistory', {
           method: 'POST',
           body: formData,
         });
@@ -87,7 +87,7 @@ const DoctorAppointmentManagement = () => {
     formData.append('appoinmentstatus', editStatus);
 
     try {
-      const res = await fetch('http://192.168.0.106:5000/update/appoinment', {
+      const res = await fetch('https://backend.medapp.transev.site/update/appoinment', {
         method: 'POST',
         body: formData,
       });
@@ -118,7 +118,7 @@ const DoctorAppointmentManagement = () => {
     formData.append('appoinid', uid);
 
     try {
-      const res = await fetch('http://192.168.0.106:5000/ops/appoinmentdelete', {
+      const res = await fetch('https://backend.medapp.transev.site/ops/appoinmentdelete', {
         method: 'POST',
         body: formData,
       });

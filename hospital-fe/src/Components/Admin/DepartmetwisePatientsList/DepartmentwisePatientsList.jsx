@@ -43,7 +43,7 @@ const PatientListPage = () => {
     }
     const formData = new FormData();
     formData.append('doctorspecialization', specialization);
-    fetch('http://192.168.0.106:5000/patientview', {
+    fetch('https://backend.medapp.transev.site/patientview', {
       method: 'POST',
       body: formData,
     })
@@ -74,7 +74,7 @@ const PatientListPage = () => {
       doctorIds.map((doctorId) => {
         const formData = new FormData();
         formData.append('doctorid', doctorId);
-        return fetch('http://192.168.0.106:5000/doctors/getbyid', {
+        return fetch('https://backend.medapp.transev.site/doctors/getbyid', {
           method: 'POST',
           body: formData,
         })
@@ -95,7 +95,7 @@ const PatientListPage = () => {
       patientUids.map((uid) => {
         const formData = new FormData();
         formData.append('patientid', uid);
-        return fetch('http://192.168.0.106:5000/ops/patientadmitstatus', {
+        return fetch('https://backend.medapp.transev.site/ops/patientadmitstatus', {
           method: 'POST',
           body: formData,
         })

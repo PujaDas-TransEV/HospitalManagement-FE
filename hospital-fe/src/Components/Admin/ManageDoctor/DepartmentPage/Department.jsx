@@ -37,7 +37,7 @@ const DepartmentPage = () => {
     const formData = new FormData();
     formData.append('doctorspecialization', specialization);
 
-    fetch('http://192.168.0.106:5000/doctors/getdoctorbyspc', {
+    fetch('https://backend.medapp.transev.site/doctors/getdoctorbyspc', {
       method: 'POST',
       body: formData,
     })
@@ -65,7 +65,7 @@ const DepartmentPage = () => {
     formData.append('leaveid', leaveId);
     formData.append('status', newStatus);
 
-    fetch('http://192.168.0.106:5000/doctors/leaveupdate', {
+    fetch('https://backend.medapp.transev.site/doctors/leaveupdate', {
       method: 'POST',
       body: formData,
     })

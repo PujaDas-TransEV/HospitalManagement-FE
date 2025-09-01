@@ -6,7 +6,7 @@ import PatientNavbar from '../Navbar/PatientNavbar';
 import PatientSidebar from '../Sidebar/PatientSidebar';
 import { useNavigate } from 'react-router-dom';
 
-const API_URL = 'http://192.168.0.106:5000/doctorops/getalldoctor';
+const API_URL = 'https://backend.medapp.transev.site/doctorops/getalldoctor';
 
 const DepartmentwiseTimetable = () => {
   const [doctors, setDoctors] = useState([]);

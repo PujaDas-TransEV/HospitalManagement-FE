@@ -52,7 +52,7 @@ const DoctorPatientListPage = () => {
       try {
         const fm = new FormData();
         fm.append('doctorid', doctorId);
-        const resp = await fetch('http://192.168.0.106:5000/patientview', { method: 'POST', body: fm });
+        const resp = await fetch('https://backend.medapp.transev.site/patientview', { method: 'POST', body: fm });
         const json = await resp.json();
         setPatients(json.patients || []);
       } catch {
@@ -80,7 +80,7 @@ const DoctorPatientListPage = () => {
       fm.append('diagonistics', diagnosis);
          fm.append('medicine', medicine);
 
-      const resp = await fetch('http://192.168.0.106:5000/createprescription', { method: 'POST', body: fm });
+      const resp = await fetch('https://backend.medapp.transev.site/createprescription', { method: 'POST', body: fm });
       const j = await resp.json();
       alert(j.message ? 'Prescription created!' : `Error: ${j.message}`);
       setShowCreateModal(false);
@@ -98,7 +98,7 @@ const DoctorPatientListPage = () => {
     try {
       const fm = new FormData();
       fm.append('patientid', pt.uid);
-      const resp = await fetch('http://192.168.0.106:5000/doctors/getprescribebypatientid', { method: 'POST', body: fm });
+      const resp = await fetch('https://backend.medapp.transev.site/doctors/getprescribebypatientid', { method: 'POST', body: fm });
       const json = await resp.json();
       if (json?.length) {
         setPrescriptions(json);

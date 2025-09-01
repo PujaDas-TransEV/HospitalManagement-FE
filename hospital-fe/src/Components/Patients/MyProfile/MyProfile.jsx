@@ -53,7 +53,7 @@ const PatientProfile = () => {
         formDataObj.append("patientid", patientId);
 
         const response = await fetch(
-          "http://192.168.0.106:5000/patients/profile/getbyid",
+          "https://backend.medapp.transev.site/patients/profile/getbyid",
           {
             method: "POST",
             headers: { Authorization: `Bearer ${accessToken}` },
@@ -146,7 +146,7 @@ const PatientProfile = () => {
 
     try {
       const response = await fetch(
-        "http://192.168.0.106:5000/patients/profile/update",
+        "https://backend.medapp.transev.site/patients/profile/update",
         {
           method: "POST",
           headers: {

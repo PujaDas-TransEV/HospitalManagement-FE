@@ -47,8 +47,8 @@ const ManagePatient = () => {
   useEffect(() => {
     setLoading(true);
     Promise.all([
-      fetch('http://192.168.0.106:5000/facilityops/getallfacility').then(r => r.json()),
-      fetch('http://192.168.0.106:5000/patientops/getallpatient').then(r => r.json()),
+      fetch('https://backend.medapp.transev.site/facilityops/getallfacility').then(r => r.json()),
+      fetch('https://backend.medapp.transev.site/patientops/getallpatient').then(r => r.json()),
     ])
     .then(([deptR, patR]) => {
       setDepartments(deptR.data || []);
@@ -67,7 +67,7 @@ const ManagePatient = () => {
     const fd = new FormData();
     fd.append('search', txt);
 
-    fetch('http://192.168.0.106:5000/search', {
+    fetch('https://backend.medapp.transev.site/search', {
       method: 'POST',
       body: fd,
     })
@@ -96,7 +96,7 @@ const ManagePatient = () => {
     const fd = new FormData();
     fd.append('patientid', uid);
 
-    fetch('http://192.168.0.106:5000/patientops/deleteprofile', {
+    fetch('https://backend.medapp.transev.site/patientops/deleteprofile', {
       method: 'POST',
       body: fd,
     })
@@ -116,7 +116,7 @@ const ManagePatient = () => {
       .forEach(field => fd.append(field, formData[field] || ''));
     fd.append('patientid', editPatient.uid);
 
-    fetch('http://192.168.0.106:5000/patients/profile/update', {
+    fetch('https://backend.medapp.transev.site/patients/profile/update', {
       method: 'POST',
       body: fd,
     })

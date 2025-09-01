@@ -42,7 +42,7 @@ useEffect(() => {
         const email = decoded.email;
         if (!email) throw new Error('Email not found in token');
 
-        const response = await fetch('http://192.168.0.106:5000/billing/getbillbypatientemail', {
+        const response = await fetch('https://backend.medapp.transev.site/billing/getbillbypatientemail', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ patientemailid: email })
@@ -83,7 +83,7 @@ useEffect(() => {
 
   const handleViewInvoice = async (billId) => {
     try {
-      const response = await fetch('http://192.168.0.106:5000/billing/getbillbybillid', {
+      const response = await fetch('https://backend.medapp.transev.site/billing/getbillbybillid', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ billid: billId })
@@ -279,7 +279,7 @@ if (invoiceData.doctor_name) {
       payload.append('feedbacktype', formData.feedbacktype);
       payload.append('feedbackmessage', formData.feedbackmessage);
 
-      const response = await fetch('http://192.168.0.106:5000/ops/surveycreate', {
+      const response = await fetch('https://backend.medapp.transev.site/ops/surveycreate', {
         method: 'POST',
         body: payload
       });

@@ -38,7 +38,7 @@ const DoctorSlotWisePatients = () => {
         const formData = new FormData();
         formData.append('doctorid', doctorId);
 
-        const res = await fetch('http://192.168.0.106:5000/doctors/getbyid', {
+        const res = await fetch('https://backend.medapp.transev.site/doctors/getbyid', {
           method: 'POST',
           body: formData,
         });
@@ -82,7 +82,7 @@ const DoctorSlotWisePatients = () => {
       formData.append('doctorid', doctorId);
       formData.append('appoinmenttime', appointmentDateTime);
 
-      const res = await fetch('http://192.168.0.106:5000/doctors/patients/by-datetime', {
+      const res = await fetch('https://backend.medapp.transev.site/doctors/patients/by-datetime', {
         method: 'POST',
         body: formData,
       });

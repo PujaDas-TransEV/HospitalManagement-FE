@@ -22,7 +22,7 @@ const AdminBillingPage = () => {
   const fetchBills = async () => {
     setLoading(true);
     try {
-      const response = await axios.get('http://192.168.0.106:5000/billing/getallbill');
+      const response = await axios.get('https://backend.medapp.transev.site/billing/getallbill');
       const formattedBills = response.data.bills.map(bill => ({
         ...bill,
         billid: bill.bill_id,
@@ -51,7 +51,7 @@ const AdminBillingPage = () => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (emailRegex.test(trimmedSearch)) {
       try {
-        const response = await axios.post('http://192.168.0.106:5000/billing/getbillbypatientemail', {
+        const response = await axios.post('https://backend.medapp.transev.site/billing/getbillbypatientemail', {
           patientemailid: trimmedSearch,
         });
 
@@ -92,7 +92,7 @@ const AdminBillingPage = () => {
  
 const handleView = async (billId) => {
   try {
-    const response = await axios.post('http://192.168.0.106:5000/billing/getbillbybillid', { billid: billId });
+    const response = await axios.post('https://backend.medapp.transev.site/billing/getbillbybillid', { billid: billId });
     const bill = response.data.bill;
 
     const invoiceHTML = `
@@ -167,7 +167,7 @@ const handleView = async (billId) => {
 
   const openEditPopup = async (billId) => {
     try {
-      const response = await axios.post('http://192.168.0.106:5000/billing/getbillbybillid', { billid: billId });
+      const response = await axios.post('https://backend.medapp.transev.site/billing/getbillbybillid', { billid: billId });
       const bill = response.data.bill;
       setEditBill({ ...bill, billid: bill.bill_id }); // Explicit billid
     } catch (error) {
@@ -188,7 +188,7 @@ const handleView = async (billId) => {
     });
 
     try {
-      await axios.post('http://192.168.0.106:5000/billing/updatebill', formData);
+      await axios.post('https://backend.medapp.transev.site/billing/updatebill', formData);
       alert('Bill updated successfully');
       setEditBill(null);
       fetchBills();

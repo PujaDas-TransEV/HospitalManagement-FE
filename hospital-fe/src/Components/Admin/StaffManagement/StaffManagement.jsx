@@ -31,7 +31,7 @@ const StaffManagement = () => {
 
   const fetchStaffList = () => {
     setLoading(true);
-    fetch('http://192.168.0.106:5000/ops/listofstaff')
+    fetch('https://backend.medapp.transev.site/ops/listofstaff')
       .then(res => res.json())
       .then(data => {
         if (data.data && Array.isArray(data.data)) {
@@ -57,7 +57,7 @@ const StaffManagement = () => {
     setLoading(true);
     const fd = new FormData();
     fd.append('staffid', searchID);
-    fetch('http://192.168.0.106:5000/ops/getstaffdetailsbyid', {
+    fetch('https://backend.medapp.transev.site/ops/getstaffdetailsbyid', {
       method: 'POST', body: fd
     })
       .then(res => res.json())
@@ -100,8 +100,8 @@ const StaffManagement = () => {
     const fd = new FormData();
     Object.entries(staffDetails).forEach(([k, v]) => fd.append(k, v));
     const url = editingStaff
-      ? 'http://192.168.0.106:5000/staffops/updatestaff'
-      : 'http://192.168.0.106:5000/ops/createstaff';
+      ? 'https://backend.medapp.transev.site/staffops/updatestaff'
+      : 'https://backend.medapp.transev.site/ops/createstaff';
 
     if (editingStaff) fd.append('staffid', editingStaff);
 
@@ -136,7 +136,7 @@ const StaffManagement = () => {
       formData.append(key, staffDetails[key]);
     });
 
-    fetch('http://192.168.0.106:5000/staffops/updatestaff', {
+    fetch('https://backend.medapp.transev.site/staffops/updatestaff', {
       method: 'POST',
       body: formData,
     })
@@ -161,7 +161,7 @@ const StaffManagement = () => {
     setLoading(true);
     const fd = new FormData();
     fd.append('staffid', uid);
-    fetch('http://192.168.0.106:5000/ops/staffdelete', {
+    fetch('https://backend.medapp.transev.site/ops/staffdelete', {
       method: 'POST', body: fd
     })
       .then(res => res.json())

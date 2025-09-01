@@ -41,7 +41,7 @@ const AdminSlotwisePatientList = () => {
 
   useEffect(() => {
     axios
-      .get('http://192.168.0.106:5000/facilityops/getallfacility')
+      .get('https://backend.medapp.transev.site/facilityops/getallfacility')
       .then((resp) => {
         const specs = resp.data.data
           ?.map((f) => f.department_name)
@@ -62,7 +62,7 @@ const AdminSlotwisePatientList = () => {
     form.append('doctorspecialization', spec);
 
     axios
-      .post('http://192.168.0.106:5000/doctors/getdoctorbyspc', form)
+      .post('https://backend.medapp.transev.site/doctors/getdoctorbyspc', form)
       .then((resp) => setDoctors(resp.data.data || []))
       .catch(console.error)
       .finally(() => setLoadingDoctors(false));
@@ -89,7 +89,7 @@ const AdminSlotwisePatientList = () => {
     form.append('appoinmenttime', `${date} ${startTime}`);
 
     axios
-      .post('http://192.168.0.106:5000/doctors/patients/by-datetime', form)
+      .post('https://backend.medapp.transev.site/doctors/patients/by-datetime', form)
       .then((resp) => {
         setPatientLists((prev) => ({ ...prev, [key]: resp.data.data || [] }));
       })

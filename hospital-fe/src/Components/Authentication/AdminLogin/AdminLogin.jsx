@@ -39,7 +39,7 @@ function AdminLoginPage() {
     formData.append('password', password);
 
     try {
-      const response = await fetch('http://192.168.0.106:5000/admins/login', {
+      const response = await fetch('https://backend.medapp.transev.site/admins/login', {
         method: 'POST',
         body: formData,
       });

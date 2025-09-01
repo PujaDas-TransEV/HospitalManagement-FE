@@ -29,7 +29,7 @@ const FacilityManagementPage = () => {
   const fetchFacilities = () => {
     setLoading(true);
     setError(null);
-    fetch('http://192.168.0.106:5000/facilityops/getallfacility')
+    fetch('https://backend.medapp.transev.site/facilityops/getallfacility')
       .then((res) => res.json())
       .then((data) => {
         setFacilities(data.data || []);
@@ -56,7 +56,7 @@ const FacilityManagementPage = () => {
       fd.append(apiKey, val);
     });
 
-    fetch('http://192.168.0.106:5000/facilityopscreate', {
+    fetch('https://backend.medapp.transev.site/facilityopscreate', {
       method: 'POST',
       body: fd,
     })
@@ -91,7 +91,7 @@ const FacilityManagementPage = () => {
     fd.append('facilityid', id);
     setLoading(true);
 
-    fetch('http://192.168.0.106:5000/facilityops/deletefacility', {
+    fetch('https://backend.medapp.transev.site/facilityops/deletefacility', {
       method: 'POST',
       body: fd,
     })
@@ -129,7 +129,7 @@ const FacilityManagementPage = () => {
     fd.append('facilityid', editingFacility.uid);
 
     setLoading(true);
-    fetch('http://192.168.0.106:5000/facilityops/updatefacilitydata', {
+    fetch('https://backend.medapp.transev.site/facilityops/updatefacilitydata', {
       method: 'POST',
       body: fd,
     })
@@ -163,7 +163,7 @@ const FacilityManagementPage = () => {
     fd.append('facilityid', id);
     setLoading(true);
 
-    fetch('http://192.168.0.106:5000/facilityops/getfacilitydetailsbyid', {
+    fetch('https://backend.medapp.transev.site/facilityops/getfacilitydetailsbyid', {
       method: 'POST',
       body: fd,
     })

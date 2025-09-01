@@ -43,7 +43,7 @@ const MedicalSurveyPage = () => {
       form.append(key, value);
     });
 
-    const response = await fetch('http://192.168.0.106:5000/ops/createmsurvey', {
+    const response = await fetch('https://backend.medapp.transev.site/ops/createmsurvey', {
       method: 'POST',
       body: form,
     });

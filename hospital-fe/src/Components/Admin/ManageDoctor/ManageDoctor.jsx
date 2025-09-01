@@ -56,12 +56,12 @@ const [searchResultCount, setSearchResultCount] = useState(null);
   useEffect(() => {
     setLoading(true);
 
-    fetch('http://192.168.0.106:5000/facilityops/getallfacility')
+    fetch('https://backend.medapp.transev.site/facilityops/getallfacility')
       .then((res) => res.json())
       .then((deptData) => {
         if (deptData && deptData.data) {
           setDepartments(deptData.data);
-          return fetch('http://192.168.0.106:5000/doctorops/getalldoctor');
+          return fetch('https://backend.medapp.transev.site/doctorops/getalldoctor');
         } else {
           throw new Error('Invalid department data');
         }
@@ -124,7 +124,7 @@ const [searchResultCount, setSearchResultCount] = useState(null);
     const formData = new FormData();
     formData.append('doctorid', doctorId);
 
-    fetch('http://192.168.0.106:5000/doctorsops/deletedoctor', {
+    fetch('https://backend.medapp.transev.site/doctorsops/deletedoctor', {
       method: 'POST',
       body: formData,
     })
@@ -162,7 +162,7 @@ const [searchResultCount, setSearchResultCount] = useState(null);
     formData.append('yoe', editDoctorData.yoe);
     formData.append('qualification', editDoctorData.qualification);
 
-    fetch('http://192.168.0.106:5000/doctors/updatedata', {
+    fetch('https://backend.medapp.transev.site/doctors/updatedata', {
       method: 'POST',
       body: formData,
     })
@@ -201,7 +201,7 @@ const handleFeeSubmit = (e) => {
   formData.append('doctoremail', selectedDoctorEmail);
   formData.append('appointmentfees', appointmentFees);
 
-  fetch('http://192.168.0.106:5000/createappointmentfees', {
+  fetch('https://backend.medapp.transev.site/createappointmentfees', {
     method: 'POST',
     body: formData,
   })
@@ -264,7 +264,7 @@ const doSearch = (searchText) => {
   const formData = new FormData();
   formData.append('search', searchText);  // Use 'search_value' as backend expects
 
-  fetch('http://192.168.0.106:5000/search', {
+  fetch('https://backend.medapp.transev.site/search', {
     method: 'POST',
     body: formData,
   })

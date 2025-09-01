@@ -33,10 +33,10 @@
 //         const formData = new FormData();
 
 //         if (role === "doctor") {
-//           url = "http://192.168.0.106:5000/doctors/getbyid";
+//           url = "https://backend.medapp.transev.site/doctors/getbyid";
 //           formData.append("doctorid", userId);
 //         } else if (role === "patient") {
-//           url = "http://192.168.0.106:5000/patients/profile/getbyid";
+//           url = "https://backend.medapp.transev.site/patients/profile/getbyid";
 //           formData.append("patientid", userId);
 //         }
 
@@ -270,8 +270,8 @@ export default function Navbar() {
       setUserType(rt);
       (async () => {
         const url = rt === "doctor"
-          ? "http://192.168.0.106:5000/doctors/getbyid"
-          : "http://192.168.0.106:5000/patients/profile/getbyid";
+          ? "https://backend.medapp.transev.site/doctors/getbyid"
+          : "https://backend.medapp.transev.site/patients/profile/getbyid";
         const fd = new FormData();
         fd.append(rt === "doctor" ? "doctorid" : "patientid", id);
         const r = await fetch(url, {

@@ -43,7 +43,7 @@ const editableFields = [
       const formData = new FormData();
       formData.append('patientid', patientId);
       const res = await axios.post(
-        'http://192.168.0.106:5000/management/homecare/gethomecarebypatientid',
+        'https://backend.medapp.transev.site/management/homecare/gethomecarebypatientid',
         formData
       );
       setRequests(res.data.data || []);
@@ -69,7 +69,7 @@ const editableFields = [
     formData.append('uid', uid);
     formData.append('status', 'cancelled');
     try {
-      await axios.post('http://192.168.0.106:5000/management/homecare/cancelstatus', formData);
+      await axios.post('https://backend.medapp.transev.site/management/homecare/cancelstatus', formData);
       alert('Request cancelled.');
       setSelectedRequest(null);
       fetchRequests();
@@ -154,7 +154,7 @@ const handleUpdate = async () => {
   }
 
   try {
-    const res = await axios.post('http://192.168.0.106:5000/ops/updatehomecare', formData);
+    const res = await axios.post('https://backend.medapp.transev.site/ops/updatehomecare', formData);
     alert('Updated successfully.');
     fetchRequests();
     setSelectedRequest(null);
@@ -172,7 +172,7 @@ const handleUpdate = async () => {
     const formData = new FormData();
     formData.append('homeuid', uid);
     try {
-      const res = await axios.post('http://192.168.0.106:5000/management/deletehomecare', formData);
+      const res = await axios.post('https://backend.medapp.transev.site/management/deletehomecare', formData);
       if (res.data.message.toLowerCase().includes('delete success')) {
         setRequests((prev) => prev.filter((r) => r.homecare.uid !== uid));
         setSelectedRequest(null);

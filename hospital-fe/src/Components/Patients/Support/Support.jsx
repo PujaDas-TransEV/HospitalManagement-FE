@@ -5,7 +5,7 @@
 // import PatientSidebar from '../Sidebar/PatientSidebar';
 // import './Support.css';
 
-// const API_URL = 'http://192.168.0.106:5000';
+// const API_URL = 'https://backend.medapp.transev.site';
 
 // const PatientSupport = () => {
 //   const issueTypes = [
@@ -189,7 +189,7 @@ import PatientNavbar from '../Navbar/PatientNavbar';
 import PatientSidebar from '../Sidebar/PatientSidebar';
 import './Support.css';
 
-const API_URL = 'http://192.168.0.106:5000';
+const API_URL = 'https://backend.medapp.transev.site';
 
 const PatientSupport = () => {
   const issueTypes = [

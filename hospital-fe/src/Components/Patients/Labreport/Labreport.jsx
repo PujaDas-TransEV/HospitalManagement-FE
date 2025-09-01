@@ -26,7 +26,7 @@ const LabReportPage = () => {
       try {
         const fd = new FormData();
         fd.append('patientid', patientId);
-        const res = await axios.post('http://192.168.0.106:5000/labreport/bypatientid', fd, {
+        const res = await axios.post('https://backend.medapp.transev.site/labreport/bypatientid', fd, {
           headers: {
             Authorization: `Bearer ${token}`,
             'Content-Type': 'multipart/form-data',
@@ -49,7 +49,7 @@ const LabReportPage = () => {
     try {
       const fd = new FormData();
       fd.append('labreportid', id);
-      await axios.post('http://192.168.0.106:5000/ops/deletelabs', fd, {
+      await axios.post('https://backend.medapp.transev.site/ops/deletelabs', fd, {
         headers: {
           Authorization: `Bearer ${token}`,
           'Content-Type': 'multipart/form-data',
@@ -69,7 +69,7 @@ const LabReportPage = () => {
       fd.append('patientid', patientId);
       fd.append('labid', report.labreportid);
       fd.append('guestaccess', newAccess);
-      await axios.post('http://192.168.0.106:5000/patientops/labdataaccessupdate', fd, {
+      await axios.post('https://backend.medapp.transev.site/patientops/labdataaccessupdate', fd, {
         headers: {
           Authorization: `Bearer ${token}`,
           'Content-Type': 'multipart/form-data',

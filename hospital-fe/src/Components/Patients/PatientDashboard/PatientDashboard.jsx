@@ -54,7 +54,7 @@ const PatientDashboard = () => {
   
         const formData = new FormData();
         formData.append('patientid', patientId);
-        const pr = await fetch('http://192.168.0.106:5000/patients/profile/getbyid', {
+        const pr = await fetch('https://backend.medapp.transev.site/patients/profile/getbyid', {
           method: 'POST',
           headers: { Authorization: `Bearer ${token}` },
           body: formData,
@@ -65,7 +65,7 @@ const PatientDashboard = () => {
        
         const af = new FormData();
         af.append('patientid', patientId);
-        const ar = await fetch('http://192.168.0.106:5000/getappoinmenthistory', {
+        const ar = await fetch('https://backend.medapp.transev.site/getappoinmenthistory', {
           method: 'POST',
           headers: { Authorization: `Bearer ${token}` },
           body: af,
@@ -83,7 +83,7 @@ const PatientDashboard = () => {
        
         const email = pd.data?.email;
         if (email) {
-          const br = await fetch('http://192.168.0.106:5000/billing/getbillbypatientemail', {
+          const br = await fetch('https://backend.medapp.transev.site/billing/getbillbypatientemail', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
             body: JSON.stringify({ patientemailid: email }),
@@ -108,7 +108,7 @@ const PatientDashboard = () => {
 
 const downloadInvoice = async (billId) => {
   try {
-    const res = await fetch('http://192.168.0.106:5000/billing/getbillbybillid', {
+    const res = await fetch('https://backend.medapp.transev.site/billing/getbillbybillid', {
       method: 'POST',
       headers: {
         Authorization: `Bearer ${token}`,

@@ -30,15 +30,15 @@ const AdminNotificationForm = ({ onClose, onSuccess, notification }) => {
       setError('Failed to decode admin token');
     }
 
-    axios.get('http://192.168.0.106:5000/patientops/getallpatient')
+    axios.get('https://backend.medapp.transev.site/patientops/getallpatient')
       .then(res => setPatients(res.data || []))
       .catch(() => setError('Failed to fetch patients'));
 
-    axios.get('http://192.168.0.106:5000/doctorops/getalldoctor')
+    axios.get('https://backend.medapp.transev.site/doctorops/getalldoctor')
       .then(res => setDoctors(res.data.data || []))
       .catch(() => setError('Failed to fetch doctors'));
 
-    axios.get('http://192.168.0.106:5000/ops/listofstaff')
+    axios.get('https://backend.medapp.transev.site/ops/listofstaff')
       .then(res => setStaff(res.data.data || []))
       .catch(() => setError('Failed to fetch staff'));
 
@@ -104,8 +104,8 @@ const AdminNotificationForm = ({ onClose, onSuccess, notification }) => {
       }
 
       const url = notification
-        ? 'http://192.168.0.106:5000/notify/update'
-        : 'http://192.168.0.106:5000/notify/create';
+        ? 'https://backend.medapp.transev.site/notify/update'
+        : 'https://backend.medapp.transev.site/notify/create';
 
       const response = await axios.post(url, formData);
 

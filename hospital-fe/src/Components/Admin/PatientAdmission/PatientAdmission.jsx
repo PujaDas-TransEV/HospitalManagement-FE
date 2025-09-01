@@ -51,7 +51,7 @@ const navigate = useNavigate();
   const fetchWards = async () => {
     setLoadingWards(true);
     try {
-      const response = await axios.get('http://192.168.0.106:5000/ops/getallward');
+      const response = await axios.get('https://backend.medapp.transev.site/ops/getallward');
       if (response.data && Array.isArray(response.data.data)) {
         setWards(response.data.data);
       }
@@ -65,7 +65,7 @@ const navigate = useNavigate();
   const fetchRooms = async () => {
     setLoadingRooms(true);
     try {
-      const response = await axios.get('http://192.168.0.106:5000/ops/getallrooms');
+      const response = await axios.get('https://backend.medapp.transev.site/ops/getallrooms');
       if (response.data && Array.isArray(response.data.data)) {
         setRooms(response.data.data);
       }
@@ -79,7 +79,7 @@ const navigate = useNavigate();
   const fetchPatients = async () => {
     setLoadingPatients(true);
     try {
-      const response = await axios.get('http://192.168.0.106:5000/patientops/getallpatient');
+      const response = await axios.get('https://backend.medapp.transev.site/patientops/getallpatient');
       if (response.data && Array.isArray(response.data)) {
         setPatients(response.data);
       }
@@ -93,7 +93,7 @@ const navigate = useNavigate();
   const fetchBedDetails = async () => {
     setLoadingBedDetails(true);
     try {
-      const response = await axios.get('http://192.168.0.106:5000/ops/getbeddetails');
+      const response = await axios.get('https://backend.medapp.transev.site/ops/getbeddetails');
       if (response.data && Array.isArray(response.data.data)) {
         setBedDetails(response.data.data);
       }
@@ -120,7 +120,7 @@ const navigate = useNavigate();
     formData.append('patientid', patientId);
 
     try {
-      const response = await axios.post('http://192.168.0.106:5000/ops/patientadmit', formData, {
+      const response = await axios.post('https://backend.medapp.transev.site/ops/patientadmit', formData, {
         headers: { 'Content-Type': 'multipart/form-data' },
       });
 
@@ -150,7 +150,7 @@ const navigate = useNavigate();
     formData.append('admissionid', admissionIdSearch);
 
     try {
-      const response = await axios.post('http://192.168.0.106:5000/ops/getbeddetails', formData);
+      const response = await axios.post('https://backend.medapp.transev.site/ops/getbeddetails', formData);
       if (response.data && response.data.data) {
         setSearchedBedDetails(response.data.data);
       } else {
@@ -204,7 +204,7 @@ const navigate = useNavigate();
   formData.append('patientdischarge_time', patientdischarge_time);
 
   try {
-    await axios.post('http://192.168.0.106:5000/discharge/patientdischarge', formData);
+    await axios.post('https://backend.medapp.transev.site/discharge/patientdischarge', formData);
     setSuccessMessage('Patient discharged successfully!');
     setShowDischargeModal(false);
     fetchBedDetails();

@@ -56,8 +56,8 @@ const AdminAppointments = () => {
   // Fetch data
   useEffect(() => {
     Promise.all([
-      fetch('http://192.168.0.106:5000/facilityops/getallfacility').then(r => r.json()),
-      fetch('http://192.168.0.106:5000/getallappoinment').then(r => r.json())
+      fetch('https://backend.medapp.transev.site/facilityops/getallfacility').then(r => r.json()),
+      fetch('https://backend.medapp.transev.site/getallappoinment').then(r => r.json())
     ])
       .then(([deptData, apptData]) => {
         setDepartments(deptData.data || []);
@@ -109,7 +109,7 @@ const AdminAppointments = () => {
     fm.append('appoinmentdetails', appoinmentdetails);
     fm.append('appoinmentstatus', appoinmentstatus);
 
-    fetch('http://192.168.0.106:5000/update/appoinment', { method: 'POST', body: fm })
+    fetch('https://backend.medapp.transev.site/update/appoinment', { method: 'POST', body: fm })
       .then(r => r.json())
       .then(d => {
         if (d.message) {
@@ -127,7 +127,7 @@ const AdminAppointments = () => {
     if (!window.confirm('Delete this appointment?')) return;
     const fm = new FormData();
     fm.append('appoinid', uid);
-    fetch('http://192.168.0.106:5000/ops/appoinmentdelete', { method: 'POST', body: fm })
+    fetch('https://backend.medapp.transev.site/ops/appoinmentdelete', { method: 'POST', body: fm })
       .then(r => r.json())
       .then(d => {
         if (d.message) {

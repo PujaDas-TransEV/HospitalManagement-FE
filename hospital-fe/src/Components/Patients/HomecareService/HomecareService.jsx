@@ -47,7 +47,7 @@ const HomeCareService = () => {
         formDataPayload.append('patientid', patientId);
 
         const response = await axios.post(
-          'http://192.168.0.106:5000/patients/profile/getbyid',
+          'https://backend.medapp.transev.site/patients/profile/getbyid',
           formDataPayload,
           { headers: { 'Content-Type': 'multipart/form-data' } }
         );
@@ -74,7 +74,7 @@ const HomeCareService = () => {
   useEffect(() => {
     if (formData.caretype === 'doctor') {
       setFieldLoading(prev => ({ ...prev, refrencedoctorname: true }));
-      axios.get('http://192.168.0.106:5000/doctorops/getalldoctor')
+      axios.get('https://backend.medapp.transev.site/doctorops/getalldoctor')
         .then(response => {
           const doctorOptions = response.data.data.map(doctor => ({
             value: doctor.fullname,
@@ -124,7 +124,7 @@ const HomeCareService = () => {
   //       formPayload.append(key, value);
   //     }
 
-  //     await axios.post('http://192.168.0.106:5000/management/homecare', formPayload, {
+  //     await axios.post('https://backend.medapp.transev.site/management/homecare', formPayload, {
   //       headers: { 'Content-Type': 'multipart/form-data' }
   //     });
 
@@ -181,7 +181,7 @@ const handleSubmit = async (e) => {
       formPayload.append("attachments", file);
     });
 
-    await axios.post('http://192.168.0.106:5000/management/homecare', formPayload, {
+    await axios.post('https://backend.medapp.transev.site/management/homecare', formPayload, {
       headers: { 'Content-Type': 'multipart/form-data' }
     });
 

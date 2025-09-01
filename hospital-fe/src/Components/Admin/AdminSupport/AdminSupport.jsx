@@ -6,7 +6,7 @@ import AdminSidebar from '../Adminsidebar/AdminSidebar';
 import supportBg from '../../Assests/background.jpg'; // Adjust path as needed
 import './AdminSupport.css';
 
-const API_URL = 'http://192.168.0.106:5000';
+const API_URL = 'https://backend.medapp.transev.site';
 
 const AdminSupport = () => {
   const [supportTickets, setSupportTickets] = useState([]);

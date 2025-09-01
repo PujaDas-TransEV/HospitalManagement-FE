@@ -45,8 +45,8 @@ const Appointment = () => {
     fd.append('patientid', patientId);
 
     Promise.all([
-      fetch('http://192.168.0.106:5000/getappoinmenthistory', { method: 'POST', body: fd }).then(res => res.json()),
-      fetch('http://192.168.0.106:5000/getappoinmentdetails', { method: 'POST', body: fd }).then(res => res.json())
+      fetch('https://backend.medapp.transev.site/getappoinmenthistory', { method: 'POST', body: fd }).then(res => res.json()),
+      fetch('https://backend.medapp.transev.site/getappoinmentdetails', { method: 'POST', body: fd }).then(res => res.json())
     ])
       .then(([histData, upcData]) => {
         const histArr = Array.isArray(histData.data) ? histData.data : [histData.data].filter(Boolean);
@@ -59,7 +59,7 @@ const Appointment = () => {
   }, [patientId]);
 
   useEffect(() => {
-    fetch('http://192.168.0.106:5000/facilityops/getallfacility')
+    fetch('https://backend.medapp.transev.site/facilityops/getallfacility')
       .then(res => res.json())
       .then(data => {
         const mapIcon = {
@@ -91,7 +91,7 @@ const Appointment = () => {
     const fd = new FormData();
     fd.append('appoinid', uid);
 
-    fetch('http://192.168.0.106:5000/ops/appoinmentdelete', { method: 'POST', body: fd })
+    fetch('https://backend.medapp.transev.site/ops/appoinmentdelete', { method: 'POST', body: fd })
       .then(res => res.json())
       .then(() => {
         setAppointments(prev => prev.filter(a => a.uid !== uid));
@@ -115,7 +115,7 @@ const Appointment = () => {
     fd.append('appoinmenttime', current.appoinmenttime);
     fd.append('appointmentdetails', current.appoinmentdetails);
 
-    fetch('http://192.168.0.106:5000/update/appoinment', { method: 'POST', body: fd })
+    fetch('https://backend.medapp.transev.site/update/appoinment', { method: 'POST', body: fd })
       .then(res => res.json())
       .then(() => {
         setAppointments(prev => prev.map(a => a.uid === current.uid ? current : a));

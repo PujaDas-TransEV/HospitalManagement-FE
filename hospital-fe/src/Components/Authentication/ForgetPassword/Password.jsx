@@ -19,7 +19,7 @@ function ForgotPasswordPage() {
     formData.append('email', email);
 
     
-    fetch('http://192.168.0.106:5000/patientpasswordreset', {
+    fetch('https://backend.medapp.transev.site/patientpasswordreset', {
       method: 'POST',
       body: formData,
     })
@@ -52,7 +52,7 @@ function ForgotPasswordPage() {
     formData.append('otp', otp);
     formData.append('newpassword', newPassword);
 
-    fetch('http://192.168.0.106:5000/patientpasswordreset', {
+    fetch('https://backend.medapp.transev.site/patientpasswordreset', {
       method: 'POST',
       body: formData,
     })

@@ -20,11 +20,11 @@ const AdminLabReportPage = () => {
   });
 
   useEffect(() => {
-    axios.get('http://192.168.0.106:5000/patientops/getallpatient')
+    axios.get('https://backend.medapp.transev.site/patientops/getallpatient')
       .then((res) => setPatients(res.data))
       .catch((err) => console.error('Error loading patients:', err));
 
-    axios.get('http://192.168.0.106:5000/doctorops/getalldoctor')
+    axios.get('https://backend.medapp.transev.site/doctorops/getalldoctor')
       .then((res) => {
         if (Array.isArray(res.data.data)) {
           setDoctors(res.data.data);
@@ -51,7 +51,7 @@ const AdminLabReportPage = () => {
   //   data.append('typeoftest', formData.testType);
   //   data.append('finalreport', formData.finalReport);
 
-  //   axios.post('http://192.168.0.106:5000/ops/labtestdata', data)
+  //   axios.post('https://backend.medapp.transev.site/ops/labtestdata', data)
   //     .then(() => {
   //       alert('Lab report created successfully!');
   //       setFormData({
@@ -78,7 +78,7 @@ const handleSubmit = (e) => {
   data.append('typeoftest', formData.testType);
   data.append('finalreport', formData.finalReport);
 
-  axios.post('http://192.168.0.106:5000/ops/labtestdata', data)
+  axios.post('https://backend.medapp.transev.site/ops/labtestdata', data)
     .then(() => {
       alert('Lab report created successfully!');
       setFormData({

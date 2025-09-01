@@ -52,7 +52,7 @@ const DoctorSettings = () => {
       const formData = new FormData();
       formData.append("doctorid", doctorId);
 
-      const response = await fetch("http://192.168.0.106:5000/doctorsops/deletedoctor", {
+      const response = await fetch("https://backend.medapp.transev.site/doctorsops/deletedoctor", {
         method: "POST",
         headers: {
           Authorization: `Bearer ${accessToken}`,

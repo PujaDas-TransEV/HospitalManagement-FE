@@ -40,7 +40,7 @@ const PatientMedicalHistoryPage = () => {
       const formData = new FormData();
       formData.append('patientid', patientId);
 
-      fetch('http://192.168.0.106:5000/ops/patientadmitstatus', {
+      fetch('https://backend.medapp.transev.site/ops/patientadmitstatus', {
         method: 'POST',
         body: formData,
       })

@@ -33,7 +33,7 @@ const AdminAppointmentBooking = () => {
   const [isBooking, setIsBooking] = useState(false);
 
   const navigate = useNavigate();
-  const BASE_URL = 'http://192.168.0.106:5000';
+  const BASE_URL = 'https://backend.medapp.transev.site';
 
   const today = new Date();
   today.setHours(0, 0, 0, 0);

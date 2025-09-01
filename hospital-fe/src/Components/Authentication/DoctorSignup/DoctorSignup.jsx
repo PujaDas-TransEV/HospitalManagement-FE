@@ -32,7 +32,7 @@ function DoctorSignupPage() {
 
 
   useEffect(() => {
-    fetch('http://192.168.0.106:5000/facilityops/getallfacility')
+    fetch('https://backend.medapp.transev.site/facilityops/getallfacility')
       .then(res => res.json())
       .then(data => {
         if (data && data.data) {
@@ -84,7 +84,7 @@ function DoctorSignupPage() {
     formData.append('confirm_password', confirmPassword);
     if (profilePicture) formData.append('profilepicture', profilePicture);
 
-    fetch('http://192.168.0.106:5000/doctor/signup', {
+    fetch('https://backend.medapp.transev.site/doctor/signup', {
       method: 'POST',
       body: formData,
     })
@@ -131,7 +131,7 @@ function DoctorSignupPage() {
     formData.append('otp', otp);
     if (profilePicture) formData.append('profilepicture', profilePicture);
 
-    fetch('http://192.168.0.106:5000/doctor/signup', {
+    fetch('https://backend.medapp.transev.site/doctor/signup', {
       method: 'POST',
       body: formData,
     })

@@ -26,7 +26,7 @@ const GuestDashboard = () => {
         formData.append('patientid', patientId);
 
         const res = await axios.post(
-          'http://192.168.0.106:5000/patients/profile/getbyid',
+          'https://backend.medapp.transev.site/patients/profile/getbyid',
           formData,
           { headers: { Authorization: `Bearer ${token}` } }
         );

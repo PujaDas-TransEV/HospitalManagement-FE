@@ -40,7 +40,7 @@ const LoginPage = () => {
     formData.append('password', password);
 
     try {
-      const response = await fetch('http://192.168.0.106:5000/patients/login', {
+      const response = await fetch('https://backend.medapp.transev.site/patients/login', {
         method: 'POST',
         body: formData,
       });

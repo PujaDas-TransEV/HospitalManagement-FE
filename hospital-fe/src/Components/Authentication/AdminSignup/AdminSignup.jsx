@@ -34,7 +34,7 @@ function AdminSignupPage() {
     formData.append('confirm_password', confirmPassword);
 
   
-    fetch('http://192.168.0.106:5000/admins/signup', {
+    fetch('https://backend.medapp.transev.site/admins/signup', {
       method: 'POST',
       body: formData,
     })
@@ -70,7 +70,7 @@ function AdminSignupPage() {
     formData.append('otp', otp); 
 
     
-    fetch('http://192.168.0.106:5000/admins/signup', {
+    fetch('https://backend.medapp.transev.site/admins/signup', {
       method: 'POST',
       body: formData,
     })
