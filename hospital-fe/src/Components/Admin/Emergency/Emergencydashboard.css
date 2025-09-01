@@ -1,7 +1,8 @@
 
 .emergency-page {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background-color: #f7f9fc;
+   background-color: #f7f9fc; 
+ 
   min-height: 100vh;
 }
 
@@ -15,7 +16,8 @@
   flex-grow: 1;
   padding: 24px 28px;
   overflow-y: auto;
-  background-color: #f0eee1;
+  /* background-color: #f0eee1; */
+  background-color: #f7f9fc; 
 }
 
 
@@ -90,9 +92,11 @@
 
 
 .priority-label {
+  
+
   position: absolute;
-  top: 12px;
-  right: 12px;
+  top: -5px;             /* Slightly inside vertically */
+right: -12px;          /* Slightly outside horizontally */
   font-weight: 700;
   font-size: 14px;
   padding: 4px 16px;
@@ -100,7 +104,16 @@
   box-shadow: 0 3px 12px rgba(0,0,0,0.2);
   user-select: none;
   text-transform: uppercase;
+  z-index: 10;
 }
+
+
+
+ 
+  
+
+
+
 
 
 .case-info h5 {

@@ -4,12 +4,12 @@ import { Link, useLocation } from 'react-router-dom';
 import {
   FaTachometerAlt, FaUserMd, FaUserInjured, FaCalendarAlt, FaMoneyBillWave,
   FaCogs, FaSignOutAlt, FaBars, FaPills, FaPlusCircle, FaBed, FaTools,
-  FaBuilding, FaUser, FaQuestionCircle, FaClinicMedical, FaAngleDoubleLeft, FaAngleDoubleRight,FaCommentDots,FaUserPlus,FaCalendarCheck, FaAmbulance,FaVial
+  FaBuilding, FaUser, FaQuestionCircle, FaClinicMedical, FaAngleDoubleLeft, FaAngleDoubleRight,FaCommentDots,FaUserPlus,FaCalendarCheck, FaAmbulance,FaVial,FaFileInvoiceDollar
 } from 'react-icons/fa';
 import './AdminSidebar.css';
 import { useNavigate } from "react-router-dom";
 import { MdMedicalServices } from 'react-icons/md';
-import { MdDashboard } from 'react-icons/md';
+import { MdDashboard,MdReceipt } from 'react-icons/md';
 import { MdChecklist } from 'react-icons/md';
 const AdminSidebar = () => {
   const [isExpanded, setIsExpanded] = useState(false);
@@ -131,7 +131,7 @@ const handleLogout = () => {
           </li>
           <li className="nav-item">
             <Link to="/admin-billing" className="nav-link" onClick={handleLinkClick}>
-              <FaMoneyBillWave className="nav-icon" />
+              <MdReceipt className="nav-icon" />
               {showText && <span>Billing</span>}
             </Link>
           </li>
