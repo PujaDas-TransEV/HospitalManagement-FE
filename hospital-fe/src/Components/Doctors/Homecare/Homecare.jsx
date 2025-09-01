@@ -59,7 +59,7 @@ const DoctorHomecareDashboard = () => {
       formData.append('homeuid', homeuid);
       formData.append('status', newStatus);
 
-      const response = await fetch('http://localhost:5000/ops/updatehomecare', {
+      const response = await fetch('https://backend.medapp.transev.site/ops/updatehomecare', {
         method: 'POST',
         body: formData,
       });

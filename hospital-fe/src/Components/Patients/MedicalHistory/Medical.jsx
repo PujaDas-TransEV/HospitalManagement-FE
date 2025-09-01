@@ -72,7 +72,7 @@ const PatientMedicalHistoryPage = () => {
     const formData = new FormData();
     formData.append('patientemailid', email);
 
-    fetch('http://localhost:5000/discharge/getdisdetailsp', {
+    fetch('https://backend.medapp.transev.site/discharge/getdisdetailsp', {
       method: 'POST',
       body: formData,
     })

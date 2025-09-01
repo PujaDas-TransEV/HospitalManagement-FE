@@ -7,7 +7,7 @@ const DoctorsSection = () => {
   const [modalDoc, setModalDoc] = useState(null);
 
   useEffect(() => {
-    fetch("http://localhost:5000/doctorops/getalldoctor")
+    fetch("https://backend.medapp.transev.site/doctorops/getalldoctor")
       .then((res) => res.json())
       .then((json) => setAllDocs(json.data || []))
       .catch(console.error);
